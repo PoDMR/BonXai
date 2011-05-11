@@ -1,0 +1,9 @@
+<xs:schema targetNamespace="http://www.w3.org/2001/XMLSchema" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xml:lang="EN">
+ <xs:element name="keyElement">
+  <xs:key name="duplicatedSelector">
+   <xs:selector xpath="xs:a"/>
+   <xs:selector xpath="xs:b"/>
+   <xs:field xpath="@name"/>
+  </xs:key>
+ </xs:element>
+</xs:schema>

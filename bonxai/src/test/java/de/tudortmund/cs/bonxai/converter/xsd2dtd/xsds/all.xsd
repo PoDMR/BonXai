@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    <xs:element name="outerElement">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="one"/>
+                <xs:element name="two" type="xs:string"/>
+                <xs:element name="three"/>
+                <xs:element name="four">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="test" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

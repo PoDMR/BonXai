@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <choice>
+            <element name="testInC">
+                <choice>
+                    <ref name="defA"/>
+                    <ref name="defB"/>
+                    <element name="b">
+                        <empty/>
+                    </element>
+                </choice>
+            </element>
+        </choice>
+    </start>
+
+    <define name="defA">
+        <group>
+            <attribute name="attrInA"/>
+            <element name="testInA">
+                <attribute name="attrInA2"/>
+                <optional>
+                    <ref name="defA"/>
+                </optional>
+            </element>
+        </group>
+    </define>
+
+    <define name="defB">
+        <group>
+            <attribute name="attrInB"/>
+            <element name="testInB">
+                <attribute name="attrInB2"/>
+                <optional>
+                    <element name="underTestInB">
+                        <empty/>
+                    </element>
+                    <ref name="defC"/>
+                </optional>
+            </element>
+        </group>
+    </define>
+
+    <define name="defC">
+        <group>
+            <attribute name="attrInC"/>
+            <element name="testInC">
+                <attribute name="attrInC2"/>
+                <optional>
+                    <ref name="defB"/>
+                </optional>
+            </element>
+        </group>
+    </define>
+
+</grammar>

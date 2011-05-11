@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.www.org"
+    xmlns:root="http://www.www.org" xmlns="http://www.www.org">
+
+    <xs:redefine schemaLocation="redefinedSchema.xsd">
+        <xs:group name="DSN">
+            <xs:choice>
+                <xs:element name="karl" type="xs:decimal"/>
+                <xs:element name="baumeister"/>
+                <xs:group ref="root:DSN2"/>
+            </xs:choice>
+        </xs:group>
+
+        <xs:attributeGroup name="test">
+            <xs:attributeGroup ref="root:test2"></xs:attributeGroup>
+        </xs:attributeGroup>
+
+        <xs:simpleType name="bob">
+            <xs:restriction base="bob">
+                <xs:length value="8"/>
+            </xs:restriction>
+        </xs:simpleType>
+
+        <xs:complexType name="bar">
+            <xs:complexContent>
+                <xs:restriction base="bar">
+                    <xs:choice>
+                        <xs:element name="mob"/>
+                    </xs:choice>
+                </xs:restriction>
+            </xs:complexContent>
+        </xs:complexType>
+
+    </xs:redefine>
+
+    <xs:element name="hanz" type="root:bar"/>
+
+
+
+</xs:schema>

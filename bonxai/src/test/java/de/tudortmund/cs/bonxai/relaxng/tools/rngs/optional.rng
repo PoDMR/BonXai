@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <element name="start">
+            <element name="a">
+                <choice>
+                    <interleave>
+                        <element name="blub">
+                            <empty/>
+                        </element>
+                    </interleave>
+                </choice>
+            </element>
+        </element>
+    </start>
+</grammar>

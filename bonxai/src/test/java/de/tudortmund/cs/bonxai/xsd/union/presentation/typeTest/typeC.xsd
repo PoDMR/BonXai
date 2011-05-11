@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.A.org"
+    xmlns:A="www.A.org">
+
+    <xs:element name="a" type="xs:NCName"/>
+
+    <xs:element name="b"/>
+
+    <xs:element name="c" type="xs:string"/>
+
+    <xs:simpleType name="calendar">
+        <xs:union memberTypes="xs:gDay xs:gMonth xs:gYear"/>
+    </xs:simpleType>
+
+    <xs:element name="d" type="A:calendar"/>
+
+    <xs:element name="e" type="A:calendar"/>
+
+</xs:schema>

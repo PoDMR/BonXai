@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:complexType name="a">
+        <xs:attributeGroup ref="a"/>
+        <xs:attribute form="qualified" name="d"/>
+        <xs:attribute form="unqualified" name="e"/>
+        <xs:attribute form="qualified" name="f"/>
+        <xs:attribute ref="g"/>
+    </xs:complexType>
+    <xs:complexType name="b">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attributeGroup ref="a"/>
+                <xs:attribute form="qualified" name="d"/>
+                <xs:attribute form="unqualified" name="e"/>
+                <xs:attribute form="qualified" name="f"/>
+                <xs:attribute ref="g"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="d">
+        <xs:complexContent>
+            <xs:extension base="xs:anyType">
+                <xs:attributeGroup ref="a"/>
+                <xs:attribute form="qualified" name="d"/>
+                <xs:attribute form="unqualified" name="e"/>
+                <xs:attribute form="qualified" name="f"/>
+                <xs:attribute ref="g"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="e">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:attributeGroup ref="a"/>
+                <xs:attribute form="qualified" name="d"/>
+                <xs:attribute form="unqualified" name="e"/>
+                <xs:attribute form="qualified" name="f"/>
+                <xs:attribute ref="g"/>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:attribute name="g"/>
+    <xs:attributeGroup name="a">
+        <xs:attribute form="qualified" name="a"/>
+        <xs:attribute form="unqualified" name="b"/>
+        <xs:attribute form="qualified" name="c"/>
+    </xs:attributeGroup>
+    <xs:element name="a">
+        <xs:complexType>
+            <xs:attributeGroup ref="a"/>
+            <xs:attribute form="qualified" name="d"/>
+            <xs:attribute form="unqualified" name="e"/>
+            <xs:attribute form="qualified" name="f"/>
+            <xs:attribute ref="g"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="b" type="a"/>
+</xs:schema>

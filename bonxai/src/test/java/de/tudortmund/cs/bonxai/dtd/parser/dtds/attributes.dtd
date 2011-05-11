@@ -1,0 +1,20 @@
+<!ELEMENT textContentAttr (#PCDATA)>
+
+<!ATTLIST textContentAttr myAttr01 ID             #IMPLIED     >
+<!ATTLIST textContentAttr myAttr02 IDREF     "eight"           >
+<!ATTLIST textContentAttr myAttr03 IDREFS    "nine"            >
+<!ATTLIST textContentAttr myAttr04 ENTITY    "five"            >
+<!ATTLIST textContentAttr myAttr05 ENTITIES  "four"            >
+<!ATTLIST textContentAttr myAttr06 ENTITIES       #IMPLIED     >
+<!ATTLIST textContentAttr myAttr07 NMTOKEN   "ten"             >
+<!ATTLIST textContentAttr myAttr08 NMTOKENS  "eleven"          >
+<!ATTLIST textContentAttr myAttr09 CDATA     "zero"            >
+<!ATTLIST textContentAttr myAttr10 CDATA          #FIXED "one" >
+<!ATTLIST textContentAttr myAttr11 CDATA          #IMPLIED     >
+<!ATTLIST textContentAttr myAttr12 CDATA          #REQUIRED    >
+
+<!ATTLIST textContentAttr myAttr13 (tiger|lion) "lion">
+
+<!NOTATION elephant SYSTEM ""> <!NOTATION snake SYSTEM "">
+
+<!ATTLIST textContentAttr myAttr14 NOTATION (elephant|snake) "snake">

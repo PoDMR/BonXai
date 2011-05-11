@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+    <start>
+        <grammar xmlns="http://relaxng.org/ns/structure/1.0">
+            <start>
+                <parentRef name="test"/>
+            </start>
+        </grammar>
+    </start>
+    <define name="test"><element name="sadf"><empty></empty></element></define>
+</grammar>

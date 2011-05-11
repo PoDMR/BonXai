@@ -1,0 +1,29 @@
+plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.name=BonxaiPlugin
+plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.author=TUDO
+plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.version=1.0.0
+plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.activate=startup #defer
+plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.description=Bonxai plugin
+plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.longdescription=description.html
+
+# Dependencies
+plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.depend.0=jdk 1.6
+plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.depend.1=jedit 04.03.09.00
+#plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.depend.2=plugin jakartacommons.JakartaCommonsPlugin 0.2
+#plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.depend.2=optional plugin archive.ArchivePlugin 0.2
+plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.jars=bonxai.jar
+
+# Option pane
+#plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.option-pane=eu.fox7
+#options.eu.fox7.bonxai.bonxaiplugin.code = new eu.fox7.BonxaiOptionPane();
+#options.eu.fox7.bonxai.bonxaiplugin.title=Bonxai
+#options.eu.fox7.bonxai.bonxaiplugin.label=Bonxai
+
+# Action labels
+plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.browser-menu=action.union action.intersect action.difference - action.xsd action.dtd action.rng action.bonxai
+action.union.label=Union
+action.intersect.label=Intersect
+action.difference.label=Difference
+action.xsd.label=Convert to XML Schema
+action.dtd.label=Convert to DTD
+action.rng.label=Convert to RelaxNG
+action.bonxai.label=Convert to BonXai

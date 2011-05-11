@@ -1,0 +1,73 @@
+groups{
+	group group1 = element bam
+	group group2 = element blub
+}
+
+grammar{
+	//foo = {
+		lax element * [543,667] {_Namespaces1,Namespace2, ns3, ns4, ns5, ns6, ns7, ns8, ns9, ns10, ns11}
+	}
+	/gro = {
+		group group1
+	}
+	/ele = {
+		element elem2 {string fixed "fix"}
+	}
+	/baz = {
+		element node1 & group group1
+	}
+	/blub = {
+		element node2? & group group2?
+	}
+	/bee = {
+		element node1? & group group1? & strict element* {_Namespaces1,Namespace2, NS3, NAS4, NS5, NS6m, NS6, BNS6, NS5}
+	}
+	/lo = {
+		element node1? & group group1? & skip element* [543] {_Namespaces1,Namespace2}
+	}
+	/li = {
+		element node1{missing|string}? & group group1? & lax element* [543,667] {_Namespaces1,Namespace2}
+	}
+	/la = {
+		element node1{missing | string fixed "\a" }? & group group1? & lax element* [543,667] {_Namespaces1,Namespace2}
+	}
+	/le = {
+		element node1{string | missing }? & group group1? & lax element* [543,667] {_Namespaces1,Namespace2}
+	}
+	/lu = {
+		missing element element1 [ 123 , 234],
+		element element1 *,
+		element element2 + | element element3,
+		( element element4 )
+	}
+	/mo = {
+		missing missing | string default "def"
+	}
+	/ma = {
+		missing string fixed "fix" | missing
+	}
+	/me = {
+		missing string
+	}
+	/rega = {
+		group group1 *
+	}
+	/regb = {
+		element elem3 +
+	}
+	/regc = {
+		skip element * {name}?
+	}
+	/regd = {
+		group group1 [123,234]
+	}
+	/rege = {
+		group group1, element elem1
+	}
+	/regf = {
+		skip element * {name} | group group1
+	}
+	/regg = {
+		{ element elem2 }
+	}
+}

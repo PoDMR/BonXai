@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://example.org/ns1" xmlns:a="http://example.org/ns1" xmlns:b="http://example.org/ns2">
+  <xs:import schemaLocation="name9.xsd"/>
+  <xs:import namespace="http://example.org/ns2" schemaLocation="b.xsd"/>
+  <xs:element name="test">
+    <xs:complexType mixed="true">
+      <xs:attribute ref="b:blub"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.A.org" xmlns:A="www.A.org">  
+    
+    <xs:element name="a" id="a" />
+
+    <xs:element name="b" id="b2" />
+
+    <xs:element name="c" abstract="true" />
+    
+    <xs:element name="d" abstract="true" />
+
+    <xs:element name="e" nillable="true"/>
+    
+    <xs:element name="f" nillable="true"/>
+
+    <xs:element name="g" fixed="foo" />
+    
+    <xs:element name="h" fixed="foo" />
+
+    <xs:element name="i" default="foo" />
+    
+    <xs:element name="j" default="foo" />
+
+    <xs:element name="k" block="#all" />
+    
+    <xs:element name="l" block="extension" />  
+    
+    <xs:element name="m" block="extension restriction substitution" />
+    
+    <xs:element name="n" block="#all" />
+    
+    <xs:element name="o" block="extension restriction" />
+    
+    <xs:element name="p" block="#all" />
+        
+    <xs:element name="q" final="#all" />
+    
+    <xs:element name="r" final="extension" />
+    
+    <xs:element name="s" final="extension restriction" />
+    
+    <xs:element name="t" final="restriction" />
+    
+    <xs:element name="v" final="#all" />
+    
+    <xs:element name="w">
+        <xs:annotation>
+            <xs:appinfo>
+                APPINFO aus elementB.xsd
+            </xs:appinfo>
+            <xs:documentation>
+                DOCUMENTATION aus elementB.xsd
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    
+    <xs:element name="x">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="selector2">
+                    <xs:complexType>
+                        <xs:attribute name="myID2"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="a">
+            <xs:selector xpath="selector2"/>
+            <xs:field xpath="@id"/>
+        </xs:unique>
+        <xs:keyref refer="A:a" name="d">
+            <xs:selector xpath="selector2"/>
+            <xs:field xpath="@myID2"/>
+        </xs:keyref>
+    </xs:element>
+
+</xs:schema>

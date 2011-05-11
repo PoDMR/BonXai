@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element name="bob" xmlns="http://relaxng.org/ns/structure/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <attribute name="attr1">
+        <grammar>
+            <start>
+                <ref name="data"/>
+            </start>
+            <define name="data">
+                <grammar>
+                    <start>
+                        <parentRef name="fromParent"/>
+                    </start>
+                </grammar>
+            </define>
+            <define name="fromParent">
+                <grammar>
+                    <start>
+                        <choice>
+                            <data type="byte"/>
+                            <value>5</value>
+                        </choice>
+                    </start>
+                </grammar>
+            </define>
+        </grammar>
+    </attribute>
+</element>

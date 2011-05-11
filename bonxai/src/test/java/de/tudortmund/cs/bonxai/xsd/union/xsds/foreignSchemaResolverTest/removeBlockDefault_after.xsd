@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:complexType block="extension" name="a">
+        <xs:choice>
+            <xs:group ref="a"/>
+            <xs:element block="extension" name="f"/>
+            <xs:element block="restriction" name="g"/>
+            <xs:element block="substitution" name="h"/>
+            <xs:element block="#all" name="i"/>
+            <xs:element block="" name="j"/>
+            <xs:element block="#all" name="k"/>
+            <xs:element ref="l"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType block="restriction" name="b">
+        <xs:complexContent>
+            <xs:extension base="a">
+                <xs:choice>
+                    <xs:group ref="a"/>
+                    <xs:element block="extension" name="f"/>
+                    <xs:element block="restriction" name="g"/>
+                    <xs:element block="substitution" name="h"/>
+                    <xs:element block="#all" name="i"/>
+                    <xs:element block="" name="j"/>
+                    <xs:element block="#all" name="k"/>
+                    <xs:element ref="l"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType block="#all" name="c">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:choice>
+                    <xs:group ref="a"/>
+                    <xs:element block="extension" name="f"/>
+                    <xs:element block="restriction" name="g"/>
+                    <xs:element block="substitution" name="h"/>
+                    <xs:element block="#all" name="i"/>
+                    <xs:element block="" name="j"/>
+                    <xs:element block="#all" name="k"/>
+                    <xs:element ref="l"/>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType block="" name="d">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType block="#all" name="e">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:group name="a">
+        <xs:sequence>
+            <xs:element block="extension" name="a"/>
+            <xs:element block="restriction" name="b"/>
+            <xs:element block="substitution" name="b"/>
+            <xs:element block="#all" name="c"/>
+            <xs:element block="" name="d"/>
+            <xs:element block="#all" name="e"/>
+        </xs:sequence>
+    </xs:group>
+    <xs:element block="#all" name="a">
+        <xs:complexType>
+            <xs:choice>
+                <xs:group ref="a"/>
+                <xs:element block="extension" name="f"/>
+                <xs:element block="restriction" name="g"/>
+                <xs:element block="substitution" name="h"/>
+                <xs:element block="#all" name="i"/>
+                <xs:element block="" name="j"/>
+                <xs:element block="#all" name="k"/>
+                <xs:element ref="l"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element block="#all" name="b" type="a"/>
+    <xs:element block="extension" name="l"/>
+    <xs:element block="restriction" name="m"/>
+    <xs:element block="substitution" name="n"/>
+    <xs:element block="#all" name="o"/>
+    <xs:element block="" name="p"/>
+    <xs:element block="#all" name="q"/>
+</xs:schema>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE ACTIONS SYSTEM "actions.dtd">
+
+<ACTIONS>
+	<ACTION NAME="action.union">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBrowserAction(view, files, "union");
+		</CODE>
+	</ACTION>
+        <ACTION NAME="action.intersect">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBrowserAction(view, files, "intersect");
+		</CODE>
+	</ACTION>
+        <ACTION NAME="action.difference">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBrowserAction(view, files, "difference");
+		</CODE>
+	</ACTION>
+
+	<ACTION NAME="action.xsd">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBrowserAction(view, files, "xsd");
+		</CODE>
+	</ACTION>
+        <ACTION NAME="action.dtd">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBrowserAction(view, files, "dtd");
+		</CODE>
+	</ACTION>
+        <ACTION NAME="action.rng">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBrowserAction(view, files, "rng");
+		</CODE>
+	</ACTION>
+        <ACTION NAME="action.bonxai">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBrowserAction(view, files, "bonxai");
+		</CODE>
+	</ACTION>
+</ACTIONS>

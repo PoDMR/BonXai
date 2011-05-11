@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element xmlns="http://relaxng.org/ns/structure/1.0">
+    <anyName/>
+    <choice>
+        <rng:grammar xmlns:rng="http://relaxng.org/ns/structure/1.0">
+            <rng:start>
+                <ref name="uniform-id0x1ab76780"/>
+            </rng:start>
+            <rng:define name="uniform-id0x1ab76780">
+                <rng:element>
+                    <rng:anyName><![CDATA[]]></rng:anyName>
+                    <rng:group>
+                        <rng:attribute>
+                            <rng:name ns="">min</rng:name>
+                            <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+                                type="float"/>
+                        </rng:attribute>
+                        <rng:attribute>
+                            <rng:name ns="">max</rng:name>
+                            <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+                                type="float"/>
+                        </rng:attribute>
+                    </rng:group>
+                </rng:element>
+            </rng:define>
+        </rng:grammar>
+    </choice>
+</element>

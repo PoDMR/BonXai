@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns="www.test.de" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:ns_3="www.test.de" xmlns:ns_4="www.bob.de" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.test.de">
+    <xs:element name="B" type="xs:string"/>
+</xs:schema>

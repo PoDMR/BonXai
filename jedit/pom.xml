@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>eu.fox7.jedit</groupId>
+	<artifactId>jedit</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+	  <groupId>eu.fox7</groupId>
+	  <artifactId>foxlib</artifactId>
+	  <version>1.0-SNAPSHOT</version>
+	</parent>
+
+
+	<modules>
+		<module>flt-plugin</module>
+		<module>bonxai-plugin</module>
+		<module>jedit-workbench</module>
+	</modules>
+
+	<dependency>
+	  <groupId>org.jedit</groupId>
+	  <artifactId>jedit</artifactId>
+	  <version>4.3.2</version>
+	  <scope>provided</scope>
+	</dependency>
+
+
+</project>

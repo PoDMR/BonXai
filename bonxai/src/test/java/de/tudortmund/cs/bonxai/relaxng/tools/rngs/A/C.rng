@@ -1,0 +1,10 @@
+<grammar  ns="" xmlns="http://relaxng.org/ns/structure/1.0" >
+  <start combine="choice">
+    <ref name="refC"></ref>
+  </start>
+  <define name="refC">
+    <element name="C">
+      <text/>
+    </element>
+  </define>
+</grammar> 

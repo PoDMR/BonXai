@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.A.org"
+    xmlns="www.A.org">
+
+    <xs:include schemaLocation="inheritA.xsd"/>
+
+    <xs:element name="a" type="fo"/>
+    
+    <xs:element name="a2" type="fo" block="extension"/>
+
+    <xs:element name="b" type="foo" block="restriction"/>
+
+    <xs:element name="c" type="fooo"/>
+    
+    <xs:element name="d" type="fooo2"/>
+    <xs:element name="lulu" type="xs:string"/>
+    <xs:element name="lolo" type="lala"/>
+    
+    <xs:simpleType name="lala">
+        <xs:list itemType="xs:ID"/>        
+    </xs:simpleType>
+    
+
+    <xs:complexType name="foo">
+        <xs:complexContent>
+            <xs:extension base="fo">
+                <xs:choice>
+                    <xs:element name="inner_c" type="xs:string"/>
+                    <xs:element name="inner_d" type="xs:string"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="fooo">
+        <xs:complexContent>
+            <xs:restriction base="foo">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="inner_b" type="xs:string"/>
+                    </xs:choice>
+                    <xs:choice>
+                        <xs:element name="inner_d" type="xs:string"/>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="fooo2">
+        <xs:complexContent>
+            <xs:restriction base="foo">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="inner_a" type="xs:string"/>
+                    </xs:choice>
+                    <xs:choice>
+                        <xs:element name="inner_c" type="xs:string"/>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="boah">
+        <xs:complexContent>
+            <xs:restriction base="fooo2">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="inner_a" type="xs:string"/>
+                    </xs:choice>
+                    <xs:choice>
+                        <xs:element name="inner_c" type="xs:string"/>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="bla">
+        <xs:complexContent>
+            <xs:restriction base="fo">
+                <xs:choice>
+                    <xs:element name="inner_a" type="xs:string"/>
+                    <xs:element name="inner_b" type="xs:string"/>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

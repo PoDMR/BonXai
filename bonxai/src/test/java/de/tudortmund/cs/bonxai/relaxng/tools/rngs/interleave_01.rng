@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="start">
+    <interleave>
+        <zeroOrMore>
+            <element name="a1"><empty/></element>
+            <element name="a2"><empty/></element>
+        </zeroOrMore>
+        <group>
+            <element name="b1"><empty/></element>
+            <element name="b2"><empty/></element>
+        </group>
+    </interleave>
+</element>

@@ -1,0 +1,48 @@
+<!ELEMENT myElement1 (#PCDATA)>
+<!ELEMENT myElement2 (#PCDATA)>
+<!ELEMENT myElement3 (#PCDATA)>
+
+<!ELEMENT myElement01 (myElement1)   >
+<!ATTLIST myElement01 name CDATA #IMPLIED>
+
+<!ELEMENT myElement02 (myElement1)*  >
+<!ATTLIST myElement02 name CDATA #IMPLIED>
+
+<!ELEMENT myElement03 (myElement1)+  >
+<!ATTLIST myElement03 name CDATA #IMPLIED>
+
+<!ELEMENT myElement04 (myElement1)?  >
+<!ATTLIST myElement04 name CDATA #IMPLIED>
+
+<!ELEMENT myElement05 (myElement1 | myElement2) >
+<!ATTLIST myElement05 name CDATA #IMPLIED>
+
+<!ELEMENT myElement06 (myElement1 , myElement2) >
+<!ATTLIST myElement06 name CDATA #IMPLIED>
+
+<!ELEMENT myElement07 (myElement1 , myElement2)* >
+<!ATTLIST myElement07 name CDATA #IMPLIED>
+
+<!ELEMENT myElement08 (myElement1 | (myElement2 , myElement3))? >
+<!ATTLIST myElement08 name CDATA #IMPLIED>
+
+<!ELEMENT myElement09 (#PCDATA)  >
+<!ATTLIST myElement09 name CDATA #IMPLIED>
+
+<!ELEMENT myElement10 (#PCDATA)* >
+<!ATTLIST myElement10 name CDATA #IMPLIED>
+
+<!ELEMENT myElement11 (#PCDATA|myElement1|myElement2)* >
+<!ATTLIST myElement11 name CDATA #IMPLIED>
+
+<!ELEMENT myElement12 ANY >
+<!ATTLIST myElement12 name CDATA #IMPLIED>
+
+<!ELEMENT myElement13 EMPTY >
+<!ATTLIST myElement13 name CDATA #IMPLIED>
+
+<!ELEMENT myElement14 EMPTY >
+
+<!ELEMENT myElement15 ANY >
+
+

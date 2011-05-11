@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.A.org"
+    xmlns:A="www.A.org">
+
+    <xs:element name="a" type="xs:time"/>
+
+    <xs:element name="b" type="xs:string"/>
+
+    <xs:element name="c" type="xs:string"/>
+
+    <xs:simpleType name="listofStates">
+        <xs:list>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="FR GB DE"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:list>
+    </xs:simpleType>
+
+    <xs:element name="d" type="A:listofStates"/>
+
+    <xs:element name="e" type="A:listofStates"/>
+
+    <!-- ======================================================================================================= -->
+    
+    <!-- ComplexType hat in allen Schemata die gleiche ID -->
+    <xs:element name="f">
+        <xs:complexType id="a"/>
+    </xs:element>
+    
+    <!-- ComplexType hat in verschiedenen Schemata verchiedene IDs -->
+    <xs:element name="g">
+        <xs:complexType id="b2"/>
+    </xs:element>
+    
+    <!-- ======================================================================================================= -->
+    
+    <!-- ComplexType h ist in allen Schemata abstract -->
+    <xs:element name="h" type="A:h2"/>
+    <xs:complexType name="h2" abstract="true"/>
+    
+    <!-- ComplexType i ist nicht in allen Schemata abstract -->
+    <xs:element name="i" type="A:i2"/>
+    <xs:complexType name="i2" abstract="true"/>
+    
+    <!-- ======================================================================================================= -->
+    
+    <!-- ComplexType ist in allen Schemata mixed -->
+    <xs:element name="j">
+        <xs:complexType mixed="true"/>
+    </xs:element>
+    
+    <!-- ComplexType ist nicht in allen Schemata mixed -->
+    <xs:element name="k">
+        <xs:complexType mixed="true"/>
+    </xs:element>
+    <!-- ======================================================================================================= -->
+    
+    <!-- ComplexType l hat in allen Schemata final Wert #all -->
+    <xs:element name="l" type="A:l2"/>
+    <xs:complexType name="l2" final="#all"/>
+    
+    <!-- ComplexType m hat in anderen Schemata final Wert #all -->
+    <xs:element name="m" type="A:m2"/>
+    <xs:complexType name="m2" final="#all"/>
+    
+    <!-- ComplexType n hat in anderen Schemata final Wert extension -->
+    <xs:element name="n" type="A:n2"/>
+    <xs:complexType name="n2" final="extension"/>
+    
+    <!-- ======================================================================================================= -->
+    
+    <!-- ComplexType o hat in allen Schemata block Wert #all -->
+    <xs:element name="o" type="A:o2"/>
+    <xs:complexType name="o2" block="#all"/>
+    
+    <!-- ComplexType p hat in allen Schemata block Wert #all -->
+    <xs:element name="p" type="A:p2"/>
+    <xs:complexType name="p2" block="#all"/>
+    
+    <!-- ComplexType q hat in allen Schemata block Wert restriction -->
+    <xs:element name="q" type="A:q2"/>
+    <xs:complexType name="q2" block="restriction"/>
+    
+    <!-- ======================================================================================================= -->
+    
+    <!-- Vereinigung von simpleType und complexType mit Elementen -->
+    <xs:element name="r" type="xs:string"/>
+    
+    <!-- Vereinigung von simpleType und complexType ohne Elementen -->
+    <xs:element name="s" type="xs:string"/>
+    
+    <!-- Vereinigung von simpleType und complexType mit SimpleContent -->
+    <xs:element name="t" type="xs:integer"/>
+    
+    <!-- Vereinigung von zwei ComplexTypes mit SimpleContent -->
+    <xs:element name="v" type="A:v2"/>
+    <xs:complexType name="v2">
+        <xs:simpleContent>
+            <xs:extension base="xs:integer">
+                <xs:attribute name="v2"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <!-- Vereinigung von zwei ComplexTypes -->
+    <xs:element name="w" type="A:w2"/>
+    <xs:complexType name="w2">
+        <xs:choice>
+            <xs:element name="w2"/>
+        </xs:choice>
+    </xs:complexType>
+    
+    <!-- Vereinigung von ComplexType mit SimpleContent und ComplexContent ohne Elemente-->
+    <xs:element name="x" type="A:x2"/>
+    <xs:complexType name="x2">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="x2"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <!-- Vereinigung von ComplexType mit SimpleContent und ComplexContent mit Elementen-->
+    <xs:element name="y" type="A:y2"/>
+    <xs:complexType name="y2">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="y2"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+</xs:schema>

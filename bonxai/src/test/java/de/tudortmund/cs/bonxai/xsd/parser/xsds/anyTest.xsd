@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://www.w3schools.com"
+xmlns="http://www.w3schools.com"
+elementFormDefault="qualified">
+
+	<xsd:element name="p" type="wasbeliebt"/>
+	<xsd:complexType name="wasbeliebt">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="b" type="xsd:string"/>
+			<xsd:element name="i" type="xsd:string"/>
+			<xsd:element name="u" type="xsd:string"/>
+		</xsd:sequence>
+		<xsd:attribute name="ibu" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:group name="hohoho">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="a" type="xsd:string"/>
+			<xsd:element name="d" type="xsd:string"/>
+			<xsd:element name="e" type="xsd:string"/>
+			<xsd:any namespace="http://www.w3.org/1999/xhtml" minOccurs="1" maxOccurs="unbounded" processContents="skip"/>
+		</xsd:choice>
+	</xsd:group>
+</xsd:schema>

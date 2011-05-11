@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="e7">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:restriction base="e7_complexType">
+                </xs:restriction>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="e7_complexType">
+        <xs:simpleContent>
+            <xs:extension base="xs:dateTime"/>
+        </xs:simpleContent>
+    </xs:complexType>
+
+</xs:schema>

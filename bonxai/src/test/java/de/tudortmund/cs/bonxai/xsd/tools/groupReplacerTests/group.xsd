@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" blockDefault="#all">
+
+    <xs:element name="order" type="ordertype"/>
+
+    <xs:complexType name="ordertype">
+        <xs:choice>
+            <xs:element name="temp"/>
+            <xs:group ref="custGroup"/>
+        </xs:choice>
+
+        <xs:attributeGroup ref="custAttributeGroup"/>
+    </xs:complexType>
+
+    <xs:group name="custGroup">
+        <xs:sequence>
+            <xs:element name="customer" type="xs:string"/>
+            <xs:group ref="custGroup2"/>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:group name="custGroup2">
+        <xs:sequence>
+            <xs:element name="orderdetails" type="xs:string"/>
+            <xs:element name="billto" type="xs:string"/>
+            <xs:element name="shipto" type="xs:string"/>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:attributeGroup name="custAttributeGroup">
+        <xs:attribute name="firstname" type="xs:string"/>
+        <xs:attributeGroup ref="custAttributeGroup2"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="custAttributeGroup2">
+        <xs:attribute name="lastname" type="xs:string"/>
+        <xs:anyAttribute/>
+    </xs:attributeGroup>
+
+</xs:schema>

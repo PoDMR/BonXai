@@ -1,0 +1,222 @@
+package de.tudortmund.cs.bonxai.xsd.parser;
+
+import de.tudortmund.cs.bonxai.xsd.parser.exceptions.attribute.*;
+import de.tudortmund.cs.bonxai.xsd.parser.exceptions.content.*;
+import de.tudortmund.cs.bonxai.xsd.parser.exceptions.type.*;
+import de.tudortmund.cs.bonxai.common.*;
+import de.tudortmund.cs.bonxai.xsd.*;
+import org.w3c.dom.*;
+
+/*******************************************************************************
+ * The AttributeProcessor processes an attribute labeled node into an attribute
+ * object or attributeRef object of the XSD object model.
+ *******************************************************************************
+ * @author Lars Schmidt, Dominik Wolff
+ */
+public class AttributeProcessor extends Processor {
+
+    // Reference to the simpleType of the constructed attribute
+    private SymbolTableRef<Type> simpleTypeRef;
+
+    // Strings for default, fixed , id and name attributes of attribute
+    private String defaultString, fixedString, idString, attributeName;
+
+    // Variable for the form attribute
+    private XSDSchema.Qualification form;
+
+    // Variable for the use attribute
+    private AttributeUse attributeUse;
+
+    // True if the attribute has a type attribute
+    private boolean typeAttr = false;
+
+    // The annotation of the attribute element
+    private Annotation annotation;
+
+    // Attributes of the attribute node
+    private NamedNodeMap attributes;
+
+    /**
+     * Constructor of the AttributeProcessor, which receives only the schema.
+     * @param schema    XSDSchema processed by this processor
+     */
+    public AttributeProcessor(XSDSchema schema) {
+        super(schema);
+    }
+
+    /**
+     * Creates an attribute corresponding to the attribute node in the dom tree.
+     * @param node      Node labeled with attribute in the dom tree
+     * @return Either an Attribute or an AttributeRef
+     * @throws java.lang.Exception
+     */
+    @Override
+    protected AttributeParticle processNode(Node node) throws Exception {
+        if (!isNCName(getLocalName(node))) {
+            throw new InvalidNCNameException(getLocalName(node), "attribute");
+        }
+        attributeName = getName(node);       
+        attributes = node.getAttributes();
+        visitChildren(node);
+        if (attributes != null) {
+
+            // id, form and use properties are all optional
+            if (attributes.getNamedItem("id") != null) {
+                if (attributes.getNamedItem("id").getNodeValue().equals("")) {
+                    throw new EmptyIdException("Attribute: " + attributeName);
+                }
+                idString = ((Attr) attributes.getNamedItem("id")).getValue();
+            }
+            if (attributes.getNamedItem("form") != null) {
+                // Global-Elements must not have the form definition!
+                if (node.getParentNode().getNodeType() == 1 && node.getParentNode().getNodeName().endsWith("schema")) {
+                    throw new InvalidFormValueLocationException(attributeName);
+                }
+                String formValue = ((Attr) attributes.getNamedItem("form")).getValue();
+                if (formValue.equals("qualified")) {
+                    form = XSDSchema.Qualification.qualified;
+                } else {
+                    if (formValue.equals("unqualified")) {
+                        form = XSDSchema.Qualification.unqualified;
+                    } else {
+                        throw new InvalidFormValueException(attributeName);
+                    }
+                }
+            }
+            if (attributes.getNamedItem("use") != null) {
+                String useValue = ((Attr) attributes.getNamedItem("use")).getValue();
+                if (useValue.equals("optional")) {
+                    attributeUse = AttributeUse.Optional;
+                } else {
+                    if (useValue.equals("prohibited")) {
+                        attributeUse = AttributeUse.Prohibited;
+                    } else {
+                        if (useValue.equals("required")) {
+                            attributeUse = AttributeUse.Required;
+                        } else {
+                            throw new InvalidUseValueException(attributeName);
+                        }
+                    }
+                }
+            }
+            // Either fixed or default are allowed to appear in an element not both.
+            if (attributes.getNamedItem("default") != null && attributes.getNamedItem("fixed") != null) {
+                throw new ExclusiveAttributesException("fixed and default", attributeName);
+            }
+            if (attributes.getNamedItem("fixed") != null && attributes.getNamedItem("default") == null) {
+                fixedString = ((Attr) attributes.getNamedItem("fixed")).getValue().trim();
+            }
+            if (attributes.getNamedItem("default") != null && attributes.getNamedItem("fixed") == null) {
+                defaultString = ((Attr) attributes.getNamedItem("default")).getValue().trim();
+            }
+
+            if (attributes.getNamedItem("type") != null) {
+                if (attributes.getNamedItem("ref") != null) {
+                    throw new ExclusiveAttributesException("type and ref", attributeName);
+                }
+                if (attributes.getNamedItem("name") == null) {
+                    throw new MissingNameException();
+                }
+                if (simpleTypeRef != null) {
+                        throw new MultipleTypesException("attribute", attributeName);
+                }
+                typeAttr = true;
+                if (!isQName(((Attr) attributes.getNamedItem("type")).getValue())) {
+                    throw new InvalidQNameException(((Attr) attributes.getNamedItem("type")).getValue(), "type");
+                }
+                String simpleTypeName = getName(((Attr) attributes.getNamedItem("type")).getValue());
+                if (!schema.getTypeSymbolTable().hasReference(simpleTypeName)) {
+                    SimpleType simpleType = new SimpleType(simpleTypeName, null);
+                    simpleType.setDummy(true);
+                    simpleTypeRef = this.schema.getTypeSymbolTable().updateOrCreateReference(simpleTypeName, simpleType);
+                } else {
+                    simpleTypeRef = this.schema.getTypeSymbolTable().getReference(simpleTypeName);
+                }
+            }
+            if (attributes.getNamedItem("ref") != null) {
+                if (attributes.getNamedItem("name") != null) {
+                    throw new ExclusiveAttributesException("name and ref", attributeName);
+                }
+                if (attributes.getNamedItem("type") != null) {
+                    throw new ExclusiveAttributesException("type and ref", attributeName);
+                }
+                if (attributes.getNamedItem("form") != null) {
+                    throw new ExclusiveAttributesException("form and ref", attributeName);
+                }
+                if (!isQName(((Attr) attributes.getNamedItem("ref")).getValue())) {
+                    throw new InvalidQNameException(((Attr) attributes.getNamedItem("ref")).getValue(), "ref");
+                }
+                String refName = getName(((Attr) attributes.getNamedItem("ref")).getValue());
+
+
+                if (!schema.getAttributeSymbolTable().hasReference(refName)) {
+                    Attribute attributeRefElement = new Attribute(refName);
+                    attributeRefElement.setDummy(true);
+                    schema.getAttributeSymbolTable().updateOrCreateReference(refName, attributeRefElement);
+                }
+                AttributeRef attributeRef = new AttributeRef(schema.getAttributeSymbolTable().getReference(refName), defaultString, fixedString, attributeUse, annotation);
+                if (attributes.getNamedItem("id") != null) {
+                    if (node.getAttributes().getNamedItem("id").getNodeValue().equals("")) {
+                        throw new EmptyIdException("Attribute: " + attributeName);
+                    }
+                    attributeRef.setId(((Attr) attributes.getNamedItem("id")).getValue());
+                }
+                return attributeRef;
+            }
+        }
+        Attribute attribute = null;
+        if (simpleTypeRef != null) {
+            attribute = new Attribute(getName(node), simpleTypeRef, defaultString, fixedString, attributeUse, typeAttr, form, annotation);
+        } else {
+            attribute = new Attribute(getName(node), defaultString, fixedString, attributeUse, typeAttr, form, annotation);
+        }
+        if (idString != null) {
+            attribute.setId(idString);
+        }
+        attribute.setDummy(false);
+        return attribute;
+    }
+
+    /**
+     * Visits a child of the attribute node and processes it according to its name
+     * @param childNode     Node in the dom tree below the attribute Node
+     * @throws java.lang.Exception
+     */
+    @Override
+    protected void processChild(Node childNode) throws Exception {
+        
+        // Tests if the node name is a local name and filters nodes with names #text, #comment and #document who are not in the enum
+        String nodeName = childNode.getNodeName();
+        if (nodeName.contains(":")) {
+            nodeName = nodeName.split(":")[1];
+        }
+        if (childNode != null && !"#text".equals(nodeName) && !"#comment".equals(nodeName) && !"#document".equals(nodeName)) {
+            switch (CASE.valueOf(nodeName.toUpperCase())) {
+                case SIMPLETYPE:
+                    if (getDebug()) {
+                        System.out.println("simpleType");
+                    }
+                    if (attributes.getNamedItem("ref") != null) {
+                        throw new ExclusiveContentException("simpleType and ref", attributeName);
+                    }
+                    if (simpleTypeRef != null) {
+                        throw new MultipleTypesException("attribute", attributeName);
+                    } else {
+                        SimpleTypeProcessor simpleTypeProcessor = new SimpleTypeProcessor(schema);
+                        simpleTypeRef = simpleTypeProcessor.processNode(childNode);
+                    }
+                    break;
+                case ANNOTATION:
+                    if (annotation == null) {
+                        AnnotationProcessor annotationProcessor = new AnnotationProcessor(schema);
+                        annotation = annotationProcessor.processNode(childNode);
+                    } else {
+                        throw new MultipleAnnotationException("attribute");
+                    }
+                    break;
+                default:
+                    throw new UnsupportedContentException(nodeName, "attribute");
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="B">
+
+    <xs:import namespace="B" schemaLocation="interleaveNewIdentifier_branchOne.xsd"/>
+
+    <xs:element name="elementRoot">
+        <xs:complexType>
+            <xs:all>
+                <xs:group ref="ns1:groupOne"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+    <start>
+        <element name="foo">
+            <oneOrMore>
+                <attribute>
+                    <anyName>
+                        <except>
+                            <name>test</name>
+                            <nsName/>
+                            <choice>
+                                <name>test</name>
+                            </choice>
+                        </except>
+                    </anyName>
+                </attribute>
+            </oneOrMore>
+        </element>
+    </start>
+</grammar>

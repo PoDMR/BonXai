@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.Y.org" xmlns:y="www.Y.org">
+
+    <xs:element name="y" type="y:bar"/>
+    
+    <xs:complexType name="bar">
+        <xs:sequence minOccurs="1">
+            <xs:element name="x" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

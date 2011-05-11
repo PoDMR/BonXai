@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="testElement" type="bla"/>
+    <xs:element name="testElement2" type="bla"/>
+    
+    
+    <xs:complexType name="bla">
+        <xs:anyAttribute namespace="http://myNamespace.de ##local"/>
+    </xs:complexType>
+    
+</xs:schema>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns="www.A.org" xmlns:A="www.A.org" xmlns:B="www.B.org" xmlns:C="www.C.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.A.org">
+    <xs:import namespace="www.B.org"/>
+    <xs:import namespace="www.C.org"/>
+    <xs:complexType name="a">
+        <xs:choice>
+            <xs:group ref="a"/>
+            <xs:element ref="a"/>
+            <xs:element form="unqualified" name="d"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:simpleType name="b">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:attribute name="a" type="xs:string"/>
+    <xs:attribute name="b"/>
+    <xs:attributeGroup name="a">
+        <xs:attribute ref="a"/>
+        <xs:attribute form="unqualified" name="b"/>
+        <xs:anyAttribute/>
+    </xs:attributeGroup>
+    <xs:group name="a">
+        <xs:choice>
+            <xs:element form="unqualified" name="c"/>
+            <xs:element ref="b"/>
+        </xs:choice>
+    </xs:group>
+    <xs:element name="a" type="xs:string"/>
+    <xs:element name="b"/>
+    <xs:element name="c">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element form="unqualified" name="e"/>
+                <xs:element form="unqualified" name="f"/>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:key name="a">
+            <xs:selector xpath="./e"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+        <xs:keyref name="b" refer="a">
+            <xs:selector xpath="./f"/>
+            <xs:field xpath="@idref"/>
+        </xs:keyref>
+    </xs:element>
+    <xs:element name="x" substitutionGroup="a"/>
+    <xs:element name="y" substitutionGroup="a"/>
+</xs:schema>
+

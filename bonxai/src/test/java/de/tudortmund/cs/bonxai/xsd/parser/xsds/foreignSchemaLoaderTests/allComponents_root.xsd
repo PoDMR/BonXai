@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="allComponents_branchOne.xsd"/>
+
+    <xs:complexType name="newTypeOne">
+        <xs:choice>
+            <xs:element ref="elementOne"/>
+            <xs:group ref="group"/>
+        </xs:choice>
+        <xs:attributeGroup ref="attributeGroup"/>
+        <xs:attribute ref="attributeOne"/>
+    </xs:complexType>
+
+    <xs:complexType name="newTypeTwo">
+        <xs:complexContent>
+            <xs:extension base="complexType">
+                <xs:choice>
+                    <xs:element name="ElementFour">
+                        <xs:keyref refer="key" name="keyrefTwo">
+                            <xs:selector xpath="*"/>
+                            <xs:field xpath="*"/>
+                        </xs:keyref>
+                    </xs:element>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

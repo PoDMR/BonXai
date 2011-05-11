@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.A.org"
+    xmlns:A="www.A.org">
+
+    <!-- Eine Choice wird mit einer Sequence und einem AllPattern vereinigt -->
+    <xs:element name="c">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="c3"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Eine Choice wird mit einer Sequence und einem AllPattern vereinigt aber mit Min- und MaxOccurs -->
+    <xs:element name="d">
+        <xs:complexType>
+            <xs:sequence minOccurs="10" maxOccurs="10">
+                <xs:element name="d3"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

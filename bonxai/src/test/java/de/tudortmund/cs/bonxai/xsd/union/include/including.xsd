@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.example.org" attributeFormDefault="qualified" elementFormDefault="qualified"
+    blockDefault="restriction substitution" finalDefault="extension list" xmlns:ex="www.example.org">
+
+    <xs:include schemaLocation="included.xsd"/>
+
+    <xs:complexType name="foo">
+        <xs:choice>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element ref="ex:family" />
+        </xs:choice>
+        <xs:attribute name="moo"/>
+    </xs:complexType>
+
+    <xs:element name="bar" type="ex:foo"/>
+
+</xs:schema>

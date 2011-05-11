@@ -1,0 +1,20 @@
+default namespace http://example.com/ns
+namespace some = http://example.com/some
+namespace xsd = http://www.w3.org/2001/XMLSchema
+
+groups {
+}
+
+grammar {
+    //foo = {
+        empty
+    }
+    (//bar)*/some:baz = {
+        attribute some:thing { xsd:int }?,
+        xsd:string default "nothing"
+    }
+}
+
+constraints {
+}
+

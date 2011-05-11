@@ -1,0 +1,29 @@
+<schema targetNamespace="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/2001/XMLSchema">
+
+  <element name="root">
+    <complexType>
+      <sequence>
+        <element name="AAA" type="myAAA"/>
+        <element name="BBB" type="myBBB"/>
+      </sequence>
+    </complexType>
+    <unique name="myId" id="id">
+      <selector xpath="./AAA/a"/>
+      <field xpath="@id"/>
+      <field xpath="@other"/>
+	<annotation>
+        <documentation xml:lang="en">
+        Report schema for Example.com
+        Copyright 2000 Example.com. All rights reserved.
+        </documentation>
+      </annotation>
+	<annotation>
+        <documentation xml:lang="en">
+        Report schema for Example.com
+        Copyright 2000 Example.com. All rights reserved.
+        </documentation>
+      </annotation>
+    </unique>
+  </element> 
+
+</schema>

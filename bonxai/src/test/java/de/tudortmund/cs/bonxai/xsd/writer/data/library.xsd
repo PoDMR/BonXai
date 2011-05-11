@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns="http://www.example.org/books" xmlns:lib="http://www.example.org/library" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="myxml.xsd"/>
+    <xs:include schemaLocation="character.xsd"/>
+    <xs:redefine schemaLocation="character12.xsd">
+        <xs:simpleType name="nameType">
+            <xs:restriction base="xs:string">
+                <xs:maxLength fixed="false" value="40"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:redefine>
+    <xs:simpleType name="isbn">
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base="xs:NMToken">
+                    <xs:enumeration value="TBD"/>
+                    <xs:enumeration value="NA"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[0-9]{10}"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+    <xs:complexType mixed="true" name="descType">
+        <xs:sequence>
+            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/1999/xhtml" processContents="skip"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType final="#all" name="characterType">
+        <xs:sequence>
+            <xs:group ref="nameTypes"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="friend-of"/>
+            <xs:element name="since" type="lib:sinceType"/>
+            <xs:element name="qualification" type="descType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="bookType">
+        <xs:complexContent>
+            <xs:extension base="lib:bookType">
+                <xs:all>
+                    <xs:element name="title">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute ref="xml:lang"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="author" type="xs:string"/>
+                    <xs:element minOccurs="0" name="character" type="characterType"/>
+                </xs:all>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:attributeGroup name="bookAttributes">
+        <xs:attribute name="isbn" type="isbn" use="required"/>
+        <xs:attribute name="available" type="xs:string" use="optional"/>
+    </xs:attributeGroup>
+    <xs:group name="nameTypes">
+        <xs:choice>
+            <xs:element name="name" type="xs:string"/>
+            <xs:sequence>
+                <xs:element name="firstName" type="xs:string"/>
+                <xs:element minOccurs="0" name="middleName" type="xs:string"/>
+                <xs:element name="lastName" type="xs:string"/>
+            </xs:sequence>
+        </xs:choice>
+    </xs:group>
+    <xs:element name="book" type="bookType">
+        <xs:key name="charName">
+            <xs:selector xpath="character"/>
+            <xs:field xpath="name"/>
+        </xs:key>
+        <xs:keyref name="charNameRef" refer="charName">
+            <xs:selector xpath="character"/>
+            <xs:field xpath="friend-of"/>
+        </xs:keyref>
+    </xs:element>
+</xs:schema>

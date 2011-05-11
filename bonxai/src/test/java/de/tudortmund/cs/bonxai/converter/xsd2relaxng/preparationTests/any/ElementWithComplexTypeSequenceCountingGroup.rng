@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="">
+    <start>
+        <ref name="e_testElement"/>
+    </start>
+    <define name="e_testElement">
+        <element name="testElement" ns="">
+            <group>
+                <element name="bla" ns="">
+                    <ref name="anyType"/>
+                </element>
+                <element name="bla" ns="">
+                    <ref name="anyType"/>
+                </element>
+                <optional>
+                    <element name="bla" ns="">
+                        <ref name="anyType"/>
+                    </element>
+                </optional>
+            </group>
+            <ref name="g_groupy"/>
+        </element>
+    </define>
+    <define name="anyType">
+        <zeroOrMore>
+            <choice>
+                <element>
+                    <anyName/>
+                    <ref name="anyType"/>
+                </element>
+                <text/>
+                <attribute>
+                    <anyName/>
+                </attribute>
+            </choice>
+        </zeroOrMore>
+    </define>
+    <define name="g_groupy">
+        <group>
+            <choice>
+                <element name="lala" ns="">
+                    <ref name="anyType"/>
+                </element>
+                <group>
+                    <element name="blob" ns="">
+                        <ref name="t_hoi"/>
+                        <mixed>
+                            <element name="myElement" ns="">
+                                <ref name="anyType"/>
+                            </element>
+                        </mixed>
+                    </element>
+                    <element name="blub" ns="">
+                        <ref name="anyType"/>
+                    </element>
+                </group>
+            </choice>
+        </group>
+    </define>
+    <define name="t_hoi">
+        <mixed>
+            <group>
+                <element name="oneMoreElement" ns="">
+                    <ref name="anyType"/>
+                </element>
+                <optional>
+                    <attribute name="test" ns="">
+                        <choice>
+                            <value type="string">5</value>
+                            <value type="string">8</value>
+                        </choice>
+                    </attribute>
+                </optional>
+                <ref name="a_globalAttr"/>
+            </group>
+        </mixed>
+    </define>
+    <define name="a_globalAttr">
+        <optional>
+            <attribute name="globalAttr" ns="">
+                <data type="ID"/>
+            </attribute>
+        </optional>
+    </define>
+</grammar>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="A" xmlns:A="A"
+  elementFormDefault="qualified" finalDefault="extension restriction" blockDefault="substitution">
+
+  <xs:element name="elementA" type="A:complexTypeA"/>
+
+  <xs:attribute name="attributeA" type="xs:string"/>
+
+  <xs:attribute name="attributeB" type="xs:string"/>
+
+  <xs:complexType name="complexTypeA">
+    <xs:choice>
+      <xs:element name="elementB" type="A:complexTypeB" form="unqualified"/>
+      <xs:element name="elementC" type="A:complexTypeC"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="complexTypeB">
+    <xs:sequence>
+      <xs:element name="elementD" type="xs:string" form="unqualified"/>
+      <xs:element name="elementE" type="xs:integer" form="unqualified"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="complexTypeC">
+    <xs:choice>
+      <xs:element name="elementC" type="A:complexTypeC"/>
+    </xs:choice>
+  </xs:complexType>
+
+</xs:schema>

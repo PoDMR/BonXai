@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+    <include href="namespaces.rng">
+        <start>
+            <element name="start">
+                <ref name="blub"/>
+            </element>
+        </start>
+        <element/>
+        <define name="bla">
+            <text/>
+        </define>
+    </include>
+    <define name="blub">
+        <empty/>
+    </define>
+</grammar>

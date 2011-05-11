@@ -1,0 +1,25 @@
+plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.name=FltPlugin
+plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.author=TUDO
+plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.version=1.0.0
+plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.activate=startup #defer
+plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.description=FLT plugin
+plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.longdescription=description.html
+
+# Dependencies
+plugin.eu.fox7.jeditfltplugin.FltPluginPlugin.depend.0=jdk 1.6
+plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.depend.1=jedit 04.03.09.00
+#plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.depend.2=plugin jakartacommons.JakartaCommonsPlugin 0.2
+#plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.depend.2=optional plugin archive.ArchivePlugin 0.2
+#plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.jars=commons-lang-2.4.jar commons-math-1.2.jar commons-cli-1.2.jar commons-jxpath-1.3.jar jaxen-1.1.1.jar dom4j-1.6.1.jar collections-generic-4.01.jar jama-1.0.0.jar flt-utilities-1.0-SNAPSHOT.jar flt-core-1.0-SNAPSHOT.jar flt-learning-1.0-SNAPSHOT.jar
+
+# Option pane
+#plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.option-pane=eu.fox7
+#options.eu.fox7.jedit.fltplugin.code = new eu.fox7.jedit.FltOptionPane();
+#options.eu.fox7.jedit.fltplugin.title=Bonxai
+#options.eu.fox7.jedit.fltplugin.label=Bonxai
+
+# Action labels
+plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.browser-menu=action.chare action.sore action.xsd
+action.chare.label=CHARE Inference
+action.sore.label=SORE Inference
+action.xsd.label=XSD Inference

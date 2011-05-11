@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+    <xs:element name="elementRoot" type="typeA">
+        
+    </xs:element>
+
+    <xs:complexType name="typeA">
+        <xs:all>
+            <xs:element name="A"/>
+            <xs:group ref="groupOne"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:group name="groupOne">
+        <xs:all>
+            <xs:element name="B"/> 
+            <xs:element name="C"/>
+            <xs:element name="D"/>
+        </xs:all>
+    </xs:group>
+
+    <xs:group name="groupTwo">
+        <xs:sequence>
+            <xs:element name="C"/>
+            <xs:element name="D"/>
+        </xs:sequence>
+    </xs:group>
+
+ </xs:schema>

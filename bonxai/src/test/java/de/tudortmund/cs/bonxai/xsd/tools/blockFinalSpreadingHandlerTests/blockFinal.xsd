@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" blockDefault="extension" finalDefault="#all">
+
+    <xs:element name="order" type="ordertype"/>
+
+    <xs:complexType name="ordertype">
+        <xs:choice>
+            <xs:element name="temp"/>
+            <xs:group ref="custGroup"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:group name="custGroup">
+        <xs:sequence>
+            <xs:element name="customer" type="xs:string" block="substitution" />
+            <xs:choice>
+                <xs:element name="customer" type="xs:string" minOccurs="2"
+                    maxOccurs="3"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:group>
+
+</xs:schema>

@@ -1,0 +1,14 @@
+namespace \name1 = http://example.org/namespace1
+default namespace http://example.org/namespace2
+datatypes name2 = http://example.org/namespace3
+import http://example.org/namespace4 = http://www.w3.org/XML/1998/namespace
+
+groups{
+	group group1 = element bazz
+}
+
+grammar{
+	//root ={
+		element node1{Type fixed "\_name" }? & group group1? & lax element* [543,667] {_Namespaces1,Namespace2}
+	}
+}

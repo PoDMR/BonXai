@@ -1,0 +1,11 @@
+default namespace http://example.com/ns
+
+groups {
+}
+
+grammar {
+}
+
+constraints {
+}
+

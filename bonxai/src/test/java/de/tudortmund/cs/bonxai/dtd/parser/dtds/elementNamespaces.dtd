@@ -1,0 +1,10 @@
+<!ELEMENT snake (zoo:elephant|(safari:lion, aquarium:shark))>
+
+<!ATTLIST snake length CDATA #REQUIRED>
+<!ATTLIST snake safari:color CDATA #REQUIRED>
+<!ATTLIST snake xs:name CDATA #IMPLIED>
+
+<!ELEMENT zoo:elephant EMPTY >
+<!ATTLIST zoo:elephant size CDATA #IMPLIED>
+
+<!ELEMENT safari:lion (zoo:elephant)+ >

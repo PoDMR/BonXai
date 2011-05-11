@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.Y.org"
+    xmlns:Y="www.Y.org">
+
+    <xs:element name="a" type="Y:a"/>
+
+    <xs:element name="b" type="xs:string" abstract="true"/>
+
+    <xs:element name="b.2" substitutionGroup="Y:b" block="restriction"/>
+
+    <xs:element name="d">
+        <xs:complexType>
+            <xs:anyAttribute/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="a">
+        <xs:choice>
+            <xs:element ref="Y:b" maxOccurs="10"/>
+        </xs:choice>
+    </xs:complexType>
+
+</xs:schema>

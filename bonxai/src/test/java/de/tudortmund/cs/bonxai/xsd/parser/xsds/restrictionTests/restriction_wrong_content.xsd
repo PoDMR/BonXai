@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.example.org" xmlns="http://www.example.org" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:simpleType name="DressSizeTypeOne">
+    <xs:restriction base="xs:integer" id="idOne">
+    	<xs:annotation>
+	  		<xs:documentation>
+	      	a restriction
+	  		</xs:documentation>
+	  	</xs:annotation>
+      <xs:minInclusive value="12"/>
+      <xs:maxInclusive value="14"/>
+      <xs:pattern value="\d{2}"/>
+      <xs:enumeration value="12"/>
+      <xs:complexType />
+      <xs:enumeration value="13"/>
+      <xs:enumeration value="14"/>
+      <xs:whiteSpace value="collapse"/>
+      <xs:fractionDigits value="0"/>
+      <xs:totalDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

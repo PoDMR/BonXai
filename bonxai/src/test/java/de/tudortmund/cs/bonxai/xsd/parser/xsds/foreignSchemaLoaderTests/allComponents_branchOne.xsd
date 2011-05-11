@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:attribute name="attributeOne"/>
+
+    <xs:attributeGroup name="attributeGroup">
+        <xs:attribute name="attributeTwo"/>
+    </xs:attributeGroup>
+
+    <xs:group name="group">
+        <xs:choice>
+            <xs:element name="elementThree"/>
+        </xs:choice>
+    </xs:group>
+
+    <xs:complexType name="complexType">
+        <xs:choice>
+            <xs:element name="elementTwo"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:element name="elementOne">
+        <xs:key name="key">
+            <xs:selector xpath="*"/>
+            <xs:field xpath="*"/>
+        </xs:key>
+        <xs:keyref refer="key" name="keyrefOne">
+            <xs:selector xpath="*"/>
+            <xs:field xpath="*"/>
+        </xs:keyref>
+    </xs:element>
+
+</xs:schema>

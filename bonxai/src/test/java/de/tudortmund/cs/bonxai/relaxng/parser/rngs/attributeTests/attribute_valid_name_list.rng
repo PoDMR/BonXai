@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:html="http://www.w3.org/1999/xhtml"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://docbook.org/ns/docbook">
+    <start combine="choice">
+        <element name="foo">
+            <attribute ns="http://www.example.org">
+                <name>temp</name>
+                <list><value>bla</value></list>
+            </attribute>
+        </element>
+    </start>
+</grammar>

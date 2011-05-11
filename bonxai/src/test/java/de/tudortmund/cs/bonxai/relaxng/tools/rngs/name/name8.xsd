@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:b="http://example.org">
+  <xs:import namespace="http://example.org" schemaLocation="b.xsd"/>
+  <xs:element name="outer">
+    <xs:complexType>
+      <xs:choice>
+        <xs:group ref="b:local"/>
+        <xs:any namespace="##local" processContents="skip"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

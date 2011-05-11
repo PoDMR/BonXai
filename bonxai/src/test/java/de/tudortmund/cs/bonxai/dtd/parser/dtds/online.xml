@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+<!DOCTYPE test SYSTEM "http://www.terminologyintheclouds.net/GeneterMemoTermStrict_V01.dtd">
+<test/> <!-- NullPointerException in SAX Parser, when there is no root-XML-Element -->

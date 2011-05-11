@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element name="bob" xmlns="http://relaxng.org/ns/structure/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <grammar>
+        <start>
+            <choice>
+                <ref name="data"/>
+            </choice>
+        </start>
+        <define name="data">
+            <data type="integer"/>
+        </define>
+    </grammar>
+</element>

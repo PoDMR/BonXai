@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+    <start>
+        <element name="root" xmlns="http://relaxng.org/ns/structure/1.0"
+            datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+            <choice>
+                <ref name="def1"/>
+            </choice>
+        </element>
+    </start>
+    <define name="def1">
+        <choice>
+            <attribute name="a1">
+                <value>4</value>
+            </attribute>
+            <oneOrMore>
+                <attribute>
+                    <anyName/>
+                </attribute>
+            </oneOrMore>
+        </choice>
+    </define>
+</grammar>

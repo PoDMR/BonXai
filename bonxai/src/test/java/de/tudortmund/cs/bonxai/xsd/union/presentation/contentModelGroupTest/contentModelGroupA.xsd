@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.A.org"
+    xmlns:A="www.A.org">
+
+    <!-- Choice hat in allen Schemata die gleiche ID -->
+    <xs:element name="a">
+        <xs:complexType>
+            <xs:choice id="a">
+                <xs:element name="a"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Choice hat in verschiedenen Schemata verschiedene IDs -->
+    <xs:element name="b">
+        <xs:complexType>
+            <xs:sequence id="b">
+                <xs:element name="b"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ================================================================================ -->
+
+    <!-- Eine Choice wird mit einer Sequence und einem AllPattern vereinigt -->
+    <xs:element name="c">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="c"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Eine Choice wird mit einer Sequence und einem AllPattern vereinigt aber mit Min- und MaxOccurs -->
+    <xs:element name="d">
+        <xs:complexType>
+            <xs:choice minOccurs="10" maxOccurs="10">
+                <xs:element name="d"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ================================================================================ -->
+
+    <!-- All wird mit leerem Content vereinigt -->
+    <xs:element name="e">
+        <xs:complexType>
+            <xs:all minOccurs="0" maxOccurs="1">
+                <xs:element name="e" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="A:f" minOccurs="0" maxOccurs="1"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="f"/>
+
+    <!-- All wird mit Sequence vereinigt -->
+    <xs:element name="g">
+        <xs:complexType>
+            <xs:all minOccurs="0" maxOccurs="1">
+                <xs:element name="g" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="A:h" minOccurs="0" maxOccurs="1"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="h"/>
+
+    <!-- All wird mit Sequence vereinigt und Element j wird ebenfalls vereinigt -->
+    <xs:element name="i">
+        <xs:complexType>
+            <xs:all minOccurs="0" maxOccurs="1">
+                <xs:element name="i" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="A:j" minOccurs="0" maxOccurs="1"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="j" type="xs:token"/>
+
+    <!-- ================================================================================ -->
+
+    <xs:group name="a">
+        <xs:choice>
+            <xs:element name="k" type="xs:string"/>
+            <xs:element name="l" type="xs:string"/>
+        </xs:choice>
+    </xs:group>
+
+    <!-- Elemente innerhalb des Contents schneiden sich nicht -->
+    <xs:element name="m">
+        <xs:complexType>
+            <xs:choice>
+                <xs:group ref="A:a"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Elemente innerhalb des Contents schneiden sich aber Typen verändern sich nicht -->
+    <xs:element name="n">
+        <xs:complexType>
+            <xs:choice>
+                <xs:group ref="A:a"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Elemente innerhalb des Contents schneiden sich und wechseln Typen -->
+    <xs:element name="o">
+        <xs:complexType>
+            <xs:choice>
+                <xs:group ref="A:a"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

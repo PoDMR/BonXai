@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.A.org"
+    xmlns:A="www.A.org">
+
+    <!-- Vereinigung von drei verschiedenen SimpleTypes "xs:unsignedByte xs:time xs:NCName" -->
+    <xs:element name="a" type="xs:unsignedByte"/>
+
+    <!-- Vereinigung von zwei "xs:string" Typen mit einem nicht vorhandenen Typen, standardgemäß ein xs:anyType -->
+    <xs:element name="b" type="xs:string"/>
+
+    <!-- Vereinigung von drei "xs:string" Typen -->
+    <xs:element name="c" type="xs:string"/>
+
+    <!-- ======================================================================================================= -->
+
+    <!-- Vereinigung von drei verschiedenen SimpleTypes, jeder mit einer eigenen Content -->
+    <xs:simpleType name="smallInteger">
+        <xs:restriction base="xs:integer">
+            <xs:maxInclusive value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="d" type="A:smallInteger"/>
+
+    <!-- Gleiche Vereinigung wie oben, allerdings ist ein Type ein xs:anyType -->
+    <xs:element name="e"/>
+
+    <!-- ======================================================================================================= -->
+
+    <!-- ComplexType hat in allen Schemata die gleiche ID -->
+    <xs:element name="f">
+        <xs:complexType id="a"/>
+    </xs:element>
+
+    <!-- ComplexType hat in verschiedenen Schemata verchiedene IDs -->
+    <xs:element name="g">
+        <xs:complexType id="b"/>
+    </xs:element>
+
+    <!-- ======================================================================================================= -->
+
+    <!-- ComplexType h ist in allen Schemata abstract -->
+    <xs:element name="h" type="A:h"/>
+    <xs:complexType name="h" abstract="true"/>
+
+    <!-- ComplexType i ist nicht in allen Schemata abstract -->
+    <xs:element name="i" type="A:i"/>
+    <xs:complexType name="i" abstract="false"/>
+
+    <!-- ======================================================================================================= -->
+
+    <!-- ComplexType ist in allen Schemata mixed -->
+    <xs:element name="j">
+        <xs:complexType mixed="true"/>
+    </xs:element>
+
+    <!-- ComplexType ist nicht in allen Schemata mixed -->
+    <xs:element name="k">
+        <xs:complexType mixed="false"/>
+    </xs:element>
+    <!-- ======================================================================================================= -->
+
+    <!-- ComplexType l hat in allen Schemata final Wert #all -->
+    <xs:element name="l" type="A:l"/>
+    <xs:complexType name="l" final="#all"/>
+
+    <!-- ComplexType m hat in anderen Schemata final Wert #all -->
+    <xs:element name="m" type="A:m"/>
+    <xs:complexType name="m" final="extension restriction"/>
+
+    <!-- ComplexType n hat in anderen Schemata final Wert extension -->
+    <xs:element name="n" type="A:n"/>
+    <xs:complexType name="n" final="restriction"/>
+
+    <!-- ======================================================================================================= -->
+
+    <!-- ComplexType o hat in allen Schemata block Wert #all -->
+    <xs:element name="o" type="A:o"/>
+    <xs:complexType name="o" block="#all"/>
+
+    <!-- ComplexType l hat in allen Schemata block Wert #all -->
+    <xs:element name="p" type="A:p"/>
+    <xs:complexType name="p" block="extension restriction"/>
+
+    <!-- ComplexType l hat in allen Schemata block Wert restriction -->
+    <xs:element name="q" type="A:q"/>
+    <xs:complexType name="q" block="extension"/>
+
+    <!-- ======================================================================================================= -->
+
+    <!-- Vereinigung von simpleType und complexType mit Elementen -->
+    <xs:element name="r" type="A:r"/>
+    <xs:complexType name="r">
+        <xs:choice>
+            <xs:element name="r"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <!-- Vereinigung von simpleType und complexType ohne Elementen -->
+    <xs:element name="s" type="A:s"/>
+    <xs:complexType name="s">
+        <xs:attribute name="s"/>
+    </xs:complexType>
+
+    <!-- Vereinigung von simpleType und complexType mit SimpleContent -->
+    <xs:element name="t" type="A:t"/>
+    <xs:complexType name="t">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="t"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- Vereinigung von zwei ComplexTypes mit SimpleContent -->
+    <xs:element name="v" type="A:v"/>
+    <xs:complexType name="v">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="v"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- Vereinigung von zwei ComplexTypes -->
+    <xs:element name="w" type="A:w"/>
+    <xs:complexType name="w">
+        <xs:choice>
+            <xs:element name="w"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <!-- Vereinigung von ComplexType mit SimpleContent und ComplexContent ohne Elemente-->
+    <xs:element name="x" type="A:x"/>
+    <xs:complexType name="x">
+        <xs:attribute name="x"/>
+    </xs:complexType>
+
+    <!-- Vereinigung von ComplexType mit SimpleContent und ComplexContent mit Elementen-->
+    <xs:element name="y" type="A:y"/>
+    <xs:complexType name="y">
+        <xs:choice>
+            <xs:element name="y"/>
+        </xs:choice>
+    </xs:complexType>
+
+</xs:schema>

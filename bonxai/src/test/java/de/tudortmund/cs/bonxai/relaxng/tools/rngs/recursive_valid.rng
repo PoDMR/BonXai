@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <ref name="a"/>
+    </start>
+    <define name="a">
+        <element name="a">
+            <ref name="b"/>
+        </element>
+    </define>
+    <define name="b">
+        <element name="b">
+            <choice>
+                <oneOrMore>
+                    <ref name="b"/>
+                </oneOrMore>
+                <ref name="c"/>
+            </choice>
+        </element>
+    </define>
+    <define name="c">
+        <element name="c">
+            <empty/>
+        </element>
+    </define>
+</grammar>

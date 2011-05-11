@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element xmlns="http://relaxng.org/ns/structure/1.0" name="root">
+  <grammar>
+    <start combine="choice">
+      <grammar>
+        <start>
+          <parentRef name="ref"/>
+        </start>
+      </grammar>
+    </start>
+    <start>
+      <grammar>
+        <start>
+          <parentRef name="ref"/>
+        </start>
+      </grammar>
+    </start>
+    <define name="ref">
+      <element name="bob">
+        <empty/>
+      </element>
+    </define>
+  </grammar>
+</element>

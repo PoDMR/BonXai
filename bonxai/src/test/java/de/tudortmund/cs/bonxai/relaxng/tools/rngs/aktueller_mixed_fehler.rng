@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <element name="start">
+            <ref name="defB"/>
+            <ref name="defC"/>
+        </element>
+    </start>
+
+    <define name="defA">
+        <element name="a">
+            <text/>
+        </element>
+    </define>
+
+    <define name="defB">
+        <element name="b">
+            <ref name="defA"/>
+        </element>
+    </define>
+    
+    <define name="defC">
+        <element name="c">
+            <ref name="defA"/>
+        </element>
+    </define>
+    
+</grammar>

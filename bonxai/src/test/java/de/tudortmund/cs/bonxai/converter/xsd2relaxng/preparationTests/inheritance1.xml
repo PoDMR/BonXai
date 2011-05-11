@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:c xmlns:ns1="www.A.org"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="www.A.org file:/Users/larsschmidt/SVN/da/Java/PG/upslution/trunk/tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/preparationTests/inheritance.xsd">
+    <inner_b>
+    </inner_b>
+</ns1:c>

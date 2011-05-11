@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.example3.org" xmlns:test="www.example3.org" xmlns:base="www.example2.org">
+    
+    
+    <xs:include schemaLocation="test.xsd"/>
+    
+    <xs:import namespace="www.example2.org" schemaLocation="base.xsd"/>
+    
+    <xs:element name="bar" type="base:foo"></xs:element>
+    
+    <xs:complexType name="merlars">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:anyAttribute/>
+            </xs:extension>
+        </xs:simpleContent>
+        
+    </xs:complexType>
+    
+    
+</xs:schema>

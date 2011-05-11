@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:html="http://www.w3.org/1999/xhtml" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://docbook.org/ns/docbook">
+    <start combine="choice">
+        <element>
+            <nsName ns="http://www.example.org">
+                <except><name>test</name></except>
+            </nsName>
+            <attribute ns="http://www.example.org" name="temp">
+                <empty/>
+            </attribute>
+        </element>
+    </start>
+</grammar>

@@ -1,0 +1,11 @@
+<schema targetNamespace="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/2001/XMLSchema">
+ 
+  <element name="shipment">
+    <complexType>
+      <all minOccurs="-6" id="all" >
+        <element name="order" type="string" />
+      </all >
+    </complexType>
+  </element>
+
+</schema>

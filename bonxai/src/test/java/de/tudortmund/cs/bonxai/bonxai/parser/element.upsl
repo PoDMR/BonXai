@@ -1,0 +1,8 @@
+groups{
+	group group1 = element elem1
+}
+grammar{
+	//root ={
+		element node1? & group group1? & strict element* { N }
+	}
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="A" xmlns:A="A">
+
+    <xs:element name="elementA" type="A:complexTypeA"/>
+
+    <xs:element name="elementC" type="A:complexTypeD"/>
+
+    <xs:group name="groupA">
+        <xs:sequence>
+            <xs:element name="elementB" type="A:complexTypeC"/>
+            <xs:element ref="A:elementC"/>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:complexType name="complexTypeA">
+        <xs:choice>
+            <xs:element name="elementA" type="A:complexTypeB"/>
+            <xs:group ref="A:groupA"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="complexTypeB">
+        <xs:sequence>
+            <xs:element name="elementC" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="complexTypeC">
+        <xs:choice>
+            <xs:element name="elementA" type="A:complexTypeB"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="complexTypeD">
+        <xs:choice>
+            <xs:any/>
+        </xs:choice>
+    </xs:complexType>
+
+</xs:schema>

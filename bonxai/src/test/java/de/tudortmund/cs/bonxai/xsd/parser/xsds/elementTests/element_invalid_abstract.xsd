@@ -1,0 +1,5 @@
+<schema targetNamespace="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/2001/XMLSchema">
+
+  <element name="comment" id="id" type="string" abstract="something" />
+
+</schema>

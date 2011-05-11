@@ -1,0 +1,13 @@
+default namespace http://example.com/ns
+dataTypes bar = http://example.com/barTypes
+dataTypes foo = http://example.com/fooTypes
+
+groups {
+}
+
+grammar {
+}
+
+constraints {
+}
+

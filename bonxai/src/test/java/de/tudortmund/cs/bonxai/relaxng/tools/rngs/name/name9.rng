@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:a="http://www.example.org/ns1"
+    xmlns:b="http://www.example.org/ns2" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <element name="outer">
+            <element>
+                <choice>
+                    <anyName>
+                        <except>
+                            <choice>
+                                <name xmlns:b="http://www.example.org/ns">b:bob</name>
+                                <name>test3</name>
+                                <nsName ns="http://www.example.org/ns2">
+                                    <except>
+                                        <name>test4</name>
+                                        <choice>
+                                            <name>test5</name>
+                                            <name>test6</name>
+                                        </choice>
+                                    </except>
+                                </nsName>
+                                <choice>
+                                    <name xmlns:b="http://www.example.org/ns">b:blub</name>
+                                    <name xmlns:b="http://www.example.org/ns2">b:blab</name>
+                                </choice>
+                            </choice>
+                        </except>
+                    </anyName>
+                    <name>test</name>
+                    <choice>
+                        <name>test2</name>
+                    </choice>
+                    <anyName/>
+                </choice>
+                <choice>
+                    <attribute name="b:blub"/>
+                    <text/>
+                </choice>
+            </element>
+        </element>
+    </start>
+</grammar>

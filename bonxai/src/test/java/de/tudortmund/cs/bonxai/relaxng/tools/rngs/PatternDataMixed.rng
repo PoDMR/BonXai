@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <element name="a:bob">
+            <mixed>
+                <element name="a:blub" xmlns:a="http://test1.org/">
+                    <empty/>
+                </element>
+            </mixed>
+            <element name="AAA" xmlns:a="http://test2.org/">
+                <choice>
+                    <text/>
+                    <element name="a:BBB">
+                        <text/>
+                    </element>
+                </choice>
+            </element>
+        </element>
+    </start>
+</grammar>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <element>
+            <choice>
+            <name>alice</name>
+            </choice>
+            <ref name="rec"/>
+            <ref name="rec2"/>
+        </element>
+    </start>
+    <define name="rec">
+        <element name="daniel">
+            <ref name="rec"/>
+            <element>
+                <choice>
+                    <name>bob</name>
+                    <name>carl</name>
+                </choice>
+                <attribute name="sd"/>
+                <ref name="rec"></ref>
+            </element>
+        </element>
+    </define>
+    <define name="rec2">
+        <element name="daniel">
+            <element>
+                <choice>
+                    <name>egon</name>
+                </choice>
+                <ref name="rec2"></ref>
+            </element>
+        </element>
+    </define>
+</grammar>
+

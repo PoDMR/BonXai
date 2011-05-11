@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:html="http://www.w3.org/1999/xhtml" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://docbook.org/ns/docbook">
+  <start>
+    <element>
+      <anyName>
+        <except>
+          <nsName/>
+          <nsName ns=""/>
+        </except>
+        <except>
+          <nsName/>
+          <nsName ns=""/>
+        </except>
+      </anyName>
+      <empty/>
+    </element>
+  </start>
+</grammar>

@@ -1,0 +1,38 @@
+<xs:schema targetNamespace="http://example.org/" xmlns="http://example.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:air="http://www.air.org">
+
+<xs:element name="person" type="air:personinfo"/>
+
+<xs:element name="female_employee" type="fullpersoninfo" substitutionGroup="person"/>
+
+<xs:element name="male_employee" type="superpersoninfo" substitutionGroup="person"/>
+
+<xs:complexType name="personinfo">
+  <xs:choice>
+    <xs:element name="firstname" type="xs:string"/>
+    <xs:element name="lastname" type="xs:string"/>
+  </xs:choice>
+</xs:complexType>
+
+<xs:complexType name="fullpersoninfo">
+  <xs:complexContent>
+    <xs:extension base="personinfo">
+      <xs:sequence>
+        <xs:element name="female_employee" type="xs:string"/>
+        <xs:element name="country" type="xs:string"/>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType> 
+
+<xs:complexType name="superpersoninfo">
+  <xs:complexContent>
+    <xs:extension base="fullpersoninfo">
+      <xs:choice>
+        <xs:element ref="person"/>
+        <xs:element ref="air:firstname"/>
+      </xs:choice>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType> 
+
+</xs:schema>

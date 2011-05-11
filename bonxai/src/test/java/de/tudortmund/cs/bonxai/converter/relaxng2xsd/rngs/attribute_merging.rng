@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element name="a" xmlns="http://relaxng.org/ns/structure/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <choice>
+        <attribute name="lang">
+            <data type="NMTOKEN"/>
+        </attribute>
+        <attribute name="lang">
+            <value>87</value>
+        </attribute>
+        <optional>
+            <attribute name="lang">
+                <data type="integer"/>
+            </attribute>
+        </optional>
+    </choice>
+</element>

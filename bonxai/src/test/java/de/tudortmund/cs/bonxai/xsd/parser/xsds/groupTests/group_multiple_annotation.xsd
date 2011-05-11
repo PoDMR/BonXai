@@ -1,0 +1,36 @@
+<schema targetNamespace="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/2001/XMLSchema">
+
+  <group name="first"  id="first">
+    <all>
+      <element name="shipTo" type="USAddress"/>
+      <element name="billTo" type="USAddress"/>
+    </all>
+  </group>
+
+  <group name="second"  id="second">
+    <choice>
+      <element name="shipTo" type="USAddress"/>
+      <element name="billTo" type="USAddress"/>
+    </choice>
+  </group>
+
+  <group name="third"  id="third">	
+    <sequence>
+      <element name="shipTo" type="USAddress"/>
+      <element name="billTo" type="USAddress"/>
+    </sequence>
+    <annotation>
+      <documentation xml:lang="en">
+      Report schema for Example.com
+      Copyright 2000 Example.com. All rights reserved.
+      </documentation>
+    </annotation>
+    <annotation>
+      <documentation xml:lang="en">
+      Report schema for Example.com
+      Copyright 2000 Example.com. All rights reserved.
+      </documentation>
+    </annotation>
+  </group>
+
+</schema>

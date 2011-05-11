@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+    <xs:element name="root" type="test"/>
+
+    <xs:complexType name="test">
+        <xs:all>
+            <xs:element name="A"/>
+            <xs:element name="B"/>
+            <xs:element name="C"/>
+        </xs:all>
+    </xs:complexType>
+
+</xs:schema>

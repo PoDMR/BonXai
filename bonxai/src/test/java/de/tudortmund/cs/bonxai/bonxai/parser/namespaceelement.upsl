@@ -1,0 +1,33 @@
+default namespace http://example.com/ns
+namespace some = http://example.com/some
+namespace xsd = http://www.w3.org/2001/XMLSchema
+
+groups{
+	attribute-group xsd:attrgrp2 ={attribute attr2 { Typ default "blue"}}
+}
+
+grammar {
+    //foo = {
+        empty
+    }
+    (//bar)*/some:baz = {
+        attribute some:thing { xsd:int }?,
+        xsd:string default "nothing"
+    }
+	/some:fil/xsd:lif/some:baz = {
+			attribute-group xsd:attrgrp2,
+			attribute some:attr1 {
+				Type fixed "node1"
+			},
+			attribute attr2 {
+				Type default "node2"
+			}?,
+			empty
+	}
+	/lu = {
+		missing element some:element1 [ 123 , 234],
+		element xsd:element1 *,
+		element element2 + | element element3,
+		( element some:element4 )
+	}
+}

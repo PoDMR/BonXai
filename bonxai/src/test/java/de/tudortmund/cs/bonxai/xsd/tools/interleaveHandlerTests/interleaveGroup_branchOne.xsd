@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="B" xmlns:C="C" xmlns:B="B">
+ 
+   
+    <xs:element name="elementOne"/>
+    
+    <xs:group name="groupOne">
+        <xs:all>
+            <xs:element ref="B:elementOne"/> 
+            <xs:element name="elementOne2"/> 
+        </xs:all>
+    </xs:group>
+    
+</xs:schema>

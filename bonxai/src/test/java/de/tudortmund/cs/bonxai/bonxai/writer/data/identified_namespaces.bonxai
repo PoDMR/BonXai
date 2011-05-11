@@ -1,0 +1,13 @@
+default namespace http://example.com/ns
+namespace foo = http://example.com/foo
+namespace xsd = http://example.com/xsd
+
+groups {
+}
+
+grammar {
+}
+
+constraints {
+}
+

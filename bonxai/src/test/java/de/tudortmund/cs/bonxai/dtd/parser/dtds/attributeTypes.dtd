@@ -1,0 +1,186 @@
+<!ELEMENT root (#PCDATA)>
+<!ELEMENT note (#PCDATA|to|from|header|message)*>
+
+
+<!NOTATION test SYSTEM "">
+<!NOTATION foo SYSTEM "">
+
+<!ATTLIST myElement myAttribute1 CDATA "one">
+
+<!ATTLIST myElement myAttribute2 ENTITIES "one">
+
+<!ATTLIST myElement myAttribute3 ENTITY "one">
+
+<!ATTLIST myElement myAttribute4 (test|foo) "foo">
+
+<!ATTLIST myElement myAttribute5 ID "one">
+
+<!ATTLIST myElement myAttribute6 IDREF "one">
+
+<!ATTLIST myElement myAttribute7 IDREFS "one">
+
+<!ATTLIST myElement myAttribute8 NMTOKEN "one">
+
+<!ATTLIST myElement myAttribute9 NMTOKENS "one">
+
+<!ATTLIST myElement myAttribute10 NOTATION (test|foo) "foo">
+
+<!ATTLIST myElement myAttribute11 CDATA #FIXED "one">
+
+<!ATTLIST myElement myAttribute12 ENTITIES #IMPLIED>
+
+<!ATTLIST myElement myAttribute13 ID #REQUIRED>
+
+<!ELEMENT myElement (#PCDATA)*>
+
+<!ATTLIST myElement test14 ENTITY "value1">
+<!ATTLIST myElement test15 NMTOKEN "value2">
+
+<!ENTITY % p 'xs:'>
+<!ENTITY % all "%p;all">
+<!ENTITY % annotation "%p;annotation">
+<!ENTITY % element "%p;element">
+<!ENTITY % allAttrs ''>
+
+<!ELEMENT %all; ((%annotation;)?, (%element;)*)>
+<!ATTLIST %all;
+          minOccurs   (1)                    #IMPLIED
+          maxOccurs   (1)                    #IMPLIED
+          id          ID                     #IMPLIED
+          %allAttrs;>
+
+<!ELEMENT lars (hans)>
+<!ATTLIST lars
+          id          ID                     #IMPLIED>
+<!ELEMENT refclass (#PCDATA|hans)*>
+
+<!ATTLIST root type CDATA "check">
+<!ATTLIST root fax CDATA #IMPLIED>
+<!ATTLIST root number CDATA #REQUIRED>
+<!ATTLIST root company CDATA #FIXED "Microsoft">
+<!ATTLIST root type2 (check|cash) "cash">
+
+	<!ELEMENT meetings (meeting*)>
+
+	<!ELEMENT meeting EMPTY>
+	<!ATTLIST meeting
+		title CDATA #REQUIRED
+		day-of-week (Mo | 1Di | Mi | Do | Fr) #FIXED "Fr"
+	>
+
+<!ELEMENT square EMPTY>
+  <!ATTLIST square width CDATA "0">
+
+
+<!-- INCLUDE/IGNORE wird vom Parser bereits gemanaged -->
+
+<!ENTITY % draft 'INCLUDE' >
+<!ENTITY % final 'IGNORE' >
+
+<![%draft;[
+<!ELEMENT book (comments*, title, body, supplements?)>
+]]>
+<![%final;[
+<!ELEMENT book (title, body, supplements?)>
+]]>
+
+<!ELEMENT note (to,from,heading,body)>
+<!ELEMENT to ANY>
+<!ELEMENT from (#PCDATA)>
+<!ELEMENT heading (#PCDATA)>
+<!ELEMENT body (#PCDATA)>
+<!ELEMENT note (#PCDATA|to|from|header|message)*>
+
+<!ELEMENT TVSCHEDULE  (#PCDATA|a|ul|b|i|em)* >
+<!ELEMENT CHANNEL (BANNER, DAY+)>
+<!ELEMENT BANNER (#PCDATA)>
+<!ELEMENT DAY ((DATE, HOLIDAY) | (DATE, PROGRAMSLOT+))+>
+<!ELEMENT HOLIDAY (#PCDATA)>
+<!ELEMENT DATE (#PCDATA)>
+<!ELEMENT PROGRAMSLOT (TIME, TITLE, DESCRIPTION?)>
+<!ELEMENT TIME (#PCDATA)>
+<!ELEMENT TITLE (#PCDATA)>
+<!ELEMENT DESCRIPTION (#PCDATA)>
+
+<!ATTLIST TVSCHEDULE NAME CDATA #REQUIRED>
+<!ATTLIST CHANNEL CHAN CDATA #REQUIRED>
+<!ATTLIST PROGRAMSLOT VTR CDATA #IMPLIED>
+<!ATTLIST TITLE RATING CDATA #IMPLIED>
+<!ATTLIST TITLE LANGUAGE CDATA #IMPLIED>
+
+<!ENTITY xml "Extensible Markup Language">
+<!ENTITY sgml "Standard Generalized Markup Language">
+<!ENTITY pxa "Professional XML Authoring">
+<!ENTITY % TEXT "(#PCDATA|CODE|KEYWORD|QUOTATION)*">
+<!ENTITY % BLOCK "(PARA|LIST)+">
+<!ENTITY % BODY "(%BLOCK;|EXAMPLE|NOTE)+">
+
+<!ELEMENT REPORT (TITLE,(SECTION|SHORTSECT)+)>
+<!ELEMENT SECTION (TITLE,%BODY;,SUBSECTION*)>
+<!ELEMENT SUBSECTION (TITLE,%BODY;,SUBSECTION*)>
+<!ELEMENT SHORTSECT (TITLE,%BODY;)>
+
+
+<!ELEMENT TITLE %TEXT;>
+<!ELEMENT PARA %TEXT;>
+<!ELEMENT LIST (ITEM)+>
+<!ELEMENT ITEM (%BLOCK;)>
+<!ELEMENT CODE (#PCDATA)>
+<!ELEMENT KEYWORD (#PCDATA)>
+<!ELEMENT EXAMPLE (TITLE?,%BLOCK;)>
+<!ELEMENT GRAPHIC EMPTY>
+
+<!ATTLIST REPORT security (high | medium | low ) "low">
+<!ATTLIST CODE type CDATA #IMPLIED>
+<!ATTLIST GRAPHIC file ENTITY #REQUIRED>
+
+
+
+<!NOTATION GIF SYSTEM "">
+<!NOTATION JPG SYSTEM "">
+<!NOTATION BMP SYSTEM "">
+
+<!ENTITY AUTHOR "John Doe">
+<!ENTITY COMPANY "JD Power Tools, Inc.">
+<!ENTITY EMAIL "jd@jd-tools.com">
+
+<!ELEMENT CATALOG (PRODUCT+)>
+
+<!ELEMENT PRODUCT
+(SPECIFICATIONS+,OPTIONS?,PRICE+,NOTES?)>
+<!ATTLIST PRODUCT
+NAME CDATA #IMPLIED
+CATEGORY (HandTool|Table|Shop-Professional) "HandTool"
+PARTNUM CDATA #IMPLIED
+PLANT (Pittsburgh|Milwaukee|Chicago) "Chicago"
+INVENTORY (InStock|Backordered|Discontinued) "InStock">
+
+<!ELEMENT SPECIFICATIONS (#PCDATA)>
+<!ATTLIST SPECIFICATIONS
+WEIGHT CDATA #IMPLIED
+POWER CDATA #IMPLIED>
+
+<!ELEMENT OPTIONS (#PCDATA)>
+<!ATTLIST OPTIONS
+FINISH (Metal|Polished|Matte) "Matte"
+ADAPTER (Included|Optional|NotApplicable) "Included"
+CASE (HardShell|Soft|NotApplicable) "HardShell">
+
+<!ELEMENT PRICE (#PCDATA)>
+<!ATTLIST PRICE
+MSRP CDATA #IMPLIED
+WHOLESALE CDATA #IMPLIED
+STREET CDATA #IMPLIED
+SHIPPING CDATA #IMPLIED>
+
+<!ELEMENT NOTES (#PCDATA)>
+
+<!--
+
+Fragen:
+- Was mache ich mit Elementen die nicht in dem DTD gefunden werden können,
+	da sie evtl nicht im Baum hängen, also nicht im contentModel hängen?
+		- Wieder aus der SymbolTable löschen?
+		- Fehler/Hinweis geben?
+-->
+

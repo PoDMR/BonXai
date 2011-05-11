@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <ref name="a"/>
+    </start>
+    <define name="a">
+        <element name="a">
+            <optional>
+                <ref name="a"/>
+            </optional>
+            <attribute name="attr1">
+                <ref name="a"/>
+            </attribute>
+        </element>
+    </define>
+</grammar>

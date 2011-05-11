@@ -1,0 +1,30 @@
+default namespace http://example.com/ns
+namespace some = http://example.com/some
+namespace xsd = http://www.w3.org/2001/XMLSchema
+
+groups {
+    group fooElementGroup = {
+        (
+            element fooElement { xsd:int } ,
+            element some:barElement ,
+            (
+                element bazElement |
+                element bamElement { xsd:int | missing } |
+                element lala { xsd:int default "23" } |
+                (
+                    lax element * { ##any }
+                )?
+            ) ,
+            (
+                element some:lolo { xsd:string fixed "nothing" }
+            )[23, 42]
+        )
+    }
+}
+
+grammar {
+}
+
+constraints {
+}
+

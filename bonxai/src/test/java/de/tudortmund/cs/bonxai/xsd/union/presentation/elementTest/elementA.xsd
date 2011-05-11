@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.A.org"
+    xmlns:A="www.A.org">
+
+    <!-- Element a hat in allen Schemata die gleiche ID -->
+    <xs:element name="a" id="a"/>
+
+    <!-- Element b hat in verschiedenen Schemata verschiedene IDs -->
+    <xs:element name="b" id="b"/>
+
+    <!-- ================================================================================ -->
+
+    <!-- Element c ist in allen Schemata abstract -->
+    <xs:element name="c" abstract="true"/>
+
+    <!-- Element b hat in verschiedenen Schemata verschiedene Werte für abstract -->
+    <xs:element name="d" abstract="false"/>
+
+    <!-- ================================================================================ -->
+
+    <!-- Element e ist in allen Schemata nillable -->
+    <xs:element name="e" nillable="true"/>
+
+    <!-- Element f ist nicht in allen Schemata nillable -->
+    <xs:element name="f" nillable="false"/>
+
+    <!-- ================================================================================ -->
+
+    <!-- Element g ist in allen Schemata auf Wert "foo" gefixed -->
+    <xs:element name="g" fixed="foo"/>
+
+    <!-- Element h hat in verschiedenen Schemata verschiedene fixed Werte -->
+    <xs:element name="h" fixed="bar"/>
+
+    <!-- ================================================================================ -->
+
+    <!-- Element i hat per default in allen Schemata den Wert "foo" -->
+    <xs:element name="i" default="foo"/>
+
+    <!-- Element j hat in verschiedenen Schemata verschiedene default Werte -->
+    <xs:element name="j" default="bar"/>
+
+    <!-- ================================================================================ -->
+
+    <!-- Element k hat in allen Schemata den block Wert "#all" -->
+    <xs:element name="k" block="#all"/>
+
+    <!-- Element l hat in allen Schemata den block Wert "extension" -->
+    <xs:element name="l" block="extension"/>
+
+    <!-- Element m hat in anderen Schemata den block Wert "extension restriction substitution" -->
+    <xs:element name="m" block="extension restriction substitution"/>
+
+    <!-- Element n hat in anderen Schemata den block Wert "#all" -->
+    <xs:element name="n" block="extension substitution"/>
+
+    <!-- Element o hat in anderen Schemata den block Wert "extension restriction" -->
+    <xs:element name="o" block="restriction substitution"/>
+
+    <!-- Element p hat in anderen Schemata den block Wert "#all" -->
+    <xs:element name="p" block=""/>
+
+    <!-- ================================================================================ -->
+
+    <!-- Element q hat in allen Schemata den final Wert "#all" -->
+    <xs:element name="q" final="#all"/>
+
+    <!-- Element r hat in allen Schemata den final Wert "extension" -->
+    <xs:element name="r" final="extension"/>
+
+    <!-- Element s hat in allen Schemata den final Wert "extension restriction" -->
+    <xs:element name="s" final="extension restriction"/>
+
+    <!-- Element t hat in anderen Schemata den final Wert "restriction" -->
+    <xs:element name="t" final="restriction extension"/>
+
+    <!-- Element v hat in anderen Schemata den final Wert "#all" -->
+    <xs:element name="v" final=""/>
+
+    <!-- ================================================================================ -->
+
+    <!-- Element w hat verschiedene Annotations in verschiedenen Schemata -->
+    <xs:element name="w">
+        <xs:annotation>
+            <xs:appinfo> APPINFO aus elementA.xsd </xs:appinfo>
+            <xs:documentation> DOCUMENTATION aus elementA.xsd </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!-- ================================================================================ -->
+
+    <!-- Element x hat verschiedene Schlüssel in verschiedenen Schemata -->
+    <xs:element name="x">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="selector">
+                    <xs:complexType>
+                        <xs:attribute name="myID"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:key name="a">
+            <xs:selector xpath="selector"/>
+            <xs:field xpath="@id"/>
+        </xs:key>
+        <xs:keyref refer="A:a" name="c">
+            <xs:selector xpath="selector"/>
+            <xs:field xpath="@myID"/>
+        </xs:keyref>
+    </xs:element>
+
+</xs:schema>

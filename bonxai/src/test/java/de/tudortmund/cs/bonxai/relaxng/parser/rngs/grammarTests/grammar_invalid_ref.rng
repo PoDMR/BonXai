@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:html="http://www.w3.org/1999/xhtml" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://docbook.org/ns/docbook">
+  <start combine="choice">
+    <element name="foo">
+      <empty/>
+    </element>
+  </start>
+  <start combine="choice">
+    <element name="bar">
+      <ref name="test"/>
+    </element>
+  </start>
+  <define name="defineOne">
+    <text/>
+  </define>
+  <div>
+    <define name="defineTwo">
+      <text/>
+    </define>
+  </div>
+  <include href="http://www.example.org">
+    <start combine="choice">
+      <element name="boah">
+        <empty/>
+      </element>
+    </start>
+  </include>
+</grammar>

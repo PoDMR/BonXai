@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.example.org" xmlns="http://www.example.org" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<!--Empty Content Type-->
+  <xs:complexType name="ItemType" abstract="true">
+    <xs:attribute name="routingNum" type="xs:integer"/>
+  </xs:complexType>
+
+	<!--Empty Content Extension (with Attribute Extension)-->
+  <xs:complexType name="ProductType">
+    <xs:complexContent>
+      <xs:extension base="ItemType">
+        <xs:sequence>
+          <xs:element name="number" type="xs:integer"/>
+          <xs:element name="name" type="xs:string"/>
+          <xs:element name="description"
+                       type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="effDate" type="xs:date"/>
+        <xs:attribute name="lang" type="xs:language"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!--Complex Content Restriction-->
+  <xs:complexType name="RestrictedProductType">
+    <xs:complexContent>
+      <xs:restriction base="ProductType" id="RestrictedProductTypeRestriction">
+        <xs:sequence>
+          <xs:element name="number" type="xs:integer"/>
+          <xs:element name="name" type="xs:token"/>
+        </xs:sequence>
+        <xs:attribute name="routingNum" type="xs:short" use="required"/>
+        <xs:attribute name="effDate" type="xs:date" default="1900-01-01"/>
+        <xs:minLength value="2"/>
+        <xs:attribute name="lang" use="prohibited"/>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+</xs:schema>

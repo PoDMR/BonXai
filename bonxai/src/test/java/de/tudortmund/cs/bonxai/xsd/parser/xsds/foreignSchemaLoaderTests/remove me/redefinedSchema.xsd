@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.www.org"
+    xmlns:root="http://www.www.org">
+
+    <xs:element name="foo" type="root:bar"/>
+
+    <xs:complexType name="bar">
+        <xs:choice>
+            <xs:element name="bob"/>
+            <xs:element name="mob"/>
+        </xs:choice>
+    </xs:complexType>
+    
+    <xs:group name="DSN">
+        <xs:choice>
+            <xs:element name="karl" type="xs:decimal"/>
+            <xs:element name="baumeister"/>
+        </xs:choice>
+        
+    </xs:group>
+    
+    <xs:attributeGroup name="test">
+        <xs:attribute name="blub"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="test2">
+        <xs:attributeGroup ref="root:test"/>
+    </xs:attributeGroup>
+
+    <xs:group name="DSN2">
+        <xs:choice>
+            <xs:element name="karl2" type="xs:decimal"/>
+            <xs:element name="baumeister2"/>
+            <xs:group ref="root:DSN"></xs:group>
+        </xs:choice>
+        
+    </xs:group>
+
+    <xs:simpleType name="bob" >
+        <xs:list itemType="xs:string"></xs:list>
+    </xs:simpleType>
+        
+    
+
+
+</xs:schema>

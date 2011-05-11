@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:b="http://www.example.org/ns2">
+  <xs:import namespace="http://www.example.org/ns2" schemaLocation="b.xsd"/>
+  <xs:element name="outer">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="b:test4"/>
+        <xs:element ref="b:test5"/>
+        <xs:element ref="b:test6"/>
+        <xs:element ref="test"/>
+        <xs:element ref="test2"/>
+        <xs:any processContents="skip"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="test">
+    <xs:complexType mixed="true">
+      <xs:attribute ref="b:blub"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="test2">
+    <xs:complexType mixed="true">
+      <xs:attribute ref="b:blub"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

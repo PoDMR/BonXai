@@ -1,0 +1,3 @@
+<!ELEMENT myElement (#PCDATA)   >
+<!ATTLIST myElement name CDATA #IMPLIED>
+<!-- This is only the basis of the test. The failure is manipulated in the unit test. -->

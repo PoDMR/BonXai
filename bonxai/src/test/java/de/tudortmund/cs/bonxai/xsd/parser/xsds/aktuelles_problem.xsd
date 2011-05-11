@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.w3.org/2001/XMLSchema" blockDefault="#all" elementFormDefault="qualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xml:lang="EN" xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty">
+
+ <xs:simpleType name="simpleDerivationSet">
+  <xs:annotation>
+   <xs:documentation>
+   #all or (possibly empty) subset of {restriction, union, list}
+   </xs:documentation>
+   <xs:documentation>
+   A utility type, not for public use</xs:documentation>
+  </xs:annotation>
+  <xs:union>
+   <xs:simpleType>
+    <xs:restriction base="xs:token">
+     <xs:enumeration value="#all"/>
+    </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType>
+    <xs:list>
+     <xs:simpleType>
+      <xs:restriction base="xs:derivationControl">
+       <xs:enumeration value="list"/>
+       <xs:enumeration value="union"/>
+       <xs:enumeration value="restriction"/>
+      </xs:restriction>
+     </xs:simpleType>
+    </xs:list>
+   </xs:simpleType>
+  </xs:union>
+ </xs:simpleType>
+ </xs:schema>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element name="root" xmlns="http://relaxng.org/ns/structure/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <mixed>
+        <zeroOrMore>
+            <group>
+                <optional>
+                    <choice>
+                        <attribute name="a1">
+                            <text/>
+                        </attribute>
+                    </choice>
+                </optional>
+            </group>
+        </zeroOrMore>
+    </mixed>
+</element>

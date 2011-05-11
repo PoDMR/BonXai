@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.example.org" xmlns="http://www.example.org" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:simpleType name="DressSizeTypeOne">
+    <xs:restriction base="" id="restrictionOne">
+      <xs:minInclusive value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

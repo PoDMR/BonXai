@@ -1,0 +1,13 @@
+<schema targetNamespace="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/2001/XMLSchema">
+
+  <element name="comment" type="string"/>
+  
+  <element name="shipment">
+    <complexType>
+      <sequence>
+        <element ref="comment" id="order" maxOccurs="-10"/>
+      </sequence>
+    </complexType>
+  </element>
+
+</schema>

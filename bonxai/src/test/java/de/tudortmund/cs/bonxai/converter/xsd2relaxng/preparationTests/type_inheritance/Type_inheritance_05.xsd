@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="e5">
+        <xs:simpleType>
+            <xs:union memberTypes="xs:boolean xs:Name e5_simpleType">
+                <xs:simpleType>
+                    <xs:restriction base="xs:decimal"/>
+                </xs:simpleType>
+            </xs:union>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:simpleType name="e5_simpleType">
+        <xs:restriction base="xs:QName"/>
+    </xs:simpleType>
+
+</xs:schema>

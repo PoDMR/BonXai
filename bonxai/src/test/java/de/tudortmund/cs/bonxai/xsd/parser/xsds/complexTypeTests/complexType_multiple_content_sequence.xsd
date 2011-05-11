@@ -1,0 +1,41 @@
+<schema targetNamespace="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/2001/XMLSchema">
+
+  <complexType name="complex" abstract="true" id="id" mixed="true" block="extension restriction" final="extension restriction">
+    <complexContent>
+      <restriction base="anyType">
+        <attribute name="currency" type="string"/>
+        <attribute name="value"    type="decimal"/>
+      </restriction>
+    </complexContent>
+  </complexType>
+
+  <complexType name="simple" >
+    <simpleContent>
+      <extension base="decimal">
+        <attribute name="currency" type="string"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <complexType name="mixed" abstract="false" block="#all" final="#all">
+    <group ref="group"/>	  
+    <attribute name="attribute"/>
+    <attributeGroup ref="attributeGroup"/>
+    <anyAttribute namespace="http://www.w3.org/1999/xhtml"/>
+  </complexType>
+
+  <complexType name="all">
+    <all/>	  
+  </complexType>
+
+  <complexType name="sequence">
+    <sequence/>
+    <sequence/>	  
+  </complexType>
+
+  <complexType name="choice">
+    <choice/>	  
+  </complexType>
+
+</schema>
+
