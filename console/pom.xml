@@ -13,16 +13,26 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-
   <name>console</name>
   <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-jar-plugin</artifactId>
+	<configuration>
+	  <archive>
+	    <manifest>
+	      <mainClass>eu.fox7.console.Console</mainClass>
+	    </manifest>
+ 	  </archive>
+   	</configuration>
+      </plugin>
+    </plugins>
+  </build>
 
   <dependencies>
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -43,8 +53,20 @@
     </dependency>
 
     <dependency>
-      <groupId>eu.fox7.flt</groupId>
-      <artifactId>flt</artifactId>
+      <groupId>eu.fox7</groupId>
+      <artifactId>treeautomata</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>eu.fox7</groupId>
+      <artifactId>upafixer</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>eu.fox7</groupId>
+      <artifactId>xsdlearner</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

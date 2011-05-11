@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>eu.fox7</groupId>
-  <artifactId>bonxai</artifactId>
+  <artifactId>xsdlearner</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
@@ -14,12 +14,8 @@
   </parent>
 
 
-  <name>bonxai</name>
+  <name>xsdlearner</name>
   <url>http://maven.apache.org</url>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
 
   <dependencies>
     <dependency>
@@ -30,9 +26,28 @@
     </dependency>
 
     <dependency>
+      <groupId>eu.fox7</groupId>
+      <artifactId>bonxai</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>eu.fox7</groupId>
+      <artifactId>treeautomata</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    
+    <dependency>
       <groupId>eu.fox7.flt</groupId>
       <artifactId>flt-core</artifactId>
       <version>1.0-SNAPSHOT</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>eu.fox7.flt</groupId>
+      <artifactId>flt-learning</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <type>jar</type>
     </dependency>
   </dependencies>
 </project>
