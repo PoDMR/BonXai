@@ -47,7 +47,7 @@
 		<module>treeautomata</module>
 		<module>upafixer</module>
 		<module>xsdlearning</module>
-		<!-- <module>jedit</module> -->
+		<module>jedit</module>
 	</modules>
 
 </project>

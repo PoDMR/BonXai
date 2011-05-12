@@ -28,6 +28,12 @@
       <version>1.0-SNAPSHOT-jar-with-dependencies</version>
     </dependency>
     
+    <dependency>
+      <groupId>eu.fox7.jedit</groupId>
+      <artifactId>bonxai-plugin</artifactId>
+      <version>1.0-SNAPSHOT-jar-with-dependencies</version>
+    </dependency>
+    
   </dependencies>
 
   <build>
@@ -70,7 +76,7 @@
                   <destFileName>flt-plugin.jar</destFileName>
                 </artifactItem>
                 
-                <!--
+                
                 <artifactItem>
                   <groupId>eu.fox7.jedit</groupId>
                   <artifactId>bonxai-plugin</artifactId>
@@ -90,7 +96,6 @@
                   <outputDirectory>${project.build.directory}/staging/jars</outputDirectory>
                   <destFileName>bonxai.jar</destFileName>
                 </artifactItem>
-                -->
                 
               </artifactItems>
               <outputDirectory>${project.build.directory}/staging</outputDirectory>

@@ -10,9 +10,11 @@
   <name>jedit</name>
   <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  <parent>
+    <groupId>eu.fox7.foxlib</groupId>
+    <artifactId>externals</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
 
   <build>
     <plugins>

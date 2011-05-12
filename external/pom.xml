@@ -6,7 +6,13 @@
 	<artifactId>externals</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
+
+	<parent>
+	  <groupId>eu.fox7</groupId>
+	  <artifactId>foxlib</artifactId>
+	  <version>1.0-SNAPSHOT</version>
+	</parent>
+
 	<modules>
 		<module>jama</module>
 		<module>jedit</module>
