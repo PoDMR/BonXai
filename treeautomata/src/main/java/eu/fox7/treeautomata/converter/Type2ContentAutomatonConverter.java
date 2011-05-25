@@ -14,6 +14,7 @@ import de.tudortmund.cs.bonxai.common.AnyPattern;
 import de.tudortmund.cs.bonxai.common.ChoicePattern;
 import de.tudortmund.cs.bonxai.common.CountingPattern;
 import de.tudortmund.cs.bonxai.common.EmptyPattern;
+import de.tudortmund.cs.bonxai.common.GroupRef;
 import de.tudortmund.cs.bonxai.common.Particle;
 import de.tudortmund.cs.bonxai.common.ParticleContainer;
 import de.tudortmund.cs.bonxai.common.SequencePattern;
@@ -93,6 +94,8 @@ public class Type2ContentAutomatonConverter {
 			return factory.createEpsilon();
 		} else if (particle == null) {
 			return factory.createEpsilon();
+		} else if (particle instanceof GroupRef) {
+			throw new RuntimeException("Groups are not supported yet.");
 		} else {
 			throw new RuntimeException("Unknown Particle");
 		}
