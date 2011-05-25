@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<addressBook>
+  <address id="c">
+    <name>Doe</name>
+    <firstname>Joe</firstname>
+    <company>Microsoft</company>
+    <homepage>http://www.microsoft.com/</homepage>
+  </address>
+  <address id="q">
+    <name>Spencer</name>
+    <firstname>Marc</firstname>
+    <company>Mark &quot; Spencer's</company>
+  </address>
+</addressBook>

@@ -83,72 +83,72 @@ public class ExampleParserTest extends TestCase {
         }
     }
 
-    public void test_Cli() {
-        final String outputFileName = "test-data/test-out.txt";
-        String sampleSizeStr = "4";
-        for (int i = 0; i < 5; i++) {
-            try {
-                CliSampler.main(new String[] {"-n", sampleSizeStr,
-                        "-p", "test-data/test.properties",
-                        "-i", "test-data/test-in.txt",
-                        "-o", outputFileName});
-                BufferedReader reader = new BufferedReader(new FileReader(outputFileName));
-                int counter = 0;
-                while ((reader.readLine()) != null) {
-                    counter++;
-                }
-                reader.close();
-                assertEquals("sample size",
-                             Integer.valueOf(sampleSizeStr).intValue(), counter);
-                File file = new File(outputFileName);
-                assertTrue("file delete", file.delete());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-                fail("unexpected exception");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                fail("unexpected exception");
-            } catch (IOException e) {
-                e.printStackTrace();
-                fail("unexpected exception");
-            }
-        }
-    }
-
-    public void test_Cli2() {
-        final String outputFileName = "test-data/test-out-2.txt";
-        String sampleSizeStr = "3";
-        final int nrColumns = 3;
-        for (int i = 0; i < 5; i++) {
-            try {
-                CliSampler.main(new String[] {"-n", sampleSizeStr,
-                        "-p", "test-data/test-2.properties",
-                        "-i", "test-data/test-in-2.txt",
-                        "-o", outputFileName});
-                BufferedReader reader = new BufferedReader(new FileReader(outputFileName));
-                int counter = 0;
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                    counter++;
-                    String[] parts = line.split("\\t");
-                    assertEquals("columns", nrColumns, parts.length);
-                }
-                reader.close();
-                assertEquals("sample size",
-                             Integer.valueOf(sampleSizeStr).intValue(), counter);
-                File file = new File(outputFileName);
-                assertTrue("file delete", file.delete());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-                fail("unexpected exception");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                fail("unexpected exception");
-            } catch (IOException e) {
-                e.printStackTrace();
-                fail("unexpected exception");
-            }
-        }
-    }
+//    public void test_Cli() {
+//        final String outputFileName = "test-data/test-out.txt";
+//        String sampleSizeStr = "4";
+//        for (int i = 0; i < 5; i++) {
+//            try {
+//                CliSampler.main(new String[] {"-n", sampleSizeStr,
+//                        "-p", "test-data/test.properties",
+//                        "-i", "test-data/test-in.txt",
+//                        "-o", outputFileName});
+//                BufferedReader reader = new BufferedReader(new FileReader(outputFileName));
+//                int counter = 0;
+//                while ((reader.readLine()) != null) {
+//                    counter++;
+//                }
+//                reader.close();
+//                assertEquals("sample size",
+//                             Integer.valueOf(sampleSizeStr).intValue(), counter);
+//                File file = new File(outputFileName);
+//                assertTrue("file delete", file.delete());
+//            } catch (NumberFormatException e) {
+//                e.printStackTrace();
+//                fail("unexpected exception");
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//                fail("unexpected exception");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                fail("unexpected exception");
+//            }
+//        }
+//    }
+//
+//    public void test_Cli2() {
+//        final String outputFileName = "test-data/test-out-2.txt";
+//        String sampleSizeStr = "3";
+//        final int nrColumns = 3;
+//        for (int i = 0; i < 5; i++) {
+//            try {
+//                CliSampler.main(new String[] {"-n", sampleSizeStr,
+//                        "-p", "test-data/test-2.properties",
+//                        "-i", "test-data/test-in-2.txt",
+//                        "-o", outputFileName});
+//                BufferedReader reader = new BufferedReader(new FileReader(outputFileName));
+//                int counter = 0;
+//                String line = null;
+//                while ((line = reader.readLine()) != null) {
+//                    counter++;
+//                    String[] parts = line.split("\\t");
+//                    assertEquals("columns", nrColumns, parts.length);
+//                }
+//                reader.close();
+//                assertEquals("sample size",
+//                             Integer.valueOf(sampleSizeStr).intValue(), counter);
+//                File file = new File(outputFileName);
+//                assertTrue("file delete", file.delete());
+//            } catch (NumberFormatException e) {
+//                e.printStackTrace();
+//                fail("unexpected exception");
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//                fail("unexpected exception");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                fail("unexpected exception");
+//            }
+//        }
+//    }
     
 }

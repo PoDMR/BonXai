@@ -109,7 +109,7 @@ public class AncestorChildrenDocumentIteratorTest extends TestCase {
     }
     
     public void test_allXsds() throws Exception {
-        final String sampleFileName = "test-data/ancestor-strings.txt";
+        final String sampleFileName = this.getClass().getResource("/test-data/ancestor-strings.txt").getFile();
         int counter = 0;
         for (Iterator<String> docIt = new AncestorChildrenDocumentIterator(sampleFileName); docIt.hasNext(); docIt.next()) {
             counter++;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<addressBook>
+  <address id="a">
+    <name>Neven</name>
+    <firstname>Frank</firstname>
+    <company>Hasselt University</company>
+    <homepage>http://alpha.uhasselt.be/frank.neven/</homepage>
+  </address>
+  <address id="b">
+    <name>Bex</name>
+    <firstname>Geert Jan</firstname>
+    <company>Hasselt University</company>
+    <company>VSC</company>
+    <homepage>http://alpha.uhasselt.be/~gjb/</homepage>
+  </address>
+</addressBook>

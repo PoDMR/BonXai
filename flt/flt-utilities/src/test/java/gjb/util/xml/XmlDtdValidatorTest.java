@@ -20,25 +20,25 @@ import junit.framework.TestCase;
 public class XmlDtdValidatorTest extends TestCase {
 
 	public void testValidDocument() {
-		final String[] xmlFileName = {"test-data/xmlFile1.xml"};
-		final String dtdFileNames = "test-data/xmlFile1.dtd";
+		final String[] xmlFileName = {this.getClass().getResource("/test-data/xmlFile1.xml").getFile()};
+		final String dtdFileNames = this.getClass().getResource("/test-data/xmlFile1.dtd").getFile();
 		final boolean[] ok = {true};
 		validate(dtdFileNames, xmlFileName, ok);
 	}
 
 	public void testInvalidDocument() {
-		final String dtdFileName = "test-data/xmlFile1.dtd";
-		final String[] xmlFileNames = {"test-data/xmlFile2.xml"};
+		final String dtdFileName = this.getClass().getResource("/test-data/xmlFile1.dtd").getFile();
+		final String[] xmlFileNames = {this.getClass().getResource("/test-data/xmlFile2.xml").getFile()};
 		final boolean[] ok = {false};
 		validate(dtdFileName, xmlFileNames, ok);
 	}
 	
 	public void testValidMultipleDocuments() {
-		final String dtdFileName = "test-data/xmlFile1.dtd";
+		final String dtdFileName = this.getClass().getResource("/test-data/xmlFile1.dtd").getFile();
 		final String[] xmlFileNames = {
-				"test-data/xmlFile1.xml",
-				"test-data/xmlFile2.xml",
-				"test-data/xmlFile3.xml"};
+				this.getClass().getResource("/test-data/xmlFile1.xml").getFile(),
+				this.getClass().getResource("/test-data/xmlFile2.xml").getFile(),
+				this.getClass().getResource("/test-data/xmlFile3.xml").getFile()};
 		final boolean[] ok = {true, false, true};
 		validate(dtdFileName, xmlFileNames, ok);
 	}

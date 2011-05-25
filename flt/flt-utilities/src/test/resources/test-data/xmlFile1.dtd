@@ -1,0 +1,8 @@
+<!ELEMENT addressBook (address+)>
+<!ELEMENT address (name, firstname, company*, homepage?)>
+<!ATTLIST address
+  id ID #REQUIRED>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT firstname (#PCDATA)>
+<!ELEMENT company (#PCDATA)>
+<!ELEMENT homepage (#PCDATA)>
