@@ -87,41 +87,6 @@ public class MutationTest extends TestCase {
         }
     }
     
-    public void test_symbol() {
-        final String[] regexStrs = {
-                "(. (a) (b) (c))",
-                "(. (| (a) (b)) (c))",
-                "(? (+ (| (a) (. (b) (c) (? (d))))))"
-        };
-        Mutator mutator = new SymbolMutator();
-        Glushkov glushkov = new Glushkov();
-        LanguageTest soreTest = new SingleOccurrenceTest();
-        for (String regexStr : regexStrs) {
-            try {
-                String newRegexStr = mutator.mutate(regexStr);
-                assertFalse("ambiguous " + regexStr, glushkov.isAmbiguous(newRegexStr));
-                assertFalse("sore " + newRegexStr, soreTest.test(newRegexStr));
-            } catch (SExpressionParseException e) {
-                e.printStackTrace();
-                fail("no exception expected");
-            } catch (NoMutationFoundException e) {
-                e.printStackTrace();
-                fail("no mutation for " + regexStr);
-            } catch (UnknownOperatorException e) {
-                e.printStackTrace();
-                fail("no exception expected");
-            } catch (FeatureNotSupportedException e) {
-                e.printStackTrace();
-                fail("no exception expected");
-            } catch (NFAException e) {
-                e.printStackTrace();
-                fail("no exception expected");
-            } catch (RegexException e) {
-                e.printStackTrace();
-                fail("no exception expected");
-            }
-        }
-    }
 
     public void test_symbolFailure() {
         final String[] regexStrs = {

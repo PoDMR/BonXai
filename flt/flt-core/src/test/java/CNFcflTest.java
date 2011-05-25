@@ -70,18 +70,7 @@ public class CNFcflTest extends TestCase {
       reader.close();
   }
 
-  @SuppressWarnings("unchecked")
-public void test_CNFcflConstructor() {
-	assertEquals("S", cfl.startSymbol());
-	assertEquals(14, cfl.nonTerminals().size());
-	assertEquals(11, cfl.terminals().size());
-	Set productions = cfl.productions("S");
-	assertEquals(9, productions.size());
-	assertTrue(productions.contains("a"));
-	productions = cfl.productions("F");
-	assertEquals(1, productions.size());
-	assertTrue(productions.contains(")"));
-  }
+
 
   public void test_CNFcflConstructorExceptions() throws Exception {
 	StringReader reader = new StringReader(grammarError1);

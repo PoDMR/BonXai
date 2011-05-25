@@ -300,48 +300,7 @@ public class XMLDocumentTest extends TestCase {
         }
 	}
 
-	public void testValidity() {
-		final String userObjects =
-			"generator: ID = gjb.flt.treegrammar.data.UniqueSymbolGenerator()\n" +
-			"generator: NAME = gjb.flt.treegrammar.data.StringGenerator()";
-        final String grammar =
-            "root = addressBook#\n" +
-            "addressBook# ->       ; (+ (address#))\n" +
-            "address#     -> id#ID ; (. (name#) (firstname#) (* (company#)) (? (homepage#)))\n" +
-            "name#        ->       ; (#NAME)\n" +
-            "firstname#   ->       ; (EPSILON)\n" +
-            "company#     ->       ; (EPSILON)\n" +
-            "homepage#    ->       ; (EPSILON)";
-        final String dtdFileName = "test-data/xmlFile1.dtd";
-        final int nrDocuments = 50;
-        Reader userObjectReader = new StringReader(userObjects);
-        XMLGenerator treeGenerator = new XMLGenerator();
-        UserObjectsReader userObjectsReader = new UserObjectsReader(treeGenerator);
-        RegularTreeGrammarReader treeGrammarReader = new RegularTreeGrammarReader(treeGenerator);
-        Reader grammarReader = new StringReader(grammar);
-        try {
-        	userObjectsReader.readUserObjects(userObjectReader);
-        	XMLGrammar xmlGrammar = treeGrammarReader.readGrammar(grammarReader);
-        	XmlDtdValidator validator = new XmlDtdValidator(dtdFileName);
-        	validator.setVerbose(true);
-        	for (int i = 0; i < nrDocuments; i++) {
-        		Document xmlDocument = treeGenerator.generateExample(xmlGrammar);
-        		assertTrue("valid", validator.isValid(xmlDocument));
-        	}
-        } catch (SyntaxException e) {
-        	e.printStackTrace();
-        	fail("unexpected exception");
-        } catch (MaxDepthExceededException e) {
-        	e.printStackTrace();
-        	fail("unexpected exception");
-        } catch (TransformerConfigurationException e) {
-        	e.printStackTrace();
-        	fail("unexpected exception");
-        } catch (ParserConfigurationException e) {
-        	e.printStackTrace();
-        	fail("unexpected exception");
-        }
-	}
+
 
 	protected String serialize(XMLGenerator xmlGenerator, XMLGrammar xmlDoc)
 	        throws SyntaxException, MaxDepthExceededException, IOException {

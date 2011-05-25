@@ -145,65 +145,6 @@ public class DeriverTest extends TestCase {
 		}
 	}
 
-	public void testLotsOfExprs() {
-		try {
-			final String fileName = "test-data/regexes-15.txt";
-			final int nrExprs = 20;
-			Set<String> alphabet = computeAlphabet(15);
-			final int nrExamples = 100;
-			Deriver deriver = new Deriver();
-			BufferedReader reader = new BufferedReader(new FileReader(fileName));
-			String line = null;
-			int counter = 0;
-			while ((line = reader.readLine()) != null) {
-				String regexStr = line.trim();
-				LanguageGenerator genRegex = new LanguageGenerator(regexStr);
-				Matcher matcher = new Matcher(regexStr);
-				for (String symbol : alphabet) {
-					Regex derivative = deriver.derive(new Regex(regexStr), symbol);
-					Matcher derivMatcher = new Matcher(derivative);
-					for (int i = 0; i < nrExamples; i++) {
-						List<String> example = genRegex.generateRandomExample();
-						String exampleStr = StringUtils.join(example.iterator(), " ");
-						if (example.size() > 0 && example.get(0).equals(symbol))
-							assertTrue(derivative + " on " + exampleStr,
-							           derivMatcher.matches(example.toArray(new String[0])));
-						else
-							assertFalse(derivative + " on " + exampleStr,
-							            derivMatcher.matches(example.toArray(new String[0])));
-					}
-					if (!derivative.toString().equals("(" + genRegex.getRegex().emptySymbol() + ")")) {
-						LanguageGenerator genDeriv = new LanguageGenerator(derivative.toString());
-						for (int i = 0; i < nrExamples; i++) {
-							List<String> example = genDeriv.generateRandomExample();
-							String exampleStr = StringUtils.join(example.iterator(), " ");
-							assertTrue(genRegex + " on " + exampleStr,
-									   matcher.matches(example.toArray(new String[0])));
-						}
-					}
-				}
-				if (++counter > nrExprs)
-					break;
-			}
-			reader.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			fail("unexpected exception");
-		} catch (IOException e) {
-			e.printStackTrace();
-			fail("unexpected exception");
-		} catch (SExpressionParseException e) {
-			e.printStackTrace();
-			fail("unexpected exception");
-		} catch (UnknownOperatorException e) {
-			e.printStackTrace();
-			fail("unexpected exception");
-		} catch (NoRegularExpressionDefinedException e) {
-			e.printStackTrace();
-			fail("unexpected exception");
-		}
-	}
-
 	protected Set<String> computeAlphabet(int n) {
 		Set<String> alphabet = new HashSet<String>();
 		AlphabetIterator it = new AlphabetIterator();
