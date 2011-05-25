@@ -18,8 +18,9 @@ public class ExternalSchemaLoaderTest extends junit.framework.TestCase {
     @Test
     public void testHandleExternalSchemas_replacing_off() throws Exception {
 
-        String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/ExternalSchemaLoaderTest/A.rng");
-
+        String filePath = new String("/tests/de/tudortmund/cs/bonxai/relaxng/tools/ExternalSchemaLoaderTest/A.rng");
+        filePath = this.getClass().getResource(filePath).getFile();
+        
         RNGParser instance = new RNGParser(filePath, false);
 
         RelaxNGSchema relaxNGSchema = instance.getRNGSchema();
@@ -94,8 +95,9 @@ public class ExternalSchemaLoaderTest extends junit.framework.TestCase {
     @Test
     public void testHandleExternalSchemas_replacing_on() throws Exception {
 
-        String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/ExternalSchemaLoaderTest/A.rng");
-
+        String filePath = new String("/tests/de/tudortmund/cs/bonxai/relaxng/tools/ExternalSchemaLoaderTest/A.rng");
+        filePath = this.getClass().getResource(filePath).getFile();
+        
         RNGParser instance = new RNGParser(filePath, false);
 
         RelaxNGSchema relaxNGSchema = instance.getRNGSchema();

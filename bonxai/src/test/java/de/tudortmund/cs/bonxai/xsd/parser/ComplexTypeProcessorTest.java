@@ -1,22 +1,17 @@
 package de.tudortmund.cs.bonxai.xsd.parser;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.ComplexContent;
 import de.tudortmund.cs.bonxai.common.AllPattern;
 import de.tudortmund.cs.bonxai.common.AnyAttribute;
 import de.tudortmund.cs.bonxai.common.ChoicePattern;
-import de.tudortmund.cs.bonxai.common.CountingPattern;
-import de.tudortmund.cs.bonxai.common.ElementRef;
 import de.tudortmund.cs.bonxai.common.Particle;
 import de.tudortmund.cs.bonxai.common.SequencePattern;
 import de.tudortmund.cs.bonxai.xsd.*;
 import de.tudortmund.cs.bonxai.xsd.parser.exceptions.attribute.*;
-import de.tudortmund.cs.bonxai.xsd.parser.exceptions.attribute.countingpattern.*;
 import de.tudortmund.cs.bonxai.xsd.parser.exceptions.content.*;
 import de.tudortmund.cs.bonxai.xsd.parser.exceptions.type.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

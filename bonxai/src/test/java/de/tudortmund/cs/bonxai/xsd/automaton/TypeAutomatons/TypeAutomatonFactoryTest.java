@@ -27,7 +27,7 @@ public class TypeAutomatonFactoryTest extends junit.framework.TestCase {
     @Test
     public void testBuildTypeAutomaton_Schema_HashMap() throws Exception {
         XSDParser xmlSchemaParser = new XSDParser(false, false);
-        XSDSchema schema = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/automaton/TypeAutomatons/xsds/testBuildTypeAutomaton_Schema_HashMap.xsd");
+        XSDSchema schema = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/automaton/TypeAutomatons/xsds/testBuildTypeAutomaton_Schema_HashMap.xsd").getFile());
         HashMap<AnyPattern, XSDSchema> anyPatternSchemaMap = new HashMap<AnyPattern, XSDSchema>();
         anyPatternSchemaMap.put((AnyPattern) ((ChoicePattern) ((ComplexContentType) ((ComplexType) schema.getTypeSymbolTable().getReference("{A}complexTypeD").getReference()).getContent()).getParticle()).getParticles().getFirst(), schema);
         TypeAutomatonFactory instance = new TypeAutomatonFactory();
@@ -248,7 +248,7 @@ public class TypeAutomatonFactoryTest extends junit.framework.TestCase {
     @Test
     public void testBuildTypeAutomaton_Particle_HashMap() throws Exception {
         XSDParser xmlSchemaParser = new XSDParser(false, false);
-        XSDSchema schema = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/automaton/TypeAutomatons/xsds/testBuildTypeAutomaton_Schema_HashMap.xsd");
+        XSDSchema schema = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/automaton/TypeAutomatons/xsds/testBuildTypeAutomaton_Schema_HashMap.xsd").getFile());
         HashMap<AnyPattern, XSDSchema> anyPatternSchemaMap = new HashMap<AnyPattern, XSDSchema>();
         anyPatternSchemaMap.put((AnyPattern) ((ChoicePattern) ((ComplexContentType) ((ComplexType) schema.getTypeSymbolTable().getReference("{A}complexTypeD").getReference()).getContent()).getParticle()).getParticles().getFirst(), schema);
         TypeAutomatonFactory instance = new TypeAutomatonFactory();
@@ -481,8 +481,8 @@ public class TypeAutomatonFactoryTest extends junit.framework.TestCase {
     @Test
     public void testBuildProductTypeAutomaton() throws Exception {
         XSDParser xmlSchemaParser = new XSDParser(false, false);
-        XSDSchema schema1 = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/automaton/TypeAutomatons/xsds/testBuildTypeAutomaton_Schema_HashMap.xsd");
-        XSDSchema schema2 = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/automaton/TypeAutomatons/xsds/testBuildSubsetTypeAutomaton.xsd");
+        XSDSchema schema1 = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/automaton/TypeAutomatons/xsds/testBuildTypeAutomaton_Schema_HashMap.xsd").getFile());
+        XSDSchema schema2 = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/automaton/TypeAutomatons/xsds/testBuildSubsetTypeAutomaton.xsd").getFile());
         HashMap<AnyPattern, XSDSchema> anyPatternSchemaMap = new HashMap<AnyPattern, XSDSchema>();
         anyPatternSchemaMap.put((AnyPattern) ((ChoicePattern) ((ComplexContentType) ((ComplexType) schema1.getTypeSymbolTable().getReference("{A}complexTypeD").getReference()).getContent()).getParticle()).getParticles().getFirst(), schema1);
         TypeAutomatonFactory instance = new TypeAutomatonFactory();
@@ -863,7 +863,7 @@ public class TypeAutomatonFactoryTest extends junit.framework.TestCase {
     @Test
     public void testBuildSubsetTypeAutomaton() throws Exception {
         XSDParser xmlSchemaParser = new XSDParser(false, false);
-        XSDSchema schema = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/automaton/TypeAutomatons/xsds/testBuildSubsetTypeAutomaton.xsd");
+        XSDSchema schema = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/automaton/TypeAutomatons/xsds/testBuildSubsetTypeAutomaton.xsd").getFile());
         HashMap<AnyPattern, XSDSchema> anyPatternSchemaMap = new HashMap<AnyPattern, XSDSchema>();
         TypeAutomatonFactory instance = new TypeAutomatonFactory();
         TypeAutomaton typeAutomaton = instance.buildTypeAutomaton(schema, anyPatternSchemaMap);

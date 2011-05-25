@@ -41,7 +41,7 @@ public class Visitor implements bonXaiTreeVisitor {
 				bonxai.setGroupList(this.visit(subnode, null));
 			} else if (node.jjtGetChild(i).getNodeType().equals("Block")) {
 				ASTBlock subnode = (ASTBlock) node.jjtGetChild(i);
-				
+				bonxai.setGrammarList(this.visit(subnode, null));
 			} else if (node.jjtGetChild(i).getNodeType().equals("ConstraintBlock")) {
 				ASTConstraintBlock subnode = (ASTConstraintBlock) node.jjtGetChild(i);
 				bonxai.setConstraintList(this.visit(subnode, null));
@@ -70,7 +70,7 @@ public class Visitor implements bonXaiTreeVisitor {
 				bonxai.setGroupList(this.visit(subnode, null));
 			} else if (node.jjtGetChild(i).getNodeType().equals("Block")) {
 				ASTBlock subnode = (ASTBlock) node.jjtGetChild(i);
-				
+				bonxai.setGrammarList(this.visit(subnode, null));
 			} else if (node.jjtGetChild(i).getNodeType().equals("ConstraintBlock")) {
 				ASTConstraintBlock subnode = (ASTConstraintBlock) node.jjtGetChild(i);
 				bonxai.setConstraintList(this.visit(subnode, null));
@@ -726,7 +726,7 @@ return null;
 				content = new de.tudortmund.cs.bonxai.bonxai.Element(namespace, name);
 
 			} else {
-				ASTBonxaiType subnode = (ASTBonxaiType) node.jjtGetChild(0);
+				ASTBonxaiType subnode = (ASTBonxaiType) node.jjtGetChild(1);
 				BonxaiType bonxaiType = this.visit(subnode, null);
 				content =
 					new de.tudortmund.cs.bonxai.bonxai.Element(
@@ -846,10 +846,16 @@ return null;
 
 	@Override
 	public GrammarList visit(ASTBlock node, Object data) {
-		// TODO Auto-generated method stub
+		GrammarList grammarList = new GrammarList();
+		for (Node subnode: node.children) {
+			if (subnode.getNodeType().equals("RootElements")) {
+				this.visit((ASTRootElements) subnode, grammarList);
+			} else if (subnode.getNodeType().equals("Expr")) {
+				grammarList.addExpression(this.visit((ASTExpr) subnode, null));
+			}
+		}
 		
-		bonxai.setGrammarList(this.visit(node, null));
-		return null;
+		return grammarList;
 	}
 
 

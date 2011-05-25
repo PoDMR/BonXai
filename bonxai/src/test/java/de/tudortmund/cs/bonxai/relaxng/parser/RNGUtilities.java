@@ -1,6 +1,8 @@
 package de.tudortmund.cs.bonxai.relaxng.parser;
 
 import java.io.*;
+import java.net.URL;
+
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
@@ -21,7 +23,9 @@ public class RNGUtilities {
     protected static Node getSchemaNode(String filename) throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(true);
-        Document doc = factory.newDocumentBuilder().parse(new File(filename));
+        URL url = filename.getClass().getResource("/"+filename);
+        File file = new File(url.getFile());
+        Document doc = factory.newDocumentBuilder().parse(file);
         Node schemaNode = doc.getFirstChild();
         while (schemaNode != null
                 && !(schemaNode.getNodeType() == 1

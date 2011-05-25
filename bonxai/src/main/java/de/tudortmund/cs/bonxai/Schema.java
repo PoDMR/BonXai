@@ -35,6 +35,7 @@ import de.tudortmund.cs.bonxai.converter.dtd2xsd.DTD2XSDConverter;
 import de.tudortmund.cs.bonxai.converter.xsd2bonxai.NewXSD2BonxaiConverter;
 import de.tudortmund.cs.bonxai.converter.xsd2dtd.XSD2DTDConverter;
 import de.tudortmund.cs.bonxai.converter.xsd2relaxng.XSD2RelaxNGConverter;
+import de.tudortmund.cs.bonxai.converter.xsd2xsd.XSDEmptyTypeRemover;
 import de.tudortmund.cs.bonxai.converter.xsd2xsd.XSDUnreachableTypeRemover;
 import de.tudortmund.cs.bonxai.converter.relaxng2xsd.RelaxNG2XSDConverter;
 import de.tudortmund.cs.bonxai.converter.ConversionFailedException;
@@ -621,6 +622,15 @@ public class Schema {
 			throw new ConversionFailedException("Can only remove unused types in xml schema");
 		}
 		XSDUnreachableTypeRemover.removeUnreachableTypes(this.getXSD());
+		this.schemaString = null;
+	}
+
+	public void removeEmptyTypes() throws ConversionFailedException {
+		if (this.getType() != SchemaType.XSD) {
+			throw new ConversionFailedException("Can only remove unused types in xml schema");
+		}
+		XSDEmptyTypeRemover xsdEmptyTypeRemover = new XSDEmptyTypeRemover();
+		xsdEmptyTypeRemover.removeEmptyTypes(this.getXSD());
 		this.schemaString = null;
 	}
 }

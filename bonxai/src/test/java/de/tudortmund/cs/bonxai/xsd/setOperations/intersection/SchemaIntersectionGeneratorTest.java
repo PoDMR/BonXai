@@ -25,9 +25,9 @@ public class SchemaIntersectionGeneratorTest extends junit.framework.TestCase {
     @Test
     public void testGenerateIntersection() throws Exception {
         XSDParser xmlSchemaParser = new XSDParser(false, false);
-        XSDSchema schemaA = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/setOperations/intersection/xsds/testGenerateIntersectionA.xsd");
-        XSDSchema schemaB = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/setOperations/intersection/xsds/testGenerateIntersectionB.xsd");
-        XSDSchema schemaC = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/setOperations/intersection/xsds/testGenerateIntersectionC.xsd");
+        XSDSchema schemaA = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/setOperations/intersection/xsds/testGenerateIntersectionA.xsd").getFile());
+        XSDSchema schemaB = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/setOperations/intersection/xsds/testGenerateIntersectionB.xsd").getFile());
+        XSDSchema schemaC = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/setOperations/intersection/xsds/testGenerateIntersectionC.xsd").getFile());
         LinkedHashSet<XSDSchema> minuendSchemata = new LinkedHashSet<XSDSchema>();
         minuendSchemata.add(schemaA);
         minuendSchemata.add(schemaB);

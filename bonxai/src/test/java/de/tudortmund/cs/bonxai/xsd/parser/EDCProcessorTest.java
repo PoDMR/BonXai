@@ -65,7 +65,7 @@ public class EDCProcessorTest extends junit.framework.TestCase {
      */
     @Test
     public void testValidCase() throws Exception {
-        String filePath = new String("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/EDCTests/valid_case.xsd");
+        String filePath = this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/EDCTests/valid_case.xsd").getFile();
         XSDParser instance = new XSDParser(false, false);
         EDCChecker edcProcessor = new EDCChecker(instance.parse(filePath));
         assertTrue(edcProcessor.isValid());

@@ -18,7 +18,7 @@ public class ExternalSchemaLoaderPresentationTest {
     @Test
     public void testHandleExternalSchemas() throws Exception {
 
-        String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/rngs/A.rng");
+        String filePath = this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/relaxng/tools/rngs/A.rng").getFile();
 
 //        String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/rngs/ProblemA.rng");
 

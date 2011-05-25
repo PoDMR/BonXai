@@ -35,8 +35,9 @@ public class PatternInformationCollectorPresentationTest {
 //        String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/rngs/optional.rng");
 
 //        String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/rngs/acronym_problem.rng");
-        String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/rngs/problem_with_text.rng");
-
+        String filePath = new String("/tests/de/tudortmund/cs/bonxai/relaxng/tools/rngs/problem_with_text.rng");
+        filePath = this.getClass().getResource(filePath).getFile();
+        
         RNGParser instance = new RNGParser(filePath, false);
         RelaxNGSchema relaxNGSchema = instance.getRNGSchema();
 

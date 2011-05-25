@@ -342,9 +342,9 @@ public class ElementConverterTest extends junit.framework.TestCase {
         de.tudortmund.cs.bonxai.xsd.Element element = new de.tudortmund.cs.bonxai.xsd.Element("{" + XSD2DTDConverter.XMLSCHEMA_NAMESPACE + "}name");
 
         SequencePattern sequencePattern = new SequencePattern();
-        sequencePattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
-        sequencePattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
-        sequencePattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element3", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        sequencePattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        sequencePattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
+        sequencePattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element3", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(sequencePattern);
 
@@ -382,9 +382,9 @@ public class ElementConverterTest extends junit.framework.TestCase {
         de.tudortmund.cs.bonxai.xsd.Element element = new de.tudortmund.cs.bonxai.xsd.Element("{" + XSD2DTDConverter.XMLSCHEMA_NAMESPACE + "}name");
 
         SequencePattern sequencePattern = new SequencePattern();
-        sequencePattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
-        sequencePattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
-        sequencePattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element3", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        sequencePattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        sequencePattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
+        sequencePattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element3", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(sequencePattern);
 
@@ -415,9 +415,9 @@ public class ElementConverterTest extends junit.framework.TestCase {
         de.tudortmund.cs.bonxai.xsd.Element element = new de.tudortmund.cs.bonxai.xsd.Element("{" + XSD2DTDConverter.XMLSCHEMA_NAMESPACE + "}name");
 
         ChoicePattern choicePattern = new ChoicePattern();
-        choicePattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
-        choicePattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
-        choicePattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element3", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        choicePattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        choicePattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
+        choicePattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element3", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(choicePattern);
 
@@ -476,9 +476,9 @@ public class ElementConverterTest extends junit.framework.TestCase {
         de.tudortmund.cs.bonxai.xsd.Element element = new de.tudortmund.cs.bonxai.xsd.Element("{" + XSD2DTDConverter.XMLSCHEMA_NAMESPACE + "}name");
 
         ChoicePattern choicePattern = new ChoicePattern();
-        choicePattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
-        choicePattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
-        choicePattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element3", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        choicePattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        choicePattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
+        choicePattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element3", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
         choicePattern.addParticle(new AnyPattern(ProcessContentsInstruction.Strict, null));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(choicePattern);
@@ -512,8 +512,8 @@ public class ElementConverterTest extends junit.framework.TestCase {
         XSD2DTDConverter.ALL_UPPER_BOUND_PERMUTATION = 5;
 
         AllPattern allPattern = new AllPattern();
-        allPattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
-        allPattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
+        allPattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        allPattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(allPattern);
 
@@ -568,8 +568,8 @@ public class ElementConverterTest extends junit.framework.TestCase {
         XSD2DTDConverter.ALL_UPPER_BOUND_PERMUTATION = 1;
 
         AllPattern allPattern = new AllPattern();
-        allPattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
-        allPattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
+        allPattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        allPattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(allPattern);
 
@@ -624,8 +624,8 @@ public class ElementConverterTest extends junit.framework.TestCase {
         XSD2DTDConverter.ALL_UPPER_BOUND_PERMUTATION = 1;
 
         AllPattern allPattern = new AllPattern();
-        allPattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
-        allPattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
+        allPattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        allPattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(allPattern);
 
@@ -675,8 +675,8 @@ public class ElementConverterTest extends junit.framework.TestCase {
         XSD2DTDConverter.ALL_UPPER_BOUND_PERMUTATION = 1;
 
         AllPattern allPattern = new AllPattern();
-        allPattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
-        allPattern.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
+        allPattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        allPattern.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new de.tudortmund.cs.bonxai.xsd.Element("{}element2"))));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(allPattern);
 
@@ -707,7 +707,7 @@ public class ElementConverterTest extends junit.framework.TestCase {
         XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND_MULTIPLICITY = 40;
 
         CountingPattern countingPattern1 = new CountingPattern(0, 1);
-        countingPattern1.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        countingPattern1.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(countingPattern1);
 
@@ -746,7 +746,7 @@ public class ElementConverterTest extends junit.framework.TestCase {
         XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND_MULTIPLICITY = 40;
 
         CountingPattern countingPattern1 = new CountingPattern(0, null);
-        countingPattern1.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        countingPattern1.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(countingPattern1);
 
@@ -785,7 +785,7 @@ public class ElementConverterTest extends junit.framework.TestCase {
         XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND_MULTIPLICITY = 40;
 
         CountingPattern countingPattern1 = new CountingPattern(1, null);
-        countingPattern1.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        countingPattern1.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(countingPattern1);
 
@@ -824,7 +824,7 @@ public class ElementConverterTest extends junit.framework.TestCase {
         XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND_MULTIPLICITY = 2;
 
         CountingPattern countingPattern1 = new CountingPattern(1, 3);
-        countingPattern1.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        countingPattern1.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(countingPattern1);
 
@@ -863,7 +863,7 @@ public class ElementConverterTest extends junit.framework.TestCase {
         XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND_MULTIPLICITY = 2;
 
         CountingPattern countingPattern1 = new CountingPattern(1, 2);
-        countingPattern1.addParticle(new de.tudortmund.cs.bonxai.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
+        countingPattern1.addParticle(new de.tudortmund.cs.bonxai.xsd.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new de.tudortmund.cs.bonxai.xsd.Element("{}element1"))));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(countingPattern1);
 

@@ -54,6 +54,7 @@ public class PatternElementConverterTest extends junit.framework.TestCase {
     }
 
     private void parseAndPrepareRNG(String filePath) throws Exception {
+    	filePath = this.getClass().getResource("/"+filePath).getFile();
         this.rng = new RelaxNGSchema();
         RNGParser instance = new RNGParser(filePath, false);
         this.rng = instance.getRNGSchema();
@@ -183,7 +184,7 @@ public class PatternElementConverterTest extends junit.framework.TestCase {
 
         de.tudortmund.cs.bonxai.common.AnyPattern anyPattern = (de.tudortmund.cs.bonxai.common.AnyPattern) sequencePattern.getParticles().getFirst();
         assertEquals("##any", anyPattern.getNamespace());
-        assertEquals(ProcessContentsInstruction.Strict, anyPattern.getProcessContentsInstruction());
+        assertEquals(ProcessContentsInstruction.Skip, anyPattern.getProcessContentsInstruction());
     }
 
     /**
@@ -217,9 +218,9 @@ public class PatternElementConverterTest extends junit.framework.TestCase {
 
         SequencePattern sequencePattern = (SequencePattern) complexContentType.getParticle();
         assertEquals(1, sequencePattern.getParticles().size());
-        assertTrue(sequencePattern.getParticles().getFirst() instanceof de.tudortmund.cs.bonxai.common.ElementRef);
+        assertTrue(sequencePattern.getParticles().getFirst() instanceof de.tudortmund.cs.bonxai.xsd.ElementRef);
 
-        de.tudortmund.cs.bonxai.common.ElementRef elementRef = (de.tudortmund.cs.bonxai.common.ElementRef) sequencePattern.getParticles().getFirst();
+        de.tudortmund.cs.bonxai.xsd.ElementRef elementRef = (de.tudortmund.cs.bonxai.xsd.ElementRef) sequencePattern.getParticles().getFirst();
         assertEquals("http://www.myNamespace.org", elementRef.getElement().getNamespace());
 
         assertEquals(1, this.schema.getForeignSchemas().size());

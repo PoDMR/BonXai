@@ -32,8 +32,9 @@ public class StartElementConverterTest extends junit.framework.TestCase {
      */
     @Test
     public void testStartConversionWithToplevelElements() throws Exception {
-        String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/startElementConverterTests/startElements.xsd";
-
+        String uri = "/tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/startElementConverterTests/startElements.xsd";
+        uri = this.getClass().getResource(uri).getFile();
+        
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
         RelaxNGSchema relaxNGSchema = new RelaxNGSchema();
@@ -71,8 +72,9 @@ public class StartElementConverterTest extends junit.framework.TestCase {
      */
     @Test
     public void testStartConversionWithToplevelElements_one() throws Exception {
-        String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/startElementConverterTests/oneStartElement_ref.xsd";
-
+        String uri = "/tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/startElementConverterTests/oneStartElement_ref.xsd";
+        uri = this.getClass().getResource(uri).getFile();
+        
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
         RelaxNGSchema relaxNGSchema = new RelaxNGSchema();

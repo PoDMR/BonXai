@@ -84,6 +84,7 @@ public class ForeignSchemaLoaderTest extends junit.framework.TestCase {
     @Test
     public void testFindForeignSchema_findBaseType() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/foreignSchemaLoaderTests/findBaseType_root.xsd";
+        uri = this.getClass().getResource("/"+uri).getFile();
         XSDParser instance = new XSDParser(false, false);
         XSDSchema xmlSchema = instance.parse(uri);
 
@@ -168,6 +169,7 @@ public class ForeignSchemaLoaderTest extends junit.framework.TestCase {
     @Test
     public void testFindForeignSchema_namespaceSharing() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/foreignSchemaLoaderTests/namespaceSharing_root.xsd";
+        uri = this.getClass().getResource("/"+uri).getFile();
         XSDParser instance = new XSDParser(false, false);
         XSDSchema xmlSchema = instance.parse(uri);
 
@@ -214,6 +216,7 @@ public class ForeignSchemaLoaderTest extends junit.framework.TestCase {
     @Test
     public void testFindForeignSchema_absolutPath() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/foreignSchemaLoaderTests/absolutPath_root.xsd";
+        uri = this.getClass().getResource("/"+uri).getFile();
         XSDParser instance = new XSDParser(false, false);
         XSDSchema xmlSchema = instance.parse(uri);
 
@@ -245,6 +248,7 @@ public class ForeignSchemaLoaderTest extends junit.framework.TestCase {
     @Test
     public void testFindForeignSchema_twoSameSchema() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/foreignSchemaLoaderTests/twoSameSchema_root.xsd";
+        uri = this.getClass().getResource("/"+uri).getFile();
         XSDParser instance = new XSDParser(false, false);
         XSDSchema xmlSchema = instance.parse(uri);
 
@@ -265,6 +269,7 @@ public class ForeignSchemaLoaderTest extends junit.framework.TestCase {
     @Test
     public void testFindForeignSchema_allComponents() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/foreignSchemaLoaderTests/allComponents_root.xsd";
+        uri = this.getClass().getResource("/"+uri).getFile();
         XSDParser instance = new XSDParser(false, false);
         XSDSchema xmlSchema = instance.parse(uri);
 

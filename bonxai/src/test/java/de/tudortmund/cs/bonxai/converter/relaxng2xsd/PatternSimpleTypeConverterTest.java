@@ -11,6 +11,8 @@ import de.tudortmund.cs.bonxai.xsd.SimpleContentRestriction;
 import de.tudortmund.cs.bonxai.xsd.SimpleContentUnion;
 import de.tudortmund.cs.bonxai.xsd.SimpleType;
 import de.tudortmund.cs.bonxai.xsd.writer.XSDWriter;
+
+import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -42,8 +44,9 @@ public class PatternSimpleTypeConverterTest extends junit.framework.TestCase {
     }
 
     private void parseAndPrepareRNG(String filePath) throws Exception {
+    	URL url = this.getClass().getResource("/"+filePath);
         rng = new RelaxNGSchema();
-        RNGParser instance = new RNGParser(filePath, false);
+        RNGParser instance = new RNGParser(url.getFile(), false);
         rng = instance.getRNGSchema();
 
         XMLAttributeReplenisher xmlAttributeReplenisher = new XMLAttributeReplenisher(this.rng);

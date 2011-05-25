@@ -7,7 +7,7 @@ import de.tudortmund.cs.bonxai.common.AllPattern;
 import de.tudortmund.cs.bonxai.common.AnyPattern;
 import de.tudortmund.cs.bonxai.common.ChoicePattern;
 import de.tudortmund.cs.bonxai.common.CountingPattern;
-import de.tudortmund.cs.bonxai.common.ElementRef;
+import de.tudortmund.cs.bonxai.xsd.ElementRef;
 import de.tudortmund.cs.bonxai.common.GroupRef;
 import de.tudortmund.cs.bonxai.common.ProcessContentsInstruction;
 import de.tudortmund.cs.bonxai.common.SequencePattern;

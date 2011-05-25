@@ -1,5 +1,7 @@
 package de.tudortmund.cs.bonxai.xsd.tools;
 
+import java.net.URL;
+
 import de.tudortmund.cs.bonxai.xsd.XSDSchema;
 import de.tudortmund.cs.bonxai.xsd.parser.ForeignSchemaLoader;
 import de.tudortmund.cs.bonxai.xsd.parser.XSDParser;
@@ -19,11 +21,13 @@ public class GroupReplacerExampleTest extends junit.framework.TestCase {
     @Test
     public void testReplace() throws Exception {
         String uri = new String("tests/de/tudortmund/cs/bonxai/xsd/tools/groupReplacerTests/group.xsd");
+    	URL url = this.getClass().getResource("/"+uri);
+
 //        String uri = new String("tests/de/tudortmund/cs/bonxai/xsd/tools/groupReplacerTests/group1.xsd");
 //        String uri = new String("tests/de/tudortmund/cs/bonxai/xsd/tools/groupReplacerTests/group2.xsd");
 
         XSDParser instance = new XSDParser(false, false);
-        XSDSchema xsdSchema = instance.parse(uri);
+        XSDSchema xsdSchema = instance.parse(url.getFile());
 
         XSDWriter xsd_Writer = new XSDWriter(xsdSchema);
 

@@ -1105,6 +1105,7 @@ public class ConverterBaseTest extends junit.framework.TestCase {
     @Test
     public void testCollectAttributeNamesWithIDTypeRecursively_particle() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/converterBaseTests/attributeIDtype.xsd";
+        uri = this.getClass().getResource("/"+uri).getFile();
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
 

@@ -16,7 +16,6 @@
  */
 package de.tudortmund.cs.bonxai.common;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.LinkedHashSet;

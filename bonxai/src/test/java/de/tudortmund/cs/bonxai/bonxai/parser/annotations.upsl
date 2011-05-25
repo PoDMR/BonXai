@@ -1,8 +1,0 @@
-grammar {
-	@Attribute is a very nice attribute
-	@element i don't like element
-	//foo = mixed {
-		lax attribute * { Namespacelist1 },
-		empty 
-	}
-}

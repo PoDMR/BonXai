@@ -1,5 +1,7 @@
 package de.tudortmund.cs.bonxai.relaxng.tools;
 
+import java.net.URL;
+
 import de.tudortmund.cs.bonxai.relaxng.RelaxNGSchema;
 import de.tudortmund.cs.bonxai.relaxng.parser.RNGParser;
 import de.tudortmund.cs.bonxai.relaxng.writer.RNGWriter;
@@ -21,8 +23,9 @@ public class XMLAttributeReplenisherPresentationTest {
         String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/parser/rngs/relaxng.rng");
 //        String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/rngs/PatternDataMixed.rng");
 //        String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/parser/rngs/docbook5.rng.xml");
+    	URL url = this.getClass().getResource("/"+filePath);
 
-        RNGParser instance = new RNGParser(filePath, false);
+        RNGParser instance = new RNGParser(url.getFile(), false);
 
         RelaxNGSchema relaxNGSchema = instance.getRNGSchema();
 

@@ -508,7 +508,7 @@ TOKEN :
 
 <VARIABLE> TOKEN: {
 
-	<VAR_LABEL: (<BASECHAR>)+ >:DEFAULT
+	<VAR_LABEL: (<BASECHAR>)(<BASECHAR> | <DIGIT>)* >:DEFAULT
 |	<VAR_CONSTANT: ( <DIGIT> )+ >:DEFAULT
 |	<VAR_OPENING_ROUND_BRACKET: "(">:VARIABLE_OR 
 |	<VAR_AT: "@" > 
@@ -521,7 +521,7 @@ TOKEN :
 
 <VARIABLE_OR> TOKEN: {
 
-	<VAROR_LABEL: (<BASECHAR>)+ >
+	<VAROR_LABEL: (<BASECHAR>)(<BASECHAR> | <DIGIT>)* >
 |	<VAROR_CONSTANT: ( <DIGIT> )+ >
 |	<VAROR_OR: "|">
 |	<VAROR_COMMA: ",">
@@ -1067,7 +1067,7 @@ void ElementPattern() #ElementPattern: {Boolean empty=false; Boolean missing=fal
 void MixedRegex() #MixedRegex : {}
 { 
 
-( LOOKAHEAD(NamedType() ("?")? "&") All() | Regex()| BonxaiType() )
+( LOOKAHEAD(NamedType() (<QUESTION_MARK>)? <ANDLITERAL>) All() | Regex()| BonxaiType() )
 
 {
 		jjtThis.setNodeType("MixedRegex");
@@ -1082,7 +1082,7 @@ void MixedRegex() #MixedRegex : {}
 void All() #All : {}
 {
 
-NamedType() [ <QUESTION_MARK> ] ( <ANDLITERAL> NamedType() [ <QUESTION_MARK> ])+
+NamedType() |  [ <QUESTION_MARK> ] ( <ANDLITERAL> NamedType() [ <QUESTION_MARK> ])+
 
 
 	{

@@ -3,7 +3,6 @@ package de.tudortmund.cs.bonxai.xsd.setOperations.union;
 import de.tudortmund.cs.bonxai.common.AnyAttribute;
 import de.tudortmund.cs.bonxai.common.AnyPattern;
 import de.tudortmund.cs.bonxai.common.ChoicePattern;
-import de.tudortmund.cs.bonxai.common.ElementRef;
 import de.tudortmund.cs.bonxai.common.GroupRef;
 import de.tudortmund.cs.bonxai.common.ProcessContentsInstruction;
 import de.tudortmund.cs.bonxai.common.SequencePattern;
@@ -37,9 +36,9 @@ public class SchemaUnionGeneratorTest extends junit.framework.TestCase {
     @Test
     public void testGenerateUnion() throws Exception {
         XSDParser xmlSchemaParser = new XSDParser(false, false);
-        XSDSchema schemaA = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/setOperations/union/xsds/testGenerateUnionA.xsd");
-        XSDSchema schemaB = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/setOperations/union/xsds/testGenerateUnionB.xsd");
-        XSDSchema schemaC = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/setOperations/union/xsds/testGenerateUnionC.xsd");
+        XSDSchema schemaA = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/setOperations/union/xsds/testGenerateUnionA.xsd").getFile());
+        XSDSchema schemaB = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/setOperations/union/xsds/testGenerateUnionB.xsd").getFile());
+        XSDSchema schemaC = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/setOperations/union/xsds/testGenerateUnionC.xsd").getFile());
         LinkedHashSet<XSDSchema> minuendSchemata = new LinkedHashSet<XSDSchema>();
         minuendSchemata.add(schemaA);
         minuendSchemata.add(schemaB);

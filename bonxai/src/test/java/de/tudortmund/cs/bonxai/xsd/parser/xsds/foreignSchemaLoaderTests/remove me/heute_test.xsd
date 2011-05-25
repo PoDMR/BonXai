@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-
-    <xs:import namespace="http://www.w3.org/2001/XMLSchema" schemaLocation="importBase.xsd"/>
-
-    <xs:element name="blob"/>
-
-</xs:schema>

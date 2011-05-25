@@ -6,7 +6,7 @@ import de.tudortmund.cs.bonxai.common.AllPattern;
 import de.tudortmund.cs.bonxai.common.AnyPattern;
 import de.tudortmund.cs.bonxai.common.ChoicePattern;
 import de.tudortmund.cs.bonxai.common.CountingPattern;
-import de.tudortmund.cs.bonxai.common.ElementRef;
+import de.tudortmund.cs.bonxai.xsd.ElementRef;
 import de.tudortmund.cs.bonxai.common.GroupRef;
 import de.tudortmund.cs.bonxai.common.ProcessContentsInstruction;
 import de.tudortmund.cs.bonxai.common.SequencePattern;
@@ -682,8 +682,9 @@ public class ComplexTypeConverterTest extends junit.framework.TestCase {
 
         XSD2RelaxNGConverter.PREFIX_TYPE_DEFINE = "";
 
-        String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/complexTypeConverterTests/inheritance.xsd";
-
+        String uri = "/tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/complexTypeConverterTests/inheritance.xsd";
+        uri = this.getClass().getResource(uri).getFile();
+        
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
         ComplexTypeConverter instance = initializeCompleTypeConverter(xmlSchema);
@@ -757,8 +758,9 @@ public class ComplexTypeConverterTest extends junit.framework.TestCase {
     public void testConvert_ComplexType_simpleContentExtension() throws Exception {
         XSD2RelaxNGConverter.PREFIX_TYPE_DEFINE = "";
 
-        String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/complexTypeConverterTests/simpleContentExtension.xsd";
-
+        String uri = "/tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/complexTypeConverterTests/simpleContentExtension.xsd";
+        uri = this.getClass().getResource(uri).getFile();
+        
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
         ComplexTypeConverter instance = initializeCompleTypeConverter(xmlSchema);
@@ -799,8 +801,9 @@ public class ComplexTypeConverterTest extends junit.framework.TestCase {
     public void testConvert_ComplexType_simpleContentRestriction_content_and_baseComplexType_mixed() throws Exception {
         XSD2RelaxNGConverter.PREFIX_TYPE_DEFINE = "";
 
-        String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/complexTypeConverterTests/simpleContentRestriction_content_and_baseComplexType_mixed.xsd";
-
+        String uri = "/tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/complexTypeConverterTests/simpleContentRestriction_content_and_baseComplexType_mixed.xsd";
+        uri = this.getClass().getResource(uri).getFile();
+        
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
         ComplexTypeConverter instance = initializeCompleTypeConverter(xmlSchema);
@@ -845,8 +848,9 @@ public class ComplexTypeConverterTest extends junit.framework.TestCase {
     public void testConvert_ComplexType_complexContentExtension() throws Exception {
         XSD2RelaxNGConverter.PREFIX_TYPE_DEFINE = "";
 
-        String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/complexTypeConverterTests/complexContentExtension.xsd";
-
+        String uri = "/tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/complexTypeConverterTests/complexContentExtension.xsd";
+        uri = this.getClass().getResource(uri).getFile();
+        
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
         ComplexTypeConverter instance = initializeCompleTypeConverter(xmlSchema);
@@ -909,8 +913,9 @@ public class ComplexTypeConverterTest extends junit.framework.TestCase {
     public void testConvert_ComplexType_complexContentRestriction() throws Exception {
         XSD2RelaxNGConverter.PREFIX_TYPE_DEFINE = "";
 
-        String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/complexTypeConverterTests/complexContentRestriction.xsd";
-
+        String uri = "/tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/complexTypeConverterTests/complexContentRestriction.xsd";
+        uri = this.getClass().getResource(uri).getFile();
+        
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
         ComplexTypeConverter instance = initializeCompleTypeConverter(xmlSchema);

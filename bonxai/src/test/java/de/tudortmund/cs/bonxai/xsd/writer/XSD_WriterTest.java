@@ -25,7 +25,6 @@ import de.tudortmund.cs.bonxai.common.AnyPattern;
 import de.tudortmund.cs.bonxai.common.ChoicePattern;
 import de.tudortmund.cs.bonxai.common.CountingPattern;
 import de.tudortmund.cs.bonxai.common.DefaultNamespace;
-import de.tudortmund.cs.bonxai.common.ElementRef;
 import de.tudortmund.cs.bonxai.common.GroupRef;
 import de.tudortmund.cs.bonxai.common.IdentifiedNamespace;
 import de.tudortmund.cs.bonxai.common.NamespaceList;

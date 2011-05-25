@@ -2,7 +2,7 @@ package de.tudortmund.cs.bonxai.xsd.tools;
 
 import de.tudortmund.cs.bonxai.xsd.Element;
 import de.tudortmund.cs.bonxai.common.AllPattern;
-import de.tudortmund.cs.bonxai.common.ElementRef;
+import de.tudortmund.cs.bonxai.xsd.ElementRef;
 import de.tudortmund.cs.bonxai.common.GroupRef;
 import de.tudortmund.cs.bonxai.common.Particle;
 import de.tudortmund.cs.bonxai.common.ParticleContainer;
@@ -62,8 +62,9 @@ public class InterleaveHandlerTest extends junit.framework.TestCase {
     @Test
     public void testInterleaveGroup() throws Exception {
 
-        String uri = "tests/de/tudortmund/cs/bonxai/xsd/tools/interleaveHandlerTests/interleaveGroup_root.xsd";
-
+        String uri = "/tests/de/tudortmund/cs/bonxai/xsd/tools/interleaveHandlerTests/interleaveGroup_root.xsd";
+        uri = this.getClass().getResource(uri).getFile();
+        
         XSDParser instance = new XSDParser(false, false);
 
         XSDParser.allowInvalidAll = true;
@@ -194,8 +195,9 @@ public class InterleaveHandlerTest extends junit.framework.TestCase {
     @Test
     public void testNewIdentifier() throws Exception {
 
-        String uri = "tests/de/tudortmund/cs/bonxai/xsd/tools/interleaveHandlerTests/interleaveNewIdentifier_root.xsd";
-
+        String uri = "/tests/de/tudortmund/cs/bonxai/xsd/tools/interleaveHandlerTests/interleaveNewIdentifier_root.xsd";
+        uri = this.getClass().getResource(uri).getFile();
+        
         XSDParser instance = new XSDParser(false, false);
 
         XSDParser.allowInvalidAll = true;

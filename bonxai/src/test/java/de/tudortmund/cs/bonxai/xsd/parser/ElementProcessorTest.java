@@ -1,7 +1,7 @@
 package de.tudortmund.cs.bonxai.xsd.parser;
 
 import de.tudortmund.cs.bonxai.common.CountingPattern;
-import de.tudortmund.cs.bonxai.common.ElementRef;
+import de.tudortmund.cs.bonxai.xsd.ElementRef;
 import de.tudortmund.cs.bonxai.common.SequencePattern;
 import de.tudortmund.cs.bonxai.xsd.*;
 import de.tudortmund.cs.bonxai.xsd.parser.exceptions.attribute.*;
@@ -11,7 +11,6 @@ import de.tudortmund.cs.bonxai.xsd.parser.exceptions.type.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

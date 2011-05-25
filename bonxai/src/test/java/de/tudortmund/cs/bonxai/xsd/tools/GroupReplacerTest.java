@@ -25,8 +25,9 @@ public class GroupReplacerTest extends junit.framework.TestCase {
      */
     @Test
     public void testReplace() throws Exception {
-        String uri = new String("tests/de/tudortmund/cs/bonxai/xsd/tools/groupReplacerTests/group.xsd");
-
+        String uri = new String("/tests/de/tudortmund/cs/bonxai/xsd/tools/groupReplacerTests/group.xsd");
+        uri = this.getClass().getResource(uri).getFile();
+        
         XSDParser instance = new XSDParser(false, false);
         XSDSchema xsdSchema = instance.parse(uri);
 

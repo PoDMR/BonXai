@@ -27,8 +27,8 @@ public class SchemaDifferenceGeneratorTest extends junit.framework.TestCase {
     @Test
     public void testGenerateDifference() throws Exception {
         XSDParser xmlSchemaParser = new XSDParser(false, false);
-        XSDSchema schemaA = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/setOperations/difference/xsds/testGenerateDifferenceA.xsd");
-        XSDSchema schemaB = xmlSchemaParser.parse("tests/de/tudortmund/cs/bonxai/xsd/setOperations/difference/xsds/testGenerateDifferenceB.xsd");
+        XSDSchema schemaA = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/setOperations/difference/xsds/testGenerateDifferenceA.xsd").getFile());
+        XSDSchema schemaB = xmlSchemaParser.parse(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/xsd/setOperations/difference/xsds/testGenerateDifferenceB.xsd").getFile());
         LinkedHashMap<String, XSDSchema> namespaceOutputSchemaMap = new LinkedHashMap<String, XSDSchema>();
         LinkedHashMap<AnyAttribute, XSDSchema> anyAttributeOldSchemaMap = new LinkedHashMap<AnyAttribute, XSDSchema>();
         LinkedHashMap<Type, XSDSchema> typeOldSchemaMap = new LinkedHashMap<Type, XSDSchema>();

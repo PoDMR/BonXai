@@ -68,8 +68,9 @@ public class NameClassAnalyzerPresentationTest {
 //        String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/rngs/name/name8.rng");
 
         // complex Example: --> printed
-        String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/rngs/name/name9.rng");
-
+        String filePath = new String("/tests/de/tudortmund/cs/bonxai/relaxng/tools/rngs/name/name9.rng");
+        filePath = this.getClass().getResource(filePath).getFile();
+        
 
 
         RNGParser parser = new RNGParser(filePath, false);

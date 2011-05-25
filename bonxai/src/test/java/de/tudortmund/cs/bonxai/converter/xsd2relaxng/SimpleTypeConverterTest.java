@@ -1050,7 +1050,8 @@ public class SimpleTypeConverterTest extends junit.framework.TestCase {
 
         XSD2RelaxNGConverter.PREFIX_TYPE_DEFINE = "";
 
-        String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/simpleTypeConverterTests/inheritance.xsd";
+        String uri = "/tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/simpleTypeConverterTests/inheritance.xsd";
+        uri = this.getClass().getResource(uri).getFile();
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
 

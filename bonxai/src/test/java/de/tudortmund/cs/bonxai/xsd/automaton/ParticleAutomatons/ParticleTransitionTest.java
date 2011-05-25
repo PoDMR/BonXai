@@ -2,6 +2,7 @@ package de.tudortmund.cs.bonxai.xsd.automaton.ParticleAutomatons;
 
 import de.tudortmund.cs.bonxai.common.*;
 import de.tudortmund.cs.bonxai.xsd.Element;
+import de.tudortmund.cs.bonxai.xsd.ElementRef;
 import de.tudortmund.cs.bonxai.xsd.Group;
 import java.util.*;
 import org.junit.Before;

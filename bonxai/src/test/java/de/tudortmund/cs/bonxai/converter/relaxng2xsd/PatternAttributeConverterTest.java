@@ -13,6 +13,8 @@ import de.tudortmund.cs.bonxai.xsd.XSDSchema;
 import de.tudortmund.cs.bonxai.xsd.SimpleContentRestriction;
 import de.tudortmund.cs.bonxai.xsd.SimpleContentUnion;
 import de.tudortmund.cs.bonxai.xsd.SimpleType;
+
+import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -43,8 +45,9 @@ public class PatternAttributeConverterTest extends junit.framework.TestCase {
     }
 
     private void parseAndPrepareRNG(String filePath) throws Exception {
+    	URL url = this.getClass().getResource("/"+filePath);
         this.rng = new RelaxNGSchema();
-        RNGParser instance = new RNGParser(filePath, false);
+        RNGParser instance = new RNGParser(url.getFile(), false);
         this.rng = instance.getRNGSchema();
 
         XMLAttributeReplenisher xmlAttributeReplenisher = new XMLAttributeReplenisher(this.rng);
@@ -237,7 +240,7 @@ public class PatternAttributeConverterTest extends junit.framework.TestCase {
         de.tudortmund.cs.bonxai.common.AnyAttribute anyAttribute = (de.tudortmund.cs.bonxai.common.AnyAttribute) result.getFirst();
 
         assertEquals("##any", anyAttribute.getNamespace());
-        assertEquals(ProcessContentsInstruction.Strict, anyAttribute.getProcessContentsInstruction());
+        assertEquals(ProcessContentsInstruction.Skip, anyAttribute.getProcessContentsInstruction());
     }
 
     /**
@@ -479,7 +482,7 @@ public class PatternAttributeConverterTest extends junit.framework.TestCase {
         de.tudortmund.cs.bonxai.common.AnyAttribute anyAttribute = (de.tudortmund.cs.bonxai.common.AnyAttribute) result.getLast();
 
         assertEquals("##any", anyAttribute.getNamespace());
-        assertEquals(ProcessContentsInstruction.Strict, anyAttribute.getProcessContentsInstruction());
+        assertEquals(ProcessContentsInstruction.Skip, anyAttribute.getProcessContentsInstruction());
         de.tudortmund.cs.bonxai.xsd.Attribute attribute2 = (de.tudortmund.cs.bonxai.xsd.Attribute) result.getFirst();
         assertEquals("{}a1", attribute2.getName());
         assertTrue(this.schema.getAttributeGroups().isEmpty());

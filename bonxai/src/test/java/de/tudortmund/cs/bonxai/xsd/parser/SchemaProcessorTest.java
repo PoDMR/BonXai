@@ -5,9 +5,6 @@ import de.tudortmund.cs.bonxai.xsd.XSDSchema.FinalDefault;
 import de.tudortmund.cs.bonxai.xsd.XSDSchema.Qualification;
 
 
-import de.tudortmund.cs.bonxai.common.CountingPattern;
-import de.tudortmund.cs.bonxai.common.ElementRef;
-import de.tudortmund.cs.bonxai.common.SequencePattern;
 import de.tudortmund.cs.bonxai.xsd.*;
 import de.tudortmund.cs.bonxai.xsd.Element;
 import org.junit.Before;
@@ -15,16 +12,7 @@ import org.junit.Test;
 
 import de.tudortmund.cs.bonxai.xsd.XSDSchema;
 import de.tudortmund.cs.bonxai.xsd.parser.exceptions.attribute.*;
-import de.tudortmund.cs.bonxai.xsd.parser.exceptions.attribute.countingpattern.*;
 import de.tudortmund.cs.bonxai.xsd.parser.exceptions.content.*;
-import de.tudortmund.cs.bonxai.xsd.parser.exceptions.type.*;
-
-import java.io.*;
-import javax.xml.parsers.*;
-import org.junit.*;
-import org.w3c.dom.*;
-
-import static org.junit.Assert.*;
 
 /**
  *

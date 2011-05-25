@@ -19,6 +19,7 @@ package de.tudortmund.cs.bonxai.xsd;
 import java.util.LinkedList;
 
 import de.tudortmund.cs.bonxai.common.*;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -688,6 +689,11 @@ public class XSDSchema {
         this.elements.add(val);
     }
 
+	public void removeElement(SymbolTableRef<Element> elementRef) {
+		this.elements.remove(elementRef);
+		this.elementSymbolTable.removeReference(elementRef.getKey());
+	}
+	
     /**
      * Returns all {@link ForeignSchema}s referenced in this schema.
      *
@@ -893,5 +899,7 @@ public class XSDSchema {
     public HashSet<String> getConstraintNames() {
         return constraintNames;
     }
+
+
 }
 

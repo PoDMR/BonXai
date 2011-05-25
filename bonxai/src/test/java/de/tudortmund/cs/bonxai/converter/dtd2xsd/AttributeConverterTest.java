@@ -32,7 +32,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
     @Override
     public void setUp() throws Exception {
         schema = new XSDSchema();
-        String filePath = new String("tests/de/tudortmund/cs/bonxai/converter/dtd2xsd/dtds/attributeConverterTests/attributes.xml");
+        String filePath = this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/converter/dtd2xsd/dtds/attributeConverterTests/attributes.xml").getFile();
         DTDSAXParser dtdParser = new DTDSAXParser(false);
         this.dtd = dtdParser.parseXML(filePath);
         this.dtdElement = dtd.getRootElement();

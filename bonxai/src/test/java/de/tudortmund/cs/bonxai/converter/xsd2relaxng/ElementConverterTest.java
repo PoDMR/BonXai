@@ -212,8 +212,9 @@ public class ElementConverterTest extends junit.framework.TestCase {
      */
     @Test
     public void testHandleSubstitutions() throws Exception {
-        String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/elementConverterTests/elementSubstitutions.xsd";
-
+        String uri = "/tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/elementConverterTests/elementSubstitutions.xsd";
+        uri = this.getClass().getResource(uri).getFile();
+        
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
         RelaxNGSchema relaxNGSchema = new RelaxNGSchema();

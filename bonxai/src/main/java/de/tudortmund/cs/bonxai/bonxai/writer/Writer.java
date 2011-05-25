@@ -485,7 +485,7 @@ public class Writer {
      * Visit ConstraintList object.
      */
     protected void traverseConstraints(ConstraintList constraints, Visitor visitor) {
-        if (!constraints.getConstraints().isEmpty()) {
+        if (constraints!=null && !constraints.getConstraints().isEmpty()) {
             visitor.startConstraintList(constraints);
             traverseConstraintList(constraints.getConstraints(), visitor);
             visitor.endConstraintList(constraints);

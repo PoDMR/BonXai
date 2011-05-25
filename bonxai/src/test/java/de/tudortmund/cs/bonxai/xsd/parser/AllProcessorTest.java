@@ -23,7 +23,7 @@ public class AllProcessorTest extends junit.framework.TestCase{
     SchemaProcessor schemaProcessor;
 
     /**
-     * Befor every test the schema and schemaProcessor are refreshed
+     * Before every test the schema and schemaProcessor are refreshed
      */
     @Before
     @Override
@@ -105,7 +105,7 @@ public class AllProcessorTest extends junit.framework.TestCase{
     @Test
     public void testSameElementUnderAllException() throws Exception {
         try {
-            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/allTests/all_same_element_under all.xsd"));
+            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/allTests/all_same_element_under_all.xsd"));
         } catch (SameElementUnderAllException error) {
             return;
         }

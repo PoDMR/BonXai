@@ -92,7 +92,7 @@ public class AttributeGroupProcessorTest extends junit.framework.TestCase {
     @Test
     public void testInvalidQNameException() throws Exception {
         try {
-            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributegroupTests/attributegroup_invalid_qname.xsd"));
+            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributeGroupTests/attributegroup_invalid_qname.xsd"));
         } catch (InvalidQNameException error) {
             return;
         }
@@ -102,7 +102,7 @@ public class AttributeGroupProcessorTest extends junit.framework.TestCase {
     @Test
     public void testExclusiveAttributesException() throws Exception {
         try {
-            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributegroupTests/attributegroup_exclusive_attributes.xsd"));
+            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributeGroupTests/attributegroup_exclusive_attributes.xsd"));
         } catch (ExclusiveAttributesException error) {
             return;
         }
@@ -112,7 +112,7 @@ public class AttributeGroupProcessorTest extends junit.framework.TestCase {
     @Test
     public void testEmptyIdExceptionWithAttributeGroupRef() throws Exception {
         try {
-            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributegroupTests/attributegroup_empty_id_2.xsd"));
+            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributeGroupTests/attributegroup_empty_id_2.xsd"));
         } catch (EmptyIdException error) {
             return;
         }
@@ -122,7 +122,7 @@ public class AttributeGroupProcessorTest extends junit.framework.TestCase {
     @Test
     public void testInvalidNCNameException() throws Exception {
         try {
-            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributegroupTests/attributegroup_invalid_ncname.xsd"));
+            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributeGroupTests/attributegroup_invalid_ncname.xsd"));
         } catch (InvalidNCNameException error) {
             return;
         }
@@ -132,7 +132,7 @@ public class AttributeGroupProcessorTest extends junit.framework.TestCase {
     @Test
     public void testEmptyIdExceptionWithAttributeGroup() throws Exception {
         try {
-            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributegroupTests/attributegroup_empty_id.xsd"));
+            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributeGroupTests/attributegroup_empty_id.xsd"));
         } catch (EmptyIdException error) {
             return;
         }
@@ -142,7 +142,7 @@ public class AttributeGroupProcessorTest extends junit.framework.TestCase {
     @Test
     public void testAnyAttributeIsNotLastException() throws Exception {
         try {
-            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributegroupTests/attributegroup_anyattribute.xsd"));
+            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributeGroupTests/attributegroup_anyattribute.xsd"));
         } catch (AnyAttributeIsNotLastException error) {
             return;
         }
@@ -152,7 +152,7 @@ public class AttributeGroupProcessorTest extends junit.framework.TestCase {
     @Test
     public void testMultipleAnnotationException() throws Exception {
         try {
-            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributegroupTests/attributegroup_multi_annot.xsd"));
+            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributeGroupTests/attributegroup_multi_annot.xsd"));
         } catch (MultipleAnnotationException error) {
             return;
         }
@@ -162,7 +162,7 @@ public class AttributeGroupProcessorTest extends junit.framework.TestCase {
     @Test
     public void testUnsupportedContentException() throws Exception {
         try {
-            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributegroupTests/attributegroup_wrong_content.xsd"));
+            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/attributeGroupTests/attributegroup_wrong_content.xsd"));
         } catch (UnsupportedContentException error) {
             return;
         }

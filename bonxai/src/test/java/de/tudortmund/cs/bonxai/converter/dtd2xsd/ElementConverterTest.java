@@ -4,7 +4,7 @@ import de.tudortmund.cs.bonxai.common.AllPattern;
 import de.tudortmund.cs.bonxai.common.AnyPattern;
 import de.tudortmund.cs.bonxai.common.ChoicePattern;
 import de.tudortmund.cs.bonxai.common.CountingPattern;
-import de.tudortmund.cs.bonxai.common.ElementRef;
+import de.tudortmund.cs.bonxai.xsd.ElementRef;
 import de.tudortmund.cs.bonxai.common.IdentifiedNamespace;
 import de.tudortmund.cs.bonxai.common.ProcessContentsInstruction;
 import de.tudortmund.cs.bonxai.common.SequencePattern;
@@ -46,7 +46,7 @@ public class ElementConverterTest extends junit.framework.TestCase {
     @Override
     public void setUp() throws Exception {
         schema = new XSDSchema();
-        String filePath = new String("tests/de/tudortmund/cs/bonxai/converter/dtd2xsd/dtds/elementConverterTests/elements.xml");
+        String filePath = this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/converter/dtd2xsd/dtds/elementConverterTests/elements.xml").getFile();
         DTDSAXParser dtdParser = new DTDSAXParser(false);
         this.dtd = dtdParser.parseXML(filePath);
         this.dtdElement = dtd.getRootElement();
@@ -739,6 +739,7 @@ public class ElementConverterTest extends junit.framework.TestCase {
             schema.setTargetNamespace(DTD2XSDConverter.XMLSCHEMA_NAMESPACE);
             schema.getNamespaceList().addIdentifiedNamespace(new IdentifiedNamespace("xs", DTD2XSDConverter.XMLSCHEMA_NAMESPACE));
             String filePath = new String("tests/de/tudortmund/cs/bonxai/converter/dtd2xsd/dtds/elementConverterTests/elements_duplicate_attributes.xml");
+            filePath = this.getClass().getResource("/"+filePath).getFile();
             DTDSAXParser dtdParser = new DTDSAXParser(false);
             this.dtd = dtdParser.parseXML(filePath);
             this.dtdElement = dtd.getRootElement();
@@ -763,6 +764,7 @@ public class ElementConverterTest extends junit.framework.TestCase {
             schema.setTargetNamespace(DTD2XSDConverter.XMLSCHEMA_NAMESPACE);
             schema.getNamespaceList().addIdentifiedNamespace(new IdentifiedNamespace("xs", DTD2XSDConverter.XMLSCHEMA_NAMESPACE));
             String filePath = new String("tests/de/tudortmund/cs/bonxai/converter/dtd2xsd/dtds/elementConverterTests/elements_duplicate_elements.xml");
+            filePath = this.getClass().getResource("/"+filePath).getFile();
             DTDSAXParser dtdParser = new DTDSAXParser(false);
             this.dtd = dtdParser.parseXML(filePath);
             this.dtdElement = dtd.getRootElement();
@@ -787,6 +789,7 @@ public class ElementConverterTest extends junit.framework.TestCase {
             schema.setTargetNamespace(DTD2XSDConverter.XMLSCHEMA_NAMESPACE);
             schema.getNamespaceList().addIdentifiedNamespace(new IdentifiedNamespace("xs", DTD2XSDConverter.XMLSCHEMA_NAMESPACE));
             String filePath = new String("tests/de/tudortmund/cs/bonxai/converter/dtd2xsd/dtds/elementConverterTests/elements_unsupported_particle.xml");
+            filePath = this.getClass().getResource("/"+filePath).getFile();
             DTDSAXParser dtdParser = new DTDSAXParser(false);
             this.dtd = dtdParser.parseXML(filePath);
             this.dtdElement = dtd.getRootElement();

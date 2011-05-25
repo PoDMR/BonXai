@@ -35,6 +35,8 @@ public class NameClassAnalyzerTest extends junit.framework.TestCase {
     }
 
     private void parseAndPrepareRNG(String filePath) throws Exception {
+        filePath = this.getClass().getResource("/"+filePath).getFile();
+
         rng = new RelaxNGSchema();
         RNGParser instance = new RNGParser(filePath, false);
         rng = instance.getRNGSchema();
@@ -143,7 +145,7 @@ public class NameClassAnalyzerTest extends junit.framework.TestCase {
         assertTrue(currentValue instanceof AnyPattern);
         AnyPattern anyPattern = (AnyPattern) currentValue;
         assertEquals("##any", anyPattern.getNamespace());
-        assertEquals(ProcessContentsInstruction.Strict, anyPattern.getProcessContentsInstruction());
+        assertEquals(ProcessContentsInstruction.Skip, anyPattern.getProcessContentsInstruction());
     }
 
     /**
@@ -168,7 +170,7 @@ public class NameClassAnalyzerTest extends junit.framework.TestCase {
         assertTrue(currentValue instanceof AnyPattern);
         AnyPattern anyPattern = (AnyPattern) currentValue;
         assertEquals("http://www.example.org", anyPattern.getNamespace());
-        assertEquals(ProcessContentsInstruction.Strict, anyPattern.getProcessContentsInstruction());
+        assertEquals(ProcessContentsInstruction.Skip, anyPattern.getProcessContentsInstruction());
     }
 
     /**
@@ -193,7 +195,7 @@ public class NameClassAnalyzerTest extends junit.framework.TestCase {
         assertTrue(currentValue instanceof AnyPattern);
         AnyPattern anyPattern = (AnyPattern) currentValue;
         assertEquals("##local", anyPattern.getNamespace());
-        assertEquals(ProcessContentsInstruction.Strict, anyPattern.getProcessContentsInstruction());
+        assertEquals(ProcessContentsInstruction.Skip, anyPattern.getProcessContentsInstruction());
     }
 
     /**
@@ -249,7 +251,7 @@ public class NameClassAnalyzerTest extends junit.framework.TestCase {
         assertTrue(currentValue instanceof AnyPattern);
         AnyPattern anyPattern2 = (AnyPattern) currentValue;
         assertEquals("http://example.org", anyPattern2.getNamespace());
-        assertEquals(ProcessContentsInstruction.Strict, anyPattern2.getProcessContentsInstruction());
+        assertEquals(ProcessContentsInstruction.Skip, anyPattern2.getProcessContentsInstruction());
     }
 
     /**

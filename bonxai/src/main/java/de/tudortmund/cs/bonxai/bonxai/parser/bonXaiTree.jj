@@ -509,7 +509,7 @@ TOKEN :
 
 <VARIABLE> TOKEN: {
 
-	<VAR_LABEL: (<BASECHAR>)+ >:DEFAULT
+	<VAR_LABEL: (<BASECHAR>)(<BASECHAR> | <DIGIT>)* >:DEFAULT
 |	<VAR_CONSTANT: ( <DIGIT> )+ >:DEFAULT
 |	<VAR_OPENING_ROUND_BRACKET: "(">:VARIABLE_OR 
 |	<VAR_AT: "@" > 
@@ -522,7 +522,7 @@ TOKEN :
 
 <VARIABLE_OR> TOKEN: {
 
-	<VAROR_LABEL: (<BASECHAR>)+ >
+	<VAROR_LABEL: (<BASECHAR>)(<BASECHAR> | <DIGIT>)* >
 |	<VAROR_CONSTANT: ( <DIGIT> )+ >
 |	<VAROR_OR: "|">
 |	<VAROR_COMMA: ",">
@@ -1903,7 +1903,7 @@ void MixedRegex()             : {/*@bgen(jjtree) MixedRegex */
 try {
 /*@egen*/ 
 
-( LOOKAHEAD(NamedType() ("?")? "&") All() | Regex()| BonxaiType() )/*@bgen(jjtree)*/
+( LOOKAHEAD(NamedType() (<QUESTION_MARK>)? <ANDLITERAL>) All() | Regex()| BonxaiType() )/*@bgen(jjtree)*/
 {
   jjtree.closeNodeScope(jjtn000, true);
   jjtc000 = false;

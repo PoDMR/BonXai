@@ -25,8 +25,9 @@ public class BlockFinalSpreadingHandlerTest extends junit.framework.TestCase {
      */
     @Test
     public void testSpread() throws Exception {
-        String uri = "tests/de/tudortmund/cs/bonxai/xsd/tools/blockFinalSpreadingHandlerTests/blockFinal.xsd";
-
+        String uri = "/tests/de/tudortmund/cs/bonxai/xsd/tools/blockFinalSpreadingHandlerTests/blockFinal.xsd";
+        uri = this.getClass().getResource(uri).getFile();
+        
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
 

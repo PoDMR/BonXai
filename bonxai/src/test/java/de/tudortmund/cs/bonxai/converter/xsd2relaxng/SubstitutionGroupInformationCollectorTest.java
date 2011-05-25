@@ -55,6 +55,8 @@ public class SubstitutionGroupInformationCollectorTest extends junit.framework.T
     public void testGetSubstitutionGroupInformation_substitutionGroupBlockRestriction() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/substitutionGroupInformationCollectorTests/substitutionGroupBlockRestriction.xsd";
 
+        uri = this.getClass().getResource("/"+uri).getFile();
+
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
 
@@ -83,6 +85,8 @@ public class SubstitutionGroupInformationCollectorTest extends junit.framework.T
     @Test
     public void testGetSubstitutionGroupInformation_substitutionGroupBlockExtension() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/substitutionGroupInformationCollectorTests/substitutionGroupBlockExtension.xsd";
+
+        uri = this.getClass().getResource("/"+uri).getFile();
 
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
@@ -120,6 +124,8 @@ public class SubstitutionGroupInformationCollectorTest extends junit.framework.T
     public void testGetSubstitutionGroupInformation_substitutionGroupBlockSubstitution() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/substitutionGroupInformationCollectorTests/substitutionGroupBlockSubstitution.xsd";
 
+        uri = this.getClass().getResource("/"+uri).getFile();
+
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
 
@@ -138,6 +144,8 @@ public class SubstitutionGroupInformationCollectorTest extends junit.framework.T
     public void testGetSubstitutionGroupInformation_substitutionGroupNested() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/substitutionGroupInformationCollectorTests/substitutionGroupNested.xsd";
 
+        uri = this.getClass().getResource("/"+uri).getFile();
+        
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
 

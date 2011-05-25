@@ -19,7 +19,9 @@ public class XMLAttributeReplenisherTest extends junit.framework.TestCase {
     public void testStartReplenishment_element() throws Exception {
 
         String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/XMLAttributeReplenisherTest/element.rng");
+        filePath = this.getClass().getResource("/"+filePath).getFile();
 
+        
         RNGParser instance = new RNGParser(filePath, false);
 
         RelaxNGSchema relaxNGSchema = instance.getRNGSchema();
@@ -53,6 +55,7 @@ public class XMLAttributeReplenisherTest extends junit.framework.TestCase {
     public void testStartReplenishment_attribute() throws Exception {
 
         String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/XMLAttributeReplenisherTest/attribute.rng");
+        filePath = this.getClass().getResource("/"+filePath).getFile();
 
         RNGParser instance = new RNGParser(filePath, false);
 
@@ -88,6 +91,7 @@ public class XMLAttributeReplenisherTest extends junit.framework.TestCase {
     public void testStartReplenishment_group() throws Exception {
 
         String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/XMLAttributeReplenisherTest/group.rng");
+        filePath = this.getClass().getResource("/"+filePath).getFile();
 
         RNGParser instance = new RNGParser(filePath, false);
 
@@ -122,6 +126,7 @@ public class XMLAttributeReplenisherTest extends junit.framework.TestCase {
     public void testStartReplenishment_interleave() throws Exception {
 
         String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/XMLAttributeReplenisherTest/interleave.rng");
+        filePath = this.getClass().getResource("/"+filePath).getFile();
 
         RNGParser instance = new RNGParser(filePath, false);
 
@@ -156,6 +161,7 @@ public class XMLAttributeReplenisherTest extends junit.framework.TestCase {
     public void testStartReplenishment_choice() throws Exception {
 
         String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/XMLAttributeReplenisherTest/choice.rng");
+        filePath = this.getClass().getResource("/"+filePath).getFile();
 
         RNGParser instance = new RNGParser(filePath, false);
 
@@ -190,6 +196,7 @@ public class XMLAttributeReplenisherTest extends junit.framework.TestCase {
     public void testStartReplenishment_optional() throws Exception {
 
         String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/XMLAttributeReplenisherTest/optional.rng");
+        filePath = this.getClass().getResource("/"+filePath).getFile();
 
         RNGParser instance = new RNGParser(filePath, false);
 
@@ -224,6 +231,7 @@ public class XMLAttributeReplenisherTest extends junit.framework.TestCase {
     public void testStartReplenishment_zeroOrMore() throws Exception {
 
         String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/XMLAttributeReplenisherTest/zeroOrMore.rng");
+        filePath = this.getClass().getResource("/"+filePath).getFile();
 
         RNGParser instance = new RNGParser(filePath, false);
 
@@ -258,6 +266,7 @@ public class XMLAttributeReplenisherTest extends junit.framework.TestCase {
     public void testStartReplenishment_oneOrMore() throws Exception {
 
         String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/XMLAttributeReplenisherTest/oneOrMore.rng");
+        filePath = this.getClass().getResource("/"+filePath).getFile();
 
         RNGParser instance = new RNGParser(filePath, false);
 
@@ -292,6 +301,7 @@ public class XMLAttributeReplenisherTest extends junit.framework.TestCase {
     public void testStartReplenishment_list() throws Exception {
 
         String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/XMLAttributeReplenisherTest/list.rng");
+        filePath = this.getClass().getResource("/"+filePath).getFile();
 
         RNGParser instance = new RNGParser(filePath, false);
 
@@ -326,6 +336,7 @@ public class XMLAttributeReplenisherTest extends junit.framework.TestCase {
     public void testStartReplenishment_mixed() throws Exception {
 
         String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/XMLAttributeReplenisherTest/mixed.rng");
+        filePath = this.getClass().getResource("/"+filePath).getFile();
 
         RNGParser instance = new RNGParser(filePath, false);
 
@@ -360,6 +371,7 @@ public class XMLAttributeReplenisherTest extends junit.framework.TestCase {
     public void testStartReplenishment_grammar() throws Exception {
 
         String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/tools/XMLAttributeReplenisherTest/grammar.rng");
+        filePath = this.getClass().getResource("/"+filePath).getFile();
 
         RNGParser instance = new RNGParser(filePath, false);
 

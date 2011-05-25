@@ -58,6 +58,8 @@ public class InheritanceInformationCollectorTest extends junit.framework.TestCas
     @Test
     public void testCollectInformation() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/inheritanceInformationCollectorTests/inheritance.xsd";
+        uri = this.getClass().getResource("/"+uri).getFile();
+
 
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
@@ -85,6 +87,7 @@ public class InheritanceInformationCollectorTest extends junit.framework.TestCas
     @Test
     public void testCollectInformation_restriction() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/inheritanceInformationCollectorTests/inheritance_block_restriction.xsd";
+        uri = this.getClass().getResource("/"+uri).getFile();
 
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
@@ -103,6 +106,7 @@ public class InheritanceInformationCollectorTest extends junit.framework.TestCas
     @Test
     public void testCollectInformation_extension() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/inheritanceInformationCollectorTests/inheritance_block_extension.xsd";
+        uri = this.getClass().getResource("/"+uri).getFile();
 
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
@@ -121,6 +125,7 @@ public class InheritanceInformationCollectorTest extends junit.framework.TestCas
     @Test
     public void testCollectInformation_all() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/inheritanceInformationCollectorTests/inheritance_block_all.xsd";
+        uri = this.getClass().getResource("/"+uri).getFile();
 
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
@@ -140,6 +145,7 @@ public class InheritanceInformationCollectorTest extends junit.framework.TestCas
     @Test
     public void testGetAllTypeSubstitutionsForElement() throws Exception {
         String uri = "tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/inheritanceInformationCollectorTests/inheritance_block_restriction_element.xsd";
+        uri = this.getClass().getResource("/"+uri).getFile();
 
         XSDParser xsdParser = new XSDParser(false, false);
         XSDSchema xmlSchema = xsdParser.parse(uri);
