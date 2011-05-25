@@ -31,7 +31,7 @@ public class XMLSamplerTest extends TestCase {
     public void test_fileListConsistency() throws Exception {
         final int nrSamplers = 3;
         final int nrFiles = 20;
-        final String dirName = "test-data/multi";
+        final String dirName = this.getClass().getResource("/test-data/multi").getFile();
         XMLSampler[] samplers = new XMLSampler[nrSamplers];
         for (int i = 0; i < samplers.length; i++) {
             samplers[i] = new XMLSampler();
@@ -50,7 +50,7 @@ public class XMLSamplerTest extends TestCase {
     public void test_contextFAConsistency() throws Exception {
         final int nrSamplers = 3;
         final int nrFiles = 20;
-        final String dirName = "test-data/multi";
+        final String dirName = this.getClass().getResource("/test-data/multi").getFile();
         XMLSampler[] samplers = new XMLSampler[nrSamplers];
         for (int i = 0; i < samplers.length; i++) {
             samplers[i] = new XMLSampler();
@@ -67,7 +67,7 @@ public class XMLSamplerTest extends TestCase {
     public void test_contentModelConsistency() throws Exception {
         final int nrSamplers = 3;
         final int nrFiles = 20;
-        final String dirName = "test-data/multi";
+        final String dirName = this.getClass().getResource("/test-data/multi").getFile();
         XMLSampler[] samplers = new XMLSampler[nrSamplers];
         for (int i = 0; i < samplers.length; i++) {
             samplers[i] = new XMLSampler();

@@ -1,0 +1,107 @@
+4	(EPSILON)	transformed
+33	(a)	transformed
+37	(? (a))	transformed
+41	(+ (a))	transformed
+45	(? (+ (a)))	transformed
+98	(. (b) (a))	transformed
+99	(. (? (b)) (a))	transformed
+102	(? (. (b) (a)))	transformed
+103	(? (. (? (b)) (a)))	transformed
+106	(. (b) (+ (a)))	transformed
+107	(. (? (b)) (+ (a)))	transformed
+110	(? (. (b) (+ (a))))	transformed
+111	(? (. (? (b)) (+ (a))))	transformed
+114	(+ (. (b) (a)))	transformed
+118	(? (+ (. (b) (a))))	transformed
+122	(+ (. (b) (+ (a))))	transformed
+123	(+ (. (? (b)) (+ (a))))	transformed
+126	(? (+ (. (b) (+ (a)))))	transformed
+127	(? (+ (. (? (b)) (+ (a)))))	transformed
+226	(. (+ (b)) (a))	transformed
+227	(. (? (+ (b))) (a))	transformed
+230	(? (. (+ (b)) (a)))	transformed
+231	(? (. (? (+ (b))) (a)))	transformed
+234	(. (+ (b)) (+ (a)))	transformed
+235	(. (? (+ (b))) (+ (a)))	transformed
+238	(? (. (+ (b)) (+ (a))))	transformed
+239	(? (. (? (+ (b))) (+ (a))))	transformed
+242	(+ (. (+ (b)) (a)))	transformed
+246	(? (+ (. (+ (b)) (a))))	transformed
+250	(+ (. (+ (b)) (+ (a))))	transformed
+251	(+ (. (? (+ (b))) (+ (a))))	transformed
+254	(? (+ (. (+ (b)) (+ (a)))))	transformed
+255	(? (+ (. (? (+ (b))) (+ (a)))))	transformed
+258	(b)	transformed
+262	(? (b))	transformed
+273	(. (a) (b))	transformed
+275	(. (? (a)) (b))	transformed
+277	(? (. (a) (b)))	transformed
+279	(? (. (? (a)) (b)))	transformed
+281	(. (+ (a)) (b))	transformed
+283	(. (? (+ (a))) (b))	transformed
+285	(? (. (+ (a)) (b)))	transformed
+287	(? (. (? (+ (a))) (b)))	transformed
+291	(| (a) (b))	transformed
+295	(? (| (a) (b)))	transformed
+299	(| (+ (a)) (b))	transformed
+303	(? (| (+ (a)) (b)))	transformed
+305	(. (a) (? (b)))	transformed
+309	(? (. (a) (? (b))))	transformed
+311	(. (? (a)) (? (b)))	transformed
+313	(. (+ (a)) (? (b)))	transformed
+317	(? (. (+ (a)) (? (b))))	transformed
+319	(. (? (+ (a))) (? (b)))	transformed
+337	(+ (. (a) (b)))	transformed
+341	(? (+ (. (a) (b))))	transformed
+345	(+ (. (+ (a)) (b)))	transformed
+349	(? (+ (. (+ (a)) (b))))	transformed
+354	(. (b) (? (a)))	transformed
+358	(? (. (b) (? (a))))	transformed
+359	(. (? (b)) (? (a)))	transformed
+362	(. (b) (? (+ (a))))	transformed
+366	(? (. (b) (? (+ (a)))))	transformed
+367	(. (? (b)) (? (+ (a))))	transformed
+377	(+ (. (+ (a)) (? (b))))	transformed
+381	(? (+ (. (+ (a)) (? (b)))))	transformed
+386	(+ (b))	transformed
+390	(? (+ (b)))	transformed
+401	(. (a) (+ (b)))	transformed
+403	(. (? (a)) (+ (b)))	transformed
+405	(? (. (a) (+ (b))))	transformed
+407	(? (. (? (a)) (+ (b))))	transformed
+409	(. (+ (a)) (+ (b)))	transformed
+411	(. (? (+ (a))) (+ (b)))	transformed
+413	(? (. (+ (a)) (+ (b))))	transformed
+415	(? (. (? (+ (a))) (+ (b))))	transformed
+419	(| (+ (b)) (a))	transformed
+423	(? (| (+ (b)) (a)))	transformed
+427	(| (+ (a)) (+ (b)))	transformed
+431	(? (| (+ (a)) (+ (b))))	transformed
+433	(. (a) (? (+ (b))))	transformed
+437	(? (. (a) (? (+ (b)))))	transformed
+439	(. (? (a)) (? (+ (b))))	transformed
+441	(. (+ (a)) (? (+ (b))))	transformed
+445	(? (. (+ (a)) (? (+ (b)))))	transformed
+447	(. (? (+ (a))) (? (+ (b))))	transformed
+465	(+ (. (a) (+ (b))))	transformed
+467	(+ (. (? (a)) (+ (b))))	transformed
+469	(? (+ (. (a) (+ (b)))))	transformed
+471	(? (+ (. (? (a)) (+ (b)))))	transformed
+473	(+ (. (+ (a)) (+ (b))))	transformed
+475	(+ (. (? (+ (a))) (+ (b))))	transformed
+477	(? (+ (. (+ (a)) (+ (b)))))	transformed
+479	(? (+ (. (? (+ (a))) (+ (b)))))	transformed
+482	(. (+ (b)) (? (a)))	transformed
+486	(? (. (+ (b)) (? (a))))	transformed
+487	(. (? (+ (b))) (? (a)))	transformed
+490	(. (+ (b)) (? (+ (a))))	transformed
+494	(? (. (+ (b)) (? (+ (a)))))	transformed
+495	(. (? (+ (b))) (? (+ (a))))	transformed
+498	(+ (. (+ (b)) (? (a))))	transformed
+502	(? (+ (. (+ (b)) (? (a)))))	transformed
+505	(+ (. (+ (a)) (? (+ (b)))))	transformed
+506	(+ (. (+ (b)) (? (+ (a)))))	transformed
+507	(+ (| (a) (b)))	transformed
+509	(? (+ (. (+ (a)) (? (+ (b))))))	transformed
+510	(? (+ (. (+ (b)) (? (+ (a))))))	transformed
+511	(? (+ (| (a) (b))))	transformed

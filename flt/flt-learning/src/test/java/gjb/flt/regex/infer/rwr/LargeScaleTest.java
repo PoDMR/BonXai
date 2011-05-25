@@ -35,29 +35,29 @@ public class LargeScaleTest extends TestCase {
     protected boolean isVerbose = false;
 
     public void test_regex_1() {
-        File file = new File("test-data/non-repaired-regex-1.txt");
+        File file = new File(this.getClass().getResource("/test-data/non-repaired-regex-1.txt").getFile());
         compute(file);
     }
 
     public void test_regex_2_sore() {
-        File file = new File("test-data/non-repaired-regex-2.txt");
+        File file = new File(this.getClass().getResource("/test-data/non-repaired-regex-2.txt").getFile());
         compute(file);
     }
 
     public void test_regex_3_sore() {
-        File file = new File("test-data/non-repaired-regex-3.txt");
+        File file = new File(this.getClass().getResource("/test-data/non-repaired-regex-3.txt").getFile());
         compute(file);
     }
 
     public void test_regex_2() {
-        File file = new File("test-data/all-regex-2.txt");
+        File file = new File(this.getClass().getResource("/test-data/all-regex-2.txt").getFile());
         final int alphabetSize = 2;
         RewriteEngine repairer = new FixedOrderRepairer();
         computeRepairs(file, alphabetSize, repairer);
     }
 
     public void test_regex_2_optimal() {
-        File file = new File("test-data/all-regex-2.txt");
+        File file = new File(this.getClass().getResource("/test-data/all-regex-2.txt").getFile());
         final int alphabetSize = 2;
         RewriteEngine repairer = new BacktrackingRepairer(new LanguageSizeMeasure(),
                                                           Integer.MAX_VALUE);
@@ -65,14 +65,14 @@ public class LargeScaleTest extends TestCase {
     }
     
     public void test_regex_3_sample() {
-        File file = new File("test-data/repaired-regex-3-sample.txt");
+        File file = new File(this.getClass().getResource("/test-data/repaired-regex-3-sample.txt").getFile());
         final int alphabetSize = 3;
         RewriteEngine repairer = new FixedOrderRepairer();
         computeRepairs(file, alphabetSize, repairer);
     }
     
     public void test_regex_3_optimal() {
-        File file = new File("test-data/repaired-regex-3-sample.txt");
+        File file = new File(this.getClass().getResource("/test-data/repaired-regex-3-sample.txt").getFile());
         final int alphabetSize = 3;
         RewriteEngine repairer = new BacktrackingRepairer(new LanguageSizeMeasure(),
                                                           Integer.MAX_VALUE);
@@ -80,7 +80,7 @@ public class LargeScaleTest extends TestCase {
     }
     
     public void test_regex_3_all_optimal() {
-        File file = new File("test-data/all-expr-3.txt");
+        File file = new File(this.getClass().getResource("/test-data/all-expr-3.txt").getFile());
         final int alphabetSize = 3;
         RewriteEngine repairer = new BacktrackingRepairer(new LanguageSizeMeasure(),
                                                           Integer.MAX_VALUE);
@@ -88,14 +88,14 @@ public class LargeScaleTest extends TestCase {
     }
     
     public void test_regex_5_sample() {
-        File file = new File("test-data/regex-5-sample.txt");
+        File file = new File(this.getClass().getResource("/test-data/regex-5-sample.txt").getFile());
         final int alphabetSize = 5;
         RewriteEngine repairer = new FixedOrderRepairer();
         computeRepairs(file, alphabetSize, repairer);
     }
     
     public void test_regex_5_optimal() {
-        File file = new File("test-data/regex-5-sample.txt");
+        File file = new File(this.getClass().getResource("/test-data/regex-5-sample.txt").getFile());
         final int alphabetSize = 5;
         RewriteEngine repairer = new BacktrackingRepairer(new LanguageSizeMeasure(),
                                                           Integer.MAX_VALUE);
@@ -103,14 +103,14 @@ public class LargeScaleTest extends TestCase {
     }
     
     public void test_regex_10_sample() {
-        File file = new File("test-data/regex-10-sample.txt");
+        File file = new File(this.getClass().getResource("/test-data/regex-10-sample.txt").getFile());
         final int alphabetSize = 10;
         RewriteEngine repairer = new FixedOrderRepairer();
         computeRepairs(file, alphabetSize, repairer);
     }
     
     public void test_regex_10_best1() {
-        File file = new File("test-data/regex-10-sample.txt");
+        File file = new File(this.getClass().getResource("/test-data/regex-10-sample.txt").getFile());
         final int alphabetSize = 10;
         RewriteEngine repairer = new BacktrackingRepairer(new LanguageSizeMeasure(),
                                                           1);
@@ -118,7 +118,7 @@ public class LargeScaleTest extends TestCase {
     }
     
     public void test_regex_10_best2() {
-        File file = new File("test-data/regex-10-sample.txt");
+        File file = new File(this.getClass().getResource("/test-data/regex-10-sample.txt").getFile());
         final int alphabetSize = 10;
         RewriteEngine repairer = new BacktrackingRepairer(new LanguageSizeMeasure(),
                                                           2);
@@ -126,7 +126,7 @@ public class LargeScaleTest extends TestCase {
     }
     
     public void test_regex_10_best3() {
-        File file = new File("test-data/regex-10-sample.txt");
+        File file = new File(this.getClass().getResource("/test-data/regex-10-sample.txt").getFile());
         final int alphabetSize = 10;
         RewriteEngine repairer = new BacktrackingRepairer(new LanguageSizeMeasure(),
                                                           3);
@@ -134,7 +134,7 @@ public class LargeScaleTest extends TestCase {
     }
     
     public void test_regex_10_best4() {
-        File file = new File("test-data/regex-10-sample.txt");
+        File file = new File(this.getClass().getResource("/test-data/regex-10-sample.txt").getFile());
         final int alphabetSize = 10;
         RewriteEngine repairer = new BacktrackingRepairer(new LanguageSizeMeasure(),
                                                           4);
@@ -142,7 +142,7 @@ public class LargeScaleTest extends TestCase {
     }
 
     public void test_regex_real_world_sores() {
-        File file = new File("test-data/real-world-sores.txt");
+        File file = new File(this.getClass().getResource("/test-data/real-world-sores.txt").getFile());
         compute(file);
     }
 

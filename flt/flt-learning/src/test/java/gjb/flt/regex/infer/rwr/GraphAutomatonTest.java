@@ -398,7 +398,7 @@ public class GraphAutomatonTest extends TestCase {
     
     public void testExpand() {
         GraphAutomatonFactory factory = new GraphAutomatonFactory();
-        File file = new File("test-data/regex-5-sample.txt");
+        File file = new File(this.getClass().getResource("/test-data/regex-5-sample.txt").getFile());
         BigInteger index = null;
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -429,7 +429,7 @@ public class GraphAutomatonTest extends TestCase {
     
     public void testReverse() {
         GraphAutomatonFactory factory = new GraphAutomatonFactory();
-        File file = new File("test-data/real-world-sores.txt");
+        File file = new File(this.getClass().getResource("/test-data/real-world-sores.txt").getFile());
         String regexStr = null;
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));

@@ -1,0 +1,1000 @@
+27247	(? (. (? (a)) (. (? (+ (c))) (+ (b)))))	transformed
+58465	(. (a) (+ (. (? (b)) (+ (c)))))	transformed
+27089	(+ (. (+ (a)) (? (. (+ (c)) (b)))))	transformed
+145	(+ (a))	transformed
+48953	(? (+ (. (+ (a)) (+ (. (+ (b)) (? (c)))))))	transformed
+386	(. (b) (a))	transformed
+33867	(? (. (| (a) (b)) (c)))	transformed
+65391	(? (+ (. (? (a)) (+ (| (b) (c))))))	transformed
+60410	(? (+ (. (+ (b)) (? (. (+ (a)) (? (+ (c))))))))	transformed
+24466	(. (+ (b)) (? (. (? (+ (c))) (+ (a)))))	transformed
+28225	(. (a) (+ (. (+ (c)) (+ (b)))))	transformed
+55762	(. (b) (? (+ (. (+ (a)) (? (+ (c)))))))	transformed
+411	(? (. (? (b)) (+ (a))))	transformed
+14375	(. (? (c)) (. (? (a)) (b)))	transformed
+57132	(? (+ (. (+ (c)) (? (+ (. (a) (+ (b))))))))	transformed
+63063	(+ (. (? (| (+ (a)) (+ (b)))) (+ (c))))	transformed
+28481	(+ (. (a) (+ (. (+ (c)) (+ (b))))))	transformed
+22693	(. (. (? (+ (c))) (a)) (? (b)))	transformed
+52238	(. (? (b)) (? (+ (c))))	transformed
+51953	(. (+ (a)) (? (| (+ (b)) (+ (c)))))	transformed
+33979	(. (? (+ (a))) (? (. (b) (c))))	transformed
+24190	(? (+ (. (? (+ (. (+ (c)) (+ (a))))) (+ (b)))))	transformed
+907	(? (. (? (+ (b))) (a)))	transformed
+39741	(. (? (c)) (? (+ (. (+ (a)) (+ (b))))))	transformed
+22246	(+ (. (? (+ (b))) (+ (. (+ (c)) (a)))))	transformed
+46218	(? (. (+ (. (b) (c))) (? (a))))	transformed
+55860	(. (+ (c)) (? (. (+ (a)) (+ (b)))))	transformed
+61948	(? (+ (. (+ (c)) (? (+ (. (? (b)) (+ (a))))))))	transformed
+37195	(? (. (? (b)) (+ (. (a) (c)))))	transformed
+38979	(| (+ (. (a) (c))) (b))	transformed
+45956	(. (c) (? (. (? (+ (b))) (a))))	transformed
+59027	(| (+ (. (+ (b)) (+ (c)))) (+ (a)))	transformed
+62523	(? (+ (. (? (+ (a))) (+ (. (b) (+ (c)))))))	transformed
+2050	(b)	transformed
+47355	(. (? (+ (. (+ (a)) (? (c))))) (? (b)))	transformed
+34142	(? (. (? (. (b) (? (+ (a))))) (c)))	transformed
+26503	(. (? (+ (. (? (+ (c))) (+ (b))))) (a))	transformed
+32631	(+ (. (? (+ (| (a) (c)))) (+ (b))))	transformed
+61852	(? (. (+ (c)) (? (. (? (b)) (+ (a))))))	transformed
+62298	(? (+ (. (+ (b)) (+ (. (+ (a)) (+ (c)))))))	transformed
+55643	(. (? (b)) (? (+ (. (+ (a)) (+ (c))))))	transformed
+49522	(. (+ (. (b) (+ (a)))) (+ (c)))	transformed
+39084	(? (. (c) (? (. (a) (? (b))))))	transformed
+39243	(. (? (b)) (? (+ (. (a) (c)))))	transformed
+63737	(? (. (+ (. (+ (a)) (? (+ (c))))) (? (b))))	transformed
+59585	(. (a) (? (. (+ (c)) (? (b)))))	transformed
+55515	(| (+ (. (+ (a)) (? (+ (c))))) (? (b)))	transformed
+57242	(? (. (. (+ (b)) (? (+ (c)))) (? (+ (a)))))	transformed
+38957	(. (? (c)) (? (. (a) (b))))	transformed
+39558	(| (+ (b)) (. (c) (? (a))))	transformed
+30164	(+ (. (+ (. (+ (c)) (? (b)))) (+ (a))))	transformed
+23076	(. (+ (c)) (. (a) (+ (b))))	transformed
+51070	(? (. (? (+ (. (+ (b)) (? (+ (a)))))) (+ (c))))	transformed
+34830	(? (| (b) (c)))	transformed
+51775	(| (. (? (+ (a))) (+ (b))) (? (+ (c))))	transformed
+33190	(| (+ (. (b) (a))) (c))	transformed
+44882	(+ (. (+ (b)) (? (. (? (+ (a))) (c)))))	transformed
+16167	(+ (. (? (c)) (+ (. (? (a)) (+ (b))))))	transformed
+59007	(? (. (? (+ (a))) (+ (. (? (+ (b))) (+ (c))))))	transformed
+36850	(. (+ (. (+ (b)) (? (+ (a))))) (? (c)))	transformed
+28548	(. (+ (. (+ (c)) (+ (b)))) (? (a)))	transformed
+51779	(| (+ (b)) (. (a) (+ (c))))	transformed
+2459	(. (? (b)) (? (+ (a))))	transformed
+51007	(? (. (? (+ (. (? (+ (a))) (+ (b))))) (+ (c))))	transformed
+27217	(. (+ (a)) (+ (c)) (+ (b)))	transformed
+2562	(+ (b))	transformed
+29060	(. (+ (c)) (? (b)) (a))	transformed
+49499	(? (. (? (b)) (. (+ (a)) (+ (c)))))	transformed
+2595	(. (? (a)) (+ (b)))	transformed
+14895	(? (. (? (c)) (. (? (a)) (+ (b)))))	transformed
+51054	(? (. (? (+ (. (+ (b)) (? (a))))) (+ (c))))	transformed
+40850	(. (. (+ (b)) (? (c))) (? (+ (a))))	transformed
+50046	(? (. (? (+ (. (+ (b)) (+ (a))))) (+ (c))))	transformed
+2617	(? (. (+ (a)) (+ (b))))	transformed
+27660	(? (+ (. (+ (c)) (b))))	transformed
+22653	(? (. (+ (. (? (+ (c))) (+ (a)))) (b)))	transformed
+22565	(. (? (+ (c))) (. (a) (b)))	transformed
+54986	(? (. (+ (b)) (+ (. (+ (c)) (? (a))))))	transformed
+2715	(? (| (+ (a)) (+ (b))))	transformed
+2721	(. (a) (? (+ (b))))	transformed
+63303	(+ (. (? (+ (b))) (+ (. (? (a)) (+ (c))))))	transformed
+49658	(? (. (+ (. (b) (+ (a)))) (? (+ (c)))))	transformed
+29623	(. (? (+ (c))) (+ (. (? (+ (b))) (+ (a)))))	transformed
+43247	(. (. (? (a)) (? (c))) (? (b)))	transformed
+45891	(+ (. (? (+ (b))) (+ (. (a) (c)))))	transformed
+27865	(? (. (+ (a)) (? (+ (. (+ (c)) (b))))))	transformed
+2851	(+ (. (? (a)) (+ (b))))	transformed
+47962	(? (+ (. (+ (b)) (? (+ (. (+ (a)) (c)))))))	transformed
+64252	(? (. (+ (. (+ (c)) (? (+ (a))))) (? (+ (b)))))	transformed
+2865	(+ (. (+ (a)) (+ (b))))	transformed
+52435	(. (| (+ (a)) (b)) (? (+ (c))))	transformed
+33679	(| (. (? (+ (b))) (a)) (? (c)))	transformed
+64740	(+ (. (+ (. (+ (c)) (? (a)))) (? (b))))	transformed
+13458	(. (+ (. (b) (c))) (+ (a)))	transformed
+55597	(. (? (+ (c))) (? (+ (. (a) (b)))))	transformed
+21930	(? (+ (. (b) (? (+ (c))) (a))))	transformed
+2962	(. (+ (b)) (? (+ (a))))	transformed
+62607	(. (? (+ (. (? (b)) (+ (c))))) (? (a)))	transformed
+2971	(. (? (+ (b))) (? (+ (a))))	transformed
+61811	(+ (. (+ (. (? (b)) (+ (a)))) (+ (c))))	transformed
+2986	(? (+ (. (+ (b)) (? (a)))))	transformed
+64075	(. (? (+ (. (a) (+ (c))))) (? (+ (b))))	transformed
+49139	(+ (. (+ (| (a) (b))) (? (c))))	transformed
+52554	(? (. (b) (? (. (? (a)) (+ (c))))))	transformed
+22459	(? (+ (. (? (. (+ (b)) (? (+ (c))))) (+ (a)))))	transformed
+52257	(. (. (a) (b)) (? (+ (c))))	transformed
+51809	(. (a) (| (+ (b)) (+ (c))))	transformed
+4228	(. (c) (a))	transformed
+62505	(? (+ (. (a) (+ (. (b) (+ (c)))))))	transformed
+47924	(. (c) (? (+ (. (? (+ (a))) (+ (b))))))	transformed
+28113	(+ (. (+ (a)) (? (+ (. (+ (c)) (b))))))	transformed
+4244	(. (c) (+ (a)))	transformed
+4245	(. (? (c)) (+ (a)))	transformed
+50146	(. (+ (. (+ (b)) (a))) (? (+ (c))))	transformed
+4253	(? (. (? (c)) (+ (a))))	transformed
+49156	(+ (c))	transformed
+14409	(? (. (+ (. (a) (c))) (b)))	transformed
+32857	(? (. (+ (a)) (c)))	transformed
+38641	(+ (. (+ (a)) (? (. (? (+ (b))) (c)))))	transformed
+39869	(. (? (c)) (? (+ (. (+ (a)) (? (+ (b)))))))	transformed
+60348	(? (. (+ (c)) (? (+ (. (+ (b)) (? (+ (a))))))))	transformed
+65430	(. (+ (| (b) (c))) (? (+ (a))))	transformed
+4487	(. (? (| (b) (c))) (a))	transformed
+39101	(. (? (c)) (? (. (+ (a)) (? (b)))))	transformed
+56970	(? (. (+ (b)) (? (. (+ (c)) (? (a))))))	transformed
+56283	(. (? (+ (b))) (? (+ (. (+ (a)) (? (+ (c)))))))	transformed
+43073	(. (. (a) (c)) (? (b)))	transformed
+4510	(? (. (| (b) (c)) (+ (a))))	transformed
+4511	(? (. (? (| (b) (c))) (+ (a))))	transformed
+33731	(. (? (+ (b))) (. (a) (? (c))))	transformed
+39588	(. (c) (? (. (a) (? (+ (b))))))	transformed
+50747	(? (. (? (+ (a))) (. (+ (b)) (+ (c)))))	transformed
+23093	(. (? (+ (c))) (. (+ (a)) (+ (b))))	transformed
+32917	(| (+ (a)) (c))	transformed
+39612	(? (. (c) (? (. (+ (a)) (? (+ (b)))))))	transformed
+64388	(. (+ (c)) (? (+ (b))) (? (a)))	transformed
+4999	(. (? (| (+ (b)) (c))) (a))	transformed
+51931	(? (| (+ (b)) (. (+ (a)) (? (+ (c))))))	transformed
+65383	(+ (. (? (a)) (+ (| (b) (c)))))	transformed
+26747	(? (. (? (. (+ (a)) (? (+ (c))))) (b)))	transformed
+23869	(? (+ (. (? (+ (c))) (+ (. (+ (a)) (b))))))	transformed
+64073	(? (. (+ (. (a) (+ (c)))) (? (+ (b)))))	transformed
+30793	(? (. (+ (. (a) (+ (c)))) (b)))	transformed
+5094	(+ (. (| (+ (b)) (c)) (a)))	transformed
+5102	(? (+ (. (| (+ (b)) (c)) (a))))	transformed
+57758	(. (? (+ (c))) (? (. (b) (+ (a)))))	transformed
+39250	(. (b) (? (+ (. (+ (a)) (c)))))	transformed
+28044	(? (. (+ (. (+ (c)) (b))) (? (a))))	transformed
+65260	(? (+ (. (+ (. (+ (c)) (? (a)))) (? (+ (b))))))	transformed
+5250	(. (b) (c) (a))	transformed
+5251	(. (? (. (b) (c))) (a))	transformed
+5254	(. (? (b)) (. (c) (a)))	transformed
+60226	(+ (. (+ (b)) (? (. (a) (+ (c))))))	transformed
+26077	(? (+ (. (? (+ (. (+ (c)) (b)))) (+ (a)))))	transformed
+23860	(+ (. (+ (c)) (+ (. (+ (a)) (b)))))	transformed
+36937	(? (+ (. (a) (c))))	transformed
+5263	(? (. (? (. (? (b)) (c))) (a)))	transformed
+63161	(? (+ (. (+ (a)) (? (+ (. (+ (b)) (+ (c))))))))	transformed
+57162	(? (. (+ (b)) (? (+ (. (? (a)) (+ (c)))))))	transformed
+48081	(+ (. (+ (a)) (? (. (c) (? (+ (b)))))))	transformed
+64228	(. (+ (. (+ (c)) (? (a)))) (? (+ (b))))	transformed
+13189	(. (? (. (c) (? (+ (b))))) (a))	transformed
+25022	(? (. (? (+ (c))) (+ (. (b) (+ (a))))))	transformed
+38001	(+ (. (+ (a)) (? (b)) (c)))	transformed
+47263	(. (? (c)) (? (| (+ (a)) (b))))	transformed
+35055	(. (? (a)) (? (| (b) (c))))	transformed
+5290	(? (+ (. (b) (c) (a))))	transformed
+30093	(? (. (? (+ (. (+ (c)) (? (b))))) (a)))	transformed
+5299	(+ (. (? (. (b) (c))) (+ (a))))	transformed
+36065	(. (a) (? (b)) (? (c)))	transformed
+15151	(? (. (? (c)) (+ (. (? (a)) (+ (b))))))	transformed
+26817	(. (a) (? (. (+ (c)) (b))))	transformed
+23295	(. (? (+ (. (? (+ (c))) (+ (a))))) (? (+ (b))))	transformed
+52793	(? (. (. (+ (a)) (+ (b))) (? (+ (c)))))	transformed
+58425	(? (. (+ (a)) (+ (. (b) (+ (c))))))	transformed
+5330	(. (b) (+ (. (c) (+ (a)))))	transformed
+23754	(? (. (b) (? (+ (. (+ (c)) (a))))))	transformed
+54738	(. (b) (+ (| (a) (c))))	transformed
+31319	(. (? (+ (. (? (+ (a))) (+ (c))))) (+ (b)))	transformed
+12685	(? (. (? (. (c) (? (b)))) (a)))	transformed
+20636	(? (. (+ (c)) (+ (a))))	transformed
+5354	(? (+ (. (b) (+ (. (c) (a))))))	transformed
+33214	(? (| (+ (. (b) (+ (a)))) (c)))	transformed
+28393	(? (. (a) (? (+ (. (? (+ (c))) (+ (b)))))))	transformed
+5366	(+ (. (? (b)) (+ (. (c) (+ (a))))))	transformed
+5367	(+ (. (? (. (? (b)) (c))) (+ (a))))	transformed
+28461	(? (+ (. (| (+ (c)) (a)) (+ (b)))))	transformed
+59796	(. (+ (c)) (? (. (b) (? (+ (a))))))	transformed
+52463	(. (? (a)) (? (b)) (? (+ (c))))	transformed
+34630	(. (? (. (+ (b)) (? (a)))) (c))	transformed
+30455	(+ (. (? (+ (. (? (+ (b))) (+ (c))))) (+ (a))))	transformed
+5511	(. (? (b)) (. (? (c)) (a)))	transformed
+63577	(? (. (+ (. (+ (a)) (+ (c)))) (? (b))))	transformed
+59804	(? (. (+ (c)) (? (. (b) (? (+ (a)))))))	transformed
+61767	(+ (. (? (. (? (b)) (a))) (+ (c))))	transformed
+5522	(. (b) (? (c)) (+ (a)))	transformed
+27285	(| (+ (a)) (. (+ (c)) (+ (b))))	transformed
+42651	(? (| (+ (. (+ (b)) (c))) (+ (a))))	transformed
+29148	(? (+ (. (+ (c)) (? (b)) (+ (a)))))	transformed
+34183	(. (? (b)) (| (a) (c)))	transformed
+52162	(. (+ (b)) (? (. (a) (? (+ (c))))))	transformed
+29858	(+ (. (+ (. (b) (+ (c)))) (a)))	transformed
+36027	(. (? (+ (a))) (? (. (b) (? (c)))))	transformed
+34907	(? (| (. (+ (a)) (c)) (b)))	transformed
+35395	(| (+ (b)) (. (a) (c)))	transformed
+52457	(? (. (a) (? (b)) (? (+ (c)))))	transformed
+5563	(? (+ (. (? (. (b) (? (c)))) (+ (a)))))	transformed
+5586	(. (b) (+ (. (? (c)) (+ (a)))))	transformed
+24575	(? (+ (| (+ (b)) (. (? (+ (c))) (+ (a))))))	transformed
+5594	(? (. (b) (+ (. (? (c)) (+ (a))))))	transformed
+29588	(. (+ (c)) (? (+ (b))) (+ (a)))	transformed
+5618	(+ (. (b) (+ (. (? (c)) (+ (a))))))	transformed
+65337	(? (+ (. (+ (a)) (+ (. (+ (b)) (? (+ (c))))))))	transformed
+58366	(? (+ (| (. (+ (b)) (+ (a))) (c))))	transformed
+27489	(+ (. (a) (? (+ (c))) (+ (b))))	transformed
+20887	(. (? (| (+ (c)) (b))) (+ (a)))	transformed
+30844	(? (. (+ (. (+ (c)) (? (+ (a))))) (b)))	transformed
+64977	(+ (. (+ (a)) (? (+ (. (+ (c)) (? (b)))))))	transformed
+65535	(? (+ (| (a) (b) (c))))	transformed
+38550	(. (? (+ (b))) (. (c) (? (+ (a)))))	transformed
+60139	(. (? (. (a) (? (+ (c))))) (? (+ (b))))	transformed
+32901	(| (a) (c))	transformed
+5775	(? (. (? (. (? (+ (b))) (c))) (a)))	transformed
+29950	(? (+ (. (+ (. (? (b)) (+ (c)))) (+ (a)))))	transformed
+61779	(+ (. (? (b)) (+ (. (+ (a)) (+ (c))))))	transformed
+5782	(. (? (+ (b))) (. (c) (+ (a))))	transformed
+52702	(. (? (. (b) (? (+ (a))))) (? (+ (c))))	transformed
+22647	(. (? (+ (. (? (+ (c))) (+ (a))))) (b))	transformed
+5787	(? (. (? (. (+ (b)) (c))) (+ (a))))	transformed
+27973	(+ (. (? (a)) (+ (. (+ (c)) (b)))))	transformed
+42922	(? (+ (. (+ (b)) (| (a) (c)))))	transformed
+50843	(? (| (+ (a)) (. (+ (b)) (+ (c)))))	transformed
+22662	(| (. (+ (c)) (a)) (b))	transformed
+53465	(? (+ (. (+ (a)) (? (+ (c))))))	transformed
+43201	(. (a) (? (. (c) (? (b)))))	transformed
+25582	(? (+ (. (? (+ (c))) (+ (. (+ (b)) (a))))))	transformed
+50793	(? (. (a) (? (+ (b))) (+ (c))))	transformed
+58302	(. (? (+ (c))) (? (+ (. (+ (b)) (+ (a))))))	transformed
+63131	(. (? (+ (. (+ (b)) (+ (c))))) (? (+ (a))))	transformed
+22451	(+ (. (? (. (+ (b)) (? (+ (c))))) (+ (a))))	transformed
+28657	(+ (. (+ (a)) (? (+ (. (? (+ (c))) (+ (b)))))))	transformed
+5842	(. (+ (b)) (+ (. (c) (+ (a)))))	transformed
+37843	(. (? (+ (b))) (+ (. (+ (a)) (? (c)))))	transformed
+49245	(? (. (? (+ (a))) (+ (c))))	transformed
+5854	(? (. (? (+ (b))) (+ (. (c) (+ (a))))))	transformed
+26767	(? (| (. (? (+ (c))) (b)) (a)))	transformed
+59262	(? (+ (. (? (+ (. (+ (b)) (? (+ (a)))))) (+ (c)))))	transformed
+42643	(| (+ (. (+ (b)) (c))) (+ (a)))	transformed
+36703	(. (? (+ (b))) (? (. (? (+ (a))) (c))))	transformed
+49598	(? (| (+ (. (b) (+ (a)))) (+ (c))))	transformed
+50337	(. (a) (? (. (b) (+ (c)))))	transformed
+5879	(+ (. (? (. (? (+ (b))) (c))) (+ (a))))	transformed
+26731	(? (. (? (. (a) (? (+ (c))))) (b)))	transformed
+64337	(+ (. (+ (. (+ (a)) (+ (c)))) (? (+ (b)))))	transformed
+5887	(? (+ (. (? (. (? (+ (b))) (c))) (+ (a)))))	transformed
+33895	(. (? (a)) (? (b)) (c))	transformed
+27014	(. (. (? (+ (c))) (b)) (? (a)))	transformed
+63079	(+ (. (? (a)) (? (+ (b))) (+ (c))))	transformed
+59597	(. (? (a)) (? (. (+ (c)) (? (b)))))	transformed
+63347	(+ (. (+ (| (a) (b))) (+ (c))))	transformed
+62602	(? (. (+ (. (b) (+ (c)))) (? (a))))	transformed
+52042	(? (. (+ (b)) (? (. (a) (+ (c))))))	transformed
+28665	(? (+ (. (+ (a)) (? (+ (. (? (+ (c))) (+ (b))))))))	transformed
+6039	(. (? (+ (b))) (. (? (c)) (+ (a))))	transformed
+41876	(. (c) (? (. (+ (b)) (+ (a)))))	transformed
+61900	(? (+ (. (+ (c)) (? (. (? (b)) (a))))))	transformed
+49987	(. (? (+ (b))) (. (a) (+ (c))))	transformed
+51263	(| (. (? (+ (a))) (b)) (? (+ (c))))	transformed
+58340	(+ (. (+ (c)) (? (+ (. (+ (b)) (a))))))	transformed
+6066	(+ (. (+ (b)) (? (c)) (+ (a))))	transformed
+52562	(. (b) (? (. (? (+ (a))) (+ (c)))))	transformed
+23284	(. (+ (. (+ (c)) (+ (a)))) (? (+ (b))))	transformed
+55122	(. (+ (b)) (+ (. (? (+ (a))) (+ (c)))))	transformed
+25068	(? (+ (. (+ (c)) (+ (. (b) (a))))))	transformed
+65362	(+ (. (+ (b)) (? (+ (. (? (+ (a))) (+ (c)))))))	transformed
+47935	(. (? (c)) (? (+ (. (? (+ (a))) (+ (b))))))	transformed
+64081	(. (+ (. (+ (a)) (+ (c)))) (? (+ (b))))	transformed
+24490	(? (+ (. (+ (b)) (? (. (? (+ (c))) (a))))))	transformed
+33130	(? (. (+ (. (b) (a))) (c)))	transformed
+16164	(+ (. (c) (+ (. (? (a)) (+ (b))))))	transformed
+24981	(. (? (. (+ (c)) (b))) (+ (a)))	transformed
+61876	(. (+ (c)) (? (+ (. (? (b)) (+ (a))))))	transformed
+23205	(. (. (? (+ (c))) (a)) (? (+ (b))))	transformed
+45915	(? (+ (. (? (+ (b))) (+ (. (+ (a)) (c))))))	transformed
+28233	(? (. (a) (+ (. (+ (c)) (+ (b))))))	transformed
+16180	(+ (. (c) (+ (. (? (+ (a))) (+ (b))))))	transformed
+43932	(? (. (c) (? (. (+ (b)) (? (+ (a)))))))	transformed
+44962	(+ (. (+ (b)) (? (| (a) (c)))))	transformed
+54313	(? (+ (. (. (a) (b)) (+ (c)))))	transformed
+24474	(? (. (+ (b)) (? (. (? (+ (c))) (+ (a))))))	transformed
+30342	(. (+ (. (? (+ (b))) (+ (c)))) (a))	transformed
+33134	(? (. (? (+ (. (b) (a)))) (c)))	transformed
+33790	(. (? (+ (. (+ (b)) (+ (a))))) (? (c)))	transformed
+49582	(? (| (+ (. (b) (a))) (+ (c))))	transformed
+33835	(? (. (? (a)) (. (b) (c))))	transformed
+64853	(+ (. (+ (. (? (+ (a))) (+ (c)))) (? (b))))	transformed
+63631	(. (? (+ (c))) (? (| (a) (b))))	transformed
+20701	(? (+ (. (? (+ (c))) (+ (a)))))	transformed
+53457	(+ (. (+ (a)) (? (+ (c)))))	transformed
+33935	(| (. (? (b)) (c)) (? (a)))	transformed
+33218	(. (. (b) (a)) (? (c)))	transformed
+6260	(. (+ (. (c) (+ (a)))) (b))	transformed
+59210	(? (+ (. (+ (b)) (? (a)) (+ (c)))))	transformed
+36929	(+ (. (a) (c)))	transformed
+6263	(. (? (+ (. (? (c)) (+ (a))))) (b))	transformed
+15564	(? (+ (. (c) (| (a) (b)))))	transformed
+56542	(. (? (b)) (? (+ (. (+ (c)) (? (+ (a)))))))	transformed
+45394	(+ (. (b) (+ (. (+ (a)) (c)))))	transformed
+52355	(| (. (b) (? (+ (c)))) (a))	transformed
+50043	(? (. (+ (. (? (+ (b))) (+ (a)))) (+ (c))))	transformed
+21659	(? (. (? (. (b) (+ (c)))) (+ (a))))	transformed
+32853	(. (? (+ (a))) (c))	transformed
+6287	(? (| (. (? (c)) (a)) (b)))	transformed
+26783	(? (| (+ (a)) (. (? (+ (c))) (b))))	transformed
+53025	(. (+ (. (a) (+ (b)))) (? (+ (c))))	transformed
+30774	(. (? (. (+ (c)) (? (+ (a))))) (b))	transformed
+52883	(| (+ (a)) (. (+ (b)) (? (+ (c)))))	transformed
+6308	(. (. (c) (a)) (? (b)))	transformed
+52187	(. (? (+ (b))) (? (. (+ (a)) (? (+ (c))))))	transformed
+65442	(+ (. (+ (. (+ (b)) (? (+ (c))))) (? (a))))	transformed
+6317	(? (. (. (? (c)) (a)) (? (b))))	transformed
+26775	(| (+ (a)) (. (? (+ (c))) (b)))	transformed
+51807	(? (| (+ (b)) (. (? (+ (a))) (+ (c)))))	transformed
+51961	(? (. (+ (a)) (? (| (+ (b)) (+ (c))))))	transformed
+50154	(? (. (+ (. (+ (b)) (a))) (? (+ (c)))))	transformed
+34913	(. (a) (| (b) (c)))	transformed
+6333	(? (. (. (? (c)) (+ (a))) (? (b))))	transformed
+61939	(+ (. (? (b)) (+ (. (+ (a)) (? (+ (c)))))))	transformed
+6335	(. (? (. (? (c)) (+ (a)))) (? (b)))	transformed
+25044	(+ (. (+ (c)) (. (b) (+ (a)))))	transformed
+27853	(. (? (a)) (? (+ (. (+ (c)) (b)))))	transformed
+34405	(. (? (. (a) (? (+ (b))))) (c))	transformed
+57780	(. (+ (c)) (? (+ (. (b) (+ (a))))))	transformed
+51297	(. (a) (| (+ (c)) (b)))	transformed
+43141	(| (. (c) (? (b))) (a))	transformed
+25988	(. (+ (. (+ (c)) (b))) (a))	transformed
+49514	(? (. (+ (. (b) (a))) (+ (c))))	transformed
+55665	(+ (. (+ (a)) (| (+ (c)) (b))))	transformed
+26735	(? (. (? (a)) (. (? (+ (c))) (b))))	transformed
+63548	(? (. (+ (c)) (? (. (? (+ (a))) (b)))))	transformed
+22154	(? (. (+ (b)) (. (+ (c)) (a))))	transformed
+54474	(? (. (b) (+ (. (+ (c)) (? (a))))))	transformed
+35873	(. (. (a) (b)) (? (c)))	transformed
+35463	(| (+ (b)) (| (a) (c)))	transformed
+26663	(. (? (| (+ (c)) (a))) (b))	transformed
+54994	(. (+ (b)) (+ (. (+ (c)) (? (+ (a))))))	transformed
+6444	(? (. (c) (+ (. (a) (b)))))	transformed
+65068	(? (+ (. (+ (c)) (? (. (? (a)) (+ (b)))))))	transformed
+6452	(. (c) (+ (. (+ (a)) (b))))	transformed
+6453	(. (? (c)) (+ (. (+ (a)) (b))))	transformed
+50171	(? (. (+ (. (? (+ (b))) (+ (a)))) (? (+ (c)))))	transformed
+62713	(? (+ (. (+ (a)) (? (+ (. (? (b)) (+ (c))))))))	transformed
+39092	(. (c) (? (. (+ (a)) (? (b)))))	transformed
+30685	(? (+ (. (? (+ (. (+ (c)) (? (+ (b)))))) (+ (a)))))	transformed
+36403	(. (? (+ (a))) (. (+ (b)) (? (c))))	transformed
+59790	(. (? (+ (c))) (? (. (b) (? (a)))))	transformed
+6692	(. (. (c) (a)) (+ (b)))	transformed
+12764	(? (+ (. (c) (? (b)) (+ (a)))))	transformed
+6694	(. (? (. (c) (a))) (+ (b)))	transformed
+54821	(+ (. (? (. (a) (+ (b)))) (+ (c))))	transformed
+57666	(+ (. (. (b) (a)) (+ (c))))	transformed
+6701	(? (. (? (c)) (. (a) (+ (b)))))	transformed
+23085	(? (. (? (+ (c))) (. (a) (+ (b)))))	transformed
+22630	(. (? (+ (. (+ (c)) (a)))) (b))	transformed
+49614	(. (? (. (b) (a))) (? (+ (c))))	transformed
+6709	(. (? (c)) (. (+ (a)) (+ (b))))	transformed
+47908	(. (c) (? (+ (. (? (a)) (+ (b))))))	transformed
+65369	(? (+ (. (+ (a)) (+ (. (+ (c)) (? (+ (b))))))))	transformed
+6716	(? (. (. (c) (+ (a))) (+ (b))))	transformed
+27020	(? (. (. (+ (c)) (b)) (? (a))))	transformed
+63011	(+ (. (? (a)) (+ (. (+ (b)) (+ (c))))))	transformed
+52465	(. (+ (a)) (? (b)) (? (+ (c))))	transformed
+31852	(? (+ (. (+ (. (+ (c)) (? (a)))) (b))))	transformed
+6758	(. (? (+ (. (c) (a)))) (+ (b)))	transformed
+6764	(? (. (+ (. (c) (a))) (+ (b))))	transformed
+28662	(+ (. (+ (. (? (+ (c))) (+ (b)))) (? (+ (a)))))	transformed
+50489	(? (. (+ (. (+ (a)) (b))) (+ (c))))	transformed
+48826	(? (+ (. (+ (b)) (? (. (c) (? (+ (a))))))))	transformed
+22202	(? (+ (. (+ (b)) (+ (c)) (+ (a)))))	transformed
+65274	(? (+ (. (+ (b)) (? (+ (. (+ (c)) (? (+ (a)))))))))	transformed
+29063	(. (? (+ (c))) (? (b)) (a))	transformed
+28572	(? (. (+ (. (+ (c)) (+ (b)))) (? (+ (a)))))	transformed
+47441	(+ (. (+ (. (+ (a)) (c))) (? (b))))	transformed
+38022	(. (? (b)) (. (c) (? (a))))	transformed
+14937	(? (. (+ (. (+ (a)) (c))) (+ (b))))	transformed
+6791	(| (+ (b)) (. (? (c)) (a)))	transformed
+27475	(+ (. (? (. (+ (a)) (+ (c)))) (+ (b))))	transformed
+14902	(. (? (. (c) (? (+ (a))))) (+ (b)))	transformed
+50791	(. (? (a)) (? (+ (b))) (+ (c)))	transformed
+39597	(. (? (c)) (? (. (a) (? (+ (b))))))	transformed
+6814	(? (| (+ (b)) (. (c) (+ (a)))))	transformed
+6815	(? (| (+ (b)) (. (? (c)) (+ (a)))))	transformed
+34967	(| (+ (a)) (| (b) (c)))	transformed
+20871	(. (? (| (+ (c)) (b))) (a))	transformed
+53595	(? (. (? (b)) (+ (. (+ (a)) (+ (c))))))	transformed
+45455	(. (? (c)) (? (. (? (b)) (a))))	transformed
+6830	(. (? (. (c) (a))) (? (+ (b))))	transformed
+64063	(. (? (+ (c))) (? (. (? (+ (a))) (+ (b)))))	transformed
+6836	(. (. (c) (+ (a))) (? (+ (b))))	transformed
+44603	(? (. (? (+ (a))) (+ (. (+ (b)) (? (c))))))	transformed
+48063	(. (? (c)) (? (+ (| (a) (b)))))	transformed
+46250	(? (+ (. (+ (. (b) (c))) (? (a)))))	transformed
+6846	(. (? (. (c) (+ (a)))) (? (+ (b))))	transformed
+41322	(? (+ (. (+ (. (b) (a))) (c))))	transformed
+30605	(? (. (? (+ (. (+ (c)) (? (+ (b)))))) (a)))	transformed
+58802	(+ (. (b) (| (+ (a)) (+ (c)))))	transformed
+50138	(? (. (. (+ (b)) (+ (a))) (? (+ (c)))))	transformed
+23604	(+ (. (+ (c)) (+ (a)) (b)))	transformed
+26524	(? (. (+ (. (+ (c)) (+ (b)))) (+ (a))))	transformed
+21746	(+ (. (b) (+ (. (+ (c)) (+ (a))))))	transformed
+27375	(. (? (a)) (? (. (? (+ (c))) (+ (b)))))	transformed
+58929	(. (+ (a)) (+ (. (+ (b)) (+ (c)))))	transformed
+26511	(? (. (? (+ (. (? (+ (c))) (+ (b))))) (a)))	transformed
+36665	(? (. (+ (. (+ (a)) (+ (b)))) (? (c))))	transformed
+55801	(? (+ (. (+ (a)) (? (| (+ (c)) (b))))))	transformed
+6908	(? (. (+ (. (c) (+ (a)))) (? (+ (b)))))	transformed
+42027	(? (. (? (a)) (+ (. (b) (c)))))	transformed
+14971	(? (. (? (+ (. (+ (a)) (? (c))))) (+ (b))))	transformed
+43701	(. (| (+ (a)) (c)) (? (+ (b))))	transformed
+43209	(? (. (a) (? (. (c) (? (b))))))	transformed
+6949	(. (? (c)) (+ (. (a) (+ (b)))))	transformed
+15140	(. (c) (+ (. (? (a)) (+ (b)))))	transformed
+58601	(? (. (a) (? (+ (. (? (b)) (+ (c)))))))	transformed
+6964	(. (c) (+ (. (+ (a)) (+ (b)))))	transformed
+6965	(. (? (c)) (+ (. (+ (a)) (+ (b)))))	transformed
+24118	(+ (. (? (. (+ (c)) (+ (a)))) (+ (b))))	transformed
+35403	(? (| (+ (b)) (. (a) (c))))	transformed
+28557	(. (? (+ (. (+ (c)) (+ (b))))) (? (a)))	transformed
+24258	(. (+ (b)) (? (+ (. (+ (c)) (a)))))	transformed
+26709	(. (? (+ (a))) (. (+ (c)) (b)))	transformed
+50417	(. (+ (a)) (? (. (? (b)) (+ (c)))))	transformed
+29847	(. (? (+ (. (? (b)) (+ (c))))) (+ (a)))	transformed
+27215	(? (. (? (. (? (a)) (+ (c)))) (+ (b))))	transformed
+56719	(. (? (b)) (. (? (+ (c))) (? (a))))	transformed
+7228	(? (+ (. (c) (+ (a)) (b))))	transformed
+56621	(? (+ (| (. (a) (b)) (c))))	transformed
+55951	(| (+ (b)) (. (? (+ (c))) (? (a))))	transformed
+31563	(? (+ (. (? (+ (. (a) (+ (c))))) (+ (b)))))	transformed
+53066	(? (. (+ (b)) (? (. (? (a)) (+ (c))))))	transformed
+60985	(? (. (+ (a)) (+ (. (+ (b)) (? (+ (c)))))))	transformed
+59551	(| (+ (a)) (. (? (+ (c))) (? (b))))	transformed
+64988	(? (+ (. (+ (c)) (? (b)) (? (+ (a))))))	transformed
+38559	(. (? (. (? (+ (b))) (c))) (? (+ (a))))	transformed
+22583	(. (? (. (? (+ (c))) (+ (a)))) (b))	transformed
+35639	(| (+ (. (? (+ (a))) (+ (b)))) (c))	transformed
+50078	(? (| (+ (c)) (. (+ (b)) (+ (a)))))	transformed
+62583	(+ (. (? (+ (a))) (? (b)) (+ (c))))	transformed
+34207	(? (. (? (b)) (| (+ (a)) (c))))	transformed
+7378	(. (b) (? (+ (. (c) (+ (a))))))	transformed
+49642	(? (. (+ (. (b) (a))) (? (+ (c)))))	transformed
+28124	(? (+ (. (+ (. (+ (c)) (b))) (? (+ (a))))))	transformed
+36945	(+ (. (+ (a)) (c)))	transformed
+22837	(. (? (+ (c))) (+ (. (+ (a)) (b))))	transformed
+31292	(? (. (+ (c)) (? (+ (a))) (+ (b))))	transformed
+14913	(. (+ (. (a) (c))) (+ (b)))	transformed
+50243	(. (| (a) (b)) (+ (c)))	transformed
+23276	(? (. (+ (. (+ (c)) (a))) (? (+ (b)))))	transformed
+15932	(? (+ (. (c) (? (+ (a))) (+ (b)))))	transformed
+32559	(? (+ (. (? (+ (c))) (? (a)) (+ (b)))))	transformed
+7476	(+ (. (c) (+ (. (+ (a)) (b)))))	transformed
+54098	(. (+ (b)) (+ (. (+ (a)) (+ (c)))))	transformed
+7484	(? (+ (. (c) (+ (. (+ (a)) (b))))))	transformed
+7485	(? (+ (. (? (c)) (+ (. (+ (a)) (b))))))	transformed
+60481	(. (a) (+ (. (+ (c)) (? (b)))))	transformed
+50211	(. (? (a)) (. (b) (+ (c))))	transformed
+33631	(? (. (? (. (? (+ (b))) (+ (a)))) (c)))	transformed
+59254	(+ (. (? (+ (. (+ (b)) (? (+ (a)))))) (+ (c))))	transformed
+43934	(. (? (c)) (? (. (+ (b)) (? (+ (a))))))	transformed
+30845	(? (. (+ (| (a) (c))) (b)))	transformed
+30651	(? (+ (. (? (+ (. (+ (b)) (? (+ (c)))))) (+ (a)))))	transformed
+38554	(? (. (. (+ (b)) (c)) (? (+ (a)))))	transformed
+44699	(| (+ (. (+ (b)) (? (c)))) (? (+ (a))))	transformed
+51206	(| (+ (c)) (b))	transformed
+31089	(+ (. (+ (. (+ (a)) (? (+ (c))))) (b)))	transformed
+28293	(| (+ (. (+ (c)) (+ (b)))) (a))	transformed
+63540	(. (+ (c)) (? (. (? (+ (a))) (b))))	transformed
+29830	(. (+ (. (? (b)) (+ (c)))) (a))	transformed
+42657	(. (a) (? (+ (. (+ (b)) (c)))))	transformed
+33247	(. (? (. (? (b)) (+ (a)))) (? (c)))	transformed
+32125	(? (+ (. (+ (| (a) (c))) (b))))	transformed
+50739	(. (? (+ (a))) (. (+ (b)) (+ (c))))	transformed
+50215	(. (? (. (? (a)) (b))) (+ (c)))	transformed
+7732	(+ (. (. (c) (+ (a))) (+ (b))))	transformed
+23183	(? (| (+ (b)) (. (? (+ (c))) (a))))	transformed
+39574	(| (+ (b)) (. (c) (? (+ (a)))))	transformed
+47689	(? (. (+ (. (a) (c))) (? (+ (b)))))	transformed
+35163	(. (? (b)) (? (. (+ (a)) (c))))	transformed
+26580	(+ (. (+ (. (+ (c)) (+ (b)))) (+ (a))))	transformed
+32366	(? (+ (. (? (+ (. (+ (c)) (? (a))))) (+ (b)))))	transformed
+63283	(+ (. (+ (. (? (+ (a))) (+ (b)))) (+ (c))))	transformed
+62340	(. (+ (c)) (? (. (? (+ (b))) (a))))	transformed
+7798	(+ (. (? (+ (. (c) (+ (a))))) (+ (b))))	transformed
+37714	(. (+ (b)) (+ (. (+ (a)) (c))))	transformed
+58931	(. (? (+ (a))) (+ (. (+ (b)) (+ (c)))))	transformed
+42402	(+ (. (b) (| (a) (c))))	transformed
+7818	(? (. (+ (b)) (? (. (c) (a)))))	transformed
+24188	(? (+ (. (+ (. (+ (c)) (+ (a)))) (+ (b)))))	transformed
+62719	(+ (| (. (? (b)) (+ (c))) (? (+ (a)))))	transformed
+39582	(? (| (+ (b)) (. (c) (? (+ (a))))))	transformed
+7838	(. (? (+ (b))) (? (. (c) (+ (a)))))	transformed
+34475	(. (? (a)) (? (. (+ (b)) (c))))	transformed
+60063	(| (+ (a)) (. (? (+ (c))) (? (+ (b)))))	transformed
+56522	(? (. (b) (? (+ (. (+ (c)) (? (a)))))))	transformed
+34899	(| (. (+ (a)) (c)) (b))	transformed
+43908	(. (c) (? (. (+ (b)) (? (a)))))	transformed
+34597	(. (? (+ (. (a) (+ (b))))) (c))	transformed
+55673	(? (+ (. (+ (a)) (| (+ (c)) (b)))))	transformed
+44978	(+ (. (+ (b)) (? (| (+ (a)) (c)))))	transformed
+49345	(. (a) (? (+ (c))))	transformed
+35979	(| (. (b) (? (c))) (? (a)))	transformed
+7906	(+ (. (+ (b)) (? (+ (. (c) (a))))))	transformed
+23845	(+ (. (? (+ (c))) (+ (. (a) (b)))))	transformed
+53053	(. (? (+ (. (+ (a)) (+ (b))))) (? (+ (c))))	transformed
+21634	(. (b) (+ (c)) (a))	transformed
+36653	(. (? (+ (. (a) (+ (b))))) (? (c)))	transformed
+7918	(? (+ (| (. (c) (a)) (b))))	transformed
+34654	(? (. (? (. (+ (b)) (? (+ (a))))) (c)))	transformed
+60155	(. (? (. (+ (a)) (? (+ (c))))) (? (+ (b))))	transformed
+14892	(? (. (c) (? (a)) (+ (b))))	transformed
+50235	(? (. (? (+ (a))) (. (b) (+ (c)))))	transformed
+61025	(. (a) (+ (| (b) (c))))	transformed
+63033	(? (+ (. (+ (a)) (+ (. (+ (b)) (+ (c)))))))	transformed
+22686	(? (| (. (+ (c)) (+ (a))) (b)))	transformed
+59258	(? (+ (. (+ (. (+ (b)) (? (+ (a))))) (+ (c)))))	transformed
+62650	(? (+ (. (+ (. (b) (+ (c)))) (? (+ (a))))))	transformed
+7980	(? (+ (. (c) (+ (. (a) (+ (b)))))))	transformed
+47857	(. (+ (. (+ (a)) (? (c)))) (? (+ (b))))	transformed
+28052	(. (+ (. (+ (c)) (b))) (? (+ (a))))	transformed
+7988	(+ (. (c) (+ (. (+ (a)) (+ (b))))))	transformed
+27341	(. (? (a)) (? (. (+ (c)) (+ (b)))))	transformed
+27148	(? (. (+ (c)) (+ (b))))	transformed
+14931	(. (? (+ (. (+ (a)) (c)))) (+ (b)))	transformed
+43761	(. (. (+ (a)) (? (c))) (? (+ (b))))	transformed
+42938	(? (+ (. (+ (b)) (| (+ (a)) (c)))))	transformed
+64412	(? (. (+ (c)) (? (+ (b))) (? (+ (a)))))	transformed
+20895	(? (. (? (| (+ (c)) (b))) (+ (a))))	transformed
+57311	(. (? (+ (b))) (? (+ (| (a) (c)))))	transformed
+65489	(+ (. (+ (a)) (? (+ (. (+ (c)) (? (+ (b))))))))	transformed
+50039	(. (? (+ (. (? (+ (b))) (+ (a))))) (+ (c)))	transformed
+8074	(? (. (+ (b)) (? (. (? (c)) (a)))))	transformed
+8079	(. (? (+ (b))) (? (. (? (c)) (a))))	transformed
+8082	(. (+ (b)) (? (. (? (c)) (+ (a)))))	transformed
+8090	(? (. (+ (b)) (? (. (? (c)) (+ (a))))))	transformed
+51026	(. (+ (b)) (? (+ (a))) (+ (c)))	transformed
+30772	(. (+ (c)) (? (+ (a))) (b))	transformed
+30358	(. (+ (. (? (+ (b))) (+ (c)))) (+ (a)))	transformed
+23231	(. (? (. (? (+ (c))) (+ (a)))) (? (+ (b))))	transformed
+63567	(. (? (+ (. (? (a)) (+ (c))))) (? (b)))	transformed
+60505	(? (. (+ (a)) (+ (. (+ (c)) (? (b))))))	transformed
+50015	(? (. (? (. (? (+ (b))) (+ (a)))) (+ (c))))	transformed
+38555	(. (? (. (+ (b)) (c))) (? (+ (a))))	transformed
+64321	(+ (. (+ (. (a) (+ (c)))) (? (+ (b)))))	transformed
+35214	(? (| (. (b) (? (a))) (c)))	transformed
+36011	(. (? (a)) (? (. (b) (? (c)))))	transformed
+35215	(| (. (? (b)) (? (a))) (c))	transformed
+52618	(? (. (b) (? (| (+ (c)) (a)))))	transformed
+53194	(? (. (+ (b)) (? (a)) (? (+ (c)))))	transformed
+30871	(. (? (+ (c))) (| (+ (a)) (b)))	transformed
+35109	(| (+ (. (a) (b))) (c))	transformed
+54939	(. (? (. (+ (b)) (+ (c)))) (? (+ (a))))	transformed
+8581	(. (? (. (c) (b))) (a))	transformed
+24172	(? (+ (. (+ (. (+ (c)) (a))) (+ (b)))))	transformed
+8583	(. (? (. (? (c)) (b))) (a))	transformed
+8588	(? (. (c) (b) (a)))	transformed
+55613	(. (? (+ (c))) (? (+ (. (+ (a)) (b)))))	transformed
+59214	(? (+ (. (? (. (+ (b)) (? (a)))) (+ (c)))))	transformed
+34619	(? (. (+ (. (? (+ (a))) (+ (b)))) (c)))	transformed
+65340	(? (+ (. (+ (c)) (? (+ (. (? (+ (a))) (+ (b))))))))	transformed
+35334	(| (+ (b)) (c))	transformed
+34455	(| (+ (a)) (. (? (+ (b))) (c)))	transformed
+8599	(. (? (. (? (c)) (b))) (+ (a)))	transformed
+64308	(. (+ (c)) (? (+ (. (? (+ (a))) (+ (b))))))	transformed
+58923	(? (. (? (a)) (+ (. (+ (b)) (+ (c))))))	transformed
+60318	(. (? (+ (c))) (? (. (+ (b)) (? (+ (a))))))	transformed
+35479	(| (+ (b)) (| (+ (a)) (c)))	transformed
+55996	(? (. (+ (c)) (? (. (+ (a)) (? (+ (b)))))))	transformed
+24210	(. (+ (b)) (? (. (+ (c)) (+ (a)))))	transformed
+8620	(? (. (c) (+ (. (b) (a)))))	transformed
+60625	(. (+ (a)) (? (+ (. (+ (c)) (? (b))))))	transformed
+53460	(+ (. (+ (c)) (? (+ (a)))))	transformed
+58519	(| (+ (. (? (b)) (+ (c)))) (+ (a)))	transformed
+64397	(. (? (. (+ (c)) (? (+ (b))))) (? (a)))	transformed
+33118	(? (. (? (. (b) (+ (a)))) (c)))	transformed
+27203	(. (? (. (a) (+ (c)))) (+ (b)))	transformed
+56526	(. (? (b)) (? (+ (. (+ (c)) (? (a))))))	transformed
+16183	(+ (. (? (c)) (? (+ (a))) (+ (b))))	transformed
+36657	(. (+ (. (+ (a)) (+ (b)))) (? (c)))	transformed
+33227	(? (. (? (b)) (. (a) (? (c)))))	transformed
+37722	(? (. (+ (b)) (+ (. (+ (a)) (c)))))	transformed
+43771	(. (? (. (+ (a)) (? (c)))) (? (+ (b))))	transformed
+65437	(. (? (+ (. (+ (c)) (? (+ (b)))))) (? (+ (a))))	transformed
+23612	(? (+ (. (+ (c)) (+ (a)) (b))))	transformed
+59396	(. (+ (c)) (? (b)))	transformed
+8692	(+ (. (c) (+ (. (b) (+ (a))))))	transformed
+50731	(? (. (? (a)) (. (+ (b)) (+ (c)))))	transformed
+34647	(. (? (+ (b))) (. (? (+ (a))) (c)))	transformed
+8700	(? (+ (. (c) (+ (. (b) (+ (a)))))))	transformed
+13205	(. (? (. (c) (? (+ (b))))) (+ (a)))	transformed
+34887	(| (. (? (a)) (c)) (b))	transformed
+34415	(? (. (? (a)) (? (+ (b))) (c)))	transformed
+50345	(? (. (a) (? (. (b) (+ (c))))))	transformed
+43769	(? (. (. (+ (a)) (? (c))) (? (+ (b)))))	transformed
+9095	(. (? (. (? (c)) (+ (b)))) (a))	transformed
+37330	(. (b) (+ (. (+ (a)) (? (c)))))	transformed
+31321	(? (. (+ (. (+ (a)) (+ (c)))) (+ (b))))	transformed
+62706	(+ (. (b) (+ (. (+ (c)) (? (+ (a)))))))	transformed
+52546	(. (b) (? (. (? (a)) (+ (c)))))	transformed
+62567	(+ (. (? (a)) (? (b)) (+ (c))))	transformed
+9109	(. (? (. (c) (+ (b)))) (+ (a)))	transformed
+46258	(+ (. (+ (. (b) (c))) (? (+ (a)))))	transformed
+9111	(. (? (. (? (c)) (+ (b)))) (+ (a)))	transformed
+34646	(. (? (. (+ (b)) (? (+ (a))))) (c))	transformed
+21495	(+ (. (? (| (+ (b)) (+ (c)))) (+ (a))))	transformed
+46641	(+ (. (+ (a)) (+ (. (+ (b)) (c)))))	transformed
+9119	(? (. (? (. (? (c)) (+ (b)))) (+ (a))))	transformed
+13213	(? (. (? (. (c) (? (+ (b))))) (+ (a))))	transformed
+50690	(. (+ (b)) (+ (c)))	transformed
+57740	(? (. (+ (c)) (? (. (b) (a)))))	transformed
+62521	(? (+ (. (+ (a)) (+ (. (b) (+ (c)))))))	transformed
+14999	(. (? (c)) (| (+ (a)) (+ (b))))	transformed
+34609	(. (+ (. (+ (a)) (+ (b)))) (c))	transformed
+9148	(? (. (c) (+ (. (+ (b)) (+ (a))))))	transformed
+26508	(? (. (+ (. (+ (c)) (+ (b)))) (a)))	transformed
+39409	(+ (. (+ (a)) (? (| (b) (c)))))	transformed
+27789	(? (| (+ (. (+ (c)) (b))) (a)))	transformed
+12687	(? (. (? (c)) (? (b)) (a)))	transformed
+29589	(. (? (. (+ (c)) (? (+ (b))))) (+ (a)))	transformed
+9180	(? (+ (. (c) (+ (b)) (+ (a)))))	transformed
+35727	(| (. (? (+ (b))) (? (a))) (c))	transformed
+57034	(? (. (+ (b)) (? (+ (. (+ (c)) (? (a)))))))	transformed
+50485	(. (? (+ (. (+ (a)) (b)))) (+ (c)))	transformed
+39229	(. (? (c)) (? (+ (. (+ (a)) (b)))))	transformed
+9198	(? (+ (. (? (c)) (+ (. (+ (b)) (a))))))	transformed
+58230	(+ (. (? (+ (. (+ (b)) (+ (a))))) (+ (c))))	transformed
+31956	(+ (. (+ (c)) (| (+ (a)) (b))))	transformed
+61823	(? (+ (. (? (+ (. (? (b)) (+ (a))))) (+ (c)))))	transformed
+50267	(? (. (| (+ (a)) (b)) (+ (c))))	transformed
+9214	(? (+ (. (? (c)) (+ (. (+ (b)) (+ (a)))))))	transformed
+52170	(? (. (+ (b)) (? (. (a) (? (+ (c)))))))	transformed
+55649	(+ (. (a) (| (+ (c)) (b))))	transformed
+29661	(? (+ (. (? (. (+ (c)) (? (+ (b))))) (+ (a)))))	transformed
+63953	(+ (. (+ (a)) (? (. (+ (c)) (? (b))))))	transformed
+34491	(. (? (+ (a))) (? (. (+ (b)) (c))))	transformed
+46226	(. (+ (. (b) (c))) (? (+ (a))))	transformed
+35531	(? (| (+ (b)) (. (a) (? (c)))))	transformed
+29071	(? (. (? (+ (c))) (? (b)) (a)))	transformed
+26677	(. (| (+ (a)) (+ (c))) (b))	transformed
+40578	(. (+ (b)) (? (. (c) (? (a)))))	transformed
+47577	(? (+ (. (+ (a)) (? (. (c) (? (b)))))))	transformed
+49241	(? (. (+ (a)) (+ (c))))	transformed
+59222	(+ (. (? (. (+ (b)) (? (+ (a))))) (+ (c))))	transformed
+55596	(? (. (+ (c)) (? (+ (. (a) (b))))))	transformed
+36239	(. (? (b)) (? (| (a) (c))))	transformed
+34413	(? (. (? (. (a) (? (+ (b))))) (c)))	transformed
+24164	(+ (. (+ (. (+ (c)) (a))) (+ (b))))	transformed
+51615	(| (. (? (b)) (? (+ (a)))) (? (+ (c))))	transformed
+46746	(? (. (+ (. (+ (b)) (c))) (? (+ (a)))))	transformed
+24308	(+ (. (+ (. (+ (c)) (+ (a)))) (? (+ (b)))))	transformed
+35383	(| (. (? (+ (a))) (+ (b))) (c))	transformed
+51283	(| (. (+ (a)) (+ (c))) (b))	transformed
+51311	(? (. (? (a)) (| (+ (c)) (b))))	transformed
+10132	(. (+ (. (c) (+ (b)))) (+ (a)))	transformed
+33883	(? (. (| (+ (a)) (b)) (c)))	transformed
+54645	(+ (. (? (+ (. (+ (a)) (? (b))))) (+ (c))))	transformed
+57141	(+ (| (+ (c)) (. (+ (a)) (+ (b)))))	transformed
+10140	(? (. (+ (. (c) (+ (b)))) (+ (a))))	transformed
+55356	(? (. (+ (c)) (? (. (+ (a)) (b)))))	transformed
+22002	(+ (. (b) (+ (. (? (+ (c))) (+ (a))))))	transformed
+34143	(? (. (? (b)) (. (? (+ (a))) (c))))	transformed
+54990	(? (. (? (+ (b))) (+ (. (+ (c)) (? (a))))))	transformed
+38558	(? (. (? (+ (b))) (. (c) (? (+ (a))))))	transformed
+10196	(+ (. (+ (. (c) (+ (b)))) (+ (a))))	transformed
+10197	(+ (. (? (+ (. (c) (+ (b))))) (+ (a))))	transformed
+10204	(? (+ (. (+ (. (c) (+ (b)))) (+ (a)))))	transformed
+10205	(? (+ (. (? (+ (. (c) (+ (b))))) (+ (a)))))	transformed
+52895	(| (+ (a)) (. (? (+ (b))) (? (+ (c)))))	transformed
+51059	(. (+ (| (a) (b))) (+ (c)))	transformed
+14657	(+ (. (+ (. (a) (c))) (b)))	transformed
+48012	(? (. (c) (? (+ (b))) (? (a))))	transformed
+10238	(? (+ (. (+ (. (? (c)) (+ (b)))) (+ (a)))))	transformed
+13994	(? (+ (. (+ (. (+ (b)) (c))) (a))))	transformed
+49651	(. (+ (. (? (b)) (+ (a)))) (? (+ (c))))	transformed
+38513	(+ (. (+ (a)) (? (+ (b))) (c)))	transformed
+53579	(? (. (? (b)) (+ (. (a) (+ (c))))))	transformed
+46147	(+ (. (| (a) (b)) (c)))	transformed
+10277	(. (| (a) (c)) (b))	transformed
+56274	(. (+ (b)) (? (+ (. (+ (a)) (? (+ (c)))))))	transformed
+45980	(? (. (c) (? (. (? (+ (b))) (+ (a))))))	transformed
+10287	(? (. (? (| (a) (c))) (b)))	transformed
+62618	(? (. (+ (. (b) (+ (c)))) (? (+ (a)))))	transformed
+26945	(+ (. (a) (+ (c)) (b)))	transformed
+26743	(. (? (+ (a))) (. (? (+ (c))) (b)))	transformed
+34975	(? (| (+ (a)) (| (b) (c))))	transformed
+55887	(| (+ (. (? (a)) (+ (c)))) (? (+ (b))))	transformed
+37210	(? (. (b) (+ (. (+ (a)) (c)))))	transformed
+22783	(. (? (+ (. (? (+ (c))) (+ (a))))) (? (b)))	transformed
+25012	(. (+ (c)) (+ (. (b) (+ (a)))))	transformed
+56548	(+ (. (+ (c)) (? (. (a) (? (b))))))	transformed
+10315	(? (. (? (. (a) (c))) (b)))	transformed
+43611	(. (? (. (+ (a)) (c))) (? (+ (b))))	transformed
+10319	(? (. (? (. (? (a)) (c))) (b)))	transformed
+10321	(. (+ (a)) (. (c) (b)))	transformed
+43149	(| (. (c) (? (b))) (? (a)))	transformed
+52771	(. (? (a)) (. (+ (b)) (? (+ (c)))))	transformed
+34353	(. (+ (a)) (. (+ (b)) (c)))	transformed
+10329	(? (. (+ (a)) (. (c) (b))))	transformed
+54845	(? (+ (. (? (. (+ (a)) (+ (b)))) (+ (c)))))	transformed
+39242	(? (. (b) (? (+ (. (a) (c))))))	transformed
+10335	(? (. (? (. (? (+ (a))) (c))) (b)))	transformed
+40331	(. (? (. (b) (? (c)))) (? (a)))	transformed
+52777	(? (. (. (a) (+ (b))) (? (+ (c)))))	transformed
+30766	(? (. (? (. (+ (c)) (? (a)))) (b)))	transformed
+32551	(+ (. (? (+ (c))) (? (a)) (+ (b))))	transformed
+10347	(? (. (? (. (a) (? (c)))) (b)))	transformed
+39746	(. (+ (b)) (? (+ (. (a) (c)))))	transformed
+47681	(. (+ (. (a) (c))) (? (+ (b))))	transformed
+14210	(. (+ (. (+ (b)) (? (c)))) (a))	transformed
+24053	(+ (. (+ (. (? (+ (c))) (+ (a)))) (? (b))))	transformed
+63135	(. (? (+ (. (? (+ (b))) (+ (c))))) (? (+ (a))))	transformed
+25599	(? (+ (. (? (. (? (+ (c))) (+ (b)))) (+ (a)))))	transformed
+10367	(? (. (? (+ (a))) (? (c)) (b)))	transformed
+10373	(| (. (c) (b)) (a))	transformed
+24018	(. (b) (? (+ (. (? (+ (c))) (+ (a))))))	transformed
+50801	(. (+ (a)) (? (+ (b))) (+ (c)))	transformed
+59916	(? (. (+ (c)) (? (+ (b)))))	transformed
+10389	(| (+ (a)) (. (c) (b)))	transformed
+56650	(? (. (b) (? (+ (. (? (a)) (+ (c)))))))	transformed
+62649	(? (+ (. (+ (a)) (? (+ (. (b) (+ (c))))))))	transformed
+31579	(? (+ (. (? (+ (. (+ (a)) (+ (c))))) (+ (b)))))	transformed
+58479	(? (. (? (a)) (+ (. (? (b)) (+ (c))))))	transformed
+22174	(? (. (? (+ (b))) (. (+ (c)) (+ (a)))))	transformed
+35647	(| (+ (. (? (+ (a))) (+ (b)))) (? (c)))	transformed
+52746	(? (. (+ (b)) (? (+ (c)))))	transformed
+57218	(. (. (+ (b)) (? (+ (c)))) (? (a)))	transformed
+46747	(. (? (+ (. (+ (b)) (c)))) (? (+ (a))))	transformed
+50981	(. (? (+ (. (a) (+ (b))))) (+ (c)))	transformed
+58481	(. (+ (a)) (+ (. (? (b)) (+ (c)))))	transformed
+22007	(+ (. (? (b)) (+ (. (? (+ (c))) (+ (a))))))	transformed
+46971	(? (+ (. (+ (| (a) (b))) (c))))	transformed
+46754	(+ (. (+ (. (+ (b)) (c))) (? (a))))	transformed
+15412	(+ (. (c) (? (+ (a))) (b)))	transformed
+35117	(? (| (+ (. (a) (b))) (c)))	transformed
+45471	(. (? (c)) (? (. (? (b)) (+ (a)))))	transformed
+55502	(| (+ (. (+ (c)) (? (a)))) (? (b)))	transformed
+63095	(+ (. (? (+ (a))) (? (+ (b))) (+ (c))))	transformed
+54470	(. (? (b)) (+ (. (+ (c)) (? (a)))))	transformed
+54369	(+ (. (a) (? (b)) (+ (c))))	transformed
+34318	(? (. (? (+ (b))) (c)))	transformed
+53452	(? (+ (. (+ (c)) (? (a)))))	transformed
+61031	(. (? (a)) (+ (| (b) (c))))	transformed
+25557	(+ (. (? (. (+ (c)) (+ (b)))) (+ (a))))	transformed
+56715	(. (? (. (b) (? (+ (c))))) (? (a)))	transformed
+10637	(. (? (. (c) (b))) (? (a)))	transformed
+47195	(. (? (+ (. (+ (a)) (c)))) (? (b)))	transformed
+64444	(? (. (+ (c)) (? (+ (| (a) (b))))))	transformed
+32989	(. (? (+ (a))) (? (c)))	transformed
+13215	(? (. (? (c)) (? (+ (b))) (+ (a))))	transformed
+62527	(? (+ (. (? (. (? (+ (a))) (b))) (+ (c)))))	transformed
+49487	(? (. (? (. (? (b)) (a))) (+ (c))))	transformed
+50586	(? (. (b) (| (+ (a)) (+ (c)))))	transformed
+33166	(? (| (. (b) (a)) (c)))	transformed
+23230	(. (? (. (+ (c)) (+ (a)))) (? (+ (b))))	transformed
+65466	(? (+ (. (+ (. (+ (b)) (? (+ (c))))) (? (+ (a))))))	transformed
+22588	(? (. (+ (c)) (+ (a)) (b)))	transformed
+59533	(| (. (+ (c)) (? (b))) (? (a)))	transformed
+13236	(. (c) (+ (. (? (+ (b))) (+ (a)))))	transformed
+58915	(. (? (a)) (+ (. (+ (b)) (+ (c)))))	transformed
+50721	(. (. (a) (+ (b))) (+ (c)))	transformed
+10766	(? (. (? (c)) (+ (b))))	transformed
+50175	(. (? (+ (. (? (+ (b))) (+ (a))))) (? (+ (c))))	transformed
+65401	(? (+ (. (+ (a)) (+ (| (b) (c))))))	transformed
+65339	(? (+ (. (? (+ (a))) (+ (. (+ (b)) (? (+ (c))))))))	transformed
+54082	(. (+ (b)) (+ (. (a) (+ (c)))))	transformed
+24463	(. (? (+ (b))) (? (. (? (+ (c))) (a))))	transformed
+39220	(. (c) (? (+ (. (+ (a)) (b)))))	transformed
+21391	(? (. (? (| (+ (b)) (+ (c)))) (a)))	transformed
+30148	(+ (. (+ (. (+ (c)) (? (b)))) (a)))	transformed
+50785	(. (a) (? (+ (b))) (+ (c)))	transformed
+34543	(. (? (a)) (? (. (? (+ (b))) (c))))	transformed
+58523	(? (| (+ (. (b) (+ (c)))) (+ (a))))	transformed
+54397	(? (+ (. (? (. (+ (a)) (? (b)))) (+ (c)))))	transformed
+13212	(? (. (c) (? (+ (b))) (+ (a))))	transformed
+33206	(| (+ (. (b) (+ (a)))) (c))	transformed
+40945	(+ (. (+ (a)) (? (+ (b))) (? (c))))	transformed
+14468	(. (c) (| (a) (b)))	transformed
+36667	(? (. (+ (. (? (+ (a))) (+ (b)))) (? (c))))	transformed
+61017	(? (. (+ (a)) (+ (. (+ (c)) (? (+ (b)))))))	transformed
+10837	(. (? (+ (a))) (. (c) (+ (b))))	transformed
+56978	(. (+ (b)) (? (. (+ (c)) (? (+ (a))))))	transformed
+64989	(+ (| (. (+ (c)) (? (b))) (? (+ (a)))))	transformed
+10843	(? (. (? (. (+ (a)) (c))) (+ (b))))	transformed
+30764	(? (. (+ (c)) (? (a)) (b)))	transformed
+51275	(? (| (. (a) (+ (c))) (b)))	transformed
+53035	(? (. (+ (. (? (a)) (+ (b)))) (? (+ (c)))))	transformed
+43257	(? (. (. (+ (a)) (? (c))) (? (b))))	transformed
+41396	(. (c) (? (+ (. (b) (+ (a))))))	transformed
+62388	(. (+ (c)) (? (+ (. (? (+ (b))) (+ (a))))))	transformed
+28045	(. (? (+ (. (+ (c)) (b)))) (? (a)))	transformed
+50042	(? (. (+ (. (+ (b)) (+ (a)))) (+ (c))))	transformed
+36571	(? (. (| (+ (a)) (+ (b))) (? (c))))	transformed
+50799	(? (. (? (a)) (? (+ (b))) (+ (c))))	transformed
+42322	(+ (. (b) (? (+ (a))) (c)))	transformed
+55511	(| (+ (| (a) (c))) (b))	transformed
+10875	(? (. (? (. (+ (a)) (? (c)))) (+ (b))))	transformed
+23263	(| (+ (. (? (+ (c))) (+ (a)))) (? (+ (b))))	transformed
+55972	(. (+ (c)) (? (. (a) (? (+ (b))))))	transformed
+55130	(? (. (+ (b)) (+ (. (? (+ (a))) (+ (c))))))	transformed
+10893	(? (| (. (c) (+ (b))) (a)))	transformed
+30108	(? (. (+ (. (+ (c)) (? (b)))) (+ (a))))	transformed
+23156	(. (+ (. (+ (c)) (+ (a)))) (+ (b)))	transformed
+30610	(. (+ (. (+ (b)) (? (+ (c))))) (+ (a)))	transformed
+59238	(+ (. (? (+ (. (+ (b)) (? (a))))) (+ (c))))	transformed
+40753	(+ (. (+ (. (+ (a)) (+ (b)))) (? (c))))	transformed
+54829	(? (+ (. (? (. (a) (+ (b)))) (+ (c)))))	transformed
+10953	(? (. (a) (? (. (c) (+ (b))))))	transformed
+27191	(. (? (| (+ (a)) (+ (c)))) (+ (b)))	transformed
+62283	(? (+ (. (? (+ (b))) (+ (. (a) (+ (c)))))))	transformed
+21691	(? (+ (. (? (. (b) (+ (c)))) (+ (a)))))	transformed
+43609	(? (. (. (+ (a)) (c)) (? (+ (b)))))	transformed
+14391	(. (? (c)) (. (? (+ (a))) (b)))	transformed
+36226	(. (b) (? (| (a) (c))))	transformed
+28281	(? (. (+ (a)) (+ (. (? (+ (c))) (+ (b))))))	transformed
+62515	(+ (. (? (+ (a))) (+ (. (b) (+ (c))))))	transformed
+61362	(+ (. (+ (b)) (? (| (+ (a)) (+ (c))))))	transformed
+65436	(? (. (+ (. (+ (c)) (? (+ (b))))) (? (+ (a)))))	transformed
+54389	(+ (. (? (. (+ (a)) (? (b)))) (+ (c))))	transformed
+33602	(. (+ (b)) (. (a) (c)))	transformed
+11081	(? (+ (. (. (a) (c)) (+ (b)))))	transformed
+63103	(? (+ (. (? (+ (a))) (? (+ (b))) (+ (c)))))	transformed
+11089	(+ (. (+ (a)) (. (c) (+ (b)))))	transformed
+62396	(? (. (+ (c)) (? (+ (. (? (+ (b))) (+ (a)))))))	transformed
+59031	(| (+ (. (? (+ (b))) (+ (c)))) (+ (a)))	transformed
+50271	(? (. (? (| (+ (a)) (b))) (+ (c))))	transformed
+61763	(+ (. (? (b)) (+ (. (a) (+ (c))))))	transformed
+50473	(? (. (+ (. (a) (b))) (+ (c))))	transformed
+64093	(? (. (+ (. (? (+ (a))) (+ (c)))) (? (+ (b)))))	transformed
+62279	(+ (. (? (. (? (+ (b))) (a))) (+ (c))))	transformed
+11121	(+ (. (+ (a)) (? (c)) (+ (b))))	transformed
+11123	(+ (. (? (. (+ (a)) (? (c)))) (+ (b))))	transformed
+11129	(? (+ (. (+ (a)) (? (c)) (+ (b)))))	transformed
+32572	(? (+ (. (+ (c)) (+ (. (? (+ (a))) (+ (b)))))))	transformed
+28527	(? (+ (. (? (a)) (+ (. (? (+ (c))) (+ (b)))))))	transformed
+58382	(? (+ (. (? (b)) (+ (c)))))	transformed
+34719	(? (. (? (+ (b))) (| (+ (a)) (c))))	transformed
+14427	(? (. (? (+ (. (+ (a)) (c)))) (b)))	transformed
+36659	(. (+ (. (? (+ (a))) (+ (b)))) (? (c)))	transformed
+48052	(. (c) (? (+ (| (a) (b)))))	transformed
+61388	(? (+ (. (+ (c)) (? (. (+ (b)) (? (a)))))))	transformed
+59627	(. (? (. (a) (? (+ (c))))) (? (b)))	transformed
+11164	(? (. (. (c) (+ (b))) (? (+ (a)))))	transformed
+61047	(. (? (+ (a))) (+ (| (b) (c))))	transformed
+35659	(. (? (+ (b))) (? (. (a) (c))))	transformed
+62531	(+ (. (| (a) (b)) (+ (c))))	transformed
+54922	(? (. (. (+ (b)) (+ (c))) (? (a))))	transformed
+11174	(. (? (c)) (+ (. (+ (b)) (? (a)))))	transformed
+21486	(? (+ (. (| (+ (b)) (+ (c))) (a))))	transformed
+11182	(? (. (? (c)) (+ (. (+ (b)) (? (a))))))	transformed
+25508	(. (+ (c)) (+ (. (+ (b)) (a))))	transformed
+56962	(. (+ (b)) (? (. (+ (c)) (? (a)))))	transformed
+23946	(? (. (b) (? (. (? (+ (c))) (a)))))	transformed
+13466	(? (. (+ (. (b) (c))) (+ (a))))	transformed
+16084	(+ (. (c) (| (+ (a)) (+ (b)))))	transformed
+33678	(? (| (. (+ (b)) (a)) (c)))	transformed
+57706	(? (+ (. (+ (. (b) (a))) (+ (c)))))	transformed
+37985	(+ (. (a) (? (b)) (c)))	transformed
+55073	(+ (. (+ (. (a) (+ (b)))) (+ (c))))	transformed
+52639	(. (? (b)) (? (| (+ (a)) (+ (c)))))	transformed
+34698	(? (. (+ (b)) (| (a) (c))))	transformed
+11333	(. (? (a)) (+ (. (c) (b))))	transformed
+47780	(. (. (c) (? (a))) (? (+ (b))))	transformed
+25485	(? (. (? (. (+ (c)) (+ (b)))) (a)))	transformed
+31948	(? (+ (. (+ (c)) (| (a) (b)))))	transformed
+57298	(. (+ (b)) (? (+ (| (a) (c)))))	transformed
+11353	(? (. (+ (a)) (+ (. (c) (b)))))	transformed
+51522	(. (b) (? (. (a) (+ (c)))))	transformed
+12676	(. (c) (? (b)) (a))	transformed
+62451	(+ (. (? (+ (b))) (+ (. (+ (a)) (? (+ (c)))))))	transformed
+31276	(? (. (+ (c)) (? (a)) (+ (b))))	transformed
+22742	(| (+ (. (+ (c)) (+ (a)))) (b))	transformed
+53049	(? (. (+ (. (+ (a)) (+ (b)))) (? (+ (c)))))	transformed
+11465	(? (. (a) (? (+ (. (c) (b))))))	transformed
+14910	(? (. (? (. (c) (? (+ (a))))) (+ (b))))	transformed
+15143	(. (? (c)) (+ (. (? (a)) (+ (b)))))	transformed
+51319	(. (? (+ (a))) (| (+ (c)) (b)))	transformed
+14969	(? (. (+ (. (+ (a)) (? (c)))) (+ (b))))	transformed
+45503	(. (? (c)) (? (+ (. (? (b)) (+ (a))))))	transformed
+27021	(. (? (. (+ (c)) (b))) (? (a)))	transformed
+11573	(+ (. (| (+ (a)) (c)) (b)))	transformed
+11581	(? (+ (. (| (+ (a)) (c)) (b))))	transformed
+24282	(? (. (+ (b)) (? (+ (. (+ (c)) (+ (a)))))))	transformed
+30438	(+ (. (+ (. (? (+ (b))) (+ (c)))) (a)))	transformed
+60045	(| (. (+ (c)) (? (+ (b)))) (? (a)))	transformed
+11597	(? (+ (. (? (a)) (+ (. (c) (b))))))	transformed
+61762	(+ (. (b) (+ (. (a) (+ (c))))))	transformed
+11605	(+ (. (? (+ (a))) (+ (. (c) (b)))))	transformed
+55711	(. (? (| (+ (c)) (b))) (? (+ (a))))	transformed
+45972	(. (c) (? (. (? (+ (b))) (+ (a)))))	transformed
+37993	(? (+ (. (a) (? (b)) (c))))	transformed
+11660	(? (. (+ (. (c) (b))) (? (a))))	transformed
+11661	(. (? (+ (. (c) (b)))) (? (a)))	transformed
+58374	(+ (. (? (b)) (+ (c))))	transformed
+27140	(. (+ (c)) (+ (b)))	transformed
+38047	(. (? (. (? (b)) (c))) (? (+ (a))))	transformed
+43263	(. (. (? (+ (a))) (? (c))) (? (b)))	transformed
+11724	(? (+ (. (+ (. (c) (b))) (? (a)))))	transformed
+53235	(. (+ (| (a) (b))) (? (+ (c))))	transformed
+30354	(. (+ (. (+ (b)) (+ (c)))) (+ (a)))	transformed
+63027	(+ (. (? (+ (a))) (+ (. (+ (b)) (+ (c))))))	transformed
+30694	(+ (. (+ (| (b) (c))) (a)))	transformed
+57690	(? (+ (. (b) (+ (a)) (+ (c)))))	transformed
+56146	(. (+ (b)) (? (+ (. (+ (a)) (+ (c))))))	transformed
+11780	(+ (. (c) (+ (b))))	transformed
+27257	(? (. (+ (a)) (? (+ (c))) (+ (b))))	transformed
+24052	(+ (. (+ (c)) (+ (. (+ (a)) (? (b))))))	transformed
+47932	(? (. (c) (? (+ (. (? (+ (a))) (+ (b)))))))	transformed
+14991	(? (. (? (c)) (| (+ (b)) (a))))	transformed
+24372	(+ (. (+ (c)) (+ (. (+ (a)) (+ (b))))))	transformed
+33754	(? (. (. (+ (b)) (+ (a))) (? (c))))	transformed
+54414	(? (. (? (b)) (. (+ (c)) (? (a)))))	transformed
+50985	(? (. (+ (. (a) (+ (b)))) (+ (c))))	transformed
+14417	(. (+ (. (+ (a)) (c))) (b))	transformed
+22782	(. (? (+ (. (+ (c)) (+ (a))))) (? (b)))	transformed
+52779	(? (. (? (a)) (. (+ (b)) (? (+ (c))))))	transformed
+11873	(. (a) (+ (. (? (c)) (+ (b)))))	transformed
+11879	(. (? (a)) (+ (. (? (c)) (+ (b)))))	transformed
+46771	(+ (| (+ (a)) (. (+ (b)) (c))))	transformed
+11887	(? (. (? (a)) (+ (. (? (c)) (+ (b))))))	transformed
+65244	(? (+ (. (+ (c)) (? (| (+ (a)) (+ (b)))))))	transformed
+49591	(| (+ (. (? (b)) (+ (a)))) (+ (c)))	transformed
+32764	(? (+ (. (+ (c)) (+ (| (a) (b))))))	transformed
+50158	(. (? (+ (. (+ (b)) (a)))) (? (+ (c))))	transformed
+23102	(? (. (? (. (+ (c)) (+ (a)))) (+ (b))))	transformed
+34447	(| (. (? (+ (b))) (c)) (? (a)))	transformed
+62348	(? (. (+ (c)) (? (. (? (+ (b))) (a)))))	transformed
+36861	(. (? (+ (. (+ (a)) (? (+ (b)))))) (? (c)))	transformed
+63231	(+ (| (. (? (+ (b))) (+ (c))) (? (+ (a)))))	transformed
+45492	(. (c) (? (+ (. (? (b)) (+ (a))))))	transformed
+51069	(? (. (? (+ (. (+ (a)) (? (+ (b)))))) (+ (c))))	transformed
+11935	(| (+ (. (? (c)) (+ (b)))) (? (+ (a))))	transformed
+11969	(. (a) (? (+ (. (c) (+ (b))))))	transformed
+11977	(? (. (a) (? (+ (. (c) (+ (b)))))))	transformed
+13207	(. (? (c)) (? (+ (b))) (+ (a)))	transformed
+58609	(. (+ (a)) (? (+ (. (? (b)) (+ (c))))))	transformed
+52409	(? (. (+ (a)) (? (. (b) (? (+ (c)))))))	transformed
+39814	(. (| (+ (b)) (c)) (? (a)))	transformed
+33138	(. (+ (. (b) (+ (a)))) (c))	transformed
+12009	(? (. (a) (? (+ (. (? (c)) (+ (b)))))))	transformed
+63230	(? (+ (. (? (+ (b))) (+ (. (+ (c)) (? (+ (a))))))))	transformed
+50130	(. (. (+ (b)) (+ (a))) (? (+ (c))))	transformed
+33853	(? (. (? (. (+ (a)) (b))) (c)))	transformed
+24270	(. (? (+ (b))) (? (+ (. (+ (c)) (a)))))	transformed
+32117	(+ (. (+ (| (a) (c))) (b)))	transformed
+62807	(+ (. (? (b)) (+ (. (? (+ (a))) (+ (c))))))	transformed
+12077	(? (+ (. (| (a) (c)) (+ (b)))))	transformed
+61266	(+ (. (+ (b)) (? (. (? (+ (a))) (+ (c))))))	transformed
+65278	(? (+ (| (+ (b)) (. (+ (c)) (? (+ (a)))))))	transformed
+31357	(? (. (+ (| (a) (c))) (+ (b))))	transformed
+50055	(| (+ (c)) (. (? (+ (b))) (a)))	transformed
+33150	(? (. (? (+ (. (b) (+ (a))))) (c)))	transformed
+36682	(? (. (+ (b)) (? (. (? (a)) (c)))))	transformed
+34089	(? (. (+ (. (a) (b))) (c)))	transformed
+27209	(? (. (a) (+ (c)) (+ (b))))	transformed
+56031	(? (| (+ (b)) (+ (| (a) (c)))))	transformed
+52750	(. (? (+ (b))) (? (+ (c))))	transformed
+21382	(. (| (+ (b)) (+ (c))) (a))	transformed
+12113	(+ (. (+ (a)) (+ (. (c) (+ (b))))))	transformed
+51795	(| (+ (b)) (. (+ (a)) (+ (c))))	transformed
+35206	(| (. (b) (? (a))) (c))	transformed
+56786	(. (b) (? (+ (| (a) (c)))))	transformed
+12125	(? (+ (. (? (+ (a))) (+ (. (c) (+ (b)))))))	transformed
+12127	(? (+ (. (? (. (? (+ (a))) (c))) (+ (b)))))	transformed
+63106	(. (+ (. (+ (b)) (+ (c)))) (? (a)))	transformed
+42171	(. (? (+ (a))) (? (+ (. (b) (c)))))	transformed
+64399	(. (? (+ (c))) (? (+ (b))) (? (a)))	transformed
+40433	(+ (. (+ (a)) (? (b)) (? (c))))	transformed
+31342	(? (. (? (+ (. (+ (c)) (? (a))))) (+ (b))))	transformed
+12151	(+ (. (? (+ (a))) (? (c)) (+ (b))))	transformed
+32772	(c)	transformed
+22700	(? (. (. (+ (c)) (a)) (? (b))))	transformed
+32759	(+ (. (? (+ (c))) (+ (| (a) (b)))))	transformed
+31315	(. (? (+ (. (+ (a)) (+ (c))))) (+ (b)))	transformed
+23294	(. (? (+ (. (+ (c)) (+ (a))))) (? (+ (b))))	transformed
+36059	(? (. (| (+ (a)) (b)) (? (c))))	transformed
+64507	(? (+ (| (+ (b)) (. (+ (a)) (? (+ (c)))))))	transformed
+12175	(. (? (+ (. (? (c)) (+ (b))))) (? (a)))	transformed
+62594	(. (+ (. (b) (+ (c)))) (? (a)))	transformed
+56572	(? (+ (. (+ (c)) (? (. (+ (a)) (? (b)))))))	transformed
+52479	(. (? (+ (a))) (? (b)) (? (+ (c))))	transformed
+52529	(. (+ (. (+ (a)) (b))) (? (+ (c))))	transformed
+12190	(? (. (+ (. (? (c)) (+ (b)))) (? (+ (a)))))	transformed
+60308	(. (+ (c)) (? (. (+ (b)) (? (+ (a))))))	transformed
+12228	(+ (. (+ (. (c) (+ (b)))) (? (a))))	transformed
+36129	(. (+ (. (a) (b))) (? (c)))	transformed
+57812	(+ (. (+ (c)) (? (. (b) (+ (a))))))	transformed
+64564	(+ (. (+ (c)) (? (. (? (+ (a))) (b)))))	transformed
+52013	(? (| (+ (. (a) (+ (b)))) (+ (c))))	transformed
+12249	(? (+ (. (+ (a)) (? (+ (. (c) (+ (b))))))))	transformed
+25087	(? (+ (. (? (. (? (+ (c))) (b))) (+ (a)))))	transformed
+22717	(? (. (. (? (+ (c))) (+ (a))) (? (b))))	transformed
+38542	(? (. (? (+ (b))) (. (c) (? (a)))))	transformed

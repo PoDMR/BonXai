@@ -1,0 +1,5 @@
+2	(EPSILON)	transformed
+9	(a)	transformed
+11	(? (a))	transformed
+13	(+ (a))	transformed
+15	(? (+ (a)))	transformed

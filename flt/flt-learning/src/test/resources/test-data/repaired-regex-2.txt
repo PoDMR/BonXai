@@ -1,0 +1,46 @@
+113	(+ (| (a) (b)))	repaired
+115	(+ (| (a) (b)))	repaired
+117	(? (+ (| (a) (b))))	repaired
+119	(? (+ (| (a) (b))))	repaired
+121	(+ (| (+ (a)) (? (b))))	repaired
+125	(? (+ (| (+ (a)) (? (b)))))	repaired
+241	(+ (| (+ (b)) (a)))	repaired
+243	(+ (| (+ (b)) (a)))	repaired
+245	(? (+ (| (+ (b)) (a))))	repaired
+247	(? (+ (| (+ (b)) (a))))	repaired
+249	(+ (| (+ (a)) (? (+ (b)))))	repaired
+253	(? (+ (| (+ (a)) (? (+ (b))))))	repaired
+307	(. (? (a)) (? (b)))	repaired
+315	(. (? (+ (a))) (? (b)))	repaired
+338	(+ (| (a) (b)))	repaired
+339	(+ (| (a) (b)))	repaired
+342	(? (+ (| (a) (b))))	repaired
+343	(? (+ (| (a) (b))))	repaired
+346	(+ (| (+ (a)) (b)))	repaired
+347	(+ (| (+ (a)) (b)))	repaired
+350	(? (+ (| (+ (a)) (b))))	repaired
+351	(? (+ (| (+ (a)) (b))))	repaired
+355	(. (? (b)) (? (a)))	repaired
+363	(. (? (b)) (? (+ (a))))	repaired
+369	(+ (| (a) (b)))	repaired
+370	(+ (| (a) (b)))	repaired
+371	(+ (| (a) (b)))	repaired
+373	(? (+ (| (a) (b))))	repaired
+374	(? (+ (| (a) (b))))	repaired
+375	(? (+ (| (a) (b))))	repaired
+378	(+ (| (+ (a)) (b)))	repaired
+379	(+ (| (+ (a)) (b)))	repaired
+382	(? (+ (| (+ (a)) (b))))	repaired
+383	(+ (| (+ (a)) (? (b))))	repaired
+435	(. (? (a)) (? (+ (b))))	repaired
+443	(. (? (+ (a))) (? (+ (b))))	repaired
+466	(+ (| (+ (b)) (? (a))))	repaired
+470	(? (+ (| (+ (b)) (? (a)))))	repaired
+474	(+ (| (+ (b)) (? (+ (a)))))	repaired
+478	(? (+ (| (+ (b)) (? (+ (a))))))	repaired
+483	(. (? (+ (b))) (? (a)))	repaired
+491	(. (? (+ (b))) (? (+ (a))))	repaired
+497	(+ (| (+ (b)) (a)))	repaired
+499	(+ (| (+ (b)) (a)))	repaired
+501	(? (+ (| (+ (b)) (a))))	repaired
+503	(+ (| (+ (b)) (? (a))))	repaired
