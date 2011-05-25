@@ -115,16 +115,7 @@ public class BonxaiPluginPlugin extends EditPlugin {
 		String fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
 		Schema schema = new Schema();
 		try {
-			if ("xsd".equals(fileExtension)) {
-				schema.loadXSD(new File(fileName));
-			} else if ("dtd".equals(fileExtension)) {
-				schema.loadDTD(new File(fileName));
-			} else if ("rng".equals(fileExtension)) {
-				schema.loadRelaxNG(new File(fileName));
-			} else if ("bonxai".equals(fileExtension)) {
-				// schema.loadBonxai(new File(fileName))
-				throw new RuntimeException("Bonxai conversion not supported by linked Bonxai library version yet");
-			}
+			schema.loadSchema(new File(fileName));
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
