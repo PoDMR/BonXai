@@ -80,7 +80,7 @@ public class DFATest extends TestCase {
 	    nfa.setFinalState("q2");
 	    nfa.addFinalState("q6");
 	    SparseNFA dfa = Determinizer.dfa(nfa);
-	    assertEquals("DFA number of states", 5, dfa.getNumberOfStates());
+	    assertEquals("DFA number of states", 6, dfa.getNumberOfStates());
 	    assertEquals("DFA final state number", 4, dfa.getNumberOfFinalStates());
 	    assertTrue(dfa.hasState("[q1, q2]"));
 	    assertTrue(dfa.hasState("[q3, q4]"));
