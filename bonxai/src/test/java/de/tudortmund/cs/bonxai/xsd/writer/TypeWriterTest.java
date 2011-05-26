@@ -171,7 +171,6 @@ public class TypeWriterTest extends junit.framework.TestCase
 
 
         testElement = (Element)testElement.getFirstChild();
-        assert(testElement != null);
         // Should be null, because no Inheritance has been defined
         // assertEquals("complexContent", testElement.getNodeName());
         assertNull(testElement);
@@ -232,7 +231,7 @@ public class TypeWriterTest extends junit.framework.TestCase
 
         TypeWriter.writeSimpContList(sNode, contentList,foundElements);
 
-        assert(sNode.getElementsByTagName("testElement").getLength() == 1);
+//        assert(sNode.getElementsByTagName("testElement").getLength() == 1);
 
         tmpNode = (Element)sNode.getFirstChild();
         assertEquals(tmpNode.getAttribute("itemType"), "myBaseType");
@@ -278,7 +277,7 @@ public class TypeWriterTest extends junit.framework.TestCase
         assertEquals(tmpNode.getAttribute("memberTypes"), "myBaseType type1 type2");
 
         tmpNode = (Element)DOMHelper.findByAttribute(testElement.getFirstChild(), "name", "myBaseType");
-        assert(tmpNode != null);
+//        assert(tmpNode != null);
         tmpNode = (Element)DOMHelper.findByAttribute(testElement.getFirstChild(), "name", "type1");
         assert(tmpNode != null);
         tmpNode = (Element)DOMHelper.findByAttribute(testElement.getFirstChild(), "name", "type2");

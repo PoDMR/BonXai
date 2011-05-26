@@ -21,7 +21,7 @@ public class RNGWriterTest extends junit.framework.TestCase {
     @Test
     public void testGetRNGString() throws IOException, FileNotFoundException, SAXException {
 
-        String filePath = new String("tests/de/tudortmund/cs/bonxai/relaxng/parser/rngs/relaxng.rng");
+        String filePath = this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/relaxng/parser/rngs/relaxng.rng").getFile();
 
         // RNGParser
         // Parameter 1: Path to file
