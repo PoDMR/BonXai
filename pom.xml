@@ -18,11 +18,6 @@
 			<target>1.6</target>
 		</configuration>
 	    </plugin>
-	  </plugins>
-	</build>
-
-  <reporting>
-    <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -30,9 +25,19 @@
 	<configuration>
 	  <use>false</use>
 	</configuration>
+	<executions>
+	  <execution>
+	    <id>aggregate</id>
+	    <goals>
+	      <goal>aggregate</goal>
+	    </goals>
+	    <phase>site</phase>
+	  </execution>
+	</executions>
       </plugin>
-    </plugins>
-  </reporting>
+	  </plugins>
+	</build>
+
 
 	<properties>
 	      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
