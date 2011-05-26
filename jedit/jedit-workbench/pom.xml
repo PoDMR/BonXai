@@ -25,13 +25,13 @@
     <dependency>
       <groupId>eu.fox7.jedit</groupId>
       <artifactId>flt-plugin</artifactId>
-      <version>1.0-SNAPSHOT-jar-with-dependencies</version>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
     
     <dependency>
       <groupId>eu.fox7.jedit</groupId>
       <artifactId>bonxai-plugin</artifactId>
-      <version>1.0-SNAPSHOT-jar-with-dependencies</version>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
     
   </dependencies>
@@ -46,23 +46,34 @@
         
         <executions>
           <execution>
-            <id>copy</id>
+            <id>copy-dependencies</id>
             <phase>package</phase>
             <goals>
-              <goal>copy</goal>
+              <goal>copy-dependencies</goal>
             </goals>
             
             <configuration>
-              <artifactItems>
+	      <includeArtifactIds>jedit</includeArtifactIds>
+	      <outputDirectory>${project.build.directory}/staging</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+	      <stripVersion>true</stripVersion>
+            </configuration>
+          </execution>
+	  <execution>
+            <id>copy-dependencies2</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            
+            <configuration>
+<!--              <artifactItems>
               	
               	<artifactItem>
                   <groupId>org.jedit</groupId>
                   <artifactId>jedit</artifactId>
-                  <version>4.3.2</version>
-                  <type>jar</type>
-                  <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/staging</outputDirectory>
-                  <destFileName>jedit.jar</destFileName>
                 </artifactItem>
                 
                 <artifactItem>
@@ -88,7 +99,7 @@
                 </artifactItem>
                 
                 <artifactItem>
-                  <groupId>eu.fox7.bonxai</groupId>
+                  <groupId>eu.fox7</groupId>
                   <artifactId>bonxai</artifactId>
                   <version>1.0-SNAPSHOT</version>
                   <type>jar</type>
@@ -96,11 +107,14 @@
                   <outputDirectory>${project.build.directory}/staging/jars</outputDirectory>
                   <destFileName>bonxai.jar</destFileName>
                 </artifactItem>
-                
+
               </artifactItems>
-              <outputDirectory>${project.build.directory}/staging</outputDirectory>
+-->
+	      <excludeArtifactIds>jedit</excludeArtifactIds>
+	      <outputDirectory>${project.build.directory}/staging/jars</outputDirectory>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
+	      <stripVersion>true</stripVersion>
             </configuration>
           </execution>
         </executions>
