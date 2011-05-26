@@ -83,26 +83,6 @@ public class AllProcessorTest extends junit.framework.TestCase{
     }
 
     @Test
-    public void testCountingPatternMaxOccursNotAllowedValueException() throws Exception {
-        try {
-            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/allTests/all_maxOccurs_not_allowed_value.xsd"));
-        } catch (CountingPatternMaxOccursNotAllowedValueException error) {
-            return;
-        }
-        fail("The value of maxOccurs is not allowed, but it wasn't detected.");
-    }
-
-    @Test
-    public void testCountingPatternMinOccursIllegalValueException() throws Exception {
-        try {
-            schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/allTests/all_minOccurs_illegal_value.xsd"));
-        } catch (CountingPatternMinOccursIllegalValueException error) {
-            return;
-        }
-        fail("The value of minOccurs is illegal, but it wasn't detected.");
-    }
-
-    @Test
     public void testSameElementUnderAllException() throws Exception {
         try {
             schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/de/tudortmund/cs/bonxai/xsd/parser/xsds/allTests/all_same_element_under_all.xsd"));

@@ -28,7 +28,7 @@ public class DTDWriterTest extends junit.framework.TestCase {
     @Test
     public void testSetWriteEntities() {
         try {
-            dtdWriter = new DTDWriter(dtdParser.parseXML("tests/de/tudortmund/cs/bonxai/dtd/writer/dtds/DTDWriterTests/writeEntites.xml"));
+            dtdWriter = new DTDWriter(dtdParser.parseXML(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/dtd/writer/dtds/DTDWriterTests/writeEntites.xml").getFile()));
             assertFalse(dtdWriter.getExternalSubsetString().contains("ENTITY"));
             dtdWriter.setWriteEntities(true);
             assertTrue(dtdWriter.getExternalSubsetString().contains("ENTITY"));
@@ -44,7 +44,7 @@ public class DTDWriterTest extends junit.framework.TestCase {
     @Test
     public void testGetXMLContainingDTDString() throws Exception {
         try {
-            dtdWriter = new DTDWriter(dtdParser.parseXML("tests/de/tudortmund/cs/bonxai/dtd/writer/dtds/DTDWriterTests/writeEntites.xml"));
+            dtdWriter = new DTDWriter(dtdParser.parseXML(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/dtd/writer/dtds/DTDWriterTests/writeEntites.xml").getFile()));
             assertTrue(dtdWriter.getXMLWithFullDTDDeclarationString().contains("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"));
             assertTrue(dtdWriter.getXMLWithFullDTDDeclarationString().startsWith("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE schema ["));
             assertTrue(dtdWriter.getXMLWithFullDTDDeclarationString().endsWith("]>\n<schema/>"));
@@ -60,7 +60,7 @@ public class DTDWriterTest extends junit.framework.TestCase {
     @Test
     public void testGetDTDString() throws Exception {
         try {
-            dtdWriter = new DTDWriter(dtdParser.parseXML("tests/de/tudortmund/cs/bonxai/dtd/writer/dtds/DTDWriterTests/getDTDString.xml"), true);
+            dtdWriter = new DTDWriter(dtdParser.parseXML(this.getClass().getResource("/tests/de/tudortmund/cs/bonxai/dtd/writer/dtds/DTDWriterTests/getDTDString.xml").getFile()), true);
             assertFalse(dtdWriter.getExternalSubsetString().contains("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"));
 
             String fileContent = "<!ENTITY % appinfo \"appinfo\">\n<!ENTITY % import \"import\">\n<!ENTITY test \"testValue\">\n\n<!NOTATION test PUBLIC \"test\">\n\n<!ELEMENT group EMPTY>\n<!ATTLIST group id ID #IMPLIED>\n<!ATTLIST group name NMTOKEN #IMPLIED>\n\n";
