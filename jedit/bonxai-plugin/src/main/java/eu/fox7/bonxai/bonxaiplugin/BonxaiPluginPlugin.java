@@ -39,40 +39,42 @@ public class BonxaiPluginPlugin extends EditPlugin {
 
 		String workingDir = new File(firstFileName).getPath();
 		Schema result = null;
-		if ("union".equals(protocol)) {
-			try {
+		try {
+			if ("union".equals(protocol)) {
 				result = Schema.union(schemas, workingDir);
-			} catch (ConversionFailedException ex) {
-				throw new RuntimeException(ex);
-			}
-		} else if ("intersect".equals(protocol)) {
-			try {
+			} else if ("intersect".equals(protocol)) {
 				result = Schema.intersect(schemas, workingDir);
-			} catch (ConversionFailedException ex) {
-				throw new RuntimeException(ex);
-			}
-		} else if ("difference".equals(protocol)) {
-			// Subtract all schemas from first
-			try {
+			} else if ("difference".equals(protocol)) {
+				// Subtract all schemas from first
 				if (schemas.size() <= 0)
 					throw new RuntimeException("No schemas selected");
 				result = schemas.get(0);
 				schemas.remove(result);
 				for (Schema s : schemas)
 					result = result.substract(s, workingDir);
-			} catch (ConversionFailedException ex) {
-				throw new RuntimeException(ex);
 			}
-		}
 
-		if ("xsd".equals(protocol)) {
-			result = convert(schemas, SchemaType.XSD);
-		} else if ("dtd".equals(protocol)) {
-			result = convert(schemas, SchemaType.DTD);
-		} else if ("rng".equals(protocol)) {
-			result = convert(schemas, SchemaType.RELAXNG);
-		} else if ("bonxai".equals(protocol)) {
-			result = convert(schemas, SchemaType.BONXAI);
+			if ("xsd".equals(protocol)) {
+				result = convert(schemas, SchemaType.XSD);
+			} else if ("dtd".equals(protocol)) {
+				result = convert(schemas, SchemaType.DTD);
+			} else if ("rng".equals(protocol)) {
+				result = convert(schemas, SchemaType.RELAXNG);
+			} else if ("bonxai".equals(protocol)) {
+				result = convert(schemas, SchemaType.BONXAI);
+			}
+			
+			if ("removeEmptyTypes".equals(protocol)) {
+				Schema schema = schemas.get(0);
+				schema.removeEmptyTypes();
+				result = schema;
+			} else if ("removeUnreachableTypes".equals(protocol)) {
+				Schema schema = schemas.get(0);
+				schema.removeUnreachableTypes();
+				result = schema;
+			}
+		} catch (ConversionFailedException e) {
+			throw new RuntimeException(e);
 		}
 
 		// TODO: Replace quick output filename hacks
@@ -93,14 +95,10 @@ public class BonxaiPluginPlugin extends EditPlugin {
 	}
 
 	// TODO: Do batch conversion? For now, only convert first selection.
-	protected static Schema convert(List<Schema> schemas, SchemaType st) {
-		try {
-			if (schemas.size() <= 0)
-				throw new RuntimeException("No schemas to convert");
-			return schemas.get(0).convert(st);
-		} catch (ConversionFailedException ex) {
-			throw new RuntimeException(ex);
-		}
+	protected static Schema convert(List<Schema> schemas, SchemaType st) throws ConversionFailedException {
+		if (schemas.size() <= 0)
+			throw new RuntimeException("No schemas to convert");
+		return schemas.get(0).convert(st);
 	}
 
 	protected static void write(Schema schema, String outputFileName) {
