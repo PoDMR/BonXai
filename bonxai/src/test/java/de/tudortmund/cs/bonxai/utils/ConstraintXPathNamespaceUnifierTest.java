@@ -4,7 +4,6 @@ import java.util.*;
 
 import de.tudortmund.cs.bonxai.common.*;
 import de.tudortmund.cs.bonxai.xsd.*;
-import de.tudortmund.cs.bonxai.converter.TestSchemaGenerator;
 
 public class ConstraintXPathNamespaceUnifierTest extends junit.framework.TestCase {
     private XSDSchema getConstraintSchemaFixture( String selector, String field )

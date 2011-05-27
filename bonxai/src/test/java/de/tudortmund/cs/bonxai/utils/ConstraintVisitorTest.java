@@ -6,7 +6,6 @@ import java.util.*;
 
 import de.tudortmund.cs.bonxai.common.*;
 import de.tudortmund.cs.bonxai.xsd.*;
-import de.tudortmund.cs.bonxai.converter.TestSchemaGenerator;
 
 public class ConstraintVisitorTest extends junit.framework.TestCase {
 
