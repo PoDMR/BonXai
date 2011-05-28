@@ -68,26 +68,33 @@ public class Console {
 		schemaNumberCompletor = new SimpleCompletor(new String[]{});
 		settingNameCompletor = new SimpleCompletor(PreferencesManager.getPreferencesManager().getSettingNames());
 		
+		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("addXML"), fileNameCompletor } ));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("convert"), schemaNumberCompletor, new SimpleCompletor(new String[]{"DTD", "XSD", "RelaxNG", "BonXai"}), nullCompletor}));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("difference"), schemaNumberCompletor, schemaNumberCompletor, nullCompletor}));
 		completors.add(new SimpleCompletor("exit"));
+		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("fixEDC"), schemaNumberCompletor, nullCompletor}));
+//		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("fixUPA"), schemaNumberCompletor, nullCompletor}));
 		completors.add(new SimpleCompletor("help"));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("intersect"), schemaNumberCompletor}));
 		completors.add(new ArgumentCompletor(new Completor[] { new SimpleCompletor("load"), fileNameCompletor } ));
+		completors.add(new ArgumentCompletor(new Completor[] { new SimpleCompletor("lernXSD"), nullCompletor } ));
+		completors.add(new ArgumentCompletor(new Completor[] { new SimpleCompletor("learnPreProcessed"), fileNameCompletor, new SimpleCompletor(new String[]{"1", "2", "3", "4", "5"}), nullCompletor } ));
 		completors.add(new SimpleCompletor("list"));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("print"), schemaNumberCompletor, nullCompletor}));
+		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("printContextAutomaton"), schemaNumberCompletor, nullCompletor}));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("printRootElements"), schemaNumberCompletor, nullCompletor}));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("remove"), schemaNumberCompletor, nullCompletor}));
+		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("removeUnreachableTypes"), schemaNumberCompletor, nullCompletor}));
+		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("removeEmptyTypes"), schemaNumberCompletor, nullCompletor}));
+		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("resetSchemaLearner"), nullCompletor}));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("resolveComplexTypeInheritance"), schemaNumberCompletor, nullCompletor}));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("resolveElementInheritance"), schemaNumberCompletor, nullCompletor}));
-		completors.add(new ArgumentCompletor(new Completor[] { new SimpleCompletor("run"), fileNameCompletor } ));
+		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("run"), fileNameCompletor } ));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("set"), settingNameCompletor, nullCompletor}));
 		completors.add(new SimpleCompletor("showPreferences"));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("unfoldCollection"), schemaNumberCompletor, nullCompletor}));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("union"), schemaNumberCompletor}));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("write"), schemaNumberCompletor, fileNameCompletor, nullCompletor}));
-		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("fixEDC"), schemaNumberCompletor}));
-		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("removeUnreachableTypes"), schemaNumberCompletor}));
 			
 		consoleReader.setDefaultPrompt(DEFAULT_PROMPT);
 		
@@ -164,6 +171,8 @@ public class Console {
 				cmdFixUPA(getSchema(parameters[1]));
 			} else if (parameters[0].equals("removeUnreachableTypes")) {
 				cmdRemoveUnreachableTypes(getSchema(parameters[1]));
+			} else if (parameters[0].equals("removeEmptyTypes")) {
+				cmdRemoveEmptyTypes(getSchema(parameters[1]));
 			} else if (parameters[0].equals("learnPreProcessed")) {
 				cmdLearnPreProcessed(parameters[1],Integer.parseInt(parameters[2]));
 			} else if (parameters[0].equals("printContextAutomaton")) {
@@ -247,7 +256,15 @@ public class Console {
 			e.printStackTrace();
 		}
 	}
-		
+
+	private void cmdRemoveEmptyTypes(Schema schema) {
+		try {
+			schema.removeEmptyTypes();
+		} catch (ConversionFailedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void cmdHelp() {
 		System.out.println("Just try TAB for now :)");
 	}
