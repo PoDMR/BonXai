@@ -47,7 +47,7 @@ public class RNGWriter {
      * @return String   The generated XML Relax NG document
      */
     public String getRNGString() {
-
+    	System.setProperty("javax.xml.transform.TransformerFactory","com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
         // Prepare all necessary Variables for writing the XML structure of the
         // Relax NG language.
         TransformerFactory transformerFactory;

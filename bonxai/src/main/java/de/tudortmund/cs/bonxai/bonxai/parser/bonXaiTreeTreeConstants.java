@@ -6,55 +6,46 @@ public interface bonXaiTreeTreeConstants
 {
   public int JJTBONXAI = 0;
   public int JJTDECL = 1;
-  public int JJTNAMESPACEURILITERAL = 2;
-  public int JJTHOST = 3;
-  public int JJTCONSTRAINTBLOCK = 4;
-  public int JJTCONSTRAINT = 5;
-  public int JJTUNIQUECONSTRAINT = 6;
-  public int JJTKEYCONSTRAINT = 7;
-  public int JJTKEYREFCONSTRAINT = 8;
-  public int JJTCONSTRAINTSELECTOR = 9;
-  public int JJTCONSTRAINTFIELDS = 10;
-  public int JJTGROUPBLOCK = 11;
-  public int JJTGROUPRULE = 12;
-  public int JJTBLOCK = 13;
-  public int JJTROOTELEMENTS = 14;
-  public int JJTEXPR = 15;
-  public int JJTANNOTATIONS = 16;
-  public int JJTANNOTATION = 17;
-  public int JJTANNOTATIONNAME = 18;
-  public int JJTANNOTATIONVALUE = 19;
-  public int JJTAPATTERN = 20;
-  public int JJTSIMPLEAPATTERN = 21;
-  public int JJTSIMPLEAPATTERNOR = 22;
-  public int JJTFULLAPATTERN = 23;
-  public int JJTFULLAPATTERNOR = 24;
-  public int JJTPATHSEPARATOR = 25;
-  public int JJTOPERATOR = 26;
-  public int JJTCPATTERN = 27;
-  public int JJTELEMENTPATTERN = 28;
-  public int JJTMIXEDREGEX = 29;
-  public int JJTALL = 30;
-  public int JJTREGEX = 31;
-  public int JJTNAMEDTYPE = 32;
-  public int JJTATTRIBUTEPATTERN = 33;
-  public int JJTATTRIBUTELIST = 34;
-  public int JJTNAMESPACELIST = 35;
-  public int JJTFOREIGN = 36;
-  public int JJTBONXAITYPE = 37;
-  public int JJTATTRBONXAITYPE = 38;
-  public int JJTIDENTIFIER = 39;
-  public int JJTQUOTATIONNAME = 40;
-  public int JJTNAME = 41;
-  public int JJTNUMBER = 42;
-  public int JJTVOID = 43;
+  public int JJTVOID = 2;
+  public int JJTCONSTRAINTBLOCK = 3;
+  public int JJTCONSTRAINT = 4;
+  public int JJTUNIQUECONSTRAINT = 5;
+  public int JJTKEYCONSTRAINT = 6;
+  public int JJTKEYREFCONSTRAINT = 7;
+  public int JJTCONSTRAINTSELECTOR = 8;
+  public int JJTCONSTRAINTFIELDS = 9;
+  public int JJTGROUPBLOCK = 10;
+  public int JJTGROUPRULE = 11;
+  public int JJTBLOCK = 12;
+  public int JJTROOTELEMENTS = 13;
+  public int JJTEXPR = 14;
+  public int JJTANNOTATIONS = 15;
+  public int JJTANNOTATION = 16;
+  public int JJTANNOTATIONNAME = 17;
+  public int JJTANNOTATIONVALUE = 18;
+  public int JJTAPATTERN = 19;
+  public int JJTSIMPLEAPATTERN = 20;
+  public int JJTSIMPLEAPATTERNOR = 21;
+  public int JJTFULLAPATTERN = 22;
+  public int JJTFULLAPATTERNOR = 23;
+  public int JJTCPATTERN = 24;
+  public int JJTELEMENTPATTERN = 25;
+  public int JJTMIXEDREGEX = 26;
+  public int JJTALL = 27;
+  public int JJTREGEX = 28;
+  public int JJTNAMEDTYPE = 29;
+  public int JJTATTRIBUTEPATTERN = 30;
+  public int JJTATTRIBUTELIST = 31;
+  public int JJTNAMESPACELIST = 32;
+  public int JJTFOREIGN = 33;
+  public int JJTBONXAITYPE = 34;
+  public int JJTATTRBONXAITYPE = 35;
 
 
   public String[] jjtNodeName = {
     "bonXai",
     "Decl",
-    "NamespaceUriLiteral",
-    "host",
+    "void",
     "ConstraintBlock",
     "Constraint",
     "UniqueConstraint",
@@ -76,8 +67,6 @@ public interface bonXaiTreeTreeConstants
     "SimpleAPatternOr",
     "FullAPattern",
     "FullAPatternOr",
-    "PathSeparator",
-    "Operator",
     "CPattern",
     "ElementPattern",
     "MixedRegex",
@@ -90,10 +79,5 @@ public interface bonXaiTreeTreeConstants
     "Foreign",
     "BonxaiType",
     "AttrBonxaiType",
-    "Identifier",
-    "QuotationName",
-    "Name",
-    "Number",
-    "void",
   };
 }

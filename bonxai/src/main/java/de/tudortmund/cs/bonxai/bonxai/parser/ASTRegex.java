@@ -7,10 +7,29 @@ package de.tudortmund.cs.bonxai.bonxai.parser;
 public
 class ASTRegex extends SimpleNode {
 
-  Integer numberBefore;
-  Integer numberAfter;
+  int numberBefore;
+  int numberAfter;
+  boolean concatenation;
+  boolean disjunction;
   String  operator;
   String  secondoperator;
+
+
+  public boolean isConcatenation() {
+	  return concatenation;
+  }
+
+  public void setConcatenation(boolean concatenation) {
+	  this.concatenation = concatenation;
+  }
+
+  public boolean isDisjunction() {
+	  return disjunction;
+  }
+
+  public void setDisjunction(boolean disjunction) {
+	  this.disjunction = disjunction;
+  }
 
   public ASTRegex(int id) {
     super(id);

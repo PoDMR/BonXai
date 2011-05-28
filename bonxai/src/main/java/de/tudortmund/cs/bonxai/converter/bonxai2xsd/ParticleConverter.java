@@ -81,6 +81,7 @@ public class ParticleConverter {
                 }
 
                 element.setType(convertType(source.getType()));
+                element.setTypeAttr(true);
             } else {
             	String qualifiedName = "{" + source.getNamespace() + "}" + source.getName();
             	State toState;

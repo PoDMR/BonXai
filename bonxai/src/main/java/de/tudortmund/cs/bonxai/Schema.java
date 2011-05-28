@@ -627,7 +627,7 @@ public class Schema {
 
 	public void removeEmptyTypes() throws ConversionFailedException {
 		if (this.getType() != SchemaType.XSD) {
-			throw new ConversionFailedException("Can only remove unused types in xml schema");
+			throw new ConversionFailedException("Can only remove empty types in xml schema");
 		}
 		XSDEmptyTypeRemover xsdEmptyTypeRemover = new XSDEmptyTypeRemover();
 		xsdEmptyTypeRemover.removeEmptyTypes(this.getXSD());

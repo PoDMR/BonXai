@@ -36,7 +36,15 @@ public abstract class ContainerParticle extends AncestorPatternParticle {
         this.children = children;
     }
 
-    /**
+    public ContainerParticle() {
+		this.children = new Vector<AncestorPatternParticle>();
+	}
+    
+    public void addChild(AncestorPatternParticle child) {
+    	this.children.add(child);
+    }
+
+	/**
      * Returns the list of AncestorPatternParticles for this ContainerParticle
      * @return children
      */

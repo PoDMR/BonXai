@@ -7,8 +7,6 @@ public interface bonXaiTreeVisitor
   public Object visit(SimpleNode node, Object data);
   public Object visit(ASTbonXai node, Object data);
   public Object visit(ASTDecl node, Object data);
-  public Object visit(ASTNamespaceUriLiteral node, Object data);
-  public Object visit(ASThost node, Object data);
   public Object visit(ASTConstraintBlock node, Object data);
   public Object visit(ASTConstraint node, Object data);
   public Object visit(ASTUniqueConstraint node, Object data);
@@ -30,8 +28,6 @@ public interface bonXaiTreeVisitor
   public Object visit(ASTSimpleAPatternOr node, Object data);
   public Object visit(ASTFullAPattern node, Object data);
   public Object visit(ASTFullAPatternOr node, Object data);
-  public Object visit(ASTPathSeparator node, Object data);
-  public Object visit(ASTOperator node, Object data);
   public Object visit(ASTCPattern node, Object data);
   public Object visit(ASTElementPattern node, Object data);
   public Object visit(ASTMixedRegex node, Object data);
@@ -44,8 +40,4 @@ public interface bonXaiTreeVisitor
   public Object visit(ASTForeign node, Object data);
   public Object visit(ASTBonxaiType node, Object data);
   public Object visit(ASTAttrBonxaiType node, Object data);
-  public Object visit(ASTIdentifier node, Object data);
-  public Object visit(ASTQuotationName node, Object data);
-  public Object visit(ASTName node, Object data);
-  public Object visit(ASTNumber node, Object data);
 }

@@ -5,9 +5,9 @@ package de.tudortmund.cs.bonxai.bonxai.parser;
 public
 class ASTFullAPattern extends SimpleNode {
 
-  String operator;
-  Boolean separator;
-  Boolean sequence;
+  String operator = "";
+  boolean separator;
+  boolean sequence;
 
   public ASTFullAPattern(int id) {
     super(id);
@@ -19,7 +19,7 @@ class ASTFullAPattern extends SimpleNode {
 
 
 
-    public void setSeparator(Boolean separator){
+    public void setSeparator(boolean separator){
     this.separator = separator;
   }
 

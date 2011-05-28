@@ -11,7 +11,6 @@ import de.tudortmund.cs.bonxai.utils.exceptions.RecursiveContentModelException;
 import de.tudortmund.cs.bonxai.utils.exceptions.UPAViolationException;
 
 import java.util.Vector;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,39 +31,18 @@ public class Visitor implements bonXaiTreeVisitor {
 	}
 
 	public Bonxai visit(SimpleNode node, Object data) {
-		for (int i = 0; i < node.jjtGetNumChildren(); i++) {
-			if (node.jjtGetChild(i).getNodeType().equals("declaration")) {
-				ASTDecl subnode = (ASTDecl) node.jjtGetChild(i);
-				bonxai.setDeclaration(this.visit(subnode, null));
-			} else if (node.jjtGetChild(i).getNodeType().equals("GroupBlock")) {
-				ASTGroupBlock subnode = (ASTGroupBlock) node.jjtGetChild(i);
-				bonxai.setGroupList(this.visit(subnode, null));
-			} else if (node.jjtGetChild(i).getNodeType().equals("Block")) {
-				ASTBlock subnode = (ASTBlock) node.jjtGetChild(i);
-				bonxai.setGrammarList(this.visit(subnode, null));
-			} else if (node.jjtGetChild(i).getNodeType().equals("ConstraintBlock")) {
-				ASTConstraintBlock subnode = (ASTConstraintBlock) node.jjtGetChild(i);
-				bonxai.setConstraintList(this.visit(subnode, null));
-			}
-
-		}
-		try {
-			bonxai.getAttributeGroupElementSymbolTable().checkReferences();
-			bonxai.getGroupSymbolTable().checkReferences();
-			return bonxai;
-		} catch (SymbolNotResolvableException e) {
-			System.out.println(e);
-		}
-		return bonxai;
+		return this.visit((ASTbonXai) node, data);
 	}
 
 
 	public Bonxai visit(ASTbonXai node, Object data) {
-
+		Declaration declaration = new Declaration(new ImportList(), new DataTypeList(), new NamespaceList(new DefaultNamespace("")));
+		bonxai.setDeclaration(declaration);
+		
 		for (int i = 0; i < node.jjtGetNumChildren(); i++) {
 			if (node.jjtGetChild(i).getNodeType().equals("declaration")) {
 				ASTDecl subnode = (ASTDecl) node.jjtGetChild(i);
-				bonxai.setDeclaration(this.visit(subnode, null));
+				this.visit(subnode, declaration);
 			} else if (node.jjtGetChild(i).getNodeType().equals("GroupBlock")) {
 				ASTGroupBlock subnode = (ASTGroupBlock) node.jjtGetChild(i);
 				bonxai.setGroupList(this.visit(subnode, null));
@@ -75,88 +53,62 @@ public class Visitor implements bonXaiTreeVisitor {
 				ASTConstraintBlock subnode = (ASTConstraintBlock) node.jjtGetChild(i);
 				bonxai.setConstraintList(this.visit(subnode, null));
 			}
-
 		}
 		try {
 			bonxai.getAttributeGroupElementSymbolTable().checkReferences();
 			bonxai.getGroupSymbolTable().checkReferences();
 			return bonxai;
 		} catch (SymbolNotResolvableException e) {
-			System.out.println(e);
+			throw new RuntimeException(e);
 		}
-		return bonxai;
 	}
 
+	public Object visit(ASTDecl node, Object data) {
+		Declaration declaration = (Declaration) data;
+		
+		NamespaceList namespaceList = declaration.getNamespaceList();
+		ImportList importList = declaration.getImportList();
+		DataTypeList dataTypeList = declaration.getDataTypeList();
 
-	public Declaration visit(ASTDecl node, Object data) {
-	
-		NamespaceList namespaceList =
-			new NamespaceList(new DefaultNamespace(""));
-		ImportList importList = new ImportList();
-		DataTypeList dataTypeList = new DataTypeList();
-
-	
 		if (node.getNodeChoice().equals("default")) {
-		namespaceList.getDefaultNamespace().setUri(node.getUri());
+			namespaceList.getDefaultNamespace().setUri(node.getUri());
 		} 
-			
-		
+
 		if (node.getNodeChoice().equals("namespace")) {
-			
-		IdentifiedNamespace identifiedNamespace = new IdentifiedNamespace(node.getIdentifier(), node.getUri());
-		namespaceList.addIdentifiedNamespace(identifiedNamespace);
-		
+			IdentifiedNamespace identifiedNamespace = new IdentifiedNamespace(node.getIdentifier(), node.getUri());
+			namespaceList.addIdentifiedNamespace(identifiedNamespace);
 		}
-		
-		
+
 		if (node.getNodeChoice().equals("import")) {
-			
-			 Import myImport;
-			
-			 if (node.getUrl().equals("")) {
-		            myImport = new Import(node.getUri());
-		        } else {
-		            myImport = new Import(node.getUri(), node.getUrl());
-		        }
-			
-			
-			 importList.addImport( myImport);
-			
+			Import myImport;
+
+			if (node.getUrl().equals("")) {
+				myImport = new Import(node.getUri());
+			} else {
+				myImport = new Import(node.getUri(), node.getUrl());
 			}
-		
-		
+			importList.addImport( myImport);
+		}
+
 		if (node.getNodeChoice().equals("datatypes")) {
-			
 			DataType dataType = new DataType(node.getIdentifier(), node.getUrl());
 			dataTypeList.addDataType(dataType);
-			
-			}
-		
+		}
 
-
-		Declaration declaration = new Declaration(importList, dataTypeList, namespaceList);
-		return declaration;
+		return null;
 	}
 
-
 	public ConstraintList visit(ASTConstraintBlock node, Object data) {
-
 		ConstraintList constraintList = new ConstraintList();
-		for (int i = 0; i <
-		node.jjtGetNumChildren(); i++) {
+		for (int i = 0; i < node.jjtGetNumChildren(); i++) {
 			ASTConstraint subnode = (ASTConstraint) node.jjtGetChild(i);
 			constraintList.addConstraint(this.visit(subnode, null));
 		}
 
 		return constraintList;
-
-
 	}
 
-
-
 	public Constraint visit(ASTConstraint node, Object data) {
-
 		Constraint constraint;
 		if (node.jjtGetChild(0).getNodeType().equals("UniqueConstraint")) {
 			ASTUniqueConstraint subnode = (ASTUniqueConstraint) node.jjtGetChild(0);
@@ -173,13 +125,9 @@ public class Visitor implements bonXaiTreeVisitor {
 		}
 
 		return constraint;
-
 	}
 
-
-
-	public UniqueConstraint visit(
-			ASTUniqueConstraint node, Object data) {
+	public UniqueConstraint visit(ASTUniqueConstraint node, Object data) {
 		ASTAPattern subnode = (ASTAPattern) node.jjtGetChild(0);
 		UniqueConstraint uniqueConstraint =
 			new UniqueConstraint(this.visit(subnode, null),
@@ -187,10 +135,7 @@ public class Visitor implements bonXaiTreeVisitor {
 		return uniqueConstraint;
 	}
 
-
-
-	public KeyConstraint visit(
-			ASTKeyConstraint node, Object data) {
+	public KeyConstraint visit(ASTKeyConstraint node, Object data) {
 		ASTAPattern subnode = (ASTAPattern) node.jjtGetChild(0);
 		KeyConstraint keyConstraint =
 			new KeyConstraint(node.getName(), this.visit(subnode, null),
@@ -198,19 +143,13 @@ public class Visitor implements bonXaiTreeVisitor {
 		return keyConstraint;
 	}
 
-
-
-	public KeyRefConstraint visit(
-			ASTKeyRefConstraint node, Object data) {
+	public KeyRefConstraint visit(ASTKeyRefConstraint node, Object data) {
 		ASTAPattern subnode = (ASTAPattern) node.jjtGetChild(0);
 		KeyRefConstraint keyRefConstraint =
 			new KeyRefConstraint(node.getName(),
 					this.visit(subnode, null), node.getSelector(), node.getFields());
 		return keyRefConstraint;
 	}
-
-
-
 
 	public GroupList visit(ASTGroupBlock node, Object data) {
 
@@ -222,12 +161,8 @@ public class Visitor implements bonXaiTreeVisitor {
 		return groupList;
 	}
 
-
 	public GroupElement visit(ASTGroupRule node, Object data) {
-
-
 		if (node.getNodeChoice().equals("group")) {
-
 			ASTRegex subnode = (ASTRegex) node.jjtGetChild(0);
 
 			Particle particle = this.visit(subnode, null);
@@ -236,11 +171,8 @@ public class Visitor implements bonXaiTreeVisitor {
 			ElementGroupElement elementGroupElement =
 				new ElementGroupElement(node.getName(), particleContainer);
 			bonxai.getGroupSymbolTable().updateOrCreateReference(node.getName(), elementGroupElement);
-			  return elementGroupElement;
-
-
+			return elementGroupElement;
 		} else {
-			
 			ASTAttributePattern subnode = (ASTAttributePattern) node.jjtGetChild(0);
 			
 			AttributePattern attributePattern = this.visit(subnode, null);
@@ -251,21 +183,14 @@ public class Visitor implements bonXaiTreeVisitor {
 		}
 	}
 
-
-
-
-	public Expression visit(
-			ASTExpr node, Object data) {
-		
+	public Expression visit(ASTExpr node, Object data) {
 		// to be extended
-		
 		Expression expression = new Expression();
 		AncestorPattern ancestorPattern;
 
 		ChildPattern childPattern;
 
 		if (node.jjtGetNumChildren() == 3) {
-
 			ASTAnnotations annotationSubnode = (ASTAnnotations) node.jjtGetChild(0);
 			ASTAPattern aPatternSubnode = (ASTAPattern) node.jjtGetChild(1);
 			ASTCPattern cPatternSubnode = (ASTCPattern) node.jjtGetChild(2);
@@ -276,7 +201,6 @@ public class Visitor implements bonXaiTreeVisitor {
 			childPattern =
 				this.visit(cPatternSubnode, null);
 		} else {
-
 			ASTAPattern aPatternSubnode = (ASTAPattern) node.jjtGetChild(0);
 			ASTCPattern cPatternSubnode = (ASTCPattern) node.jjtGetChild(1);
 			ancestorPattern =
@@ -290,10 +214,7 @@ public class Visitor implements bonXaiTreeVisitor {
 		return expression;
 	}
 
-
-
-	public Expression visit(
-			ASTAnnotations node, Object data) {
+	public Expression visit(ASTAnnotations node, Object data) {
 		Expression expression = (Expression) data;
 		for (int i = 0; i <
 		node.jjtGetNumChildren(); i++) {
@@ -304,116 +225,74 @@ public class Visitor implements bonXaiTreeVisitor {
 		return expression;
 	}
 
-
-	public AncestorPattern visit(
-			ASTAPattern node, Object data) {
-
+	public AncestorPattern visit(ASTAPattern node, Object data) {
+		AncestorPattern ancestorPattern = new AncestorPattern(null);
 		if (node.getNodeChoice().equals("full")) {
 			ASTFullAPattern subnode = (ASTFullAPattern) node.jjtGetChild(0);
-
+			AncestorPatternParticle particle = this.visit(subnode, null);
+			ancestorPattern = new AncestorPattern(particle);
 		}
-		else {
+//		else {
+//
+//			if (node.getNodeChoice().equals("simple_full")) {
+//
+//				ASTSimpleAPattern subnode = (ASTSimpleAPattern) node.jjtGetChild(0);
+//				ASTFullAPattern fullnode = (ASTFullAPattern) node.jjtGetChild(1);
+//				
+//
+//			}
+//			else {
+//
+//				ASTSimpleAPattern subnode = (ASTSimpleAPattern) node.jjtGetChild(0);
+//				
+//			}
+//
+//		}
 
-			if (node.getNodeChoice().equals("simple_full")) {
-
-				ASTSimpleAPattern subnode = (ASTSimpleAPattern) node.jjtGetChild(0);
-				ASTFullAPattern fullnode = (ASTFullAPattern) node.jjtGetChild(1);
-				
-
-			}
-			else {
-
-				ASTSimpleAPattern subnode = (ASTSimpleAPattern) node.jjtGetChild(0);
-				
-			}
-
-		}
-
-		return new AncestorPattern(null);
-		
-		
+		return ancestorPattern;
 	}
 
-
-
-
-	public AncestorPatternParticle visit(
-			ASTSimpleAPattern node, Object data) {
-
+	public AncestorPatternParticle visit(ASTSimpleAPattern node, Object data) {
 		AncestorPatternParticle apattern;
 
 		if (node.getName() != "") {
-
-			
-
-			String namespace;
-
-			String name;
-
-
-			name =  extractName(node.getName());
-			namespace = extractIdentifier(node.getName());
-
+			String name =  extractName(node.getName());
+			String namespace = extractIdentifier(node.getName());
 
 			apattern = new DoubleSlashPrefixElement(namespace, name);
 
-
 			ASTFullAPattern subnode = (ASTFullAPattern) node.jjtGetChild(0);
-
-
-
 		}
 		else {
-
 			ASTSimpleAPatternOr subnode = (ASTSimpleAPatternOr) node.jjtGetChild(0);
 
 			Vector<AncestorPatternParticle> orExpressionContent = new Vector<AncestorPatternParticle>();
 			orExpressionContent.add(this.visit(subnode, null));
 
-
 			OrExpression orExpression = new OrExpression(orExpressionContent);
 			return orExpression;
-
-
 		}
-		
-		
- return apattern;
-
-
+		return apattern;
 	}
 
-
-
-
-	public AncestorPatternParticle visit(
-			ASTFullAPatternOr  node, Object data) {
-
-
+	public AncestorPatternParticle visit(ASTFullAPatternOr node, Object data) {
 		if (node.jjtGetNumChildren() == 1) {
 			ASTFullAPattern subnode = (ASTFullAPattern) node.jjtGetChild(0);
 			return this.visit(subnode, null);
 		} else {
-			ASTFullAPattern subnodeOne = (ASTFullAPattern) node.jjtGetChild(0);
-			ASTFullAPattern subnodeTwo = (ASTFullAPattern) node.jjtGetChild(1);
-			Vector<AncestorPatternParticle> orExpressionContent =
-				new Vector<AncestorPatternParticle>();
-			orExpressionContent.add(this.visit(subnodeOne, null));
-			orExpressionContent.add(this.visit(subnodeTwo, null));
+			Vector<AncestorPatternParticle> orExpressionContent = new Vector<AncestorPatternParticle>();
+			for (Node subnode: node.children) {
+				ASTFullAPattern astFullAPattern = (ASTFullAPattern) subnode;
+				orExpressionContent.add(this.visit(astFullAPattern, null));
+			}
+			
 			OrExpression orExpression = new OrExpression(orExpressionContent);
 			return orExpression;
-
-
-
 		}
 	}
 
-
-
 	public AncestorPatternParticle visit(
 			ASTSimpleAPatternOr  node, Object data) {
-
-
 		if (node.jjtGetNumChildren() == 1) {
 			ASTSimpleAPattern subnode = (ASTSimpleAPattern) node.jjtGetChild(0);
 			return this.visit(subnode, null);
@@ -426,106 +305,68 @@ public class Visitor implements bonXaiTreeVisitor {
 			orExpressionContent.add(this.visit(subnodeTwo, null));
 			OrExpression orExpression = new OrExpression(orExpressionContent);
 			return orExpression;
-
-
-
 		}
 	}
 
-
-
-	public AncestorPatternParticle visit(
-			ASTFullAPattern node, Object data) {
-
+	public AncestorPatternParticle visit(ASTFullAPattern node, Object data) {
 		AncestorPatternParticle content;
 		String namespace;
-
 		String name;
 
-
-
-		ASTSimpleAPattern parentnode = (ASTSimpleAPattern) node.jjtGetParent();
-
-		name = extractName(parentnode.getName());
-		namespace = extractIdentifier(parentnode.getName());
-
+		boolean sequence = node.getSequence();
 
 		if (node.getNodeChoice().equals("separator")) {
-
-			if (node.getSeparator()) {
-
-
-				content = new DoubleSlashPrefixElement(namespace, name);
-
-
-			} else {
-
-
-				content = new SingleSlashPrefixElement(namespace, name);
-
-			}
-
-
 			ASTSimpleAPattern subnode = (ASTSimpleAPattern) node.jjtGetChild(0);
-
+			String bonxainame = subnode.getName();
+			
+			namespace = this.extractIdentifier(bonxainame);
+			name = this.extractName(bonxainame);
+	
+			if (node.getSeparator())
+				content = new DoubleSlashPrefixElement(namespace, name);
+			else 
+				content = new SingleSlashPrefixElement(namespace, name);
 		} else {
-
 			ASTFullAPatternOr subnode = (ASTFullAPatternOr) node.jjtGetChild(0);
+			AncestorPatternParticle childContent = this.visit(subnode, null);
 
-
-			if (node.getOperator() != "") {
-
-
+			if (! node.getOperator().isEmpty()) {
 				Integer min = 1;
 				Integer max = 1;
 				if (node.getOperator().equals("*")) {
 					min = 0;
-					max =
-						null;
+					max = null;
 				} else if (node.getOperator().equals("+")) {
-					min = 0;
-					max =
-						null;
+					max = null;
 				} else if (node.getOperator().equals("?")) {
 					min = 0;
-					max =
-						1;
 				}
 
-				AncestorPatternParticle childContent = this.visit(subnode, null);
-				content =new CardinalityParticle(childContent, min, max);
-
+				content = new CardinalityParticle(childContent, min, max);
+			} else {
+				content = childContent;
 			}
-
 		}
 
+		if (sequence) {
+			ASTFullAPattern subnode = (ASTFullAPattern) node.jjtGetChild(1);
 
-		if (node.getSequence()) {
-
-
-			ASTFullAPattern subnode = (ASTFullAPattern) node.jjtGetChild(0);
-			AncestorPatternParticle childContent = this.visit(subnode, null);
-		
-			Vector<AncestorPatternParticle> sequenceExpressionContent =  new Vector<AncestorPatternParticle>();
-			sequenceExpressionContent.add(childContent);
-			sequenceExpressionContent.add(this.visit(subnode, null));
-			// return new SequenceExpression(sequenceExpressionContent);
-
-
+			SequenceExpression sequenceExpression = new SequenceExpression();
+			sequenceExpression.addChild(content);
+			
+			while (sequence) {
+				sequence = subnode.getSequence();
+				subnode.setSequence(false);
+				content = this.visit(subnode, null);
+				sequenceExpression.addChild(content);
+			} 
+			
+			content = sequenceExpression;
 		}
-
-
-return null;
-
+		return content;
 	}
 
-
-
-
-
 	public Annotation visit(ASTAnnotation node, Object data) {
-
-
 		String name="";
 		String value="";
 
@@ -541,181 +382,82 @@ return null;
 			}
 		}
 
-
 		Annotation annotation = new Annotation( name, value);
 
 		return annotation;
-
 	}
-
-	// Visit implementation not necessary for: AnnotaionName, Annotation Value
-
 
 	public Particle visit( ASTRegex node, Object data) {
-
+		Particle particle = null;
 
 		if (node.getNodeChoice().equals("regex")) {
-
-
 			// (regex)
-			if (node.getOperator() == "" && node.getNumberBefore() == 0 && node.getNumberAfter() == 0) {
-
-				ASTRegex nextRegex = (ASTRegex) node.jjtGetChild(0);
-
-
-			}
-
-			// (regex)* | (regex)+
-
-			if ( (node.getOperator() == "*" || node.getOperator() == "+") && node.getNumberBefore() == 0 && node.getNumberAfter() == 0) {
-
-				ASTRegex nextRegex = (ASTRegex) node.jjtGetChild(0);
-				CountingPattern countingPattern = new CountingPattern(0, null);
-
-
-			}
-
-			// regex ?
-			if (node.getOperator() == "?" && node.getNumberBefore() == 0 && node.getNumberAfter() == 0) {
-
-				ASTRegex nextRegex = (ASTRegex) node.jjtGetChild(0);
-				CountingPattern countingPattern = new CountingPattern(0, 1);
-
-
-			}
-
-			// regex [n]
-			if (node.getOperator() == "" && node.getNumberBefore() > 0 && node.getNumberAfter() == 0 && node.getSecondOperator()=="") {
-
-				ASTRegex nextRegex = (ASTRegex) node.jjtGetChild(0);
-				CountingPattern countingPattern = new CountingPattern(0, node.getNumberBefore());
-
-
-			}
-
-			// regex [n, n ]
-			if (node.getOperator() == "" && node.getNumberBefore() > 0 &&  node.getNumberAfter() > 0 && node.getSecondOperator()=="") {
-
-				ASTRegex nextRegex = (ASTRegex) node.jjtGetChild(0);
-				CountingPattern countingPattern = new CountingPattern(  node.getNumberBefore(), node.getNumberAfter());
-
-
-			}
-
-			// regex [n *]
-			if (node.getOperator() == "" && node.getNumberBefore() > 0 && node.getNumberAfter() == 0 && node.getSecondOperator()=="*") {
-
-				ASTRegex nextRegex = (ASTRegex) node.jjtGetChild(0);
-				CountingPattern countingPattern = new CountingPattern( node.getNumberBefore(), null );
-
-
-			} 
-
-
-
-		}
-
-
-
-		if (node.getNodeChoice().equals("named_type_single")) {
-
+			ASTRegex nextRegex = (ASTRegex) node.jjtGetChild(0);
+			particle = this.visit(nextRegex, null);
+		} else if (node.getNodeChoice().equals("namedtype")) {
 			// (NamedType)
-			if (node.getOperator() == "" && node.getNumberBefore() == 0 && node.getNumberAfter() == 0) {
-
-				ASTNamedType namedType = (ASTNamedType) node.jjtGetChild(0);
-
-
-			}
-
-			// (NamedType)* | (NamedType)+
-
-			if ( (node.getOperator() == "*" || node.getOperator() == "+") && node.getNumberBefore() == 0 && node.getNumberAfter() == 0) {
-
-				ASTNamedType namedType = (ASTNamedType) node.jjtGetChild(0);
-				CountingPattern countingPattern = new CountingPattern(0, null);
-
-
-			}
-
-			// NamedType ? 
-
-			if (node.getOperator() == "?" && node.getNumberBefore() == 0 && node.getNumberAfter() == 0) {
-
-				ASTNamedType namedType = (ASTNamedType) node.jjtGetChild(0);
-				CountingPattern countingPattern = new CountingPattern(0, 1);
-
-
-			}
-
-			// NamedType[n]
-			if (node.getOperator() == "" && node.getNumberBefore() > 0 && node.getNumberAfter() == 0 && node.getSecondOperator()=="") {
-
-				ASTNamedType namedType = (ASTNamedType) node.jjtGetChild(0);
-				CountingPattern countingPattern = new CountingPattern(0, node.getNumberBefore());
-
-
-			}
-
-			// NamedType[n, n ]
-			if (node.getOperator() == "" && node.getNumberBefore() > 0 && node.getNumberAfter() > 0 && node.getSecondOperator()=="") {
-
-				ASTNamedType namedType = (ASTNamedType) node.jjtGetChild(0);
-				CountingPattern countingPattern = new CountingPattern(  node.getNumberBefore(), node.getNumberAfter());
-
-
-			}
-
-			// NamedType [n *]
-			if (node.getOperator() == "" && node.getNumberBefore() > 0 && node.getNumberAfter() == 0 && node.getSecondOperator()=="*") {
-
-				ASTNamedType namedType = (ASTNamedType) node.jjtGetChild(0);
-				CountingPattern countingPattern = new CountingPattern( node.getNumberBefore(), null );
-
-
-			} 
-
-		
-		
-		}
-
-
-		if (node.getNodeChoice().equals("named_type_comma")) {
-
-
 			ASTNamedType namedType = (ASTNamedType) node.jjtGetChild(0);
+			particle = this.visit(namedType, null);
+		}
+		
+		CountingPattern countingPattern = null;
+
+		if (node.getOperator().equals("*"))
+			countingPattern = new CountingPattern(particle, 0, null);
+		else if (node.getOperator().equals("+"))
+			countingPattern = new CountingPattern(particle, 1, null);
+		else if (node.getOperator().equals("?"))
+			countingPattern = new CountingPattern(particle, 0, 1);
+		else if (node.getNumberBefore() > 0 &&  node.getNumberAfter() > 0)
+			countingPattern = new CountingPattern(particle, node.getNumberBefore(), node.getNumberAfter());
+		else if (node.getNumberBefore() > 0 && node.getSecondOperator().equals("*"))
+			countingPattern = new CountingPattern(particle, node.getNumberBefore(), null);
+	
+		if (countingPattern != null)
+			particle = countingPattern;
+
+		boolean concatenation = node.isConcatenation();
+		boolean disjunction = node.isDisjunction();
+		
+		// concatenation has a higher priority than or
+		if (concatenation) {
 			SequencePattern sequencePattern = new SequencePattern();
-			sequencePattern.addParticle(this.visit(namedType, null));
-
-		}
-
-
-		if (node.getNodeChoice().equals("named_type_or")) {
-
-
-			ASTNamedType namedType = (ASTNamedType) node.jjtGetChild(0);
+			sequencePattern.addParticle(particle);
+			
+			while (concatenation) {
+				node = (ASTRegex) node.jjtGetChild(1);
+				concatenation = node.isConcatenation();
+				disjunction = node.isDisjunction();
+				node.setConcatenation(false);
+				node.setDisjunction(false);
+				
+				particle = this.visit(node, null);
+				sequencePattern.addParticle(particle);
+			}
+		
+			particle = sequencePattern;
+		} 
+		
+		if (disjunction) {
 			ChoicePattern choicePattern = new ChoicePattern();
-			choicePattern.addParticle(this.visit(namedType, null));
+			choicePattern.addParticle(particle);
+			
+			while (disjunction) {
+				node = (ASTRegex) node.jjtGetChild(1);
+				disjunction = node.isDisjunction();
+				node.setDisjunction(false);
 
+				particle = this.visit(node, null);
+				choicePattern.addParticle(particle);
+			}
+
+			particle = choicePattern;
 		}
 
-
-
-
-
-
-		return null;
-
-
-
+		return particle;
 	}
 
-
-
-
 	public Element visit(ASTNamedType node, Object data) {
-
-
-
 		if (node.getNodeChoice().equals("element")) {
 			de.tudortmund.cs.bonxai.bonxai.Element content;
 
@@ -724,9 +466,8 @@ return null;
 
 			if (node.jjtGetNumChildren() == 0) {
 				content = new de.tudortmund.cs.bonxai.bonxai.Element(namespace, name);
-
 			} else {
-				ASTBonxaiType subnode = (ASTBonxaiType) node.jjtGetChild(1);
+				ASTBonxaiType subnode = (ASTBonxaiType) node.jjtGetChild(0);
 				BonxaiType bonxaiType = this.visit(subnode, null);
 				content =
 					new de.tudortmund.cs.bonxai.bonxai.Element(
@@ -738,25 +479,16 @@ return null;
 				if (subnode.getFixed()) {
 					content.setFixed(subnode.getName());
 				}
-
 			}
 			return content;
-
-
 		}
-
-
 
 		if (node.getNodeChoice().equals("group")) {
-
 			GroupRef groupRef = new GroupRef(
 					bonxai.getGroupSymbolTable().getReference(node.getName()));
-
 		}
 
-
 		if (node.getNodeChoice().equals("foreign")) {
-
 			String namespace ="";
 			// Wie namespaceListe Vector in String ?!  String namespace = node.getNameSpaceList();
 			AnyPattern anyPattern;
@@ -774,28 +506,16 @@ return null;
 				CountingPattern countingPattern =
 					new CountingPattern(node.getNumberBefore(), null);
 				countingPattern.addParticle(anyPattern);
-
-
 			}
 
-
 			if (node.getNumberBefore() >0 && node.getNumberAfter() >0) {
-
 				CountingPattern countingPattern =
 					new CountingPattern(node.getNumberBefore(), node.getNumberAfter());
 				countingPattern.addParticle(anyPattern);
-
-
 			}
-
-
-
 		}
 		return null;
 	}
-
-
-
 
 	public Particle visit(ASTAll node, Object data) {
 		if (node.jjtGetNumChildren() == 1) {
@@ -811,35 +531,15 @@ return null;
 		}
 	}
 
-
-	@Override
-	public Object visit(ASTNamespaceUriLiteral node, Object data) {
-		// implementation not necessary
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Object visit(ASThost node, Object data) {
-		// implementation not necessary
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	@Override
 	public Object visit(ASTConstraintSelector node, Object data) {
 		// implementation not necessary
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public Object visit(ASTConstraintFields node, Object data) {
 		// implementation not necessary
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -861,31 +561,8 @@ return null;
 
 	@Override
 	public Object visit(ASTAnnotationName node, Object data) {
-		// implementation not necessary
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-	public Object visit(ASTFullAPatternHead node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Object visit(ASTPathSeparator node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Object visit(ASTOperator node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
 	public ChildPattern visit(ASTCPattern node, Object data) {
@@ -938,7 +615,6 @@ return null;
 	        return elementPattern;
 	}
 
-
 	@Override
 	public Particle visit(ASTMixedRegex node, Object data) {
 		 Particle content;
@@ -963,7 +639,6 @@ return null;
 	        }
 	        return content;
 	}
-
 
 	@Override
 	public AttributePattern visit(ASTAttributePattern node, Object data) {
@@ -1016,11 +691,8 @@ return null;
 		                attribute.setFixed(subnode.getName());
 		            }
 		        }
-		       
-			 
-			 
+
 			 attributePattern.addAttribute(attribute);
-			 
 		 }
 		 
 		 attributePattern.setAttributeList(attributeList);
@@ -1028,27 +700,20 @@ return null;
 		 return attributePattern;
 	}
 
-
 	@Override
 	public Object visit(ASTAttributeList node, Object data) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public Object visit(ASTNameSpaceList node, Object data) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public Object visit(ASTForeign node, Object data) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public BonxaiType visit(ASTBonxaiType node, Object data) {
@@ -1058,7 +723,6 @@ return null;
         return bonxaiType;
 	}
 
-
 	@Override
 	public BonxaiType visit(ASTAttrBonxaiType node, Object data) {
         String namespace = extractIdentifier(node.getType());
@@ -1066,35 +730,6 @@ return null;
         BonxaiType bonxaiType = new BonxaiType(namespace, type);
         return bonxaiType;
 	}
-
-
-	@Override
-	public Object visit(ASTIdentifier node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Object visit(ASTQuotationName node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Object visit(ASTName node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Object visit(ASTNumber node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	
     public String extractName(
             String nameWithPossibleIdentifier) {
@@ -1172,33 +807,33 @@ return null;
 
         //END: Cropping construction for Identifier extraction
         if (possibleIdentifier.isEmpty()) {
-            //name stays name
-            } else {
-            if (bonxai.getDeclaration().getNamespaceList().getNamespaceByIdentifier(possibleIdentifier).getUri() != null) {
-                namespace = bonxai.getDeclaration().getNamespaceList().getNamespaceByIdentifier(possibleIdentifier).getUri();
-                name =
-                        nameWithoutIdentifierAndColon;
-            }
-
+        	//name stays name
+        } else {
+        	if (bonxai.getDeclaration().getNamespaceList().getNamespaceByIdentifier(possibleIdentifier).getUri() != null) {
+        		namespace = bonxai.getDeclaration().getNamespaceList().getNamespaceByIdentifier(possibleIdentifier).getUri();
+        		name = nameWithoutIdentifierAndColon;
+        	}
         }
         return namespace;
     }
 
-
 	@Override
 	public Object visit(ASTAnnotationValue node, Object data) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-
 	@Override
-	public Vector<String> visit(ASTRootElements node, Object data) {
-		return node.getRootElementNames();
+	public Object visit(ASTRootElements node, Object data) {
+		GrammarList grammarList = (GrammarList) data;
+		
+		for (String rootElement: node.getRootElementNames()) {
+			String name = this.extractName(rootElement);
+			String namespace = this.extractIdentifier(rootElement);
+			
+			grammarList.addRootElementName("{"+namespace+"}"+name);
+		}
+		
+		return null;
 	}
-
-
-
-
 }
 /* JavaCC - OriginalChecksum=61392cb8ba6d017f5680f7409376633d (do not edit this line) */

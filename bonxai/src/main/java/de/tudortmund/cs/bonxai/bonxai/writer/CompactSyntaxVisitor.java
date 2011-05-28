@@ -430,11 +430,8 @@ public class CompactSyntaxVisitor implements Visitor {
      */
     public void visitElement(de.tudortmund.cs.bonxai.bonxai.Element particle, boolean hasMore) {
         String line = "element ";
-
-        if (!particle.getNamespace().equals(this.namespaces.getDefaultNamespace().getUri())) {
-            line += this.namespaces.getNamespaceByUri(particle.getNamespace()).getIdentifier()
-                + ":";
-        }
+        
+        line += this.getNamespacePrefix(particle.getNamespace());
 
         line += checkForKeywords(particle.getName());
 
@@ -443,11 +440,7 @@ public class CompactSyntaxVisitor implements Visitor {
 
             line += " { type ";
 
-            // @TODO: Refactor this mechanism into method. Used several times.
-            if (!type.getNamespace().equals(this.namespaces.getDefaultNamespace().getUri())) {
-                line += this.namespaces.getNamespaceByUri(type.getNamespace()).getIdentifier()
-                     + ":";
-            }
+            line += this.getNamespacePrefix(type.getNamespace());
 
             line += particle.getType().getType();
 
@@ -469,7 +462,7 @@ public class CompactSyntaxVisitor implements Visitor {
         appendLine(line);
     }
 
-    /**
+	/**
      * Visit GroupRef object.
      */
     public void visitGroupRef(GroupRef particle, boolean hasMore) {
@@ -531,10 +524,7 @@ public class CompactSyntaxVisitor implements Visitor {
     public void visitSingleSlashPrefixElement(SingleSlashPrefixElement element, boolean hasMore) {
         append("/");
 
-        if (!element.getNamespace().equals(this.namespaces.getDefaultNamespace().getUri())) {
-            append(this.namespaces.getNamespaceByUri(element.getNamespace()).getIdentifier());
-            append(":");
-        }
+        append(this.getNamespacePrefix(element.getNamespace()));
 
         append(checkForKeywords(element.getName()));
 
@@ -549,10 +539,7 @@ public class CompactSyntaxVisitor implements Visitor {
     public void visitDoubleSlashPrefixElement(DoubleSlashPrefixElement element, boolean hasMore) {
         append("//");
 
-        if (!element.getNamespace().equals(this.namespaces.getDefaultNamespace().getUri())) {
-            append(this.namespaces.getNamespaceByUri(element.getNamespace()).getIdentifier());
-            append(":");
-        }
+        append(this.getNamespacePrefix(element.getNamespace()));
 
         append(checkForKeywords(element.getName()));
 
@@ -673,13 +660,13 @@ public class CompactSyntaxVisitor implements Visitor {
         if (ePattern == null) {
             line += "empty";
         } else if (ePattern.getBonxaiType() != null) {
+            if (ePattern.isMissing()) {
+                line += " missing | ";
+            }
+
             BonxaiType type = ePattern.getBonxaiType();
 
-            // @TODO: Refactor this mechanism into method. Used several times.
-            if (!type.getNamespace().equals(this.namespaces.getDefaultNamespace().getUri())) {
-                line += this.namespaces.getNamespaceByUri(type.getNamespace()).getIdentifier()
-                     + ":";
-            }
+            line += this.getNamespacePrefix(type.getNamespace());
 
             line += "type " + type.getType();
 
@@ -687,10 +674,6 @@ public class CompactSyntaxVisitor implements Visitor {
                 line += " fixed " + quoteString(ePattern.getFixed());
             } else if (ePattern.getDefault() != null) {
                 line += " default " + quoteString(ePattern.getDefault());
-            }
-
-            if (ePattern.isMissing()) {
-                line += " | missing";
             }
         }
 
@@ -818,11 +801,13 @@ public class CompactSyntaxVisitor implements Visitor {
     }
     
     public void visitRootElement(String rootElement, boolean hasMore) {
-    	append(rootElement);
-    	if (hasMore) 
-    		append(", ");
-    }
+    	String name = rootElement.substring(rootElement.lastIndexOf("}") + 1);
+    	String namespace = rootElement.substring(1, rootElement.lastIndexOf("}"));
+    	String line = this.getNamespacePrefix(namespace) + name + (hasMore?", ":"");
 
+    	append(line);
+    }
+    	
     /**
      * Convert the given instruction to its string representation.
      */
@@ -986,5 +971,13 @@ public class CompactSyntaxVisitor implements Visitor {
         }
         return name;
     }
+
+    private String getNamespacePrefix(String namespace) {
+        if (!this.namespaces.getDefaultNamespace().getUri().equals(namespace))
+            return this.namespaces.getNamespaceByUri(namespace).getIdentifier()+ ":";
+        else 
+        	return "";
+	}
+
 }
 

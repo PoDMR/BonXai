@@ -608,20 +608,16 @@ void Decl() #Decl: {String uri="" ; String ident=""; String url="";}
 | <IMPORT> uri=NamespaceUriLiteral() [ <EQUALS> url=NamespaceUriLiteral() ] { jjtThis.setNodeChoice("import"); } 
 ) 
 
-
-
 {
 		jjtThis.setUri(uri);
 		jjtThis.setIdentifier(ident);
 		jjtThis.setUrl(url);
 		jjtThis.setNodeType("declaration");
 }
-
-
 }
 
 
-String NamespaceUriLiteral() #NamespaceUriLiteral : {Token t; String r; String s = "";}
+String NamespaceUriLiteral(): {Token t; String r; String s = "";}
 {
 
 //( <HTTP> | <FTP> )(<BASECHAR>| <CONSTANT> | <SLASH>|<POINT>)+
@@ -634,7 +630,7 @@ String NamespaceUriLiteral() #NamespaceUriLiteral : {Token t; String r; String s
 }
 
 
-String host() #host: {Token t; String s = "";}
+String host(): {Token t; String s = "";}
 {
 
 t=<URI_LABEL> {s=t.image;} (((t=<URI_POINT>|t=<URI_SLASH>|t=<URI_CONSTANT>) {s = s + t.image;})*  t=<URI_LABEL> {s = s + t.image;})*
@@ -920,12 +916,12 @@ void APattern() #APattern : {}
 
 
 //old:SimpleAPattern       ::= Name | "(" SimpleAPatternOr ")"
-// new: SimpleAPattern       ::= Name FullAPattern? | "@"Name | "(" SimpleAPatternOr ")"
+// new: SimpleAPattern       ::= Name | "@"Name | "(" SimpleAPatternOr ")"
 
 void SimpleAPattern() #SimpleAPattern : {String name="";}
 {
 
-( name=Name() {jjtThis.setName(name);} [ FullAPattern() ] | (<VAR_AT> | <VAROR_AT>) ( name=Name() {jjtThis.setName(name); jjtThis.setAttribute(true); }) | <VAR_OPENING_ROUND_BRACKET> SimpleAPatternOr() <VAR_CLOSING_ROUND_BRACKET> )
+( name=Name() {jjtThis.setName(name);}  | (<VAR_AT> | <VAROR_AT>) ( name=Name() {jjtThis.setName(name); jjtThis.setAttribute(true); }) | <VAR_OPENING_ROUND_BRACKET> SimpleAPatternOr() <VAR_CLOSING_ROUND_BRACKET> )
 
       {
 	jjtThis.setNodeType("SimpleAPattern");
@@ -953,23 +949,18 @@ SimpleAPattern() (<VAROR_OR> SimpleAPattern())*
 // old: FullAPattern       ::=    PathSeparator SimpleAPattern (FullAPattern)? | "(" FullAPatternOr ")" Operator?
 // new: FullAPattern       ::=    PathSeparator SimpleAPattern | "(" FullAPatternOr ")" Operator? | FullAPattern FullAPattern
 // without left recursion  ::=    PathSeparator SimpleAPattern | "(" FullAPatternOr ")" Operator? (FullAPattern)?
-
+// correct without left recursion ::=   ( PathSeparator SimpleAPattern | "(" FullAPatternOr ")" Operator? ) (FullAPattern)?
 
 void FullAPattern() #FullAPattern: {Boolean separator=false; Boolean sequence=false; String operator="";}
 {
 (	separator=PathSeparator() SimpleAPattern() { jjtThis.setNodeChoice("separator"); }  
-| (<OPENING_ROUND_BRACKET>  FullAPatternOr() <CLOSING_ROUND_BRACKET> [operator=Operator() {jjtThis.setOperator(operator);} ]  { jjtThis.setNodeChoice("Or"); }   
+| (<OPENING_ROUND_BRACKET>  FullAPatternOr() <CLOSING_ROUND_BRACKET> [operator=Operator() {jjtThis.setOperator(operator);} ]   { jjtThis.setNodeChoice("Or"); } ))  
  [FullAPattern() {sequence=true;} ] 
 
-
-)
-  
-	)
-
-      {
+    {
       jjtThis.setSequence(sequence);
       jjtThis.setSeparator(separator);
-	jjtThis.setNodeType("FullAPatternOr");
+	  jjtThis.setNodeType("FullAPattern");
 	}
 
 }
@@ -1000,14 +991,11 @@ FullAPattern() (<OR> FullAPattern())*
 
 // PathSeparator      ::= "/" | "//"
 
-Boolean PathSeparator() #PathSeparator: {}
+Boolean PathSeparator() : {}
 {
 
 (<SLASH> {return false;} | <DOUBLESLASH> {return true;} )
 
-      {
-	jjtThis.setNodeType("PathSeparator");
-	}
 
 }
 
@@ -1015,14 +1003,10 @@ Boolean PathSeparator() #PathSeparator: {}
 
 // Operator           ::= "*" | "+" | "?"
 
-String Operator() #Operator: {}
+String Operator(): {}
 {
 
 ( <STAR> {return "*";} | <PLUS> {return "+";} | <QUESTION_MARK> {return "?";} )
-
-      {
-	jjtThis.setNodeType("Operator");
-	}
 
 }
 
@@ -1082,7 +1066,7 @@ void MixedRegex() #MixedRegex : {}
 void All() #All : {}
 {
 
-NamedType() |  [ <QUESTION_MARK> ] ( <ANDLITERAL> NamedType() [ <QUESTION_MARK> ])+
+NamedType() [ <QUESTION_MARK> ] ( <ANDLITERAL> NamedType() [ <QUESTION_MARK> ])+
 
 
 	{
@@ -1120,12 +1104,12 @@ void Regex() #Regex : {Integer numberBefore=0; Integer numberAfter=0; Token t=nu
     <CLOSING_SQUARED_BRACKET> 
   ] 
   [
-    ( <COMMA> Regex()  { jjtThis.setNodeChoice("regex_comma"); } )
-       | ( <OR> Regex()   { jjtThis.setNodeChoice("regex_or"); } )
+    ( <COMMA> Regex()  { jjtThis.setConcatenation(true); } )
+       | ( <OR> Regex()   { jjtThis.setDisjunction(true); } )
   ]
   
 | 
-  NamedType() { jjtThis.setNodeChoice("named_type_single"); } 
+  NamedType() { jjtThis.setNodeChoice("namedtype"); } 
   [ 
     t=<STAR> | t=<PLUS> | t=<QUESTION_MARK> | <OPENING_SQUARED_BRACKET> numberBefore=Number() 
     [ 
@@ -1134,8 +1118,8 @@ void Regex() #Regex : {Integer numberBefore=0; Integer numberAfter=0; Token t=nu
     <CLOSING_SQUARED_BRACKET>
   ]
   [
-    ( <COMMA> Regex()  { jjtThis.setNodeChoice("named_type_comma"); } )
-      | ( <OR> Regex()   { jjtThis.setNodeChoice("named_type_or"); } )
+    ( <COMMA> Regex()  { jjtThis.setConcatenation(true);} )
+      | ( <OR> Regex()   { jjtThis.setDisjunction(true); } )
   ] 
 ) 
 
@@ -1153,10 +1137,6 @@ void Regex() #Regex : {Integer numberBefore=0; Integer numberAfter=0; Token t=nu
 	}
 
 }
-
-
-
-
 
 
 //NamedType           ::= "element" Name ( "{" BonxaiType "}" )?
@@ -1339,7 +1319,7 @@ type=Name() [ (<FIXED> {fixed=true;}  name=QuotationName() | <DEFAULTT> {def=tru
 // Identifier          ::= ( NCName \ Keywords )
 //                      | QuotedIdentifier
 
-String Identifier() #Identifier : {Token t; String s="" ;}
+String Identifier(): {Token t; String s="" ;}
 {
 
 ( t=<VAR_LABEL> {s= s+t.image;} | t=<VAROR_LABEL> {s= s+t.image;} )  
@@ -1347,12 +1327,7 @@ String Identifier() #Identifier : {Token t; String s="" ;}
 // | ( (t=<VAROR_WS> {s=t.image;})* t=<VAROR_LABEL> {s= s+t.image;} )
 
 
-{
-
-jjtThis.setNodeType("Identifier");
-return s;
-
-}
+{ return s; } 
 
 
 }
@@ -1365,7 +1340,7 @@ return s;
 // QuotationName		::= """ arbitraryLetterExceptQuote """
 
 
-String QuotationName() #QuotationName : {Token t; String s="" ;}
+String QuotationName(): {Token t; String s="" ;}
 {
 
 <QUOTE> (t=<QUOT_LABEL>|t=<QUOT_CONSTANT>) {s=t.image;} <QUOT_QUOTE>
@@ -1382,16 +1357,12 @@ String QuotationName() #QuotationName : {Token t; String s="" ;}
 // Name                ::= ( (Letter | "_" | ":") (NameChar)* ) \ keywords  | QuotedName
 // added: productions like Name:Name; first Name: Namespace (group.bonxai example!)
 
-String Name() #Name: {String s="" ; String t="";}
+String Name(): {String s="" ; String t="";}
 {
 
 s=Identifier() [(<COLON> | <VAROR_COLON>) t=Identifier() {t=":" + t;} ]
 
-{
-jjtThis.setNodeType("Name");
-return s+t;
-
-}
+{ return s+t; }
 
 
 }
@@ -1399,7 +1370,7 @@ return s+t;
 
 // Number              ::= Digit+
 
-Integer  Number() #Number: {Token value;} {
+Integer  Number() : {Token value;} {
 
 value=<CONSTANT>
 

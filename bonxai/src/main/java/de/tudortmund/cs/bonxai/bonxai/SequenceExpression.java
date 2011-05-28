@@ -31,7 +31,11 @@ public class SequenceExpression extends ContainerParticle {
         super(children);
     }
 
-    @Override
+    public SequenceExpression() {
+		super();
+	}
+
+	@Override
     public String toString() {
         String sequence = "";
         for (int i = 0; i < getChildren().size(); i++) {

@@ -651,8 +651,6 @@ try {
 }
 /*@egen*/ 
 
-
-
 {
 		jjtn000.setUri(uri);
 		jjtn000.setIdentifier(ident);
@@ -679,78 +677,28 @@ try {
   }
 }
 /*@egen*/
-
-
 }
 
 
-String NamespaceUriLiteral()                      : {/*@bgen(jjtree) NamespaceUriLiteral */
-                                                     ASTNamespaceUriLiteral jjtn000 = new ASTNamespaceUriLiteral(JJTNAMESPACEURILITERAL);
-                                                     boolean jjtc000 = true;
-                                                     jjtree.openNodeScope(jjtn000);
-/*@egen*/Token t; String r; String s = "";}
-{/*@bgen(jjtree) NamespaceUriLiteral */
-try {
-/*@egen*/
+String NamespaceUriLiteral(): {Token t; String r; String s = "";}
+{
 
 //( <HTTP> | <FTP> )(<BASECHAR>| <CONSTANT> | <SLASH>|<POINT>)+
 
-( t=<HTTP> | t=<FTP> ) { s = t.image;} r = host() {s = s + r;} ((t=<URI_WS>|t=<URI_ROW>|t=<URI_LINE>) {s = s + t.image; })/*@bgen(jjtree)*/
+( t=<HTTP> | t=<FTP> ) { s = t.image;} r = host() {s = s + r;} ((t=<URI_WS>|t=<URI_ROW>|t=<URI_LINE>) {s = s + t.image; })
+
+{ return s;}
+
+
+}
+
+
+String host(): {Token t; String s = "";}
 {
-  jjtree.closeNodeScope(jjtn000, true);
-  jjtc000 = false;
-}
-/*@egen*/
 
-{ return s;}/*@bgen(jjtree)*/
-} catch (Throwable jjte000) {
-  if (jjtc000) {
-    jjtree.clearNodeScope(jjtn000);
-    jjtc000 = false;
-  } else {
-    jjtree.popNode();
-  }
-  if (jjte000 instanceof RuntimeException) {
-    throw (RuntimeException)jjte000;
-  }
-  if (jjte000 instanceof ParseException) {
-    throw (ParseException)jjte000;
-  }
-  throw (Error)jjte000;
-} finally {
-  if (jjtc000) {
-    jjtree.closeNodeScope(jjtn000, true);
-  }
-}
-/*@egen*/
+t=<URI_LABEL> {s=t.image;} (((t=<URI_POINT>|t=<URI_SLASH>|t=<URI_CONSTANT>) {s = s + t.image;})*  t=<URI_LABEL> {s = s + t.image;})*
 
-
-}
-
-
-String host()      : {/*@bgen(jjtree) host */
-                      ASThost jjtn000 = new ASThost(JJTHOST);
-                      boolean jjtc000 = true;
-                      jjtree.openNodeScope(jjtn000);
-/*@egen*/Token t; String s = "";}
-{/*@bgen(jjtree) host */
-try {
-/*@egen*/
-
-t=<URI_LABEL> {s=t.image;} (((t=<URI_POINT>|t=<URI_SLASH>|t=<URI_CONSTANT>) {s = s + t.image;})*  t=<URI_LABEL> {s = s + t.image;})*/*@bgen(jjtree)*/
-{
-  jjtree.closeNodeScope(jjtn000, true);
-  jjtc000 = false;
-}
-/*@egen*/
-
-{return s;}/*@bgen(jjtree)*/
-} finally {
-  if (jjtc000) {
-    jjtree.closeNodeScope(jjtn000, true);
-  }
-}
-/*@egen*/
+{return s;}
 
 }
 
@@ -1530,7 +1478,7 @@ try {
 
 
 //old:SimpleAPattern       ::= Name | "(" SimpleAPatternOr ")"
-// new: SimpleAPattern       ::= Name FullAPattern? | "@"Name | "(" SimpleAPatternOr ")"
+// new: SimpleAPattern       ::= Name | "@"Name | "(" SimpleAPatternOr ")"
 
 void SimpleAPattern()                 : {/*@bgen(jjtree) SimpleAPattern */
                                          ASTSimpleAPattern jjtn000 = new ASTSimpleAPattern(JJTSIMPLEAPATTERN);
@@ -1541,7 +1489,7 @@ void SimpleAPattern()                 : {/*@bgen(jjtree) SimpleAPattern */
 try {
 /*@egen*/
 
-( name=Name() {jjtn000.setName(name);} [ FullAPattern() ] | (<VAR_AT> | <VAROR_AT>) ( name=Name() {jjtn000.setName(name); jjtn000.setAttribute(true); }) | <VAR_OPENING_ROUND_BRACKET> SimpleAPatternOr() <VAR_CLOSING_ROUND_BRACKET> )/*@bgen(jjtree)*/
+( name=Name() {jjtn000.setName(name);}  | (<VAR_AT> | <VAROR_AT>) ( name=Name() {jjtn000.setName(name); jjtn000.setAttribute(true); }) | <VAR_OPENING_ROUND_BRACKET> SimpleAPatternOr() <VAR_CLOSING_ROUND_BRACKET> )/*@bgen(jjtree)*/
       {
         jjtree.closeNodeScope(jjtn000, true);
         jjtc000 = false;
@@ -1625,7 +1573,7 @@ SimpleAPattern() (<VAROR_OR> SimpleAPattern())*/*@bgen(jjtree)*/
 // old: FullAPattern       ::=    PathSeparator SimpleAPattern (FullAPattern)? | "(" FullAPatternOr ")" Operator?
 // new: FullAPattern       ::=    PathSeparator SimpleAPattern | "(" FullAPatternOr ")" Operator? | FullAPattern FullAPattern
 // without left recursion  ::=    PathSeparator SimpleAPattern | "(" FullAPatternOr ")" Operator? (FullAPattern)?
-
+// correct without left recursion ::=   ( PathSeparator SimpleAPattern | "(" FullAPatternOr ")" Operator? ) (FullAPattern)?
 
 void FullAPattern()              : {/*@bgen(jjtree) FullAPattern */
                                     ASTFullAPattern jjtn000 = new ASTFullAPattern(JJTFULLAPATTERN);
@@ -1636,23 +1584,18 @@ void FullAPattern()              : {/*@bgen(jjtree) FullAPattern */
 try {
 /*@egen*/
 (	separator=PathSeparator() SimpleAPattern() { jjtn000.setNodeChoice("separator"); }  
-| (<OPENING_ROUND_BRACKET>  FullAPatternOr() <CLOSING_ROUND_BRACKET> [operator=Operator() {jjtn000.setOperator(operator);} ]  { jjtn000.setNodeChoice("Or"); }   
- [FullAPattern() {sequence=true;} ] 
+| (<OPENING_ROUND_BRACKET>  FullAPatternOr() <CLOSING_ROUND_BRACKET> [operator=Operator() {jjtn000.setOperator(operator);} ]   { jjtn000.setNodeChoice("Or"); } ))  
+ [FullAPattern() {sequence=true;} ]/*@bgen(jjtree)*/
+    {
+      jjtree.closeNodeScope(jjtn000, true);
+      jjtc000 = false;
+    }
+/*@egen*/ 
 
-
-)
-  
-	)/*@bgen(jjtree)*/
-      {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtc000 = false;
-      }
-/*@egen*/
-
-      {
+    {
       jjtn000.setSequence(sequence);
       jjtn000.setSeparator(separator);
-	jjtn000.setNodeType("FullAPatternOr");
+	  jjtn000.setNodeType("FullAPattern");
 	}/*@bgen(jjtree)*/
 } catch (Throwable jjte000) {
   if (jjtc000) {
@@ -1734,31 +1677,11 @@ FullAPattern() (<OR> FullAPattern())*/*@bgen(jjtree)*/
 
 // PathSeparator      ::= "/" | "//"
 
-Boolean PathSeparator()               : {/*@bgen(jjtree) PathSeparator */
-  ASTPathSeparator jjtn000 = new ASTPathSeparator(JJTPATHSEPARATOR);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) PathSeparator */
-try {
-/*@egen*/
+Boolean PathSeparator() : {}
+{
 
-(<SLASH> {return false;} | <DOUBLESLASH> {return true;} )/*@bgen(jjtree)*/
-      {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtc000 = false;
-      }
-/*@egen*/
+(<SLASH> {return false;} | <DOUBLESLASH> {return true;} )
 
-      {
-	jjtn000.setNodeType("PathSeparator");
-	}/*@bgen(jjtree)*/
-} finally {
-  if (jjtc000) {
-    jjtree.closeNodeScope(jjtn000, true);
-  }
-}
-/*@egen*/
 
 }
 
@@ -1766,31 +1689,10 @@ try {
 
 // Operator           ::= "*" | "+" | "?"
 
-String Operator()          : {/*@bgen(jjtree) Operator */
-  ASTOperator jjtn000 = new ASTOperator(JJTOPERATOR);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) Operator */
-try {
-/*@egen*/
+String Operator(): {}
+{
 
-( <STAR> {return "*";} | <PLUS> {return "+";} | <QUESTION_MARK> {return "?";} )/*@bgen(jjtree)*/
-      {
-        jjtree.closeNodeScope(jjtn000, true);
-        jjtc000 = false;
-      }
-/*@egen*/
-
-      {
-	jjtn000.setNodeType("Operator");
-	}/*@bgen(jjtree)*/
-} finally {
-  if (jjtc000) {
-    jjtree.closeNodeScope(jjtn000, true);
-  }
-}
-/*@egen*/
+( <STAR> {return "*";} | <PLUS> {return "+";} | <QUESTION_MARK> {return "?";} )
 
 }
 
@@ -2018,12 +1920,12 @@ try {
     <CLOSING_SQUARED_BRACKET> 
   ] 
   [
-    ( <COMMA> Regex()  { jjtn000.setNodeChoice("regex_comma"); } )
-       | ( <OR> Regex()   { jjtn000.setNodeChoice("regex_or"); } )
+    ( <COMMA> Regex()  { jjtn000.setConcatenation(true); } )
+       | ( <OR> Regex()   { jjtn000.setDisjunction(true); } )
   ]
   
 | 
-  NamedType() { jjtn000.setNodeChoice("named_type_single"); } 
+  NamedType() { jjtn000.setNodeChoice("namedtype"); } 
   [ 
     t=<STAR> | t=<PLUS> | t=<QUESTION_MARK> | <OPENING_SQUARED_BRACKET> numberBefore=Number() 
     [ 
@@ -2032,8 +1934,8 @@ try {
     <CLOSING_SQUARED_BRACKET>
   ]
   [
-    ( <COMMA> Regex()  { jjtn000.setNodeChoice("named_type_comma"); } )
-      | ( <OR> Regex()   { jjtn000.setNodeChoice("named_type_or"); } )
+    ( <COMMA> Regex()  { jjtn000.setConcatenation(true);} )
+      | ( <OR> Regex()   { jjtn000.setDisjunction(true); } )
   ] 
 )/*@bgen(jjtree)*/
         {
@@ -2076,10 +1978,6 @@ try {
 /*@egen*/
 
 }
-
-
-
-
 
 
 //NamedType           ::= "element" Name ( "{" BonxaiType "}" )?
@@ -2451,37 +2349,15 @@ type=Name() [ (<FIXED> {fixed=true;}  name=QuotationName() | <DEFAULTT> {def=tru
 // Identifier          ::= ( NCName \ Keywords )
 //                      | QuotedIdentifier
 
-String Identifier()             : {/*@bgen(jjtree) Identifier */
-                                   ASTIdentifier jjtn000 = new ASTIdentifier(JJTIDENTIFIER);
-                                   boolean jjtc000 = true;
-                                   jjtree.openNodeScope(jjtn000);
-/*@egen*/Token t; String s="" ;}
-{/*@bgen(jjtree) Identifier */
-try {
-/*@egen*/
-
-( t=<VAR_LABEL> {s= s+t.image;} | t=<VAROR_LABEL> {s= s+t.image;} )/*@bgen(jjtree)*/
+String Identifier(): {Token t; String s="" ;}
 {
-  jjtree.closeNodeScope(jjtn000, true);
-  jjtc000 = false;
-}
-/*@egen*/  
+
+( t=<VAR_LABEL> {s= s+t.image;} | t=<VAROR_LABEL> {s= s+t.image;} )  
 //(( t=<VAR_WS> {s=t.image;} | t=<VAROR_WS> {s=t.image;} ))* ( t=<VAR_LABEL> {s= s+t.image;} | t=<VAROR_LABEL> {s= s+t.image;} )  
 // | ( (t=<VAROR_WS> {s=t.image;})* t=<VAROR_LABEL> {s= s+t.image;} )
 
 
-{
-
-jjtn000.setNodeType("Identifier");
-return s;
-
-}/*@bgen(jjtree)*/
-} finally {
-  if (jjtc000) {
-    jjtree.closeNodeScope(jjtn000, true);
-  }
-}
-/*@egen*/
+{ return s; } 
 
 
 }
@@ -2494,29 +2370,12 @@ return s;
 // QuotationName		::= """ arbitraryLetterExceptQuote """
 
 
-String QuotationName()                : {/*@bgen(jjtree) QuotationName */
-                                         ASTQuotationName jjtn000 = new ASTQuotationName(JJTQUOTATIONNAME);
-                                         boolean jjtc000 = true;
-                                         jjtree.openNodeScope(jjtn000);
-/*@egen*/Token t; String s="" ;}
-{/*@bgen(jjtree) QuotationName */
-try {
-/*@egen*/
-
-<QUOTE> (t=<QUOT_LABEL>|t=<QUOT_CONSTANT>) {s=t.image;} <QUOT_QUOTE>/*@bgen(jjtree)*/
+String QuotationName(): {Token t; String s="" ;}
 {
-  jjtree.closeNodeScope(jjtn000, true);
-  jjtc000 = false;
-}
-/*@egen*/
 
-{return s;}/*@bgen(jjtree)*/
-} finally {
-  if (jjtc000) {
-    jjtree.closeNodeScope(jjtn000, true);
-  }
-}
-/*@egen*/
+<QUOTE> (t=<QUOT_LABEL>|t=<QUOT_CONSTANT>) {s=t.image;} <QUOT_QUOTE>
+
+{return s;}
 
 }
 
@@ -2528,47 +2387,12 @@ try {
 // Name                ::= ( (Letter | "_" | ":") (NameChar)* ) \ keywords  | QuotedName
 // added: productions like Name:Name; first Name: Namespace (group.bonxai example!)
 
-String Name()      : {/*@bgen(jjtree) Name */
-                      ASTName jjtn000 = new ASTName(JJTNAME);
-                      boolean jjtc000 = true;
-                      jjtree.openNodeScope(jjtn000);
-/*@egen*/String s="" ; String t="";}
-{/*@bgen(jjtree) Name */
-try {
-/*@egen*/
-
-s=Identifier() [(<COLON> | <VAROR_COLON>) t=Identifier() {t=":" + t;} ]/*@bgen(jjtree)*/
+String Name(): {String s="" ; String t="";}
 {
-  jjtree.closeNodeScope(jjtn000, true);
-  jjtc000 = false;
-}
-/*@egen*/
 
-{
-jjtn000.setNodeType("Name");
-return s+t;
+s=Identifier() [(<COLON> | <VAROR_COLON>) t=Identifier() {t=":" + t;} ]
 
-}/*@bgen(jjtree)*/
-} catch (Throwable jjte000) {
-  if (jjtc000) {
-    jjtree.clearNodeScope(jjtn000);
-    jjtc000 = false;
-  } else {
-    jjtree.popNode();
-  }
-  if (jjte000 instanceof RuntimeException) {
-    throw (RuntimeException)jjte000;
-  }
-  if (jjte000 instanceof ParseException) {
-    throw (ParseException)jjte000;
-  }
-  throw (Error)jjte000;
-} finally {
-  if (jjtc000) {
-    jjtree.closeNodeScope(jjtn000, true);
-  }
-}
-/*@egen*/
+{ return s+t; }
 
 
 }
@@ -2576,28 +2400,11 @@ return s+t;
 
 // Number              ::= Digit+
 
-Integer  Number()        : {/*@bgen(jjtree) Number */
-                            ASTNumber jjtn000 = new ASTNumber(JJTNUMBER);
-                            boolean jjtc000 = true;
-                            jjtree.openNodeScope(jjtn000);
-/*@egen*/Token value;} {/*@bgen(jjtree) Number */
-try {
-/*@egen*/
+Integer  Number() : {Token value;} {
 
-value=<CONSTANT>/*@bgen(jjtree)*/
-{
-  jjtree.closeNodeScope(jjtn000, true);
-  jjtc000 = false;
-}
-/*@egen*/
+value=<CONSTANT>
 
-{return Integer.valueOf(value.image).intValue();}/*@bgen(jjtree)*/
-} finally {
-  if (jjtc000) {
-    jjtree.closeNodeScope(jjtn000, true);
-  }
-}
-/*@egen*/
+{return Integer.valueOf(value.image).intValue();}
 
 }
 
