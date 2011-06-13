@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <element name="test">
+            <choice>
+                <ref name="refA"></ref>
+                <ref name="refB"></ref>
+            </choice>
+        </element>
+    </start>
+    <define name="refA">
+        <attribute name="b"></attribute>
+        <attribute name="a"><value>2</value></attribute>
+    </define>
+    <define name="refB">
+        <attribute name="a"><text/></attribute>
+    </define>
+</grammar>

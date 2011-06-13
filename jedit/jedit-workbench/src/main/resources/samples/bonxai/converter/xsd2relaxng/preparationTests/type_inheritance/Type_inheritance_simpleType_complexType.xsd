@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="e1" type="xs:int"/>
+
+    <xs:element name="e2">
+        <xs:simpleType>
+            <xs:restriction base="xs:decimal"/>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="e3">
+        <xs:simpleType>
+            <xs:list itemType="xs:anyURI"/>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="e4">
+        <xs:simpleType>
+            <xs:list>
+                <xs:simpleType>
+                    <xs:restriction base="xs:decimal"/>
+                </xs:simpleType>
+            </xs:list>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="e5">
+        <xs:simpleType>
+            <xs:union memberTypes="xs:boolean xs:Name e5_simpleType">
+                <xs:simpleType>
+                    <xs:restriction base="xs:decimal"/>
+                </xs:simpleType>
+            </xs:union>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:simpleType name="e5_simpleType">
+        <xs:restriction base="xs:QName"/>
+    </xs:simpleType>
+
+    <xs:element name="e6">
+        <xs:simpleType>
+            <xs:restriction base="e5_simpleType">
+                <xs:length value="3"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="e7">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:restriction base="e7_complexType"> </xs:restriction>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="e7_complexType">
+        <xs:simpleContent>
+            <xs:extension base="xs:dateTime"/>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:element name="e8">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:restriction base="e8_complexType">
+                    <xs:attribute name="attr2"/>
+                </xs:restriction>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="e9">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:restriction base="e9_complexType">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:short"/>
+                    </xs:simpleType>
+                </xs:restriction>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="e8_complexType">
+        <xs:attribute name="attr2"/>
+    </xs:complexType>
+
+    <xs:complexType name="e9_complexType" mixed="true">
+        <xs:attribute name="attr1"/>
+    </xs:complexType>
+
+    <xs:element name="e10">
+        <xs:complexType>
+            <xs:attribute name="attr3"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="e11">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="inner_e11"/>
+                <xs:element ref="e1"/>
+            </xs:choice>
+            <xs:attribute name="attr4"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="e12">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="e8_complexType">
+                    <xs:choice>
+                        <xs:element name="inner_e12"/>
+                        <xs:element ref="e2"/>
+                    </xs:choice>
+                    <xs:attribute name="attr5"/>
+                </xs:extension>
+            </xs:complexContent>
+
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

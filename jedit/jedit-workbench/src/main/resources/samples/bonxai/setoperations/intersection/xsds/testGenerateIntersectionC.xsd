@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="A" xmlns:A="A"
+  finalDefault="extension" blockDefault="restriction substitution">
+
+  <xs:element name="elementA" type="xs:anyType"/>
+
+  <xs:attribute name="attributeA" type="xs:string"/>
+
+  <xs:attribute name="attributeB" type="xs:string"/>
+
+</xs:schema>

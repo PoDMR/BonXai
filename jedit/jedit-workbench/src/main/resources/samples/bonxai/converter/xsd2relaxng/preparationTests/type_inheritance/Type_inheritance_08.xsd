@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="e8">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:restriction base="e8_complexType">
+                    <xs:attribute name="attr2"/>
+                </xs:restriction>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="e8_complexType">
+        <xs:attribute name="attr2"/>
+    </xs:complexType>
+
+</xs:schema>

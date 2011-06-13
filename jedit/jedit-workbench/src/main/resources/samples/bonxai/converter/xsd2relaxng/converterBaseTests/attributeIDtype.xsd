@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:myOne="http://myNamespace.com"
+    xmlns:a="http://attribute.com" targetNamespace="http://myNamespace.com">
+
+    <xs:element name="root">
+        <xs:complexType>
+            <xs:attribute name="myOne" type="xs:ID"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:group name="group">
+        <xs:choice>
+            <xs:sequence>
+                <xs:element name="test">
+                    <xs:complexType>
+                        <xs:attribute name="myTwo" type="xs:IDREF"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:choice>
+    </xs:group>
+
+</xs:schema>

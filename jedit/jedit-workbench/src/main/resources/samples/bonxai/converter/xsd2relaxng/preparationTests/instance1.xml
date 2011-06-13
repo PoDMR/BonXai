@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/D:/Diplomarbeit/Netbeans/upslution/tests/de/tudortmund/cs/bonxai/converter/xsd2relaxng/preparationTests/substitutionGroupBlockRestriction.xsd">
+    <C xsi:type="BBB">0</C>
+    <test xsi:type="BBB">0</test>
+</root>

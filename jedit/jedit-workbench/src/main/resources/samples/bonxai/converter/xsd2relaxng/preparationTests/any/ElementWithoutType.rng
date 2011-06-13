@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<grammar ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <choice>
+            <notAllowed/>
+            <element name="testElement">
+                <mixed>
+                    <zeroOrMore>
+                        <choice>
+                            <attribute>
+                                <anyName/>
+                            </attribute>
+                            <ref name="element0"/>
+                        </choice>
+                    </zeroOrMore>
+                </mixed>
+            </element>
+        </choice>
+    </start>
+    <define name="element0">
+        <element>
+            <anyName/>
+            <mixed>
+                <zeroOrMore>
+                    <choice>
+                        <attribute>
+                            <anyName/>
+                        </attribute>
+                        <ref name="element0"/>
+                    </choice>
+                </zeroOrMore>
+            </mixed>
+        </element>
+    </define>
+</grammar>

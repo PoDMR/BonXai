@@ -1,0 +1,1627 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty" xmlns:xs="http://www.w3.org/2001/XMLSchema" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.w3.org/2001/XMLSchema">
+  <start>
+    <choice>
+      <ref name="e_schema"/>
+      <ref name="e_anyAttribute"/>
+      <ref name="e_complexContent"/>
+      <ref name="e_simpleContent"/>
+      <ref name="e_complexType"/>
+      <ref name="e_element"/>
+      <ref name="e_all"/>
+      <ref name="e_choice"/>
+      <ref name="e_sequence"/>
+      <ref name="e_group"/>
+      <ref name="e_any"/>
+      <ref name="e_attribute"/>
+      <ref name="e_attributeGroup"/>
+      <ref name="e_include"/>
+      <ref name="e_redefine"/>
+      <ref name="e_import"/>
+      <ref name="e_selector"/>
+      <ref name="e_field"/>
+      <ref name="e_unique"/>
+      <ref name="e_key"/>
+      <ref name="e_keyref"/>
+      <ref name="e_notation"/>
+      <ref name="e_appinfo"/>
+      <ref name="e_documentation"/>
+      <ref name="e_annotation"/>
+      <ref name="e_simpleType"/>
+      <ref name="e_restriction"/>
+      <ref name="e_list"/>
+      <ref name="e_union"/>
+      <ref name="e_minExclusive"/>
+      <ref name="e_minInclusive"/>
+      <ref name="e_maxExclusive"/>
+      <ref name="e_maxInclusive"/>
+      <ref name="e_totalDigits"/>
+      <ref name="e_fractionDigits"/>
+      <ref name="e_length"/>
+      <ref name="e_minLength"/>
+      <ref name="e_maxLength"/>
+      <ref name="e_enumeration"/>
+      <ref name="e_whiteSpace"/>
+      <ref name="e_pattern"/>
+    </choice>
+  </start>
+  <define name="e_schema">
+    <element name="schema" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_openAttrs"/>
+      <optional>
+        <attribute name="targetNamespace">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="version">
+          <choice>
+            <data type="token"/>
+            <ref name="t_public"/>
+            <data type="language"/>
+            <ref name="t_reducedDerivationControl"/>
+            <data type="NMTOKEN"/>
+            <data type="NCName"/>
+            <data type="ENTITY"/>
+            <ref name="t_formChoice"/>
+            <ref name="t_typeDerivationControl"/>
+            <ref name="t_derivationControl"/>
+            <data type="IDREF"/>
+            <data type="ID"/>
+            <data type="Name"/>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="finalDefault">
+          <ref name="t_fullDerivationSet"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="blockDefault">
+          <ref name="t_blockSet"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="attributeFormDefault">
+          <ref name="t_formChoice"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="elementFormDefault">
+          <ref name="t_formChoice"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <ref name="a_lang"/>
+      <group>
+        <zeroOrMore>
+          <choice>
+            <ref name="e_include"/>
+            <ref name="e_import"/>
+            <ref name="e_redefine"/>
+            <ref name="e_annotation"/>
+          </choice>
+        </zeroOrMore>
+        <zeroOrMore>
+          <group>
+            <ref name="g_schemaTop"/>
+            <zeroOrMore>
+              <ref name="e_annotation"/>
+            </zeroOrMore>
+          </group>
+        </zeroOrMore>
+      </group>
+    </element>
+  </define>
+  <define name="t_openAttrs">
+    <group>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+    </group>
+  </define>
+  <define name="t_public">
+    <data type="token"/>
+  </define>
+  <define name="t_reducedDerivationControl">
+    <choice>
+      <value type="string">substitution</value>
+      <value type="string">extension</value>
+      <value type="string">restriction</value>
+      <value type="string">list</value>
+      <value type="string">union</value>
+    </choice>
+  </define>
+  <define name="t_formChoice">
+    <choice>
+      <value type="string">qualified</value>
+      <value type="string">unqualified</value>
+    </choice>
+  </define>
+  <define name="t_typeDerivationControl">
+    <choice>
+      <value type="string">substitution</value>
+      <value type="string">extension</value>
+      <value type="string">restriction</value>
+      <value type="string">list</value>
+      <value type="string">union</value>
+    </choice>
+  </define>
+  <define name="t_derivationControl">
+    <choice>
+      <value type="string">substitution</value>
+      <value type="string">extension</value>
+      <value type="string">restriction</value>
+      <value type="string">list</value>
+      <value type="string">union</value>
+    </choice>
+  </define>
+  <define name="t_fullDerivationSet">
+    <choice>
+      <value type="string">#all</value>
+      <list>
+        <zeroOrMore>
+          <ref name="t_typeDerivationControl"/>
+        </zeroOrMore>
+      </list>
+    </choice>
+  </define>
+  <define name="t_blockSet">
+    <choice>
+      <value type="string">#all</value>
+      <list>
+        <zeroOrMore>
+          <ref name="t_derivationControl"/>
+        </zeroOrMore>
+      </list>
+    </choice>
+  </define>
+  <define name="a_lang">
+    <optional>
+      <attribute name="lang">
+        <choice>
+          <value type="string"/>
+          <data type="language"/>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="e_include">
+    <element name="include" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_annotated"/>
+      <attribute name="schemaLocation">
+        <data type="anyURI"/>
+      </attribute>
+    </element>
+  </define>
+  <define name="t_annotated">
+    <group>
+      <ref name="t_openAttrs"/>
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="e_annotation"/>
+      </optional>
+    </group>
+  </define>
+  <define name="e_annotation">
+    <element name="annotation" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_openAttrs"/>
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="e_appinfo"/>
+          <ref name="e_documentation"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="e_appinfo">
+    <element name="appinfo" ns="http://www.w3.org/2001/XMLSchema">
+      <mixed>
+        <group>
+          <zeroOrMore>
+            <element>
+              <anyName/>
+              <ref name="anyType"/>
+            </element>
+          </zeroOrMore>
+          <optional>
+            <attribute name="source">
+              <data type="anyURI"/>
+            </attribute>
+          </optional>
+          <oneOrMore>
+            <attribute>
+              <anyName>
+                <except>
+                  <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+                </except>
+              </anyName>
+            </attribute>
+          </oneOrMore>
+        </group>
+      </mixed>
+    </element>
+  </define>
+  <define name="anyType">
+    <zeroOrMore>
+      <choice>
+        <element>
+          <anyName/>
+          <ref name="anyType"/>
+        </element>
+        <text/>
+        <attribute>
+          <anyName/>
+        </attribute>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="e_documentation">
+    <element name="documentation" ns="http://www.w3.org/2001/XMLSchema">
+      <mixed>
+        <group>
+          <zeroOrMore>
+            <element>
+              <anyName/>
+              <ref name="anyType"/>
+            </element>
+          </zeroOrMore>
+          <optional>
+            <attribute name="source">
+              <data type="anyURI"/>
+            </attribute>
+          </optional>
+          <ref name="a_lang"/>
+          <oneOrMore>
+            <attribute>
+              <anyName>
+                <except>
+                  <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+                </except>
+              </anyName>
+            </attribute>
+          </oneOrMore>
+        </group>
+      </mixed>
+    </element>
+  </define>
+  <define name="e_import">
+    <element name="import" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_annotated"/>
+      <optional>
+        <attribute name="namespace">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="schemaLocation">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+    </element>
+  </define>
+  <define name="e_redefine">
+    <element name="redefine" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_openAttrs"/>
+      <attribute name="schemaLocation">
+        <data type="anyURI"/>
+      </attribute>
+      <optional>
+        <attribute name="id">
+          <data type="ID"/>
+        </attribute>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="e_annotation"/>
+          <ref name="g_redefinable"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="g_redefinable">
+    <group>
+      <choice>
+        <ref name="e_simpleType"/>
+        <ref name="e_complexType"/>
+        <ref name="e_group"/>
+        <ref name="e_attributeGroup"/>
+      </choice>
+    </group>
+  </define>
+  <define name="e_simpleType">
+    <element name="simpleType" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_topLevelSimpleType"/>
+    </element>
+  </define>
+  <define name="t_topLevelSimpleType">
+    <group>
+      <attribute name="name">
+        <choice>
+          <data type="NCName"/>
+          <data type="ENTITY"/>
+          <data type="IDREF"/>
+          <data type="ID"/>
+        </choice>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <ref name="g_simpleDerivation"/>
+      </group>
+    </group>
+  </define>
+  <define name="g_simpleDerivation">
+    <group>
+      <choice>
+        <ref name="e_restriction"/>
+        <ref name="e_list"/>
+        <ref name="e_union"/>
+      </choice>
+    </group>
+  </define>
+  <define name="e_restriction">
+    <element name="restriction" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_annotated"/>
+      <optional>
+        <attribute name="base">
+          <data type="QName"/>
+        </attribute>
+      </optional>
+      <ref name="g_simpleRestrictionModel"/>
+    </element>
+  </define>
+  <define name="g_simpleRestrictionModel">
+    <group>
+      <group>
+        <optional>
+          <element name="simpleType" ns="http://www.w3.org/2001/XMLSchema">
+            <ref name="t_localSimpleType"/>
+          </element>
+        </optional>
+        <zeroOrMore>
+          <ref name="g_facets"/>
+        </zeroOrMore>
+      </group>
+    </group>
+  </define>
+  <define name="t_localSimpleType">
+    <group>
+      <attribute name="name">
+        <notAllowed/>
+      </attribute>
+      <attribute name="final">
+        <notAllowed/>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <ref name="g_simpleDerivation"/>
+      </group>
+    </group>
+  </define>
+  <define name="g_facets">
+    <group>
+      <choice>
+        <ref name="e_minExclusive"/>
+        <ref name="e_minInclusive"/>
+        <ref name="e_maxExclusive"/>
+        <ref name="e_maxInclusive"/>
+        <ref name="e_totalDigits"/>
+        <ref name="e_fractionDigits"/>
+        <ref name="e_length"/>
+        <ref name="e_minLength"/>
+        <ref name="e_maxLength"/>
+        <ref name="e_enumeration"/>
+        <ref name="e_whiteSpace"/>
+        <ref name="e_pattern"/>
+      </choice>
+    </group>
+  </define>
+  <define name="e_minExclusive">
+    <element name="minExclusive" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_facet"/>
+    </element>
+  </define>
+  <define name="t_facet">
+    <group>
+      <ref name="t_annotated"/>
+      <attribute name="value"/>
+      <optional>
+        <attribute name="fixed">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+    </group>
+  </define>
+  <define name="e_minInclusive">
+    <element name="minInclusive" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_facet"/>
+    </element>
+  </define>
+  <define name="e_maxExclusive">
+    <element name="maxExclusive" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_facet"/>
+    </element>
+  </define>
+  <define name="e_maxInclusive">
+    <element name="maxInclusive" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_facet"/>
+    </element>
+  </define>
+  <define name="e_totalDigits">
+    <element name="totalDigits" ns="http://www.w3.org/2001/XMLSchema">
+      <attribute name="value">
+        <data type="positiveInteger"/>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <optional>
+        <ref name="e_annotation"/>
+      </optional>
+    </element>
+  </define>
+  <define name="e_fractionDigits">
+    <element name="fractionDigits" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_numFacet"/>
+    </element>
+  </define>
+  <define name="t_numFacet">
+    <group>
+      <attribute name="value">
+        <choice>
+          <data type="nonNegativeInteger"/>
+          <data type="unsignedInt"/>
+          <data type="unsignedLong"/>
+          <data type="unsignedShort"/>
+          <data type="unsignedByte"/>
+          <data type="positiveInteger"/>
+        </choice>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <optional>
+        <ref name="e_annotation"/>
+      </optional>
+    </group>
+  </define>
+  <define name="e_length">
+    <element name="length" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_numFacet"/>
+    </element>
+  </define>
+  <define name="e_minLength">
+    <element name="minLength" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_numFacet"/>
+    </element>
+  </define>
+  <define name="e_maxLength">
+    <element name="maxLength" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_numFacet"/>
+    </element>
+  </define>
+  <define name="e_enumeration">
+    <element name="enumeration" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_noFixedFacet"/>
+    </element>
+  </define>
+  <define name="t_noFixedFacet">
+    <group>
+      <attribute name="fixed">
+        <notAllowed/>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <optional>
+        <ref name="e_annotation"/>
+      </optional>
+    </group>
+  </define>
+  <define name="e_whiteSpace">
+    <element name="whiteSpace" ns="http://www.w3.org/2001/XMLSchema">
+      <attribute name="value">
+        <choice>
+          <value type="string">preserve</value>
+          <value type="string">replace</value>
+          <value type="string">collapse</value>
+        </choice>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <optional>
+        <ref name="e_annotation"/>
+      </optional>
+    </element>
+  </define>
+  <define name="e_pattern">
+    <element name="pattern" ns="http://www.w3.org/2001/XMLSchema">
+      <attribute name="value">
+        <choice>
+          <data type="string"/>
+          <ref name="t_public"/>
+          <data type="language"/>
+          <ref name="t_reducedDerivationControl"/>
+          <data type="normalizedString"/>
+          <data type="NMTOKEN"/>
+          <data type="NCName"/>
+          <data type="ENTITY"/>
+          <ref name="t_formChoice"/>
+          <ref name="t_typeDerivationControl"/>
+          <ref name="t_derivationControl"/>
+          <data type="IDREF"/>
+          <data type="token"/>
+          <data type="ID"/>
+          <data type="Name"/>
+        </choice>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <optional>
+        <ref name="e_annotation"/>
+      </optional>
+    </element>
+  </define>
+  <define name="e_list">
+    <element name="list" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_annotated"/>
+      <optional>
+        <attribute name="itemType">
+          <data type="QName"/>
+        </attribute>
+      </optional>
+      <optional>
+        <element name="simpleType" ns="http://www.w3.org/2001/XMLSchema">
+          <ref name="t_localSimpleType"/>
+        </element>
+      </optional>
+    </element>
+  </define>
+  <define name="e_union">
+    <element name="union" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_annotated"/>
+      <optional>
+        <attribute name="memberTypes">
+          <list>
+            <zeroOrMore>
+              <data type="QName"/>
+            </zeroOrMore>
+          </list>
+        </attribute>
+      </optional>
+      <zeroOrMore>
+        <element name="simpleType" ns="http://www.w3.org/2001/XMLSchema">
+          <ref name="t_localSimpleType"/>
+        </element>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="e_complexType">
+    <element name="complexType" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_topLevelComplexType"/>
+    </element>
+  </define>
+  <define name="t_topLevelComplexType">
+    <group>
+      <attribute name="name">
+        <choice>
+          <data type="NCName"/>
+          <data type="ENTITY"/>
+          <data type="IDREF"/>
+          <data type="ID"/>
+        </choice>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <ref name="g_complexTypeModel"/>
+      </group>
+    </group>
+  </define>
+  <define name="g_complexTypeModel">
+    <group>
+      <choice>
+        <ref name="e_simpleContent"/>
+        <ref name="e_complexContent"/>
+        <group>
+          <optional>
+            <ref name="g_typeDefParticle"/>
+          </optional>
+          <ref name="g_attrDecls"/>
+        </group>
+      </choice>
+    </group>
+  </define>
+  <define name="e_simpleContent">
+    <element name="simpleContent" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_annotated"/>
+      <choice>
+        <element name="restriction" ns="http://www.w3.org/2001/XMLSchema">
+          <ref name="t_simpleRestrictionType"/>
+        </element>
+        <element name="extension" ns="http://www.w3.org/2001/XMLSchema">
+          <ref name="t_simpleExtensionType"/>
+        </element>
+      </choice>
+    </element>
+  </define>
+  <define name="t_simpleRestrictionType">
+    <group>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <optional>
+          <ref name="g_simpleRestrictionModel"/>
+        </optional>
+        <ref name="g_attrDecls"/>
+      </group>
+    </group>
+  </define>
+  <define name="g_attrDecls">
+    <group>
+      <group>
+        <zeroOrMore>
+          <choice>
+            <element name="attribute" ns="http://www.w3.org/2001/XMLSchema">
+              <ref name="t_attribute"/>
+            </element>
+            <element name="attributeGroup" ns="http://www.w3.org/2001/XMLSchema">
+              <ref name="t_attributeGroupRef"/>
+            </element>
+          </choice>
+        </zeroOrMore>
+        <optional>
+          <ref name="e_anyAttribute"/>
+        </optional>
+      </group>
+    </group>
+  </define>
+  <define name="t_attribute">
+    <group>
+      <ref name="t_annotated"/>
+      <ref name="ag_defRef"/>
+      <optional>
+        <attribute name="type">
+          <data type="QName"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="use">
+          <choice>
+            <value type="string">prohibited</value>
+            <value type="string">optional</value>
+            <value type="string">required</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="default">
+          <choice>
+            <data type="string"/>
+            <ref name="t_public"/>
+            <data type="language"/>
+            <ref name="t_reducedDerivationControl"/>
+            <data type="normalizedString"/>
+            <data type="NMTOKEN"/>
+            <data type="NCName"/>
+            <data type="ENTITY"/>
+            <ref name="t_formChoice"/>
+            <ref name="t_typeDerivationControl"/>
+            <ref name="t_derivationControl"/>
+            <data type="IDREF"/>
+            <data type="token"/>
+            <data type="ID"/>
+            <data type="Name"/>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="fixed">
+          <choice>
+            <data type="string"/>
+            <ref name="t_public"/>
+            <data type="language"/>
+            <ref name="t_reducedDerivationControl"/>
+            <data type="normalizedString"/>
+            <data type="NMTOKEN"/>
+            <data type="NCName"/>
+            <data type="ENTITY"/>
+            <ref name="t_formChoice"/>
+            <ref name="t_typeDerivationControl"/>
+            <ref name="t_derivationControl"/>
+            <data type="IDREF"/>
+            <data type="token"/>
+            <data type="ID"/>
+            <data type="Name"/>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="form">
+          <ref name="t_formChoice"/>
+        </attribute>
+      </optional>
+      <optional>
+        <element name="simpleType" ns="http://www.w3.org/2001/XMLSchema">
+          <ref name="t_localSimpleType"/>
+        </element>
+      </optional>
+    </group>
+  </define>
+  <define name="ag_defRef">
+    <group>
+      <optional>
+        <attribute name="name">
+          <choice>
+            <data type="NCName"/>
+            <data type="ENTITY"/>
+            <data type="IDREF"/>
+            <data type="ID"/>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="ref">
+          <data type="QName"/>
+        </attribute>
+      </optional>
+    </group>
+  </define>
+  <define name="t_attributeGroupRef">
+    <group>
+      <attribute name="ref">
+        <data type="QName"/>
+      </attribute>
+      <attribute name="name">
+        <notAllowed/>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <optional>
+        <ref name="e_annotation"/>
+      </optional>
+    </group>
+  </define>
+  <define name="e_anyAttribute">
+    <element name="anyAttribute" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_wildcard"/>
+    </element>
+  </define>
+  <define name="t_wildcard">
+    <group>
+      <ref name="t_annotated"/>
+      <optional>
+        <attribute name="namespace">
+          <ref name="t_namespaceList"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="processContents">
+          <choice>
+            <value type="string">skip</value>
+            <value type="string">lax</value>
+            <value type="string">strict</value>
+          </choice>
+        </attribute>
+      </optional>
+    </group>
+  </define>
+  <define name="t_namespaceList">
+    <choice>
+      <choice>
+        <value type="string">##any</value>
+        <value type="string">##other</value>
+      </choice>
+      <list>
+        <zeroOrMore>
+          <choice>
+            <choice>
+              <value type="string">##targetNamespace</value>
+              <value type="string">##local</value>
+            </choice>
+            <data type="anyURI"/>
+          </choice>
+        </zeroOrMore>
+      </list>
+    </choice>
+  </define>
+  <define name="t_simpleExtensionType">
+    <group>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <ref name="g_attrDecls"/>
+      </group>
+    </group>
+  </define>
+  <define name="e_complexContent">
+    <element name="complexContent" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_annotated"/>
+      <optional>
+        <attribute name="mixed">
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <choice>
+        <element name="restriction" ns="http://www.w3.org/2001/XMLSchema">
+          <ref name="t_complexRestrictionType"/>
+        </element>
+        <element name="extension" ns="http://www.w3.org/2001/XMLSchema">
+          <ref name="t_extensionType"/>
+        </element>
+      </choice>
+    </element>
+  </define>
+  <define name="t_complexRestrictionType">
+    <group>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <optional>
+          <ref name="g_typeDefParticle"/>
+        </optional>
+        <ref name="g_attrDecls"/>
+      </group>
+    </group>
+  </define>
+  <define name="g_typeDefParticle">
+    <group>
+      <choice>
+        <element name="group" ns="http://www.w3.org/2001/XMLSchema">
+          <ref name="t_groupRef"/>
+        </element>
+        <ref name="e_all"/>
+        <ref name="e_choice"/>
+        <ref name="e_sequence"/>
+      </choice>
+    </group>
+  </define>
+  <define name="t_groupRef">
+    <group>
+      <attribute name="ref">
+        <data type="QName"/>
+      </attribute>
+      <attribute name="name">
+        <notAllowed/>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <optional>
+        <ref name="e_annotation"/>
+      </optional>
+    </group>
+  </define>
+  <define name="e_all">
+    <element name="all" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_all"/>
+    </element>
+  </define>
+  <define name="t_all">
+    <group>
+      <optional>
+        <attribute name="minOccurs">
+          <choice>
+            <value type="string">0</value>
+            <value type="string">1</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="maxOccurs">
+          <choice>
+            <value type="string">unbounded</value>
+            <data type="nonNegativeInteger"/>
+          </choice>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <ref name="g_allModel"/>
+    </group>
+  </define>
+  <define name="g_allModel">
+    <group>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <zeroOrMore>
+          <element name="element" ns="http://www.w3.org/2001/XMLSchema">
+            <ref name="t_narrowMaxMin"/>
+          </element>
+        </zeroOrMore>
+      </group>
+    </group>
+  </define>
+  <define name="t_narrowMaxMin">
+    <group>
+      <optional>
+        <attribute name="minOccurs">
+          <choice>
+            <value type="string">0</value>
+            <value type="string">1</value>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="maxOccurs">
+          <choice>
+            <value type="string">unbounded</value>
+            <data type="nonNegativeInteger"/>
+          </choice>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <optional>
+          <choice>
+            <element name="simpleType" ns="http://www.w3.org/2001/XMLSchema">
+              <ref name="t_localSimpleType"/>
+            </element>
+            <element name="complexType" ns="http://www.w3.org/2001/XMLSchema">
+              <ref name="t_localComplexType"/>
+            </element>
+          </choice>
+        </optional>
+        <zeroOrMore>
+          <ref name="g_identityConstraint"/>
+        </zeroOrMore>
+      </group>
+    </group>
+  </define>
+  <define name="t_localComplexType">
+    <group>
+      <attribute name="name">
+        <notAllowed/>
+      </attribute>
+      <attribute name="abstract">
+        <notAllowed/>
+      </attribute>
+      <attribute name="final">
+        <notAllowed/>
+      </attribute>
+      <attribute name="block">
+        <notAllowed/>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <ref name="g_complexTypeModel"/>
+      </group>
+    </group>
+  </define>
+  <define name="g_identityConstraint">
+    <group>
+      <choice>
+        <ref name="e_unique"/>
+        <ref name="e_key"/>
+        <ref name="e_keyref"/>
+      </choice>
+    </group>
+  </define>
+  <define name="e_unique">
+    <element name="unique" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_keybase"/>
+    </element>
+  </define>
+  <define name="t_keybase">
+    <group>
+      <ref name="t_annotated"/>
+      <attribute name="name">
+        <choice>
+          <data type="NCName"/>
+          <data type="ENTITY"/>
+          <data type="IDREF"/>
+          <data type="ID"/>
+        </choice>
+      </attribute>
+      <group>
+        <ref name="e_selector"/>
+        <oneOrMore>
+          <ref name="e_field"/>
+        </oneOrMore>
+      </group>
+    </group>
+  </define>
+  <define name="e_selector">
+    <element name="selector" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_annotated"/>
+      <attribute name="xpath">
+        <data type="token">
+          <param name="pattern">(\.//)?(((child::)?((\i\c*:)?(\i\c*|\*)))|\.)(/(((child::)?((\i\c*:)?(\i\c*|\*)))|\.))*(\|(\.//)?(((child::)?((\i\c*:)?(\i\c*|\*)))|\.)(/(((child::)?((\i\c*:)?(\i\c*|\*)))|\.))*)*</param>
+        </data>
+      </attribute>
+    </element>
+  </define>
+  <define name="e_field">
+    <element name="field" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_annotated"/>
+      <attribute name="xpath">
+        <data type="token">
+          <param name="pattern">(\.//)?((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)/)*((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)|((attribute::|@)((\i\c*:)?(\i\c*|\*))))(\|(\.//)?((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)/)*((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)|((attribute::|@)((\i\c*:)?(\i\c*|\*)))))*</param>
+        </data>
+      </attribute>
+    </element>
+  </define>
+  <define name="e_key">
+    <element name="key" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_keybase"/>
+    </element>
+  </define>
+  <define name="e_keyref">
+    <element name="keyref" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_keybase"/>
+      <attribute name="refer">
+        <data type="QName"/>
+      </attribute>
+    </element>
+  </define>
+  <define name="e_choice">
+    <element name="choice" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_explicitGroup"/>
+    </element>
+  </define>
+  <define name="t_explicitGroup">
+    <group>
+      <attribute name="name">
+        <group>
+          <choice>
+            <data type="NCName"/>
+            <data type="ENTITY"/>
+            <data type="IDREF"/>
+            <data type="ID"/>
+          </choice>
+          <notAllowed/>
+        </group>
+      </attribute>
+      <attribute name="ref">
+        <group>
+          <data type="QName"/>
+          <notAllowed/>
+        </group>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="g_nestedParticle"/>
+        </zeroOrMore>
+      </group>
+    </group>
+  </define>
+  <define name="g_nestedParticle">
+    <group>
+      <choice>
+        <element name="element" ns="http://www.w3.org/2001/XMLSchema">
+          <ref name="t_localElement"/>
+        </element>
+        <element name="group" ns="http://www.w3.org/2001/XMLSchema">
+          <ref name="t_groupRef"/>
+        </element>
+        <ref name="e_choice"/>
+        <ref name="e_sequence"/>
+        <ref name="e_any"/>
+      </choice>
+    </group>
+  </define>
+  <define name="t_localElement">
+    <group>
+      <attribute name="substitutionGroup">
+        <notAllowed/>
+      </attribute>
+      <attribute name="final">
+        <notAllowed/>
+      </attribute>
+      <attribute name="abstract">
+        <notAllowed/>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <optional>
+          <choice>
+            <element name="simpleType" ns="http://www.w3.org/2001/XMLSchema">
+              <ref name="t_localSimpleType"/>
+            </element>
+            <element name="complexType" ns="http://www.w3.org/2001/XMLSchema">
+              <ref name="t_localComplexType"/>
+            </element>
+          </choice>
+        </optional>
+        <zeroOrMore>
+          <ref name="g_identityConstraint"/>
+        </zeroOrMore>
+      </group>
+    </group>
+  </define>
+  <define name="e_sequence">
+    <element name="sequence" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_explicitGroup"/>
+    </element>
+  </define>
+  <define name="e_any">
+    <element name="any" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_wildcard"/>
+      <ref name="ag_occurs"/>
+    </element>
+  </define>
+  <define name="ag_occurs">
+    <group>
+      <optional>
+        <attribute name="minOccurs">
+          <choice>
+            <data type="nonNegativeInteger"/>
+            <data type="unsignedInt"/>
+            <data type="unsignedLong"/>
+            <data type="unsignedShort"/>
+            <data type="unsignedByte"/>
+            <data type="positiveInteger"/>
+          </choice>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="maxOccurs">
+          <ref name="t_allNNI"/>
+        </attribute>
+      </optional>
+    </group>
+  </define>
+  <define name="t_allNNI">
+    <choice>
+      <value type="string">unbounded</value>
+      <data type="nonNegativeInteger"/>
+    </choice>
+  </define>
+  <define name="t_extensionType">
+    <group>
+      <ref name="t_annotated"/>
+      <attribute name="base">
+        <data type="QName"/>
+      </attribute>
+      <group>
+        <optional>
+          <ref name="g_typeDefParticle"/>
+        </optional>
+        <ref name="g_attrDecls"/>
+      </group>
+    </group>
+  </define>
+  <define name="e_group">
+    <element name="group" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_namedGroup"/>
+    </element>
+  </define>
+  <define name="t_namedGroup">
+    <group>
+      <attribute name="name">
+        <choice>
+          <data type="NCName"/>
+          <data type="ENTITY"/>
+          <data type="IDREF"/>
+          <data type="ID"/>
+        </choice>
+      </attribute>
+      <attribute name="ref">
+        <notAllowed/>
+      </attribute>
+      <attribute name="minOccurs">
+        <notAllowed/>
+      </attribute>
+      <attribute name="maxOccurs">
+        <notAllowed/>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <choice>
+          <element name="all" ns="http://www.w3.org/2001/XMLSchema">
+            <attribute name="minOccurs">
+              <notAllowed/>
+            </attribute>
+            <attribute name="maxOccurs">
+              <notAllowed/>
+            </attribute>
+            <oneOrMore>
+              <attribute>
+                <anyName>
+                  <except>
+                    <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+                  </except>
+                </anyName>
+              </attribute>
+            </oneOrMore>
+            <ref name="g_allModel"/>
+          </element>
+          <element name="choice" ns="http://www.w3.org/2001/XMLSchema">
+            <ref name="t_simpleExplicitGroup"/>
+          </element>
+          <element name="sequence" ns="http://www.w3.org/2001/XMLSchema">
+            <ref name="t_simpleExplicitGroup"/>
+          </element>
+        </choice>
+      </group>
+    </group>
+  </define>
+  <define name="t_simpleExplicitGroup">
+    <group>
+      <attribute name="minOccurs">
+        <notAllowed/>
+      </attribute>
+      <attribute name="maxOccurs">
+        <notAllowed/>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="g_nestedParticle"/>
+        </zeroOrMore>
+      </group>
+    </group>
+  </define>
+  <define name="e_attributeGroup">
+    <element name="attributeGroup" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_namedAttributeGroup"/>
+    </element>
+  </define>
+  <define name="t_namedAttributeGroup">
+    <group>
+      <attribute name="name">
+        <choice>
+          <data type="NCName"/>
+          <data type="ENTITY"/>
+          <data type="IDREF"/>
+          <data type="ID"/>
+        </choice>
+      </attribute>
+      <attribute name="ref">
+        <notAllowed/>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <ref name="g_attrDecls"/>
+      </group>
+    </group>
+  </define>
+  <define name="g_schemaTop">
+    <group>
+      <choice>
+        <ref name="g_redefinable"/>
+        <ref name="e_element"/>
+        <ref name="e_attribute"/>
+        <ref name="e_notation"/>
+      </choice>
+    </group>
+  </define>
+  <define name="e_element">
+    <element name="element" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_topLevelElement"/>
+    </element>
+  </define>
+  <define name="t_topLevelElement">
+    <group>
+      <attribute name="ref">
+        <notAllowed/>
+      </attribute>
+      <attribute name="form">
+        <notAllowed/>
+      </attribute>
+      <attribute name="minOccurs">
+        <notAllowed/>
+      </attribute>
+      <attribute name="maxOccurs">
+        <notAllowed/>
+      </attribute>
+      <attribute name="name">
+        <choice>
+          <data type="NCName"/>
+          <data type="ENTITY"/>
+          <data type="IDREF"/>
+          <data type="ID"/>
+        </choice>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <optional>
+          <choice>
+            <element name="simpleType" ns="http://www.w3.org/2001/XMLSchema">
+              <ref name="t_localSimpleType"/>
+            </element>
+            <element name="complexType" ns="http://www.w3.org/2001/XMLSchema">
+              <ref name="t_localComplexType"/>
+            </element>
+          </choice>
+        </optional>
+        <zeroOrMore>
+          <ref name="g_identityConstraint"/>
+        </zeroOrMore>
+      </group>
+    </group>
+  </define>
+  <define name="e_attribute">
+    <element name="attribute" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_topLevelAttribute"/>
+    </element>
+  </define>
+  <define name="t_topLevelAttribute">
+    <group>
+      <attribute name="ref">
+        <notAllowed/>
+      </attribute>
+      <attribute name="form">
+        <notAllowed/>
+      </attribute>
+      <attribute name="use">
+        <notAllowed/>
+      </attribute>
+      <attribute name="name">
+        <choice>
+          <data type="NCName"/>
+          <data type="ENTITY"/>
+          <data type="IDREF"/>
+          <data type="ID"/>
+        </choice>
+      </attribute>
+      <oneOrMore>
+        <attribute>
+          <anyName>
+            <except>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+            </except>
+          </anyName>
+        </attribute>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="e_annotation"/>
+        </optional>
+        <optional>
+          <element name="simpleType" ns="http://www.w3.org/2001/XMLSchema">
+            <ref name="t_localSimpleType"/>
+          </element>
+        </optional>
+      </group>
+    </group>
+  </define>
+  <define name="e_notation">
+    <element name="notation" ns="http://www.w3.org/2001/XMLSchema">
+      <ref name="t_annotated"/>
+      <attribute name="name">
+        <choice>
+          <data type="NCName"/>
+          <data type="ENTITY"/>
+          <data type="IDREF"/>
+          <data type="ID"/>
+        </choice>
+      </attribute>
+      <optional>
+        <attribute name="public">
+          <ref name="t_public"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="system">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+    </element>
+  </define>
+</grammar>

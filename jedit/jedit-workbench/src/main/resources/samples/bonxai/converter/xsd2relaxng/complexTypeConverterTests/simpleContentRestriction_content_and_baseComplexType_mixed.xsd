@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="e9">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:restriction base="e9_complexType">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:short"/>
+                    </xs:simpleType>
+                </xs:restriction>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="e9_complexType" mixed="true">
+        <xs:attribute name="attr1"/>
+    </xs:complexType>
+
+
+</xs:schema>

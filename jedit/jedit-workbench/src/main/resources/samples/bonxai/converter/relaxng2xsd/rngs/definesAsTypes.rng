@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:oo="http://ns.xmlschemata.org/object-orientation/"
+    xmlns="http://relaxng.org/ns/structure/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <define name="BaseType">
+        <element name="FirstName">
+            <data type="token"/>
+        </element>
+        <element name="LastName">
+            <data type="token"/>
+        </element>
+        <optional>
+            <element name="Mail">
+                <data type="token"/>
+            </element>
+        </optional>
+    </define>
+    <define name="ExtendedType" oo:extends="BaseType">
+        <ref name="BaseType"/>
+        <element name="Password">
+            <data type="token"/>
+        </element>
+    </define>
+    <define name="RestrictedType" oo:restricts="BaseType">
+        <element name="FirstName">
+            <data type="token"/>
+        </element>
+        <element name="LastName">
+            <data type="token"/>
+        </element>
+    </define>
+    <define name="Head">
+        <element name="Head">
+            <ref name="BaseType"/>
+        </element>
+    </define>
+    <define name="Head" combine="choice" oo:substitutionGroup="Head">
+        <element name="Restricted">
+            <ref name="RestrictedType"/>
+        </element>
+    </define>
+    <define name="Head" combine="choice" oo:substitutionGroup="Head">
+        <element name="Extended">
+            <ref name="ExtendedType"/>
+        </element>
+    </define>
+    <start>
+        <element name="Root">
+            <ref name="Head"/>
+        </element>
+    </start>
+</grammar>

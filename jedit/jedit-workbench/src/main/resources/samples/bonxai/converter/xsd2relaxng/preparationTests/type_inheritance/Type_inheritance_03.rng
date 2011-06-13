@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<grammar ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <choice>
+            <notAllowed/>
+            <element name="e3">
+                <list>
+                    <zeroOrMore>
+                        <data type="anyURI"/>
+                    </zeroOrMore>
+                </list>
+            </element>
+        </choice>
+    </start>
+</grammar>

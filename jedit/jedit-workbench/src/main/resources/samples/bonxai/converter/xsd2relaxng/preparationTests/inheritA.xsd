@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:complexType name="fo">
+        <xs:choice>
+            <xs:element name="inner_a"/>
+            <xs:element name="inner_b" type="xs:string"/>
+        </xs:choice>
+    </xs:complexType>
+</xs:schema>

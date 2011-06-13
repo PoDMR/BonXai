@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element name="root" xmlns="http://relaxng.org/ns/structure/1.0" ns="http://www.example.org"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <oneOrMore>
+        <attribute ns="http://www.myOtherExample.org">
+            <name>bob</name>
+            <text/>
+        </attribute>
+    </oneOrMore>
+</element>

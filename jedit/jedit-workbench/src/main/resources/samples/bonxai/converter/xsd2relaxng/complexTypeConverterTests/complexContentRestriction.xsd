@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2001/ds"
+    targetNamespace="http://www.w3.org/2001/ds">
+
+    <xs:element name="e8">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:restriction base="ds:e8_complexType">
+                    <xs:choice>
+                        <xs:element name="ele1"/>
+                    </xs:choice>
+                    <xs:attribute name="attr1" fixed="5"/>
+                </xs:restriction>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="e8_complexType">
+        <xs:choice>
+            <xs:element name="ele1"/>
+            <xs:element name="test" type="xs:ID"/>
+        </xs:choice>
+        <xs:attributeGroup ref="ds:attrG"/>
+    </xs:complexType>
+
+    <xs:attributeGroup name="attrG">
+        <xs:attribute name="attr1"/>
+        <xs:attribute name="attr2"/>
+    </xs:attributeGroup>
+
+</xs:schema>

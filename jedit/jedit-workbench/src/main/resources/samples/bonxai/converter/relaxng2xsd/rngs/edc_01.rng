@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <choice>
+            <element name="foo">
+                <text/>
+            </element>
+            <element name="foo">
+                <element name="bar">
+                    <data type="int"/>
+                </element>
+                <element name="bar">
+                    <empty/>
+                </element>
+                <element>
+                    <choice>
+                        <name>blob</name>
+                        <name>bar</name>
+                    </choice>
+                    <attribute name="name">
+                        <text/>
+                    </attribute>
+                </element>
+            </element>
+        </choice>
+    </start>
+</grammar>

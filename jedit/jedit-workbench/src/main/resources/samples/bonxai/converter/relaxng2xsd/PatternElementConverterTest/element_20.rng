@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <element xmlns="http://relaxng.org/ns/structure/1.0" name="root">
+      <ref name="ref"/>
+      <attribute name="blub"/>
+    </element>
+  </start>
+  <define name="ref">
+    <mixed>
+      <element name="bob">
+        <empty/>
+      </element>
+      <element name="bab">
+        <empty/>
+      </element>
+    </mixed>
+  </define>
+</grammar>

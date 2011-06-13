@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testElement>
+    <bla> </bla>
+    <bla> </bla>
+    <bla>fg</bla>
+    <blob>
+        <oneMoreElement>
+            <blob>
+                <oneMoreElement/>
+                <myElement/>
+            </blob>
+        </oneMoreElement>
+        <myElement>
+            <blub>
+                <myElement/>
+            </blub>
+        </myElement>
+    </blob>
+</testElement>

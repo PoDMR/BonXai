@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+    <start>
+        <element name="root" xmlns="http://relaxng.org/ns/structure/1.0"
+            datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+            <choice>
+            <ref name="def1"/>
+            <attribute>
+                <name>alice</name>
+                <value>4</value>
+            </attribute>
+            </choice>
+        </element>
+    </start>
+    <define name="def1">
+        <choice>
+            <attribute>
+                <name>alice</name>
+                <value>4</value>
+            </attribute>
+            <optional>
+                <attribute>
+                    <name>bob</name>
+                    <text/>
+                </attribute>
+            </optional>
+        </choice>
+    </define>
+</grammar>

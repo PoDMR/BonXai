@@ -1,0 +1,14 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:test="http://www.example.org/test">
+    <xs:element name="outerElement">
+        <xs:complexType>
+            <xs:choice minOccurs="2" maxOccurs="4">
+                <xs:sequence minOccurs="1" maxOccurs="2">
+                    <xs:element ref="test:element1" minOccurs="5" maxOccurs="8"/>
+                </xs:sequence>
+                <xs:sequence minOccurs="5" maxOccurs="7">
+                    <xs:element name="bob" minOccurs="7" maxOccurs="9"/>
+                </xs:sequence>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

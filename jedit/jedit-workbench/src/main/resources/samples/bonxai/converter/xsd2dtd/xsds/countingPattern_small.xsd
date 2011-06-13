@@ -1,0 +1,10 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:test="http://www.example.org/test">
+    <xs:element name="outerElement">
+        <xs:complexType>
+            <xs:sequence minOccurs="2" maxOccurs="3">
+                <xs:element name="bob"/>
+                <xs:element name="bob2" minOccurs="0" maxOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

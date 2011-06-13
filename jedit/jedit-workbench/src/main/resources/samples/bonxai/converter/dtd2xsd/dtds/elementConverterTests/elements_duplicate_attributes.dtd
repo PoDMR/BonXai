@@ -1,0 +1,3 @@
+<!ELEMENT myElement (#PCDATA)   >
+<!ATTLIST myElement name CDATA #IMPLIED>
+<!ATTLIST myElement xs:name CDATA #IMPLIED>
