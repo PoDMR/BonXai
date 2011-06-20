@@ -16,12 +16,10 @@ public class CompactSyntaxParser implements BonxaiParser {
 		BufferedReader rdr = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		bonXaiTree parser = new bonXaiTree(rdr);
 		
-		try {
-			SimpleNode simpleNode = parser.bonXai();
-			Visitor visitor = new Visitor(new Bonxai());
-			bonxai = visitor.visit(simpleNode, null);
-			return bonxai;
-		} 
+		SimpleNode simpleNode = parser.bonXai();
+		Visitor visitor = new Visitor(new Bonxai());
+		bonxai = visitor.visit(simpleNode, null);
+		return bonxai;
 	}
 
 }

@@ -2299,7 +2299,7 @@ void AttrBonxaiType()                 : {/*@bgen(jjtree) AttrBonxaiType */
 try {
 /*@egen*/
 
-type=Name() [ (<FIXED> {fixed=true;}  name=QuotationName() | <DEFAULTT> {def=true;}   name=QuotationName() )]/*@bgen(jjtree)*/
+<TYPE> type=Name() [ (<FIXED> {fixed=true;}  name=QuotationName() | <DEFAULTT> {def=true;}   name=QuotationName() )]/*@bgen(jjtree)*/
 {
   jjtree.closeNodeScope(jjtn000, true);
   jjtc000 = false;

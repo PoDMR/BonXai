@@ -1294,7 +1294,7 @@ void BonxaiType() #BonxaiType : {Boolean missing=false; Boolean fixed=false; Boo
 void AttrBonxaiType() #AttrBonxaiType : {Boolean fixed=false; Boolean def=false; String type=""; String name="";}
 {
 
-type=Name() [ (<FIXED> {fixed=true;}  name=QuotationName() | <DEFAULTT> {def=true;}   name=QuotationName() )]
+<TYPE> type=Name() [ (<FIXED> {fixed=true;}  name=QuotationName() | <DEFAULTT> {def=true;}   name=QuotationName() )]
 
 
 

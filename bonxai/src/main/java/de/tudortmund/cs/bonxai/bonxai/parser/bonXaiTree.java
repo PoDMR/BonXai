@@ -2422,6 +2422,7 @@ jjtn000.setNodeType("NameSpaceList");
                                          boolean jjtc000 = true;
                                          jjtree.openNodeScope(jjtn000);Boolean fixed=false; Boolean def=false; String type=""; String name="";
       try {
+        jj_consume_token(TYPE);
         type = Name();
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case DEFAULTT:
@@ -2429,12 +2430,12 @@ jjtn000.setNodeType("NameSpaceList");
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case FIXED:
             jj_consume_token(FIXED);
-                        fixed=true;
+                               fixed=true;
             name = QuotationName();
             break;
           case DEFAULTT:
             jj_consume_token(DEFAULTT);
-                                                                         def=true;
+                                                                                def=true;
             name = QuotationName();
             break;
           default:

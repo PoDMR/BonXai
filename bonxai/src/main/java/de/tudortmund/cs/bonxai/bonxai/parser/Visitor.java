@@ -644,14 +644,15 @@ public class Visitor implements bonXaiTreeVisitor {
 	public AttributePattern visit(ASTAttributePattern node, Object data) {
 		 AttributePattern attributePattern = new AttributePattern();
 		 
-		 ProcessContentsInstruction instruction;
+		 ProcessContentsInstruction instruction = null;
 		 if (node.getForeign().equals("lax")) {
-	            instruction = ProcessContentsInstruction.Lax;
-	        } else if (node.getForeign().equals("strict")) {
-	            instruction = ProcessContentsInstruction.Strict;
-	        } else {
-	            instruction = ProcessContentsInstruction.Skip;
-	        }
+			 instruction = ProcessContentsInstruction.Lax;
+		 } else if (node.getForeign().equals("strict")) {
+			 instruction = ProcessContentsInstruction.Strict;
+		 } else if (node.getForeign().equals("skip")) {
+			 instruction = ProcessContentsInstruction.Skip;
+		 }
+
 		 // Frage: String setzen, aber DS liefert eine Liste!! so eher nicht
 	        AnyAttribute anyAttribute = new AnyAttribute(instruction, node.getNamespaceList().toString());
 		 
