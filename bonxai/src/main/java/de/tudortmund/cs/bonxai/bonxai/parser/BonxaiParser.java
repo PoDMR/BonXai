@@ -6,5 +6,5 @@ import java.io.IOException;
 import de.tudortmund.cs.bonxai.bonxai.Bonxai;
 
 public interface BonxaiParser {
-	public Bonxai parse(File file) throws IOException;
+	public Bonxai parse(File file) throws IOException, ParseException;
 }

@@ -11,7 +11,7 @@ import de.tudortmund.cs.bonxai.bonxai.Bonxai;
 public class CompactSyntaxParser implements BonxaiParser {
 
 	@Override
-	public Bonxai parse(File file) throws IOException {
+	public Bonxai parse(File file) throws IOException, ParseException {
 		Bonxai bonxai;
 		BufferedReader rdr = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		bonXaiTree parser = new bonXaiTree(rdr);
@@ -21,10 +21,7 @@ public class CompactSyntaxParser implements BonxaiParser {
 			Visitor visitor = new Visitor(new Bonxai());
 			bonxai = visitor.visit(simpleNode, null);
 			return bonxai;
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException(e);
-		}
+		} 
 	}
 
 }
