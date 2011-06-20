@@ -1,0 +1,56 @@
+default namespace http://example.org/namespace
+namespace xml = http://www.w3.org/XML/1998/namespace
+
+groups {
+}
+
+grammar {
+    roots {root, delta}
+    /root/choice = {
+        (
+            element alpha { type string } |
+            element beta { type string }
+        )
+    }
+    /root/sequence = {
+        (
+            element alpha { type string } ,
+            element beta { type string }
+        )
+    }
+    /root/all = {
+            element alpha { type string } &
+            element beta { type string }
+    }
+    /root = {
+        (
+            element choice ,
+            element sequence ,
+            element all ,
+            element all2
+        )
+    }
+    /root/all2 = {
+            element alpha { type string }? &
+            element beta { type string }?
+    }
+    /delta = {
+        (
+            (
+                element alpha { type string }
+            )* ,
+            (
+                element beta { type string }
+            )+ ,
+            (
+                element gamma { type string }
+            )? ,
+            (
+                element delta { type string }
+            )[3, 7] ,
+            (
+                element epsilon { type string }
+            )[23, 23]
+        )
+    }
+}

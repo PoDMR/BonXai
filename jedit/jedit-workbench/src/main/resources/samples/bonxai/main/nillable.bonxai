@@ -1,0 +1,5 @@
+default namespace http://example.org/namespace 
+grammar { roots {someElement}
+
+//someElement = { missing | type string}
+}

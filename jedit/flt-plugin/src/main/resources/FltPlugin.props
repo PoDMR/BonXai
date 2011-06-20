@@ -19,7 +19,7 @@ plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.depend.1=jedit 04.03.09.00
 #options.eu.fox7.jedit.fltplugin.label=Bonxai
 
 # Action labels
-plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.browser-menu=action.chare action.sore action.xsd
+plugin.eu.fox7.jedit.fltplugin.FltPluginPlugin.browser-menu=action.chare action.sore action.xsdinf
 action.chare.label=CHARE Inference
 action.sore.label=SORE Inference
-action.xsd.label=XSD Inference
+action.xsdinf.label=XSD Inference

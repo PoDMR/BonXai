@@ -13,9 +13,9 @@
 			jEdit.getPlugin("eu.fox7.jedit.fltplugin.FltPluginPlugin").handleBrowserAction(view, files, "chare");
 		</CODE>
 	</ACTION>
-	<ACTION NAME="action.xsd">
+	<ACTION NAME="action.xsdinf">
 		<CODE>
-			jEdit.getPlugin("eu.fox7.jedit.fltplugin.FltPluginPlugin").handleBrowserAction(view, files, "xsd");
+			jEdit.getPlugin("eu.fox7.jedit.fltplugin.FltPluginPlugin").handleBrowserAction(view, files, "xsdinf");
 		</CODE>
 	</ACTION>
 

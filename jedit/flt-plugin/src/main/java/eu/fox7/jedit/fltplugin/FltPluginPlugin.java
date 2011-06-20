@@ -43,7 +43,7 @@ public class FltPluginPlugin extends EditPlugin {
 				outputFileName = chareInfer(files[i].getPath());
 			} else if ("sore".equals(protocol)) {
 				outputFileName = soreInfer(files[i].getPath());
-			} else if ("xsd".equals(protocol)) {
+			} else if ("xsdinf".equals(protocol)) {
 				outputFileName = xsdInfer(files[i].getPath());
 			}
 			

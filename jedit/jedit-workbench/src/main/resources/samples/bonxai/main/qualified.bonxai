@@ -1,0 +1,7 @@
+default namespace "http://example.org/someNamespace"
+grammar {
+ roots { book} 
+//book= {  element title {type string},
+           element author {type string}
+}
+}
