@@ -293,7 +293,11 @@ public class Console {
 		for (int i=1; i<parameters.length; ++i) {
 			File file = new File(parameters[i]);
 			Schema schema = new Schema();
-			schema.loadSchema(file);
+			try {
+				schema.loadSchema(file);
+			} catch (ConversionFailedException e) {
+				e.printStackTrace();
+			}
 			if (schema.getType() != SchemaType.NONE) {
 				schemas.add(schema);
 			}
