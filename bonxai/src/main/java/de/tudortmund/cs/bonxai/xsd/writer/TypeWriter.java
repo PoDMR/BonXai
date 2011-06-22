@@ -18,7 +18,12 @@ package de.tudortmund.cs.bonxai.xsd.writer;
 
 import java.util.*;
 import org.w3c.dom.*;
+
+import de.tudortmund.cs.bonxai.common.CountingPattern;
+import de.tudortmund.cs.bonxai.common.Particle;
+import de.tudortmund.cs.bonxai.common.SequencePattern;
 import de.tudortmund.cs.bonxai.xsd.*;
+import de.tudortmund.cs.bonxai.xsd.Element;
 
 /**
  *
@@ -528,7 +533,16 @@ public abstract class TypeWriter {
             if (cont.getMixed() == true) {
                 typeNode.setAttribute("mixed", cont.getMixed().toString());
             }
-            ParticleWriter.writeParticle(typeNode, cont.getParticle(), foundElements);
+            Particle particle = cont.getParticle();
+            if ((particle instanceof Element) || 
+            		((particle instanceof CountingPattern) && 
+            				((CountingPattern) particle).getParticles().getFirst() instanceof Element)) {
+            	// element is not allowed at top-level, therefore it is wrapped in a sequence
+            	SequencePattern sequencePattern = new SequencePattern();
+            	sequencePattern.addParticle(cont.getParticle());
+            	particle = sequencePattern;
+            }
+            ParticleWriter.writeParticle(typeNode, particle, foundElements);
         } else {
             org.w3c.dom.Element contNode;
             contNode = typeNode.getOwnerDocument().createElementNS("http://www.w3.org/2001/XMLSchema", "complexContent");
