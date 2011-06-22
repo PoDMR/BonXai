@@ -26,6 +26,7 @@ import de.tudortmund.cs.bonxai.xsd.writer.XSDWriter;
 import de.tudortmund.cs.bonxai.relaxng.writer.RNGWriter;
 import de.tudortmund.cs.bonxai.bonxai.parser.BonxaiParser;
 import de.tudortmund.cs.bonxai.bonxai.parser.CompactSyntaxParser;
+import de.tudortmund.cs.bonxai.bonxai.parser.ParseException;
 import de.tudortmund.cs.bonxai.bonxai.writer.Writer;
 import de.tudortmund.cs.bonxai.bonxai.writer.CompactSyntaxVisitor;
 
@@ -143,8 +144,9 @@ public class Schema {
 	/**
 	 * Load a schema from disk. The schema type is determined by filename extension.
 	 * @param file
+	 * @throws ConversionFailedException 
 	 */
-	public void loadSchema(File file) {
+	public void loadSchema(File file) throws ConversionFailedException {
 		String filename = file.getPath();
 		String[] nameComponents = filename.split("\\.");
 		String extension = "";
@@ -168,8 +170,9 @@ public class Schema {
 	/**
 	 * Load an XSD schema from disk.
 	 * @param file
+	 * @throws ConversionFailedException 
 	 */
-	public void loadXSD(File file) {
+	public void loadXSD(File file) throws ConversionFailedException {
 		clear();
 		
 		try {
@@ -180,15 +183,16 @@ public class Schema {
 			this.filename = file.getPath();
             this.comment = file.getPath();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new ConversionFailedException(e);
 		}
 	}
 
 	/**
 	 * Load a DTD schema from disk.
 	 * @param file
+	 * @throws ConversionFailedException 
 	 */
-	public void loadDTD(File file) {
+	public void loadDTD(File file) throws ConversionFailedException {
 		clear();
 		
 		try {
@@ -199,15 +203,16 @@ public class Schema {
 			this.filename = file.getPath();
             this.comment = file.getPath();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new ConversionFailedException(e);
 		}
 	}
 
 	/**
 	 * Load a RelaxNG schema from disk.
 	 * @param file
+	 * @throws ConversionFailedException 
 	 */
-	public void loadRelaxNG(File file) {
+	public void loadRelaxNG(File file) throws ConversionFailedException {
 		clear();
 		
 		try {
@@ -218,15 +223,16 @@ public class Schema {
             this.filename = file.getPath();
             this.comment = file.getPath();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new ConversionFailedException(e);
 		}
 	}
 	
 	/**
 	 * Load a BonXai Schema from disk. (not working yet)
 	 * @param file
+	 * @throws ConversionFailedException 
 	 */
-	public void loadBonxai(File file) {
+	public void loadBonxai(File file) throws ConversionFailedException {
 		clear();
 		
 		try {
@@ -236,7 +242,7 @@ public class Schema {
             bonxaiSchema = schema;
             comment = file.getPath();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new ConversionFailedException(e);
 		}
 	}
 

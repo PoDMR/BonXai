@@ -506,7 +506,6 @@ TOKEN :
 
 }
 
-
 <VARIABLE> TOKEN: {
 
 	<VAR_LABEL: (<BASECHAR>)(<BASECHAR> | <DIGIT>)* >:DEFAULT
@@ -517,7 +516,7 @@ TOKEN :
 }
 
 <VARIABLE> SKIP: {
- " " | "\r" | "\n"  
+ " " | "\r" | "\n" | "\t"  
 }
 
 <VARIABLE_OR> TOKEN: {
@@ -535,7 +534,7 @@ TOKEN :
 }
 
 <VARIABLE_OR> SKIP: {
- " " | "\r" | "\n"  
+ " " | "\r" | "\n" | "\t"
 }
 
 <QUOTATION> TOKEN: {
@@ -685,7 +684,7 @@ String NamespaceUriLiteral(): {Token t; String r; String s = "";}
 
 //( <HTTP> | <FTP> )(<BASECHAR>| <CONSTANT> | <SLASH>|<POINT>)+
 
-( t=<HTTP> | t=<FTP> ) { s = t.image;} r = host() {s = s + r;} ((t=<URI_WS>|t=<URI_ROW>|t=<URI_LINE>) {s = s + t.image; })
+( t=<HTTP> | t=<FTP> ) { s = t.image;} r = host() {s = s + r;} ((<URI_WS>|<URI_ROW>|<URI_LINE>) )
 
 { return s;}
 

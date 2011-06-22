@@ -359,6 +359,7 @@ public class Visitor implements bonXaiTreeVisitor {
 				subnode.setSequence(false);
 				content = this.visit(subnode, null);
 				sequenceExpression.addChild(content);
+				if (sequence) subnode = (ASTFullAPattern) subnode.jjtGetChild(1);
 			} 
 			
 			content = sequenceExpression;

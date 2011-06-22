@@ -133,23 +133,23 @@ public interface bonXaiTreeConstants {
   int VAR_OPENING_ROUND_BRACKET = 131;
   int VAR_AT = 132;
   int VAR_COLON = 133;
-  int VAROR_LABEL = 137;
-  int VAROR_CONSTANT = 138;
-  int VAROR_OR = 139;
-  int VAROR_COMMA = 140;
-  int VAR_CLOSING_ROUND_BRACKET = 141;
-  int VAR_OPENING_CURLY_BRACKET = 142;
-  int VAR_CLOSING_CURLY_BRACKET = 143;
-  int VAROR_AT = 144;
-  int VAROR_COLON = 145;
-  int QUOT_LABEL = 149;
-  int QUOT_CONSTANT = 150;
-  int QOUT_WS = 151;
-  int QUOT_QUOTE = 152;
-  int LIST_LABEL = 157;
-  int START_LIST = 158;
-  int LIST_COMMA = 159;
-  int END_LIST = 160;
+  int VAROR_LABEL = 138;
+  int VAROR_CONSTANT = 139;
+  int VAROR_OR = 140;
+  int VAROR_COMMA = 141;
+  int VAR_CLOSING_ROUND_BRACKET = 142;
+  int VAR_OPENING_CURLY_BRACKET = 143;
+  int VAR_CLOSING_CURLY_BRACKET = 144;
+  int VAROR_AT = 145;
+  int VAROR_COLON = 146;
+  int QUOT_LABEL = 151;
+  int QUOT_CONSTANT = 152;
+  int QOUT_WS = 153;
+  int QUOT_QUOTE = 154;
+  int LIST_LABEL = 159;
+  int START_LIST = 160;
+  int LIST_COMMA = 161;
+  int END_LIST = 162;
 
   int DEFAULT = 0;
   int URI = 1;
@@ -296,6 +296,7 @@ public interface bonXaiTreeConstants {
     "\" \"",
     "\"\\r\"",
     "\"\\n\"",
+    "\"\\t\"",
     "<VAROR_LABEL>",
     "<VAROR_CONSTANT>",
     "\"|\"",
@@ -308,6 +309,7 @@ public interface bonXaiTreeConstants {
     "\" \"",
     "\"\\r\"",
     "\"\\n\"",
+    "\"\\t\"",
     "<QUOT_LABEL>",
     "<QUOT_CONSTANT>",
     "\" \"",
