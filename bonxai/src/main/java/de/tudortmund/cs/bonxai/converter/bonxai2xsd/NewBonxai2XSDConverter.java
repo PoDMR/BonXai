@@ -23,6 +23,7 @@ import de.tudortmund.cs.bonxai.xsd.AttributeGroup;
 import de.tudortmund.cs.bonxai.xsd.Element;
 import de.tudortmund.cs.bonxai.xsd.Type;
 import de.tudortmund.cs.bonxai.xsd.XSDSchema;
+import de.tudortmund.cs.bonxai.xsd.XSDSchema.Qualification;
 
 public class NewBonxai2XSDConverter {
 	public static Map<String,XSDSchema> convert(Bonxai bonxai) {
@@ -35,11 +36,14 @@ public class NewBonxai2XSDConverter {
 		SymbolTableFoundation<de.tudortmund.cs.bonxai.xsd.Group> groupSymbolTable = xsdSchema.getGroupSymbolTable();
 
 		Declaration declaration = bonxai.getDeclaration();
+		// TODO: handle unqualified
 		NamespaceList namespaceList = declaration.getNamespaceList();
 		String targetNamespace = namespaceList.getDefaultNamespace().getUri();
 		GrammarList grammarList = bonxai.getGrammarList();
 		
 		xsdSchema.setNamespaceList(namespaceList);
+		
+		xsdSchema.setElementFormDefault(Qualification.qualified);
 		
 		//convert groups
 		//TODO

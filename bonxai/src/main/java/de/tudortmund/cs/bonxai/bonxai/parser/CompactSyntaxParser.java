@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 
 import de.tudortmund.cs.bonxai.bonxai.Bonxai;
 
@@ -20,6 +21,18 @@ public class CompactSyntaxParser implements BonxaiParser {
 		Visitor visitor = new Visitor(new Bonxai());
 		bonxai = visitor.visit(simpleNode, null);
 		return bonxai;
+	}
+	
+	@Override
+	public Bonxai parse(String bonxaiString) throws ParseException {
+		Bonxai bonxai;
+		BufferedReader rdr = new BufferedReader(new StringReader(bonxaiString));
+		bonXaiTree parser = new bonXaiTree(rdr);
+		
+		SimpleNode simpleNode = parser.bonXai();
+		Visitor visitor = new Visitor(new Bonxai());
+		bonxai = visitor.visit(simpleNode, null);
+		return bonxai;		
 	}
 
 }

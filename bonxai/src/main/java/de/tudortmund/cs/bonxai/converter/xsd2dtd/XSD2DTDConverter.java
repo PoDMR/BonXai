@@ -144,9 +144,11 @@ public class XSD2DTDConverter {
     		 * Handle all external schemas and link the references to the correct 
     		 * declarations
     		 */
-    		StatusLogger.logInfo("XSD2DTD", "Start loading of external schemas");
-    		ForeignSchemaLoader foreignSchemaLoader = new ForeignSchemaLoader(this.xmlSchema, false);
-    		foreignSchemaLoader.findForeignSchemas();
+    		if (this.xmlSchema.getSchemaLocation()!=null) {
+    			StatusLogger.logInfo("XSD2DTD", "Start loading of external schemas");
+    			ForeignSchemaLoader foreignSchemaLoader = new ForeignSchemaLoader(this.xmlSchema, false);
+    			foreignSchemaLoader.findForeignSchemas();
+    		}
 
     		/**
     		 * 1. a

@@ -1066,8 +1066,6 @@ void All() #All : {}
 {
 
 NamedType() [ <QUESTION_MARK> ] ( <ANDLITERAL> NamedType() [ <QUESTION_MARK> ])+
-
-
 	{
 		jjtThis.setNodeType("All");
 	}

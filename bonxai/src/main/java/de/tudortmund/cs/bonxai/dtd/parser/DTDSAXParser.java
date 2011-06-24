@@ -5,7 +5,10 @@ import de.tudortmund.cs.bonxai.dtd.common.DTDNameChecker;
 import de.tudortmund.cs.bonxai.dtd.common.exceptions.IllegalNAMEStringException;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.InputStream;
+
 import org.xml.sax.XMLReader;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -26,6 +29,12 @@ public class DTDSAXParser extends DefaultHandler {
     private DTDEventHandler myDTDHandler;
     private String tempFileName = null;
 
+    public DocumentTypeDefinition parseXML(String xmlURI)
+    throws Exception {
+    	InputSource inputSource = new InputSource(new FileInputStream(new File(xmlURI)));
+    	return parseXML(inputSource, xmlURI);
+    }
+    
     /**
      * Method parse. This is the "main" method of this class for parsing the DTD 
      * content out of a XML file given by its path.
@@ -33,7 +42,7 @@ public class DTDSAXParser extends DefaultHandler {
      * @return DocumentTypeDefinition
      * @throws Exception
      */
-    public DocumentTypeDefinition parseXML(String xmlURI)
+    public DocumentTypeDefinition parseXML(InputSource inputSource, String xmlURI)
             throws Exception {
 
         // Initialize the xmlReader
@@ -89,9 +98,7 @@ public class DTDSAXParser extends DefaultHandler {
 
         // It is necessary to use InputSources to define a SystemId. This
         // handles the setting of the correct workingdirectory!
-        InputSource inputSource =
-                new InputSource(new java.io.FileInputStream(
-                new java.io.File(xmlURI)));
+        // 
         inputSource.setSystemId(xmlURI);
 
         /***********************************************************************
@@ -103,6 +110,8 @@ public class DTDSAXParser extends DefaultHandler {
         // return the generated DTD Structure
         return myDTDHandler.getDTD();
     }
+    
+    
 
     /**
      * Method parse. This is the "main" method of this class for parsing the DTD

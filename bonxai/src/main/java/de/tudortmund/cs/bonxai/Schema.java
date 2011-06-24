@@ -41,13 +41,19 @@ import de.tudortmund.cs.bonxai.converter.xsd2xsd.XSDUnreachableTypeRemover;
 import de.tudortmund.cs.bonxai.converter.relaxng2xsd.RelaxNG2XSDConverter;
 import de.tudortmund.cs.bonxai.converter.ConversionFailedException;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringBufferInputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+
+import org.xml.sax.InputSource;
 
 /**
  * Wrapper class for schemas of different types:
@@ -140,7 +146,55 @@ public class Schema {
 		this.schemaCollection = schemaCollection;
 		type = SchemaType.COLLECTION;
 	}
+	
+	public void parseSchema(String schemaString, SchemaType schemaType) throws ParseException, ConversionFailedException {
+		switch(schemaType) {
+		case BONXAI: parseBonxai(schemaString); break;
+		case XSD: parseXSD(schemaString); break;
+		case RELAXNG: parseRelaxNG(schemaString); break;
+		case DTD: parseDTD(schemaString);
+		}
+	}
 		
+	private void parseRelaxNG(String schemaString) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void parseDTD(String schemaString) throws ConversionFailedException {
+		clear();
+		
+		try {
+			DTDSAXParser dtdParser = new DTDSAXParser();
+			DocumentTypeDefinition schema = dtdParser.parseXML(new InputSource(schemaString), "");
+			type = SchemaType.DTD;
+			dtdSchema = schema;
+		} catch (Exception e) {
+			throw new ConversionFailedException(e);
+		}	
+	}
+
+	private void parseXSD(String schemaString) throws ConversionFailedException {
+		clear();
+		
+		try {
+			XSDParser xsdParser = new XSDParser(false, false);
+			XSDSchema schema = xsdParser.parse(new StringBufferInputStream(schemaString));
+			type = SchemaType.XSD;
+			xsdSchema = schema;
+		} catch (Exception e) {
+			throw new ConversionFailedException(e);
+		}
+		
+	}
+
+	private void parseBonxai(String schemaString) throws ParseException {
+		clear();
+		
+		this.bonxaiSchema = new CompactSyntaxParser().parse(schemaString);
+		this.type = SchemaType.BONXAI;
+	}
+
 	/**
 	 * Load a schema from disk. The schema type is determined by filename extension.
 	 * @param file
@@ -241,6 +295,7 @@ public class Schema {
             type = SchemaType.BONXAI;
             bonxaiSchema = schema;
             comment = file.getPath();
+            this.filename = file.getPath();
 		} catch (Exception e) {
 			throw new ConversionFailedException(e);
 		}
@@ -260,6 +315,7 @@ public class Schema {
 	 * @throws IOException
 	 */
 	public void writeSchema(File file) throws IOException {
+		this.filename = file.getPath();
 		fillSchemaString();
 		FileOutputStream fos = new FileOutputStream(file);
         fos.write(schemaString.getBytes(), 0, schemaString.length());
@@ -275,6 +331,8 @@ public class Schema {
 	public Schema convert(SchemaType targetType) throws ConversionFailedException {
 		Schema newSchema = new Schema();
 		SchemaType sourceType = type;
+       	String newfilename = this.getFilename(targetType);
+       	newSchema.filename = newfilename;
 		
 		switch (sourceType) {
 		case DTD:
@@ -283,6 +341,7 @@ public class Schema {
 			case XSD: 
                	DTD2XSDConverter dtd2XSDConverter = new DTD2XSDConverter(dtdSchema);
                	XSDSchema xmlSchema = dtd2XSDConverter.convert(true);
+               	xmlSchema.setSchemaLocation(newfilename);
                	newSchema = new Schema(xmlSchema);
                	newSchema.comment = "Converted from \"" + this.comment +"\"";
 				break;
@@ -321,6 +380,7 @@ public class Schema {
 			case XSD: 
 				RelaxNG2XSDConverter rng2xsdConverter = new RelaxNG2XSDConverter(relaxNGSchema);
 				XSDSchema xmlSchema = rng2xsdConverter.convert();
+				xmlSchema.setSchemaLocation(newfilename);
 				newSchema = new Schema(xmlSchema);
 				newSchema.comment = "Converted from \"" + this.comment +"\"";
 				break;
@@ -336,7 +396,9 @@ public class Schema {
 				Map<String,XSDSchema> resultSchemas = NewBonxai2XSDConverter.convert(bonxaiSchema);
 				
 				if (resultSchemas.size() == 1) {
-					newSchema = new Schema(resultSchemas.values().iterator().next());
+					XSDSchema xmlSchema = resultSchemas.values().iterator().next();
+					xmlSchema.setSchemaLocation(newfilename);
+					newSchema = new Schema(xmlSchema);
 					newSchema.comment = "Converted from \"" + this.comment + "\"";
 				} else {
 					Collection<Schema> newSchemas = new LinkedList<Schema>();
@@ -358,6 +420,24 @@ public class Schema {
 		return newSchema;
 	}
 	
+	private String getFilename(SchemaType type) {
+		String filename = this.getFilename();
+		String extension = "";
+		switch(type) {
+		case XSD: extension=".xsd"; break;
+		case BONXAI: extension=".bonxai"; break;
+		case RELAXNG: extension=".rng"; break;
+		case DTD: extension=".dtd"; break;
+		}
+		int index = filename.lastIndexOf('.');
+		filename = ((index==-1)?filename:filename.substring(0, index)) + extension;
+		return filename;
+	}
+
+	private String getFilename() {
+		return this.filename;
+	}
+
 	/**
 	 * Computes a schema for the union of a set of schemas. Only works for XSD schemas.
 	 * @param schemas

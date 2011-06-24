@@ -7,4 +7,5 @@ import de.tudortmund.cs.bonxai.bonxai.Bonxai;
 
 public interface BonxaiParser {
 	public Bonxai parse(File file) throws IOException, ParseException;
+	public Bonxai parse(String bonxaiString) throws ParseException;
 }

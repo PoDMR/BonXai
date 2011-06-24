@@ -137,8 +137,10 @@ public class XSD2RelaxNGConverter extends ConverterBase {
     		 * declarations
     		 */
     		StatusLogger.logInfo("XSD2RNG", "Start loading of external schemas");
-    		ForeignSchemaLoader foreignSchemaLoader = new ForeignSchemaLoader(this.xmlSchema, false);
-    		foreignSchemaLoader.findForeignSchemas();
+    		if (this.xmlSchema.getSchemaLocation()!=null) {
+    			ForeignSchemaLoader foreignSchemaLoader = new ForeignSchemaLoader(this.xmlSchema, false);
+    			foreignSchemaLoader.findForeignSchemas();
+    		}
 
     		/**
     		 * 1.
