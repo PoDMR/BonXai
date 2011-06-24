@@ -2,5 +2,35 @@
 
 <!DOCTYPE ACTIONS SYSTEM "actions.dtd">
 
-<ACTIONS/>
-
+<ACTIONS>
+	<ACTION NAME="action.xsd">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBufferAction(view, "xsd");
+		</CODE>
+	</ACTION>
+    <ACTION NAME="action.dtd">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBufferAction(view, "dtd");
+		</CODE>
+	</ACTION>
+    <ACTION NAME="action.rng">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBufferAction(view, "rng");
+		</CODE>
+	</ACTION>
+    <ACTION NAME="action.bonxai">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBufferAction(view, "bonxai");
+		</CODE>
+	</ACTION>
+    <ACTION NAME="action.removeEmptyTypes">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBufferAction(view, "removeEmptyTypes");
+		</CODE>
+	</ACTION>
+    <ACTION NAME="action.removeUnreachableTypes">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin").handleBufferAction(view, "removeUnreachableTypes");
+		</CODE>
+	</ACTION>
+</ACTIONS>

@@ -2,25 +2,37 @@ package eu.fox7.bonxai.bonxaiplugin;
 
 import de.tudortmund.cs.bonxai.Schema;
 import de.tudortmund.cs.bonxai.SchemaType;
+import de.tudortmund.cs.bonxai.bonxai.parser.ParseException;
 import de.tudortmund.cs.bonxai.converter.ConversionFailedException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+
+import org.gjt.sp.jedit.Buffer;
 import org.gjt.sp.jedit.EditPlugin;
 import org.gjt.sp.jedit.View;
 import org.gjt.sp.jedit.jEdit;
+import org.gjt.sp.jedit.buffer.JEditBuffer;
 import org.gjt.sp.jedit.io.VFSFile;
+import org.gjt.sp.jedit.textarea.JEditTextArea;
 
 public class BonxaiPluginPlugin extends EditPlugin {
+	protected static Map<JEditTextArea, SchemaType> schemaTypeMap = new HashMap<JEditTextArea, SchemaType>();
+	
 	public void handleBrowserAction(View view, VFSFile[] files, String protocol) {
 		if (files == null) {
 			view.getToolkit().beep();
 			return;
 		}
-
+		
 		String firstFileName = null;
 		List<Schema> schemas = new LinkedList<Schema>();
 		for (VFSFile entry : files) {
@@ -38,6 +50,47 @@ public class BonxaiPluginPlugin extends EditPlugin {
 		}
 
 		String workingDir = new File(firstFileName).getPath();
+		doAction(view, schemas, protocol, workingDir);
+	}
+	
+	public void handleBufferAction(View view, String protocol) {
+		Buffer buffer = view.getBuffer();
+		JEditTextArea textArea = view.getTextArea();
+
+		SchemaType schemaType = getSchemaType(buffer);
+		Schema schema = new Schema();
+		try {
+			schema.parseSchema(textArea.getText(), schemaType);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		
+		doAction(view, schema, protocol, buffer.getDirectory());
+	}
+	
+	private SchemaType getSchemaType(Buffer buffer) {
+		SchemaType schemaType = SchemaType.NONE;
+		String type = buffer.getStringProperty("eu.fox7.schematype");
+		if (type != null)
+		  schemaType = SchemaType.valueOf(type);
+		else {
+			String path = buffer.getPath();
+			String extension = path.substring(path.indexOf('.')+1);
+			if (extension.equals("bonxai")) schemaType=SchemaType.BONXAI; else
+			if (extension.equals("xsd")) schemaType=SchemaType.XSD; else
+			if (extension.equals("rng")) schemaType=SchemaType.RELAXNG; else
+			if (extension.equals("xml") || extension.equals("dtd")) schemaType=SchemaType.DTD;
+		}
+		return schemaType;
+	}
+
+	private void doAction(View view, Schema schema, String protocol, String workingDir) {
+		List<Schema> schemas = new LinkedList<Schema>();
+		schemas.add(schema);
+		doAction(view, schemas, protocol, workingDir);
+	}
+
+	private void doAction(View view, List<Schema> schemas, String protocol, String workingDir) {
 		Schema result = null;
 		try {
 			if ("union".equals(protocol)) {
@@ -78,20 +131,28 @@ public class BonxaiPluginPlugin extends EditPlugin {
 		}
 
 		// TODO: Replace quick output filename hacks
-		String outputFileName = firstFileName + "." + protocol;
+		// String outputFileName = firstFileName + "." + protocol;
 		Collection<Schema> collection = result.getCollection();
+		
 		if (collection != null) {
-			int i = 0;
+			// int i = 0;
 			for (Schema schema : collection) {
-				write(schema, outputFileName + "." + i++);
+				// write(schema, outputFileName + "." + i++);
+				openSchema(view, schema);
 			}
-			jEdit.openFile(view, outputFileName + "." + "0");
-		} else if(result != null) {
-			write(result, outputFileName);
-			jEdit.openFile(view, outputFileName);
+			// jEdit.openFile(view, outputFileName + "." + "0");
 		} else {
-			JOptionPane.showMessageDialog(view, "Operation failed");
+			// write(result, outputFileName);
+			// jEdit.openFile(view, outputFileName);
+			openSchema(view,result);
 		}
+	}
+
+	protected static void openSchema(View view, Schema schema) {
+		JEditBuffer buffer = jEdit.newFile(view);
+		// USE AWT-Thread?
+		buffer.insert(0, schema.getSchemaString());
+		buffer.setStringProperty("eu.fox7.schematype", schema.getType().name());
 	}
 
 	// TODO: Do batch conversion? For now, only convert first selection.

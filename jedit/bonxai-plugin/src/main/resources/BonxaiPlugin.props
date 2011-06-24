@@ -20,6 +20,7 @@ plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.jars=bonxai.jar
 
 # Action labels
 plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.browser-menu=action.union action.intersect action.difference - action.xsd action.dtd action.rng action.bonxai - action.removeUnreachableTypes action.removeEmptyTypes
+plugin.eu.fox7.bonxai.bonxaiplugin.BonxaiPluginPlugin.menu=action.xsd action.dtd action.rng action.bonxai - action.removeUnreachableTypes action.removeEmptyTypes
 action.union.label=Union
 action.intersect.label=Intersect
 action.difference.label=Difference
