@@ -658,7 +658,8 @@ public class Schema {
 			case NONE: schemaString = "There is no schema."; break;
 			case DTD:
 				DTDWriter dtdWriter = new DTDWriter(dtdSchema);
-				schemaString = dtdWriter.getXMLWithFullDTDDeclarationString();
+				schemaString = dtdWriter.getExternalSubsetString();
+				// schemaString = dtdWriter.getXMLWithFullDTDDeclarationString();
 				break;
 			case XSD:
 				XSDWriter xsdWriter = new XSDWriter(xsdSchema);

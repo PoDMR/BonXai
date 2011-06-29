@@ -131,7 +131,6 @@ public class RelaxNG2XSDConverter extends ConverterBase {
         this.resultLocationFilename = "result.xsd";
         this.resultAbsolutePath = getPathFromLocation(this.resultLocationFilename);
         this.xmlSchema.setSchemaLocation(this.resultLocationFilename);
-        this.xmlSchema.setElementFormDefault(Qualification.qualified);
 
     }
 
@@ -275,6 +274,8 @@ public class RelaxNG2XSDConverter extends ConverterBase {
     			}
     			// return generated XML XSDSchema
     			StatusLogger.logLastInfoMessage("RNG2XSD", "Conversion completed: XML XSDSchema document structure created");
+
+    			this.xmlSchema.setElementFormDefault(Qualification.qualified);
 
     			return this.xmlSchema;
     	} catch (Exception e) {
