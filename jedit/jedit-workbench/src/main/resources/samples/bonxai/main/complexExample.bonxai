@@ -1,0 +1,19 @@
+default namespace http://example.org/namespace
+namespace xml = http://www.w3.org/XML/1998/namespace
+
+grammar {
+    roots {a}
+    //a = { ( element b )+ , element c , ( element d )* }
+    //b = {
+            (
+                ( element a )* ,
+                ( element e { type string } )+
+            )+ |
+            element f { type string }
+    }
+    //c = { ( element b )* }
+    (//c/b|//d/c) = { element g { type string } , element h { type string } }
+    //d = { element c }
+}
+
+

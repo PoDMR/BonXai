@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="A" xmlns:A="A">
+
+    <xs:element name="a" type="A:myType"/>
+    
+    <xs:complexType name="myType">
+        <xs:choice>
+            <xs:element name="a" form="qualified" type="A:myOtherType"/>
+        </xs:choice>
+    </xs:complexType>
+    
+   
+    <xs:complexType name="myOtherType" mixed="true">
+        <xs:choice>
+            <xs:element name="b" type="A:myExtendedSimpleType"/>
+            <xs:element name="d" type="xs:string"/>
+        </xs:choice>
+    </xs:complexType>
+    
+    <xs:complexType name="myExtendedSimpleType">
+        <xs:simpleContent>
+            <xs:extension base="xs:short">
+                <xs:anyAttribute processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+</xs:schema>

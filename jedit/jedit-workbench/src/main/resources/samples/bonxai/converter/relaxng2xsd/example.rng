@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://example.org/namespace">
+  <start>
+    <ref name="a"/>
+  </start>
+  <define name="a">
+    <element name="a">
+      <ref name="A"/>
+    </element>
+  </define>
+  <define name="A">
+    <group>
+      <oneOrMore>
+        <element name="b">
+          <ref name="X"/>
+        </element>
+      </oneOrMore>
+      <element name="c">
+        <ref name="C"/>
+      </element>
+      <zeroOrMore>
+        <element name="d">
+          <ref name="D"/>
+        </element>
+      </zeroOrMore>
+    </group>
+  </define>
+  <define name="X">
+    <choice>
+      <oneOrMore>
+        <group>
+          <zeroOrMore>
+            <element name="a">
+              <ref name="A"/>
+            </element>
+          </zeroOrMore>
+          <oneOrMore>
+            <element name="e">
+              <empty/>
+            </element>
+          </oneOrMore>
+        </group>
+      </oneOrMore>
+      <element name="f">
+        <empty/>
+      </element>
+    </choice>
+  </define>
+  <define name="C">
+    <zeroOrMore>
+      <element name="b">
+        <ref name="Y"/>
+      </element>
+    </zeroOrMore>
+  </define>
+  <define name="Y">
+    <group>
+      <element name="g">
+        <empty/>
+      </element>
+      <element name="h">
+        <empty/>
+      </element>
+    </group>
+  </define>
+  <define name="D">
+    <element name="c">
+      <ref name="Y"/>
+    </element>
+  </define>
+</grammar>
+
