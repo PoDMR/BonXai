@@ -11,6 +11,7 @@ import de.tudortmund.cs.bonxai.tools.StatusLogger;
 import de.tudortmund.cs.bonxai.xsd.ForeignSchema;
 import de.tudortmund.cs.bonxai.xsd.ImportedSchema;
 import de.tudortmund.cs.bonxai.xsd.XSDSchema;
+import de.tudortmund.cs.bonxai.xsd.XSDSchema.Qualification;
 import de.tudortmund.cs.bonxai.xsd.tools.EDCFixer;
 import de.tudortmund.cs.bonxai.xsd.tools.InterleaveHandler;
 import de.tudortmund.cs.bonxai.xsd.tools.UPAHandler;
@@ -130,6 +131,7 @@ public class RelaxNG2XSDConverter extends ConverterBase {
         this.resultLocationFilename = "result.xsd";
         this.resultAbsolutePath = getPathFromLocation(this.resultLocationFilename);
         this.xmlSchema.setSchemaLocation(this.resultLocationFilename);
+        this.xmlSchema.setElementFormDefault(Qualification.qualified);
 
     }
 
