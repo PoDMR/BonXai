@@ -15,6 +15,7 @@ public abstract class AbstractUPAFixer implements UPAFixer {
 	protected TypeAutomaton typeAutomaton;
 	protected Type2ContentAutomatonConverter typeConverter;
 	protected ContentAutomaton2TypeConverter caConverter;
+	protected XSDSchema xsdSchema;
 	
 	@Override
 	public void fixUPA(TypeAutomaton typeAutomaton) {
@@ -29,6 +30,7 @@ public abstract class AbstractUPAFixer implements UPAFixer {
 				ContentAutomaton contentAutomaton = typeConverter.convertType(type);
 				Regex regex = this.fixUPA(contentAutomaton);
 				Type newType = this.caConverter.convertRegex(regex, typename, state);
+				this.xsdSchema.getTypeSymbolTable().updateOrCreateReference(typename, newType);
 				this.typeAutomaton.updateType(typename, newType);
 			}
 		}
@@ -38,6 +40,7 @@ public abstract class AbstractUPAFixer implements UPAFixer {
 	public void fixUPA(XSDSchema xsdSchema) {
 		XSDTypeAutomatonFactory taFactory = new XSDTypeAutomatonFactory();
 		TypeAutomaton typeAutomaton = taFactory.createTypeAutomaton(xsdSchema);
+		this.xsdSchema = xsdSchema;
 		this.fixUPA(typeAutomaton);
 	}
 }
