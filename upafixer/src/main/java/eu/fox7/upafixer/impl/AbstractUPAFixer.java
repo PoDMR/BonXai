@@ -1,5 +1,6 @@
 package eu.fox7.upafixer.impl;
 
+import de.tudortmund.cs.bonxai.common.SymbolTableRef;
 import de.tudortmund.cs.bonxai.typeautomaton.TypeAutomaton;
 import de.tudortmund.cs.bonxai.typeautomaton.factories.XSDTypeAutomatonFactory;
 import de.tudortmund.cs.bonxai.xsd.Type;
@@ -15,7 +16,6 @@ public abstract class AbstractUPAFixer implements UPAFixer {
 	protected TypeAutomaton typeAutomaton;
 	protected Type2ContentAutomatonConverter typeConverter;
 	protected ContentAutomaton2TypeConverter caConverter;
-	protected XSDSchema xsdSchema;
 	
 	@Override
 	public void fixUPA(TypeAutomaton typeAutomaton) {
@@ -30,7 +30,6 @@ public abstract class AbstractUPAFixer implements UPAFixer {
 				ContentAutomaton contentAutomaton = typeConverter.convertType(type);
 				Regex regex = this.fixUPA(contentAutomaton);
 				Type newType = this.caConverter.convertRegex(regex, typename, state);
-				this.xsdSchema.getTypeSymbolTable().updateOrCreateReference(typename, newType);
 				this.typeAutomaton.updateType(typename, newType);
 			}
 		}
@@ -40,7 +39,15 @@ public abstract class AbstractUPAFixer implements UPAFixer {
 	public void fixUPA(XSDSchema xsdSchema) {
 		XSDTypeAutomatonFactory taFactory = new XSDTypeAutomatonFactory();
 		TypeAutomaton typeAutomaton = taFactory.createTypeAutomaton(xsdSchema);
-		this.xsdSchema = xsdSchema;
 		this.fixUPA(typeAutomaton);
+		for (State state: typeAutomaton.getStates()) {
+			if (! typeAutomaton.isInitialState(state)) {
+				SymbolTableRef<Type> typeRef = typeAutomaton.getType(state);
+				Type type = typeRef.getReference();
+				String typename = typeRef.getKey();
+				
+				xsdSchema.getTypeSymbolTable().updateOrCreateReference(typename, type);
+			}
+		}
 	}
 }
