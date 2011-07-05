@@ -1,0 +1,15 @@
+default namespace http://example.org/namespace
+namespace xs = http://www.w3.org/2001/XMLSchema
+
+grammar {
+  roots {cars}
+  
+  /cars = { element usedCars, element newCars }
+  
+  (//usedCars | //newCars) = { (element BMW)* }
+  
+  //usedCars/BMW = { element year { type xs:integer } }
+  
+  //newCars/BMW = { element warranty { type xs:integer } }
+}
+

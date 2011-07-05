@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:xs="http://example.org/namespace" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://example.org/namespace">
+  <define name="root-type">
+    <group>
+      <element name="a">
+        <element name="b">
+          <empty/>
+        </element>
+      </element>
+      <element name="a">
+        <element name="c">
+          <empty/>
+        </element>
+      </element>
+    </group>
+  </define>
+  <start>
+    <ref name="r"/>
+  </start>
+  <define name="r">
+    <element name="r">
+      <ref name="root-type"/>
+    </element>
+  </define>
+</grammar>
+
