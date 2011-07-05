@@ -1,9 +1,14 @@
 package eu.fox7.jedit.fltplugin;
 
+import gjb.flt.regex.infer.rwr.NoOpportunityFoundException;
 import java.io.Writer;
 import gjb.util.xml.ConfigurationException;
 import gjb.flt.regex.infer.crx.LargeSampleCRXInferrer;
 import gjb.flt.regex.infer.crx.SmallSampleCRXInferrer;
+import gjb.flt.regex.infer.rwr.RewriteEngine;
+import gjb.flt.regex.infer.rwr.Rewriter;
+import gjb.flt.regex.infer.rwr.impl.Automaton;
+import gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
 import gjb.flt.schema.infer.ixsd.XsdLearner;
 import gjb.flt.treeautomata.impl.ContextAutomaton;
 import gjb.util.sampling.SampleException;
@@ -22,6 +27,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.gjt.sp.jedit.EditPlugin;
 import org.gjt.sp.jedit.View;
@@ -160,7 +167,7 @@ class FltFacility {
 	 */
 	
 	private static String chareInfer(String[][] samples) {
-		LargeSampleCRXInferrer deriver = new LargeSampleCRXInferrer();
+		SmallSampleCRXInferrer deriver = new SmallSampleCRXInferrer();
 		for (String[] example : samples) {
 			deriver.addExample(example);
 		}
@@ -169,12 +176,16 @@ class FltFacility {
 	}
 	
 	private static String soreInfer(String[][] samples) {
-		SmallSampleCRXInferrer deriver = new SmallSampleCRXInferrer();
-		for (String[] example : samples) {
-			deriver.addExample(example);
+		GraphAutomatonFactory factory = new GraphAutomatonFactory();
+		Automaton automaton;
+		automaton = factory.create(samples);
+		RewriteEngine rewriter = new Rewriter();
+		try {
+			return rewriter.rewriteToRegex(automaton);
+		} catch (NoOpportunityFoundException e) {
+			fail(e);
+			return null;
 		}
-		String reg = deriver.infer();
-		return reg;
 	}
 	
 	private static String xsdInferString(String inputXMLFileName) {
