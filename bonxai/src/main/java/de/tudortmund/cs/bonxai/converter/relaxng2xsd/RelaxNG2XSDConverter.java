@@ -14,7 +14,6 @@ import de.tudortmund.cs.bonxai.xsd.XSDSchema;
 import de.tudortmund.cs.bonxai.xsd.XSDSchema.Qualification;
 import de.tudortmund.cs.bonxai.xsd.tools.EDCFixer;
 import de.tudortmund.cs.bonxai.xsd.tools.InterleaveHandler;
-import de.tudortmund.cs.bonxai.xsd.tools.UPAHandler;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -258,20 +257,9 @@ public class RelaxNG2XSDConverter extends ConverterBase {
 
     			/**
     			 * UPA FIX:
-    			 * --------
-    			 * The unique particle attribution constraint of XML XSDSchema has to be
-    			 * fixed after the conversion from RELAX NG to XML XSDSchema.
-    			 * This has to be managed in a dedicated software component after this
-    			 * converter returned the generated XML XSDSchema object structure.
-    			 *
-    			 * The implementation of an UPA Repair tool is not part of the current
-    			 * diplomathesis. Only a class stub is written to provide an
-    			 * interface to link this tool in the future.
+    			 * TODO
     			 */
-    			if (!RelaxNG2XSDConverter.UPA_FIX_OFF) {
-    				UPAHandler upaHandler = new UPAHandler(this.xmlSchema);
-    				this.xmlSchema = upaHandler.repairUPA();
-    			}
+  
     			// return generated XML XSDSchema
     			StatusLogger.logLastInfoMessage("RNG2XSD", "Conversion completed: XML XSDSchema document structure created");
 
