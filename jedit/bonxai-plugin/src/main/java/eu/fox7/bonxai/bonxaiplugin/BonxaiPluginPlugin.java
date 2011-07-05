@@ -153,6 +153,8 @@ public class BonxaiPluginPlugin extends EditPlugin {
 		// USE AWT-Thread?
 		buffer.insert(0, schema.getSchemaString());
 		buffer.setStringProperty("eu.fox7.schematype", schema.getType().name());
+	    view.getTextArea().goToBufferStart(false);
+	    view.getBuffer().setMode();
 	}
 
 	// TODO: Do batch conversion? For now, only convert first selection.
