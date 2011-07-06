@@ -177,14 +177,13 @@ class FltFacility {
 	
 	private static String soreInfer(String[][] samples) {
 		GraphAutomatonFactory factory = new GraphAutomatonFactory();
-		Automaton automaton;
-		automaton = factory.create(samples);
+		Automaton automaton = factory.create(samples);
 		RewriteEngine rewriter = new Rewriter();
 		try {
 			return rewriter.rewriteToRegex(automaton);
 		} catch (NoOpportunityFoundException e) {
 			fail(e);
-			return null;
+			return "No opportunity found: " + Arrays.deepToString(samples);
 		}
 	}
 	
