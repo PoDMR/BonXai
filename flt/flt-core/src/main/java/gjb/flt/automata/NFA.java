@@ -71,6 +71,8 @@ public interface NFA{
 	public boolean isInitialState(String stateValue);
 
 	public Set<String> getFinalStateValues();
+	
+	public Set<String> getEpsilonClosure(String stateValue);
 
 	public boolean hasFinalStates();
 

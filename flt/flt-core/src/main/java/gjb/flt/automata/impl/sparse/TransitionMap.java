@@ -6,6 +6,7 @@ import gjb.flt.automata.NotDFAException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.List;
@@ -23,7 +24,7 @@ public class TransitionMap {
     protected boolean intendedDFA = false;
 
 	public TransitionMap() {
-		this.rules = new HashMap<Symbol,Map<State,Set<State>>>();
+		this.rules = new LinkedHashMap<Symbol,Map<State,Set<State>>>();
 	}
 
 	public TransitionMap(TransitionMap map, Map<State,State> stateRemap)
@@ -262,7 +263,7 @@ public class TransitionMap {
 		Map<State,Set<State>> stateMap = rules.get(symbol);
 		if (stateMap != null) {
 			Set<State> toStateSet = stateMap.get(fromState);
-			if (toStateSet != null) {
+			if (toStateSet != null && toStateSet.size()>0) {
 				if (toStateSet.size() == 1) {
 					return toStateSet.iterator().next();
 				} else {

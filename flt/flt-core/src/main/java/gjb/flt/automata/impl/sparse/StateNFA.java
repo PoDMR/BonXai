@@ -64,6 +64,8 @@ public interface StateNFA extends NFA {
     public boolean hasNextStates(Symbol symbol, State fromState);
 
     public Set<State> getNextStates(State fromState);
+    
+    public Set<State> getEpsilonClosure(State state);
 
 	public Set<State> getPreviousStates(Symbol symbol, State toState);
 

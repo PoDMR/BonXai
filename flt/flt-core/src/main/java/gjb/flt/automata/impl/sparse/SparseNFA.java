@@ -12,7 +12,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -481,15 +483,49 @@ public class SparseNFA implements DFA, StateDFA, ModifiableStateNFA, ModifiableS
     }
 
     public Set<State> getNextStates(Symbol symbol, State fromState) {
-    	return Collections.unmodifiableSet(getTransitionMap().nextStates(symbol,
-    	                                                                 fromState));
+    	Set<State> epsilonClosure = this.getEpsilonClosure(fromState);
+    	if (epsilonClosure.size() == 1) {
+    		return Collections.unmodifiableSet(getTransitionMap().nextStates(symbol, fromState));
+    	} else {
+    		Set<State> nextStates = new HashSet<State>();
+    		for (State state: epsilonClosure)
+    			nextStates.addAll(getTransitionMap().nextStates(symbol, state));
+    		return nextStates;
+    	}
     }
 
     public State getNextState(Symbol symbol, State fromState)
             throws NotDFAException {
     	return getTransitionMap().nextState(symbol, fromState);
     }
-
+    
+	@Override
+	public Set<State> getEpsilonClosure(State state) {
+		Set<State> epsilonClosure = new HashSet<State>();
+		Queue<State> queue = new LinkedList<State>();
+		queue.add(state);
+		while (! queue.isEmpty()) {
+			State currentState = queue.poll();
+			if (! epsilonClosure.contains(currentState)) {
+				epsilonClosure.add(currentState);
+				Set<Transition> transitions = this.getOutgoingTransitions(currentState);
+				for(Transition transition: transitions) 
+					if (transition.getSymbol() == Symbol.getEpsilon()) 
+						queue.add(transition.getToState());
+			}
+		}
+		return epsilonClosure;
+	}
+	
+	@Override
+	public Set<String> getEpsilonClosure(String stateValue) {
+		Set<String> eclosure = new HashSet<String>();
+		Set<State> epsilonClosure = this.getEpsilonClosure(this.getState(stateValue));
+		for (State state: epsilonClosure)
+			eclosure.add(this.getStateValue(state));
+		
+		return eclosure;
+	}
     @Override
     public boolean hasNextStates(Symbol symbol, State fromState) {
         return !getTransitionMap().nextStates(symbol, fromState).isEmpty();
