@@ -1,9 +1,9 @@
 package eu.fox7.upafixer;
 
-import de.tudortmund.cs.bonxai.typeautomaton.TypeAutomaton;
-import de.tudortmund.cs.bonxai.xsd.XSDSchema;
-import gjb.flt.regex.Regex;
-import gjb.flt.treeautomata.impl.ContentAutomaton;
+import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
+import eu.fox7.bonxai.xsd.XSDSchema;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
 
 public interface UPAFixer {
 	public void fixUPA(XSDSchema xsdSchema);

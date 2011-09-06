@@ -1,16 +1,16 @@
 package eu.fox7.upafixer.impl;
 
-import de.tudortmund.cs.bonxai.common.SymbolTableRef;
-import de.tudortmund.cs.bonxai.typeautomaton.TypeAutomaton;
-import de.tudortmund.cs.bonxai.typeautomaton.factories.XSDTypeAutomatonFactory;
-import de.tudortmund.cs.bonxai.xsd.Type;
-import de.tudortmund.cs.bonxai.xsd.XSDSchema;
+import eu.fox7.bonxai.common.SymbolTableRef;
+import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
+import eu.fox7.bonxai.typeautomaton.factories.XSDTypeAutomatonFactory;
+import eu.fox7.bonxai.xsd.Type;
+import eu.fox7.bonxai.xsd.XSDSchema;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
 import eu.fox7.treeautomata.converter.ContentAutomaton2TypeConverter;
 import eu.fox7.treeautomata.converter.Type2ContentAutomatonConverter;
 import eu.fox7.upafixer.UPAFixer;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.regex.Regex;
-import gjb.flt.treeautomata.impl.ContentAutomaton;
 
 public abstract class AbstractUPAFixer implements UPAFixer {
 	protected TypeAutomaton typeAutomaton;

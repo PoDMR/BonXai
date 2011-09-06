@@ -1,14 +1,14 @@
 package eu.fox7.upafixer.impl;
 
-import gjb.flt.automata.FeatureNotSupportedException;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.infer.rwr.NoOpportunityFoundException;
-import gjb.flt.treeautomata.impl.ContentAutomaton;
-import gjb.util.automata.disambiguate.DeterministicExpression;
-import gjb.util.automata.disambiguate.DeterministicExpressionBKW;
-import gjb.util.tree.SExpressionParseException;
-import gjb.util.tree.Tree;
+import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.infer.rwr.NoOpportunityFoundException;
+import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
+import eu.fox7.util.automata.disambiguate.DeterministicExpression;
+import eu.fox7.util.automata.disambiguate.DeterministicExpressionBKW;
+import eu.fox7.util.tree.SExpressionParseException;
+import eu.fox7.util.tree.Tree;
 
 public class BKWUPAFixer extends AbstractUPAFixer {
 
