@@ -1,27 +1,27 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.util.RandomSelector;
-import gjb.flt.automata.FeatureNotSupportedException;
-import gjb.flt.regex.Glushkov;
-import gjb.flt.automata.converters.NFAMinimizer;
-import gjb.flt.automata.factories.sparse.Determinizer;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.measures.LanguageSize;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.generators.LanguageGenerator;
-import gjb.flt.regex.infer.rwr.impl.Automaton;
-import gjb.flt.regex.infer.rwr.BacktrackingRepairer;
-import gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
-import gjb.flt.regex.infer.rwr.measures.LanguageSizeMeasure;
-import gjb.flt.regex.infer.rwr.NoOpportunityFoundException;
-import gjb.flt.regex.infer.rwr.RewriteEngine;
-import gjb.flt.regex.infer.rwr.Rewriter;
-import gjb.util.tree.SExpressionParseException;
-import gjb.util.tree.Tree;
+import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.automata.converters.NFAMinimizer;
+import eu.fox7.flt.automata.factories.sparse.Determinizer;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.measures.LanguageSize;
+import eu.fox7.flt.regex.Glushkov;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.generators.LanguageGenerator;
+import eu.fox7.flt.regex.infer.rwr.BacktrackingRepairer;
+import eu.fox7.flt.regex.infer.rwr.NoOpportunityFoundException;
+import eu.fox7.flt.regex.infer.rwr.RewriteEngine;
+import eu.fox7.flt.regex.infer.rwr.Rewriter;
+import eu.fox7.flt.regex.infer.rwr.impl.Automaton;
+import eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
+import eu.fox7.flt.regex.infer.rwr.measures.LanguageSizeMeasure;
+import eu.fox7.util.RandomSelector;
+import eu.fox7.util.tree.SExpressionParseException;
+import eu.fox7.util.tree.Tree;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -83,7 +83,7 @@ DeterministicApproximator {
 	}
 
 	/* (non-Javadoc)
-	 * @see gjb.util.automata.disambiguate.DeterministicApproximator#deterministicApproximation(java.lang.String)
+	 * @see eu.fox7.util.automata.disambiguate.DeterministicApproximator#deterministicApproximation(java.lang.String)
 	 */
 	public Set<Tree> deterministicApproximation(String regexStr)
 	throws NoOpportunityFoundException, SExpressionParseException,
@@ -135,7 +135,7 @@ DeterministicApproximator {
 	 * @return
 	 */
 	protected LinkedList<SparseNFA> orderDFAs(SparseNFA originalDFA, Set<SparseNFA> DFAs, LanguageSize measure) {
-		gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
+		eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
 		SortedSet<TreePair> sortedSet = new TreeSet<TreePair>();
 
 		SparseNFA minOriginalDFA = new SparseNFA(originalDFA);

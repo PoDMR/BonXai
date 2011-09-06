@@ -1,10 +1,10 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.NFA;
-import gjb.util.tree.Tree;
+import eu.fox7.flt.automata.NFA;
+import eu.fox7.util.tree.Tree;
 
 /**
  * @author woutergelade

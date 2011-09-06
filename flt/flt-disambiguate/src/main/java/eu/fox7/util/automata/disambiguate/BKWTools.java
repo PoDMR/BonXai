@@ -1,21 +1,21 @@
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.FeatureNotSupportedException;
-import gjb.flt.automata.NoSuchStateException;
-import gjb.flt.regex.Glushkov;
-import gjb.flt.automata.converters.NFAMinimizer;
-import gjb.flt.automata.converters.Simplifier;
-import gjb.flt.automata.factories.sparse.Determinizer;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.NoSuchTransitionException;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.Transition;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.generators.LanguageGenerator;
-import gjb.util.tree.Node;
-import gjb.util.tree.SExpressionParseException;
-import gjb.util.tree.Tree;
+import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.automata.NoSuchStateException;
+import eu.fox7.flt.automata.NoSuchTransitionException;
+import eu.fox7.flt.automata.converters.NFAMinimizer;
+import eu.fox7.flt.automata.converters.Simplifier;
+import eu.fox7.flt.automata.factories.sparse.Determinizer;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.Transition;
+import eu.fox7.flt.regex.Glushkov;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.generators.LanguageGenerator;
+import eu.fox7.util.tree.Node;
+import eu.fox7.util.tree.SExpressionParseException;
+import eu.fox7.util.tree.Tree;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,7 +50,7 @@ public class BKWTools {
 				if(nextStates.isEmpty())
 					canContract = false;
 				else{
-					String toState = gjb.util.Collections.extractSingleton(nextStates);
+					String toState = eu.fox7.util.Collections.extractSingleton(nextStates);
 					reachableStates.add(toState);
 				}
 				if(canContract)
@@ -104,7 +104,7 @@ public class BKWTools {
 			Set<String> connectedStates = new HashSet<String>();
 			for(String symbol : nfa.getAlphabet().keySet())
 				connectedStates.addAll(nfa.getNextStateValues(symbol, state));
-			if(!gjb.util.Collections.intersect(states, connectedStates).equals(connectedStates))
+			if(!eu.fox7.util.Collections.intersect(states, connectedStates).equals(connectedStates))
 				newFinalStates.add(state);
 		}
 
@@ -112,11 +112,11 @@ public class BKWTools {
 			return null;
 		}
 		else{
-			String finalState = gjb.util.Collections.getOne(newFinalStates);
+			String finalState = eu.fox7.util.Collections.getOne(newFinalStates);
 			for(String symbol : nfa.getAlphabet().keySet()){
 				Set<String> nextStates = nfa.getNextStateValues(symbol, finalState);
 				if(nextStates.size() == 1){
-					String toState = gjb.util.Collections.extractSingleton(nextStates);
+					String toState = eu.fox7.util.Collections.extractSingleton(nextStates);
 					if(!states.contains(toState)){
 						mapOutgoingConnections.put(symbol, toState);
 					}
@@ -143,7 +143,7 @@ public class BKWTools {
 				Set<String> connectedStates = new HashSet<String>();
 				for(String symbol : nfa.getAlphabet().keySet())
 					connectedStates.addAll(nfa.getNextStateValues(symbol, state));
-				if(!gjb.util.Collections.intersect(scc, connectedStates).equals(connectedStates))
+				if(!eu.fox7.util.Collections.intersect(scc, connectedStates).equals(connectedStates))
 					newFinalStates.add(state);
 			}
 
@@ -161,7 +161,7 @@ public class BKWTools {
 			if(getInitialState != null)
 				orbit.setInitialState(getInitialState);
 			else
-				orbit.setInitialState(gjb.util.Collections.getOne(scc));
+				orbit.setInitialState(eu.fox7.util.Collections.getOne(scc));
 
 			for(String finalState : newFinalStates)
 				orbit.addFinalState(finalState);
@@ -179,7 +179,7 @@ public class BKWTools {
 			Set<String> connectedStates = new HashSet<String>();
 			for(String symbol : nfa.getAlphabet().keySet())
 				connectedStates.addAll(nfa.getNextStateValues(symbol, state));
-			if(!gjb.util.Collections.intersect(states, connectedStates).equals(connectedStates))
+			if(!eu.fox7.util.Collections.intersect(states, connectedStates).equals(connectedStates))
 				newFinalStates.add(state);
 		}
 
@@ -209,7 +209,7 @@ public class BKWTools {
 		if(expressions.size() == 0)
 			return null;
 		else if(expressions.size() == 1)
-			return gjb.util.Collections.extractSingleton(expressions);
+			return eu.fox7.util.Collections.extractSingleton(expressions);
 		else{
 			boolean first = true;
 			Iterator<Node> expressionIterator = expressions.iterator();
@@ -331,12 +331,12 @@ public class BKWTools {
 			Set<String> gates = computeGates(nfa, scc);
 
 			if (!gates.isEmpty()) {
-				String firstState = gjb.util.Collections.getOne(gates);
+				String firstState = eu.fox7.util.Collections.getOne(gates);
 				boolean areFinal = nfa.isFinalState(firstState);
 				Map<String, String> toStates = new HashMap<String, String>();
 				for (String symbol : getAlphabet) {
 					if (!nfa.getNextStateValues(symbol, firstState).isEmpty()){
-						String toState = gjb.util.Collections
+						String toState = eu.fox7.util.Collections
 						.extractSingleton(nfa.getNextStateValues(symbol,
 								firstState));
 						if(!scc.contains(toState))
@@ -354,7 +354,7 @@ public class BKWTools {
 								&& toStates.containsKey(symbol))
 							return false;
 						else if (!nextStates.isEmpty()){
-							String toState = gjb.util.Collections.extractSingleton(nextStates);
+							String toState = eu.fox7.util.Collections.extractSingleton(nextStates);
 							if(scc.contains(toState) && toStates.containsKey(symbol))
 								return false;
 							else if(!scc.contains(toState) && (!toStates.containsKey(symbol) || !toStates.get(symbol).equals(toState)))
@@ -388,7 +388,7 @@ public class BKWTools {
 		for(String state : getFinalStates){
 			for(String symbol : consistent){
 				try {
-					nfa.removeTransition(nfa.getAlphabet().get(symbol), nfa.getState(state), nfa.getState(gjb.util.Collections.extractSingleton(nfa.getNextStateValues(symbol, state))));
+					nfa.removeTransition(nfa.getAlphabet().get(symbol), nfa.getState(state), nfa.getState(eu.fox7.util.Collections.extractSingleton(nfa.getNextStateValues(symbol, state))));
 				} catch (NoSuchTransitionException e) {
 					e.printStackTrace();
 				}
@@ -415,14 +415,14 @@ public class BKWTools {
 		for(State s : getFinalStatesState)
 			getFinalStates.add(stateMap.getKey(s));
 
-		finalState = gjb.util.Collections.getOne(getFinalStates);
+		finalState = eu.fox7.util.Collections.getOne(getFinalStates);
 		if(!getFinalStates.isEmpty()){
 			for(String symbol : getAlphabet){
 				mistakeFound = false;
 				if(!nfa.getNextStateValues(symbol,finalState).isEmpty()){
-					targetState = gjb.util.Collections.extractSingleton(nfa.getNextStateValues(symbol,finalState));
+					targetState = eu.fox7.util.Collections.extractSingleton(nfa.getNextStateValues(symbol,finalState));
 					for(String state : getFinalStates){
-						mistakeFound = mistakeFound || nfa.getNextStateValues(symbol,state).isEmpty() || !targetState.equals(gjb.util.Collections.extractSingleton(nfa.getNextStateValues(symbol,state)));
+						mistakeFound = mistakeFound || nfa.getNextStateValues(symbol,state).isEmpty() || !targetState.equals(eu.fox7.util.Collections.extractSingleton(nfa.getNextStateValues(symbol,state)));
 					}
 					if(!mistakeFound)
 						sConsistent.add(symbol);
@@ -439,7 +439,7 @@ public class BKWTools {
 		Set<HashSet<String>> scc = new HashSet<HashSet<String>>();
 		Set<String> done  = new HashSet<String>();
 		Set<String> states = reachableStates(nfa, nfa.getStateValue(nfa.getInitialState()));
-		gjb.util.Collections.intersect(states, backwardReachableStates(nfa,finalStateValues(nfa)));
+		eu.fox7.util.Collections.intersect(states, backwardReachableStates(nfa,finalStateValues(nfa)));
 
 		for(String state : states){
 			if(!done.contains(state)){
@@ -460,7 +460,7 @@ public class BKWTools {
 	}
 
 	/*public static void throwNoOpportunityFoundException(String message,NFA nfa) throws NoOpportunityFoundException{
-		gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
+		eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
 		throw new NoOpportunityFoundException(message,factory.create(nfa));
 	}*/
 
@@ -510,7 +510,7 @@ public class BKWTools {
 		toDo.addAll(states);
 
 		while (!toDo.isEmpty()) {
-			String currentState = gjb.util.Collections.takeOne(toDo);
+			String currentState = eu.fox7.util.Collections.takeOne(toDo);
 			reach.add(currentState);
 			Set<String> connected = stateValues(nfa,nfa.getPreviousStates(nfa.getState(currentState)));
 			connected.removeAll(reach);
@@ -534,7 +534,7 @@ public class BKWTools {
 	/*	private static void cleanNFA(NFA nfa) {
 		String initial = nfa.getStateValue(nfa.getInitialState());
 		Set<String> states = reachableStates(nfa,initial);
-		states = gjb.util.Collections.intersect(states, backwardReachableStates(nfa,stateValues(nfa,nfa.getFinalStates())));
+		states = eu.fox7.util.Collections.intersect(states, backwardReachableStates(nfa,stateValues(nfa,nfa.getFinalStates())));
 		Set<String> oldStates = new HashSet<String>(nfa.getStateValues());
 
 		for(String state : oldStates){
@@ -554,7 +554,7 @@ public class BKWTools {
 			return true;
 
 		while (!toDo.isEmpty() && !reach) {
-			String state = gjb.util.Collections.takeOne(toDo);
+			String state = eu.fox7.util.Collections.takeOne(toDo);
 			done.add(state);
 			Set<String> connected = connectedStates(nfa,state);
 			if(connected.contains(toState))

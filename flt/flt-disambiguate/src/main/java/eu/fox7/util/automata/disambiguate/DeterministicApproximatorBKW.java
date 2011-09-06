@@ -1,18 +1,18 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.FeatureNotSupportedException;
-import gjb.flt.regex.Glushkov;
-import gjb.flt.automata.converters.NFAMinimizer;
-import gjb.flt.automata.factories.sparse.Determinizer;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.generators.LanguageGenerator;
-import gjb.flt.regex.infer.rwr.NoOpportunityFoundException;
-import gjb.util.tree.SExpressionParseException;
-import gjb.util.tree.Tree;
+import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.automata.converters.NFAMinimizer;
+import eu.fox7.flt.automata.factories.sparse.Determinizer;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.regex.Glushkov;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.generators.LanguageGenerator;
+import eu.fox7.flt.regex.infer.rwr.NoOpportunityFoundException;
+import eu.fox7.util.tree.SExpressionParseException;
+import eu.fox7.util.tree.Tree;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,10 +1,10 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +16,7 @@ import java.util.Set;
 public class LinearIsomorphism implements Isomorphism {
 
 	/* (non-Javadoc)
-	 * @see gjb.util.automata.disambiguate.Isomorphism#removeIsomporhicDFAs(java.util.Set)
+	 * @see eu.fox7.util.automata.disambiguate.Isomorphism#removeIsomporhicDFAs(java.util.Set)
 	 */
 	public Set<SparseNFA> removeIsomporhicDFAs(Set<SparseNFA> DFAs) throws NotDFAException {
 		Set<SparseNFA> result = new HashSet<SparseNFA>();
@@ -31,7 +31,7 @@ public class LinearIsomorphism implements Isomorphism {
 	}
 
 	/* (non-Javadoc)
-	 * @see gjb.util.automata.disambiguate.Isomorphism#isContainedIn(gjb.flt.automata.impl.sparse.SparseNFA, java.util.Set)
+	 * @see eu.fox7.util.automata.disambiguate.Isomorphism#isContainedIn(eu.fox7.flt.automata.impl.sparse.SparseNFA, java.util.Set)
 	 */
 	public boolean isContainedIn(SparseNFA dfa, Set<SparseNFA> DFAs) throws NotDFAException {
 		System.out.println("isContainedIn: Not implemented");
@@ -39,7 +39,7 @@ public class LinearIsomorphism implements Isomorphism {
 	}
 
 	/* (non-Javadoc)
-	 * @see gjb.util.automata.disambiguate.Isomorphism#isContainedIn(java.util.Set, java.util.Set)
+	 * @see eu.fox7.util.automata.disambiguate.Isomorphism#isContainedIn(java.util.Set, java.util.Set)
 	 */
 	public boolean isContainedIn(Set<SparseNFA> subset, Set<SparseNFA> superset)
 			throws NotDFAException {

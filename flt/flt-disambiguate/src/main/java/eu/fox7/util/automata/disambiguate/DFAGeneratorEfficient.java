@@ -1,13 +1,13 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.Transition;
-import gjb.util.Pair;
-import gjb.util.RandomSelector;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.Transition;
+import eu.fox7.util.Pair;
+import eu.fox7.util.RandomSelector;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -99,7 +99,7 @@ public class DFAGeneratorEfficient extends DFAGeneratorNaive {
 	}
 
 	/* (non-Javadoc)
-	 * @see gjb.util.automata.disambiguate.DFAGenerator#generateDFAs(gjb.flt.automata.impl.sparse.SparseNFA, int)
+	 * @see eu.fox7.util.automata.disambiguate.DFAGenerator#generateDFAs(eu.fox7.flt.automata.impl.sparse.SparseNFA, int)
 	 */
 	public Set<SparseNFA> generateDFAs(SparseNFA minimalDFA, int size) {
 		totalGenerated = 0;
@@ -490,7 +490,7 @@ public class DFAGeneratorEfficient extends DFAGeneratorNaive {
 			if(nextStates.isEmpty())
 				return generateOneDFARecursively(minimalDFA,newDFA,toDo,getAlphabet,newAlphabetNr,stateCount,stateIndex,remainingOpportunities,done);
 			else {
-				String toState = minimalDFA.getStateValue(gjb.util.Collections.getOne(nextStates));
+				String toState = minimalDFA.getStateValue(eu.fox7.util.Collections.getOne(nextStates));
 
 				boolean toOldStateAllowed = toOldStateAllowed(stateCount,
 						stateIndex, remainingOpportunities, fromState, toState);
@@ -518,7 +518,7 @@ public class DFAGeneratorEfficient extends DFAGeneratorNaive {
 	private void updateOpportunitiesOnQueue(Map<String,Integer> opportunitesOnQueue, String state, SparseNFA minimalDFA){
 		for(String symbol : minimalDFA.getAlphabet().keySet()){
 			if(!minimalDFA.getNextStates(minimalDFA.getAlphabet().get(symbol), minimalDFA.getState(state)).isEmpty()){
-				String toState = minimalDFA.getStateValue(gjb.util.Collections.getOne(minimalDFA.getNextStates(minimalDFA.getState(state))));
+				String toState = minimalDFA.getStateValue(eu.fox7.util.Collections.getOne(minimalDFA.getNextStates(minimalDFA.getState(state))));
 				for(String reachableState : reachableStatesFrom(toState, minimalDFA))
 					opportunitesOnQueue.put(reachableState, new Integer(opportunitesOnQueue.get(reachableState).intValue() + 1));
 			}
@@ -677,7 +677,7 @@ public class DFAGeneratorEfficient extends DFAGeneratorNaive {
 
 			/*if(getAlphabetNr == 0 && !opportunitiesOnQueue.equals(computeOpportunitiesOnQueue(toDo, minimalDFA))){
 				Set<State> nextStates = minimalDFA.getNextStates(minimalDFA.getAlphabet().get(getAlphabet[getAlphabetNr]),minimalDFA.getState(fromState));
-				String toState = minimalDFA.getStateValue(gjb.util.Collections.getOne(nextStates));
+				String toState = minimalDFA.getStateValue(eu.fox7.util.Collections.getOne(nextStates));
 				System.out.println("Handling" + fromStateNew + " to " + toState);
 			System.out.println(stringRep);
 			System.out.println(toDo);
@@ -699,7 +699,7 @@ public class DFAGeneratorEfficient extends DFAGeneratorNaive {
 			if(nextStates.isEmpty())
 				return generateDFAsRecursively(minimalDFA,newDFA,stringRep,toDo,getAlphabet,newAlphabetNr,stateCount,stateIndex,remainingOpportunities,numberDone);
 			else {
-				String toState = minimalDFA.getStateValue(gjb.util.Collections.getOne(nextStates));
+				String toState = minimalDFA.getStateValue(eu.fox7.util.Collections.getOne(nextStates));
 				boolean toNewStateAllowed = stateIndex.get(toState).intValue() < stateCount.get(toState).intValue();
 				boolean toOldStateAllowed = toOldStateAllowed(stateCount,
 						stateIndex, remainingOpportunities, fromState, toState, minimalDFA);
@@ -776,7 +776,7 @@ public class DFAGeneratorEfficient extends DFAGeneratorNaive {
 			if(nextStates.isEmpty())
 				return generateOneDFARecursively(minimalDFA,newDFA,stringRep,toDo,getAlphabet,newAlphabetNr,stateCount,stateIndex,remainingOpportunities,numberDone,greedy);
 			else {
-				String toState = minimalDFA.getStateValue(gjb.util.Collections.getOne(nextStates));
+				String toState = minimalDFA.getStateValue(eu.fox7.util.Collections.getOne(nextStates));
 				boolean toNewStateAllowed = stateIndex.get(toState).intValue() < stateCount.get(toState).intValue();
 				boolean toOldStateAllowed = toOldStateAllowed(stateCount,
 						stateIndex, remainingOpportunities, fromState, toState, minimalDFA);
@@ -855,7 +855,7 @@ public class DFAGeneratorEfficient extends DFAGeneratorNaive {
 			if(nextStates.isEmpty())
 				return generateOneDFARecursively(minimalDFA,newDFA,toDo,getAlphabet,newAlphabetNr,stateCount,stateIndex,remainingOpportunities,done);
 			else {
-				String toState = minimalDFA.getStateValue(gjb.util.Collections.getOne(nextStates));
+				String toState = minimalDFA.getStateValue(eu.fox7.util.Collections.getOne(nextStates));
 				boolean toNewStateAllowed = stateIndex.get(toState).intValue() < stateCount.get(toState).intValue();
 
 				//toOldStateAllowed(stateCount,

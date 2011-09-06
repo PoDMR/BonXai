@@ -1,7 +1,7 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
 /**
  * @author woutergelade

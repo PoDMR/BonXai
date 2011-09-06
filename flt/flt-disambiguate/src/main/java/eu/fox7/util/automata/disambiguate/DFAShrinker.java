@@ -1,15 +1,15 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.NoSuchStateException;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.Transition;
-import gjb.flt.regex.infer.rwr.impl.Automaton;
-import gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
-import gjb.flt.regex.infer.rwr.measures.LanguageSizeMeasure;
+import eu.fox7.flt.automata.NoSuchStateException;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.Transition;
+import eu.fox7.flt.regex.infer.rwr.impl.Automaton;
+import eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
+import eu.fox7.flt.regex.infer.rwr.measures.LanguageSizeMeasure;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,8 +48,8 @@ public class DFAShrinker {
 		if(result.isEmpty())
 			return null;
 
-		SparseNFA first = gjb.util.Collections.takeOne(result);
-		gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
+		SparseNFA first = eu.fox7.util.Collections.takeOne(result);
+		eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
 		double languageSize = 1 - l.compute(factory.create(first));
 		SparseNFA optimal = first;
 		for(SparseNFA nfa : result){
@@ -84,7 +84,7 @@ public class DFAShrinker {
 		for(String state : dfa.getStateValues()){
 			Set<Transition> incomingTransitions = dfa.getIncomingTransitions(dfa.getState(state));
 			if(!incomingTransitions.isEmpty()){
-				String symbol = gjb.util.Collections.getOne(incomingTransitions).getSymbol().toString();
+				String symbol = eu.fox7.util.Collections.getOne(incomingTransitions).getSymbol().toString();
 				incomingSymbol.put(state, symbol);
 			}
 		}
@@ -130,7 +130,7 @@ public class DFAShrinker {
 
 		while(!merge.isEmpty()){
 			Set<String> currentSet = new HashSet<String>();
-			for(String state : gjb.util.Collections.takeOne(merge)){
+			for(String state : eu.fox7.util.Collections.takeOne(merge)){
 				while(newName.containsKey(state))
 					state = newName.get(state);
 				currentSet.add(state);
@@ -219,7 +219,7 @@ public class DFAShrinker {
 		for(String state : set){
 			Set<Transition> incomingTransitions = dfa.getIncomingTransitions(dfa.getState(state));
 			if(!incomingTransitions.isEmpty()){
-				Transition transition = gjb.util.Collections.getOne(incomingTransitions);
+				Transition transition = eu.fox7.util.Collections.getOne(incomingTransitions);
 				return transition.getSymbol().toString() + "_" + label;
 			}
 		}
@@ -248,7 +248,7 @@ public class DFAShrinker {
 
 		while(!merge.isEmpty()){
 			Set<String> currentSet = new HashSet<String>();
-			for(String state : gjb.util.Collections.takeOne(merge)){
+			for(String state : eu.fox7.util.Collections.takeOne(merge)){
 				while(newName.containsKey(state))
 					state = newName.get(state);
 				currentSet.add(state);

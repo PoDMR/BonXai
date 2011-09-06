@@ -1,18 +1,19 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import gjb.flt.regex.infer.rwr.impl.Automaton;
-import gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
-import gjb.flt.regex.infer.rwr.impl.InvalidLabelException;
-import gjb.flt.regex.infer.rwr.impl.Opportunity;
-import gjb.flt.regex.infer.rwr.impl.OpportunityFilter;
+import eu.fox7.flt.regex.infer.rwr.impl.Automaton;
+import eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
+import eu.fox7.flt.regex.infer.rwr.impl.InvalidLabelException;
+import eu.fox7.flt.regex.infer.rwr.impl.Opportunity;
+import eu.fox7.flt.regex.infer.rwr.impl.OpportunityFilter;
+
 
 
 
@@ -22,7 +23,7 @@ import gjb.flt.regex.infer.rwr.impl.OpportunityFilter;
  */
 public class DeterminismFilter implements OpportunityFilter{
 	public boolean isPassed(Opportunity opportunity, Automaton automaton) {
-		gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
+		eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
 		Automaton newAutomaton = factory.expand(automaton);
 		return isDeterministic(newAutomaton);
 	}

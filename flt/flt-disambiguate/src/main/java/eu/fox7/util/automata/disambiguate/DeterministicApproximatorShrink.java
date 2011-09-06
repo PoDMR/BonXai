@@ -1,27 +1,27 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.FeatureNotSupportedException;
-import gjb.flt.regex.Glushkov;
-import gjb.flt.automata.converters.NFAMinimizer;
-import gjb.flt.automata.factories.sparse.Determinizer;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.NotDFAException;
-import gjb.flt.automata.measures.LanguageSize;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.generators.LanguageGenerator;
-import gjb.flt.regex.infer.rwr.BacktrackingRepairer;
-import gjb.flt.regex.infer.rwr.FixedOrderRepairer;
-import gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
-import gjb.flt.regex.infer.rwr.measures.LanguageSizeMeasure;
-import gjb.flt.regex.infer.rwr.NoOpportunityFoundException;
-import gjb.flt.regex.infer.rwr.RewriteEngine;
-import gjb.util.tree.Node;
-import gjb.util.tree.SExpressionParseException;
-import gjb.util.tree.Tree;
+import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.converters.NFAMinimizer;
+import eu.fox7.flt.automata.factories.sparse.Determinizer;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.measures.LanguageSize;
+import eu.fox7.flt.regex.Glushkov;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.generators.LanguageGenerator;
+import eu.fox7.flt.regex.infer.rwr.BacktrackingRepairer;
+import eu.fox7.flt.regex.infer.rwr.FixedOrderRepairer;
+import eu.fox7.flt.regex.infer.rwr.NoOpportunityFoundException;
+import eu.fox7.flt.regex.infer.rwr.RewriteEngine;
+import eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
+import eu.fox7.flt.regex.infer.rwr.measures.LanguageSizeMeasure;
+import eu.fox7.util.tree.Node;
+import eu.fox7.util.tree.SExpressionParseException;
+import eu.fox7.util.tree.Tree;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -80,7 +80,7 @@ DeterministicApproximator {
 	}*/
 
 	/* (non-Javadoc)
-	 * @see gjb.util.automata.disambiguate.DeterministicApproximator#deterministicApproximation(gjb.flt.automata.impl.sparse.SparseNFA)
+	 * @see eu.fox7.util.automata.disambiguate.DeterministicApproximator#deterministicApproximation(eu.fox7.flt.automata.impl.sparse.SparseNFA)
 	 */
 	public Set<Tree> deterministicApproximation(String regexStr) throws SExpressionParseException, UnknownOperatorException, FeatureNotSupportedException {
 //		Glushkov g = new Glushkov();
@@ -193,7 +193,7 @@ DeterministicApproximator {
 	 */
 	protected Set<Tree> convertToExpressions(Set<SparseNFA> NFAs, Set<SparseNFA> deterministicLanguages, Set<SparseNFA> nonDeterministicLanguages, IsomorphismTree testedNFAs) {
 		Set<Tree> result = new HashSet<Tree>();
-		gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
+		eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
 
 		for(SparseNFA nfa : deterministicLanguages){
 			if(NFAs.contains(nfa)){

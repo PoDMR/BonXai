@@ -1,11 +1,11 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.NotDFAException;
-import gjb.util.tree.Node;
+import eu.fox7.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.util.tree.Node;
 
 import java.util.HashMap;
 import java.util.HashSet;

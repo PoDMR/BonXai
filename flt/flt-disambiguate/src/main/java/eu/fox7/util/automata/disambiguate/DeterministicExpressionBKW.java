@@ -1,7 +1,7 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,25 +12,26 @@ import java.util.Set;
 import org.apache.commons.collections15.BidiMap;
 import org.apache.commons.collections15.bidimap.DualHashBidiMap;
 
-import gjb.util.Pair;
-import gjb.util.RandomSelector;
-import gjb.flt.automata.FeatureNotSupportedException;
-import gjb.flt.regex.Glushkov;
-import gjb.flt.automata.converters.NFAMinimizer;
-import gjb.flt.automata.converters.Simplifier;
-import gjb.flt.automata.factories.sparse.Determinizer;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.Transition;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.generators.LanguageGenerator;
-import gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
-import gjb.flt.regex.infer.rwr.measures.LanguageSizeMeasure;
-import gjb.flt.regex.infer.rwr.NoOpportunityFoundException;
-import gjb.util.tree.Node;
-import gjb.util.tree.SExpressionParseException;
-import gjb.util.tree.Tree;
+import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.automata.converters.NFAMinimizer;
+import eu.fox7.flt.automata.converters.Simplifier;
+import eu.fox7.flt.automata.factories.sparse.Determinizer;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.Transition;
+import eu.fox7.flt.regex.Glushkov;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.generators.LanguageGenerator;
+import eu.fox7.flt.regex.infer.rwr.NoOpportunityFoundException;
+import eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
+import eu.fox7.flt.regex.infer.rwr.measures.LanguageSizeMeasure;
+import eu.fox7.util.Pair;
+import eu.fox7.util.RandomSelector;
+import eu.fox7.util.tree.Node;
+import eu.fox7.util.tree.SExpressionParseException;
+import eu.fox7.util.tree.Tree;
+
 
 /**
  * @author woutergelade
@@ -201,7 +202,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 	}
 
 	/* (non-Javadoc)
-	 * @see gjb.util.automata.disambiguate.DeterministicApproximator#deterministicApproximation(gjb.flt.automata.impl.sparse.SparseNFA)
+	 * @see eu.fox7.util.automata.disambiguate.DeterministicApproximator#deterministicApproximation(eu.fox7.flt.automata.impl.sparse.SparseNFA)
 	 */
 	public Set<Tree> deterministicApproximation(String regexStr) throws NoOpportunityFoundException, SExpressionParseException, UnknownOperatorException, FeatureNotSupportedException {
 //		Glushkov g = new Glushkov();
@@ -238,7 +239,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 		/*if(!isUnambiguous(dfa))
 			BKWTools.throwNoOpportunityFoundException("automaton is not convertable to expression", dfa);
 		else*/
-		return gjb.util.Collections.getOne(deterministicExpressionMinimal(dfa));
+		return eu.fox7.util.Collections.getOne(deterministicExpressionMinimal(dfa));
 	}
 
 	protected Set<Tree> deterministicExpressionMinimal(SparseNFA nfa) throws NoOpportunityFoundException{
@@ -355,7 +356,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 		}
 		else if(repairSelectCriterion == SELECT_LANG_SIZE){
 			Set<Pair<Tree,Double>> result = new HashSet<Pair<Tree,Double>>();
-			gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
+			eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
 
 			for(Tree tree : input){
 				try {				
@@ -394,7 +395,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 		if(result.size() < repairBranchingFactor)
 			result.add(newPair);
 		else{
-			Pair<String,Double> biggest = gjb.util.Collections.getOne(result);
+			Pair<String,Double> biggest = eu.fox7.util.Collections.getOne(result);
 			for(Pair<String,Double> pair : result){
 				if(pair.getSecond().doubleValue() > biggest.getSecond().doubleValue())
 					biggest = pair;
@@ -417,7 +418,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 		if(result.size() < repairSelectFactor)
 			result.add(newPair);
 		else{
-			Pair<Tree,Double> biggest = gjb.util.Collections.getOne(result);
+			Pair<Tree,Double> biggest = eu.fox7.util.Collections.getOne(result);
 			for(Pair<Tree,Double> pair : result){
 				if(pair.getSecond().doubleValue() > biggest.getSecond().doubleValue())
 					biggest = pair;
@@ -468,7 +469,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 			}
 			else if(repairBranchCriterion == BRANCH_LANG_SIZE){
 				Set<Pair<String,Double>> result = new HashSet<Pair<String,Double>>();
-				gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
+				eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
 
 				for(String symbol : candidates){
 					SparseNFA newNFA = new SparseNFA(nfa);
@@ -521,11 +522,11 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 	/*public static Tree constructSingleOrbitExpressionOptimized(
 			DeterministicExpressionBKWOptimized det,
 			NFA nfa, Set<String> sConsistent, boolean repair) {
-		String finalState = nfa.getStateValue(gjb.util.Collections.getOne(nfa.getFinalStates()));
+		String finalState = nfa.getStateValue(eu.fox7.util.Collections.getOne(nfa.getFinalStates()));
 		Map<String,HashSet<String>> fromStates = new HashMap<String,HashSet<String>>();
 		for(String symbol : sConsistent){
 			if(!nfa.getNextStateValues(symbol, finalState).isEmpty()){
-				String toState = gjb.util.Collections.extractSingleton(nfa.getNextStateValues(symbol, finalState));
+				String toState = eu.fox7.util.Collections.extractSingleton(nfa.getNextStateValues(symbol, finalState));
 				if(fromStates.containsKey(toState))
 					fromStates.get(toState).add(symbol);
 				else{
@@ -539,7 +540,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 		Map<String,String> toStatesNaive = new HashMap<String,String>();
 		for(String symbol : sConsistent){
 			if(!nfa.getNextStateValues(symbol, finalState).isEmpty())
-				toStatesNaive.put(symbol, gjb.util.Collections.extractSingleton(nfa.getNextStateValues(symbol, finalState)));
+				toStatesNaive.put(symbol, eu.fox7.util.Collections.extractSingleton(nfa.getNextStateValues(symbol, finalState)));
 		}
 
 		Set<String> inToStatesNaive = new HashSet<String>();
@@ -548,7 +549,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 
 		if(inToStatesNaive.size() != fromStates.keySet().size())
 			System.out.println("problem");
-		else if(gjb.util.Collections.intersect(inToStatesNaive, fromStates.keySet()).size() != inToStatesNaive.size())
+		else if(eu.fox7.util.Collections.intersect(inToStatesNaive, fromStates.keySet()).size() != inToStatesNaive.size())
 			System.out.println("problem");
 
 		NFA nfaWithoutS = new NFA(nfa);
@@ -575,18 +576,18 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 
 	protected Set<Tree> constructSingleOrbitExpressionOptimized(SparseNFA nfa,
 			Set<String> sConsistent) throws NoOpportunityFoundException {
-		String finalState = nfa.getStateValue(gjb.util.Collections.getOne(nfa.getFinalStates()));
+		String finalState = nfa.getStateValue(eu.fox7.util.Collections.getOne(nfa.getFinalStates()));
 		Map<String,String> toStates = new HashMap<String,String>();
 		for(String symbol : sConsistent){
 			if(!nfa.getNextStateValues(symbol, finalState).isEmpty())
-				toStates.put(symbol, gjb.util.Collections.extractSingleton(nfa.getNextStateValues(symbol, finalState)));
+				toStates.put(symbol, eu.fox7.util.Collections.extractSingleton(nfa.getNextStateValues(symbol, finalState)));
 		}
 
 
 		Map<String,HashSet<String>> fromStates = new HashMap<String,HashSet<String>>();
 		for(String symbol : sConsistent){
 			if(!nfa.getNextStateValues(symbol, finalState).isEmpty()){
-				String toState = gjb.util.Collections.extractSingleton(nfa.getNextStateValues(symbol, finalState));
+				String toState = eu.fox7.util.Collections.extractSingleton(nfa.getNextStateValues(symbol, finalState));
 				if(fromStates.containsKey(toState))
 					fromStates.get(toState).add(symbol);
 				else{
@@ -643,11 +644,11 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 
 	protected Set<Tree> constructSingleOrbitExpressionNotOptimized(SparseNFA nfa,
 			Set<String> sConsistent) throws NoOpportunityFoundException {
-		String finalState = nfa.getStateValue(gjb.util.Collections.getOne(nfa.getFinalStates()));
+		String finalState = nfa.getStateValue(eu.fox7.util.Collections.getOne(nfa.getFinalStates()));
 		Map<String,String> toStates = new HashMap<String,String>();
 		for(String symbol : sConsistent){
 			if(!nfa.getNextStateValues(symbol, finalState).isEmpty())
-				toStates.put(symbol, gjb.util.Collections.extractSingleton(nfa.getNextStateValues(symbol, finalState)));
+				toStates.put(symbol, eu.fox7.util.Collections.extractSingleton(nfa.getNextStateValues(symbol, finalState)));
 		}
 		SparseNFA nfaWithoutS = new SparseNFA(nfa);
 		BKWTools.removeFinalTransitions(nfaWithoutS,sConsistent);
@@ -792,7 +793,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 	protected Set<Tree> constructMultipleOrbitExpressionNotOptimized(SparseNFA nfa,
 			Set<HashSet<String>> sccs) throws NoOpportunityFoundException {
 		Set<String> initialScc = BKWTools.getScc(sccs,nfa.getStateValue(nfa.getInitialState()));
-		boolean epsilon = !gjb.util.Collections.intersect(initialScc, BKWTools.finalStateValues(nfa)).isEmpty();
+		boolean epsilon = !eu.fox7.util.Collections.intersect(initialScc, BKWTools.finalStateValues(nfa)).isEmpty();
 		//NFA initialAutomaton = new NFA(nfa);
 		//initialAutomaton = createOrbitAutomaton(initialAutomaton,initialScc, initialAutomaton.getStateValue(initialAutomaton.getInitialState()));
 		SparseNFA initialAutomaton =  BKWTools.createOrbitAutomaton(nfa,initialScc, nfa.getStateValue(nfa.getInitialState()));
@@ -856,7 +857,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 		if(repairBranchCriterion == NO_REPAIR || repairSelectFactor <= 1){
 			Map<String,Tree> expressions = new HashMap<String, Tree>();
 			for(String expression : expressionsMap.keySet())
-				expressions.put(expression, gjb.util.Collections.getOne(expressionsMap.get(expression)));
+				expressions.put(expression, eu.fox7.util.Collections.getOne(expressionsMap.get(expression)));
 			result.add(applyMorphism(tree,expressions));
 			return result;
 		} 
@@ -873,9 +874,9 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 		if(repairBranchCriterion == NO_REPAIR || repairSelectFactor <= 1){
 			Map<String, Tree> resultingExpressions = new HashMap<String, Tree>();
 			for(String string : resultingExpressionsSet.keySet())
-				resultingExpressions.put(string, gjb.util.Collections.getOne(resultingExpressionsSet.get(string)));
+				resultingExpressions.put(string, eu.fox7.util.Collections.getOne(resultingExpressionsSet.get(string)));
 			Set<Tree> result = new HashSet<Tree>();
-			result.add(composeMultipleOrbitExpressions(gjb.util.Collections.getOne(initialReSet),resultingExpressions,epsilon));
+			result.add(composeMultipleOrbitExpressions(eu.fox7.util.Collections.getOne(initialReSet),resultingExpressions,epsilon));
 			return result;
 		}
 		else{
@@ -893,10 +894,10 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 			Map<Tree,Set<Tree>> resultingExpressionsSet) {
 		if(repairBranchCriterion == NO_REPAIR || repairSelectFactor <= 1){
 			Set<Node> expressions = new HashSet<Node>();
-			Tree reWithoutS = gjb.util.Collections.getOne(reWithoutSSet);
+			Tree reWithoutS = eu.fox7.util.Collections.getOne(reWithoutSSet);
 
 			for(Tree tree : resultingExpressionsSet.keySet()){
-				Tree resultingExpression = gjb.util.Collections.getOne(resultingExpressionsSet.get(tree));
+				Tree resultingExpression = eu.fox7.util.Collections.getOne(resultingExpressionsSet.get(tree));
 				expressions.add(BKWTools.concatenate(tree, resultingExpression));
 			}
 			Tree result = composeSingleOrbitExpressionsOptimized(reWithoutS, expressions);
@@ -943,7 +944,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 			return result;
 		}
 		else{
-			Tree current = gjb.util.Collections.takeOne(toDo);
+			Tree current = eu.fox7.util.Collections.takeOne(toDo);
 			Set<Tree> currentSet = resultingExpressionsSet.get(current);
 			for(Tree resultingExpression : currentSet){
 				Set<Node> expressionsNew = new HashSet<Node>(expressions);
@@ -960,9 +961,9 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 		if(repairBranchCriterion == NO_REPAIR || repairSelectFactor <= 1){
 			Map<String, Tree> resultingExpressions = new HashMap<String, Tree>();
 			for(String string : resultingExpressionsSet.keySet())
-				resultingExpressions.put(string, gjb.util.Collections.getOne(resultingExpressionsSet.get(string)));
+				resultingExpressions.put(string, eu.fox7.util.Collections.getOne(resultingExpressionsSet.get(string)));
 			Set<Tree> result = new HashSet<Tree>();
-			result.add(composeSingleOrbitExpressions(gjb.util.Collections.getOne(reWithoutSSet),resultingExpressions));
+			result.add(composeSingleOrbitExpressions(eu.fox7.util.Collections.getOne(reWithoutSSet),resultingExpressions));
 			return result;
 		}
 		else {
@@ -1044,7 +1045,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 		else{
 
 			Set<Map<String,Tree>> result = new HashSet<Map<String,Tree>>();
-			String current = gjb.util.Collections.takeOne(toDo);
+			String current = eu.fox7.util.Collections.takeOne(toDo);
 			Set<Tree> currentSet = resultingExpressionsSet.get(current);
 
 			for(Tree tree : currentSet){
@@ -1074,7 +1075,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 		HashSet<String> mergeSet = new HashSet<String>();
 		for(String state : states){
 			if(nfa.getTransitionMap().hasTransitionWith(nfa.getAlphabet().get(symbol), nfa.getState(state)))
-				mergeSet.add(gjb.util.Collections.getOne(nfa.getNextStateValues(symbol, state)));
+				mergeSet.add(eu.fox7.util.Collections.getOne(nfa.getNextStateValues(symbol, state)));
 			nfa.addTransition(symbol, state, toStateNew);
 			if(globalNFA != null)
 				globalNFA.addTransition(symbol, state, toStateNew);
@@ -1093,7 +1094,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 		
 		for(String state : getFinalStates){
 			if(nfa.getTransitionMap().hasTransitionWith(nfa.getAlphabet().get(symbol), nfa.getState(state))){
-				toStateNew = gjb.util.Collections.getOne(nfa.getNextStateValues(symbol, state));
+				toStateNew = eu.fox7.util.Collections.getOne(nfa.getNextStateValues(symbol, state));
 				break;
 			}
 		}
@@ -1148,7 +1149,7 @@ public class DeterministicExpressionBKW implements DeterministicExpression, Dete
 				String toState = null;
 				for(String gate : gates){
 					if(!nfa.getNextStateValues(symbol, gate).isEmpty()){
-						String possibleToState = gjb.util.Collections.getOne(nfa.getNextStateValues(symbol, gate));
+						String possibleToState = eu.fox7.util.Collections.getOne(nfa.getNextStateValues(symbol, gate));
 						if(!scc.contains(possibleToState)){
 							toState = possibleToState;
 							break;

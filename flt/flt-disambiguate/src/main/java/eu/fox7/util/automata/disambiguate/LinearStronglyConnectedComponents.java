@@ -1,11 +1,11 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.NFA;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.NFA;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,7 +32,7 @@ public class LinearStronglyConnectedComponents implements StronglyConnectedCompo
 		Set<HashSet<String>> result = new HashSet<HashSet<String>>();
 		
 		while(!toDo.isEmpty()){
-			String currentState = gjb.util.Collections.getOne(toDo);
+			String currentState = eu.fox7.util.Collections.getOne(toDo);
 			Set<HashSet<String>> newResult = computeStronglyConnectedComponents(nfa,currentState);
 			for(HashSet<String> scc : newResult)
 				toDo.removeAll(scc);

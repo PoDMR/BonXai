@@ -1,18 +1,17 @@
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.converters.Simplifier;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.NoSuchStateException;
-import gjb.flt.automata.NotDFAException;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.Symbol;
-import gjb.flt.automata.impl.sparse.Transition;
-import gjb.util.RandomSelector;
+import eu.fox7.flt.automata.NoSuchStateException;
+import eu.fox7.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.converters.Simplifier;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.flt.automata.impl.sparse.Transition;
+import eu.fox7.flt.automata.impl.sparse.TransitionMap;
+import eu.fox7.flt.regex.Glushkov;
+import eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
+import eu.fox7.util.RandomSelector;
 
-import gjb.flt.regex.Glushkov;
-import gjb.flt.automata.NotDFAException;
-import gjb.flt.automata.impl.sparse.TransitionMap;
-import gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -222,7 +221,7 @@ public class DFAExpander {
 		for(String state : dfa.getStateValues()){
 			Set<Transition> incomingTransitions = dfa.getIncomingTransitions(dfa.getState(state));
 			if(incomingTransitions.size() > 1){
-				String symbol = gjb.util.Collections.getOne(incomingTransitions).getSymbol().toString();
+				String symbol = eu.fox7.util.Collections.getOne(incomingTransitions).getSymbol().toString();
 				candidates.put(state, symbol);
 			}
 		}
@@ -254,7 +253,7 @@ public class DFAExpander {
 		for(String state : dfa.getStateValues()){
 			Set<Transition> incomingTransitions = dfa.getIncomingTransitions(dfa.getState(state));
 			if(incomingTransitions.size() > 1){
-				String symbol = gjb.util.Collections.getOne(incomingTransitions).getSymbol().toString();
+				String symbol = eu.fox7.util.Collections.getOne(incomingTransitions).getSymbol().toString();
 				result.addAll(expandDFAAll(dfa,state,symbol,removeIsomorphic,tree));
 			}
 			if(removeIsomorphic && tree.satisfied())
@@ -269,7 +268,7 @@ public class DFAExpander {
 		for(String state : dfa.getStateValues()){
 			Set<Transition> incomingTransitions = dfa.getIncomingTransitions(dfa.getState(state));
 			if(!incomingTransitions.isEmpty()){
-				Symbol symbol = ((Transition)gjb.util.Collections.getOne(incomingTransitions)).getSymbol();
+				Symbol symbol = ((Transition)eu.fox7.util.Collections.getOne(incomingTransitions)).getSymbol();
 				for(Transition transition : incomingTransitions){
 					if(!symbol.equals(transition.getSymbol()))
 						return false;				
@@ -510,7 +509,7 @@ public class DFAExpander {
 			return result;
 		}
 		else{
-			String current = gjb.util.Collections.takeOne(preSet);
+			String current = eu.fox7.util.Collections.takeOne(preSet);
 			Set<HashSet<String>> subSets = powerSetInduction(preSet,subsetSize);
 			Set<HashSet<String>> result = new HashSet<HashSet<String>>();
 			result.addAll(subSets);

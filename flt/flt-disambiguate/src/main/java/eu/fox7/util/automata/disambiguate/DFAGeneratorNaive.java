@@ -1,16 +1,16 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.converters.Simplifier;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.NotDFAException;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.util.RandomSelector;
+import eu.fox7.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.converters.Simplifier;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.util.Pair;
+import eu.fox7.util.RandomSelector;
 
-import gjb.util.Pair;
-//import gjb.util.regex.random.RegexGenerator;
+//import eu.fox7.util.regex.random.RegexGenerator;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,7 +24,7 @@ import java.util.Set;
 public class DFAGeneratorNaive {
 
 	/* (non-Javadoc)
-	 * @see gjb.util.automata.disambiguate.DFAGenerator#generateDFAs(gjb.flt.automata.impl.sparse.SparseNFA, int)
+	 * @see eu.fox7.util.automata.disambiguate.DFAGenerator#generateDFAs(eu.fox7.flt.automata.impl.sparse.SparseNFA, int)
 	 */
 	public Set<SparseNFA> generateDFAs(SparseNFA minimalDFA, int size) {
 		Set<SparseNFA> result = new HashSet<SparseNFA>();
@@ -105,7 +105,7 @@ public class DFAGeneratorNaive {
 	}
 
 	/* (non-Javadoc)
-	 * @see gjb.util.automata.disambiguate.DFAGenerator#generateDisjointDFAs(gjb.flt.automata.impl.sparse.SparseNFA, int)
+	 * @see eu.fox7.util.automata.disambiguate.DFAGenerator#generateDisjointDFAs(eu.fox7.flt.automata.impl.sparse.SparseNFA, int)
 	 */
 	public Set<SparseNFA> generateDisjointDFAs(SparseNFA minimalDFA, int size) {
 		Isomorphism linear = new LinearIsomorphism();
@@ -187,7 +187,7 @@ public class DFAGeneratorNaive {
 				return generateDFAsRecursively(minimalDFA, newDFA, states,
 						nextStateNr, nextInstanceNr, getAlphabet, nextAlphabetNr, stateCount);
 			else {
-				String toState = minimalDFA.getStateValue(gjb.util.Collections.getOne(nextStates));
+				String toState = minimalDFA.getStateValue(eu.fox7.util.Collections.getOne(nextStates));
 				for(int count = 1; count <= stateCount.get(toState).intValue();count++){
 					SparseNFA newerDFA = new SparseNFA(newDFA);
 					newerDFA.addTransition(getAlphabet[getAlphabetNr], makeLabel(states[stateNr], ""+instanceNr), makeLabel(toState, "" + count));

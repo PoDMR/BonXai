@@ -1,12 +1,13 @@
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
 import java.util.Set;
 
-import gjb.flt.automata.FeatureNotSupportedException;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.infer.rwr.NoOpportunityFoundException;
-import gjb.util.tree.SExpressionParseException;
-import gjb.util.tree.Tree;
+import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.infer.rwr.NoOpportunityFoundException;
+import eu.fox7.util.tree.SExpressionParseException;
+import eu.fox7.util.tree.Tree;
+
 
 public interface DeterministicApproximator {
 	/**

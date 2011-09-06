@@ -1,7 +1,9 @@
-package gjb.util;
+package eu.fox7.util;
+
+import eu.fox7.util.TimerNotRunningException;
 
 /**
- * @author gjb
+ * @author eu.fox7
  * @version $Revision: 1.1 $
  * 
  */

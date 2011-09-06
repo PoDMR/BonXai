@@ -2,10 +2,10 @@
  * Created on Oct 12, 2008
  * Modified on $Date: 2008-10-24 14:49:51 $
  */
-package gjb.util;
+package eu.fox7.util;
 
 /**
- * @author gjb
+ * @author eu.fox7
  * @version $Revision: 1.1 $
  * 
  */

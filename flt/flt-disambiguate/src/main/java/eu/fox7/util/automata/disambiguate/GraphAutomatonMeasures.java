@@ -1,15 +1,15 @@
 /**
  * 
  */
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.FeatureNotSupportedException;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.infer.rwr.impl.Automaton;
-import gjb.flt.regex.infer.rwr.impl.GraphAutomaton;
-import gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
-import gjb.flt.regex.infer.rwr.measures.LanguageSizeMeasure;
-import gjb.util.tree.SExpressionParseException;
+import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.infer.rwr.impl.Automaton;
+import eu.fox7.flt.regex.infer.rwr.impl.GraphAutomaton;
+import eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
+import eu.fox7.flt.regex.infer.rwr.measures.LanguageSizeMeasure;
+import eu.fox7.util.tree.SExpressionParseException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class GraphAutomatonMeasures {
 	
 	public double languageSize(String regexStr,int maxLength) throws SExpressionParseException, UnknownOperatorException, FeatureNotSupportedException{
-		gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
+		eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
 		Automaton automaton = factory.create(regexStr);
 		LanguageSizeMeasure measure = new LanguageSizeMeasure();
 		measure.setMaxLength(maxLength);
@@ -37,7 +37,7 @@ public class GraphAutomatonMeasures {
 	}
 	
 	public double languageSize(String regexStr) throws SExpressionParseException, UnknownOperatorException, FeatureNotSupportedException{
-		gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
+		eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
 		Automaton automaton = factory.create(regexStr);
 		LanguageSizeMeasure measure = new LanguageSizeMeasure();
 		
@@ -51,7 +51,7 @@ public class GraphAutomatonMeasures {
 	}
 	
 	public double kappaValue(String regexStr) throws SExpressionParseException, UnknownOperatorException, FeatureNotSupportedException{
-		gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
+		eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
 		Automaton automaton = factory.create(regexStr);
 		return kappaValue(automaton);
 	}
@@ -63,7 +63,7 @@ public class GraphAutomatonMeasures {
 	}
 	
 	public int kValue(String regexStr) throws SExpressionParseException, UnknownOperatorException, FeatureNotSupportedException{
-		gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
+		eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory factory = new eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory();
 		Automaton automaton = factory.create(regexStr);
 		return kValue(automaton);
 	}

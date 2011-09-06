@@ -1,6 +1,6 @@
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.NFA;
+import eu.fox7.flt.automata.NFA;
 
 import java.util.HashSet;
 import java.util.Set;

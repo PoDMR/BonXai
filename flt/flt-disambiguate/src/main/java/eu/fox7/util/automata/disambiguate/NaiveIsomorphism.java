@@ -1,8 +1,8 @@
-package gjb.util.automata.disambiguate;
+package eu.fox7.util.automata.disambiguate;
 
-import gjb.flt.automata.converters.AlphabetCleaner;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.converters.AlphabetCleaner;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,7 +42,7 @@ public class NaiveIsomorphism implements Isomorphism {
 		bijection.put(dfa1.getStateValue(dfa1.getInitialState()), dfa2.getStateValue(dfa2.getInitialState()));
 	
 		while(!toDo.isEmpty()){
-			String state1 = gjb.util.Collections.getOne(toDo.keySet());
+			String state1 = eu.fox7.util.Collections.getOne(toDo.keySet());
 			String state2 = toDo.get(state1);
 			toDo.remove(state1);
 	
@@ -56,8 +56,8 @@ public class NaiveIsomorphism implements Isomorphism {
 				if(!(toStates1.size() == toStates2.size()) || toStates1.size() > 1)
 					return false;
 				else if(toStates1.size() == 1){
-					String toState1 = gjb.util.Collections.extractSingleton(toStates1);
-					String toState2 = gjb.util.Collections.extractSingleton(toStates2);
+					String toState1 = eu.fox7.util.Collections.extractSingleton(toStates1);
+					String toState2 = eu.fox7.util.Collections.extractSingleton(toStates2);
 					if(bijection.containsKey(toState1) && !(bijection.get(toState1) == toState2))
 						return false;
 					else if(!bijection.containsKey(toState1)){
@@ -78,7 +78,7 @@ public class NaiveIsomorphism implements Isomorphism {
 	}
 
 	/* (non-Javadoc)
-	 * @see gjb.util.automata.disambiguate.Isomorphism#isContainedIn(gjb.flt.automata.impl.sparse.SparseNFA, java.util.Set)
+	 * @see eu.fox7.util.automata.disambiguate.Isomorphism#isContainedIn(eu.fox7.flt.automata.impl.sparse.SparseNFA, java.util.Set)
 	 */
 	public boolean isContainedIn(SparseNFA dfa, Set<SparseNFA> DFAs) throws NotDFAException {
 		for(SparseNFA dfaSuper : DFAs)
@@ -89,7 +89,7 @@ public class NaiveIsomorphism implements Isomorphism {
 	}
 
 	/* (non-Javadoc)
-	 * @see gjb.util.automata.disambiguate.Isomorphism#isContainedIn(java.util.Set, java.util.Set)
+	 * @see eu.fox7.util.automata.disambiguate.Isomorphism#isContainedIn(java.util.Set, java.util.Set)
 	 */
 	public boolean isContainedIn(Set<SparseNFA> subset, Set<SparseNFA> superset)
 			throws NotDFAException {
