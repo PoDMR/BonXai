@@ -16,10 +16,6 @@
  */
 package eu.fox7.bonxai.converter.bonxai2xsd;
 
-import gjb.flt.automata.NotDFAException;
-import gjb.flt.automata.impl.sparse.AnnotatedStateDFA;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.Symbol;
 
 import java.util.LinkedList;
 
@@ -28,6 +24,10 @@ import eu.fox7.bonxai.common.*;
 import eu.fox7.bonxai.typeautomaton.ElementProperties;
 import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.bonxai.xsd.*;
+import eu.fox7.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.impl.sparse.AnnotatedStateDFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.Symbol;
 
 /**
  * Bonxai2XSDConverter for group declarations inside an Bonxai schema.

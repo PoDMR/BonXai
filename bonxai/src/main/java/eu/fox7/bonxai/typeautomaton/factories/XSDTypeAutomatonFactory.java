@@ -1,7 +1,5 @@
 package eu.fox7.bonxai.typeautomaton.factories;
 
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.Symbol;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,6 +19,8 @@ import eu.fox7.bonxai.xsd.Content;
 import eu.fox7.bonxai.xsd.Element;
 import eu.fox7.bonxai.xsd.Type;
 import eu.fox7.bonxai.xsd.XSDSchema;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.Symbol;
 
 public class XSDTypeAutomatonFactory {
     /**

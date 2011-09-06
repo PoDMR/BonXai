@@ -1,13 +1,13 @@
 package eu.fox7.bonxai.typeautomaton;
 
-import gjb.flt.automata.impl.sparse.ModifiableStateNFA;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.StateDFA;
 import eu.fox7.bonxai.common.SymbolAlreadyRegisteredException;
 import eu.fox7.bonxai.common.SymbolTable;
 import eu.fox7.bonxai.common.SymbolTableFoundation;
 import eu.fox7.bonxai.common.SymbolTableRef;
 import eu.fox7.bonxai.xsd.Type;
+import eu.fox7.flt.automata.impl.sparse.ModifiableStateNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.StateDFA;
 
 public interface TypeAutomaton extends ModifiableStateNFA, StateDFA {
 	public SymbolTableRef<Type> getType(State state);

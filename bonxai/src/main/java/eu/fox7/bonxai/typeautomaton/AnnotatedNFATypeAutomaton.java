@@ -7,10 +7,10 @@ import eu.fox7.bonxai.common.SymbolTable;
 import eu.fox7.bonxai.common.SymbolTableFoundation;
 import eu.fox7.bonxai.common.SymbolTableRef;
 import eu.fox7.bonxai.xsd.Type;
-import gjb.flt.automata.impl.sparse.AnnotatedSparseNFA;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.StateNFA;
-import gjb.util.Pair;
+import eu.fox7.flt.automata.impl.sparse.AnnotatedSparseNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.StateNFA;
+import eu.fox7.util.Pair;
 
 public class AnnotatedNFATypeAutomaton extends
 		AnnotatedSparseNFA<Pair<SymbolTableRef<Type>, ElementProperties>, Object> implements TypeAutomaton {

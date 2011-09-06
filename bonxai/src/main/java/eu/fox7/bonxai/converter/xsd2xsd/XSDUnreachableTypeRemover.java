@@ -1,6 +1,5 @@
 package eu.fox7.bonxai.converter.xsd2xsd;
 
-import gjb.flt.automata.impl.sparse.State;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -12,6 +11,7 @@ import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.bonxai.typeautomaton.factories.XSDTypeAutomatonFactory;
 import eu.fox7.bonxai.xsd.Type;
 import eu.fox7.bonxai.xsd.XSDSchema;
+import eu.fox7.flt.automata.impl.sparse.State;
 
 public class XSDUnreachableTypeRemover {
 	public static void removeUnreachableTypes(XSDSchema schema) {

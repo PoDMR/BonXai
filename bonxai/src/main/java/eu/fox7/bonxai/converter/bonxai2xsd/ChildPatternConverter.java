@@ -1,6 +1,5 @@
 package eu.fox7.bonxai.converter.bonxai2xsd;
 
-import gjb.flt.automata.impl.sparse.State;
 
 import java.util.HashSet;
 
@@ -20,6 +19,7 @@ import eu.fox7.bonxai.xsd.SimpleContentExtension;
 import eu.fox7.bonxai.xsd.SimpleContentType;
 import eu.fox7.bonxai.xsd.SimpleType;
 import eu.fox7.bonxai.xsd.Type;
+import eu.fox7.flt.automata.impl.sparse.State;
 
 public class ChildPatternConverter {
 	

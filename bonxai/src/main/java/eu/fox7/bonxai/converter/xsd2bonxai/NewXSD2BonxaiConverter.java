@@ -1,18 +1,5 @@
 package eu.fox7.bonxai.converter.xsd2bonxai;
 
-import gjb.flt.automata.converters.Minimizer;
-import gjb.flt.automata.converters.NFAMinimizer;
-import gjb.flt.automata.impl.sparse.ModifiableStateDFA;
-import gjb.flt.automata.impl.sparse.SparseDFA;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.StateDFA;
-import gjb.flt.automata.impl.sparse.Symbol;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.converters.EpsilonEmptyEliminator;
-import gjb.flt.regex.converters.Normalizer;
-import gjb.flt.regex.factories.StateEliminationFactory;
-import gjb.util.tree.Node;
-import gjb.util.tree.Tree;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -62,6 +49,19 @@ import eu.fox7.bonxai.xsd.SimpleContentType;
 import eu.fox7.bonxai.xsd.Type;
 import eu.fox7.bonxai.xsd.XSDSchema;
 import eu.fox7.bonxai.xsd.XSDSchema.Qualification;
+import eu.fox7.flt.automata.converters.Minimizer;
+import eu.fox7.flt.automata.converters.NFAMinimizer;
+import eu.fox7.flt.automata.impl.sparse.ModifiableStateDFA;
+import eu.fox7.flt.automata.impl.sparse.SparseDFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.StateDFA;
+import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.converters.EpsilonEmptyEliminator;
+import eu.fox7.flt.regex.converters.Normalizer;
+import eu.fox7.flt.regex.factories.StateEliminationFactory;
+import eu.fox7.util.tree.Node;
+import eu.fox7.util.tree.Tree;
 
 
 /**

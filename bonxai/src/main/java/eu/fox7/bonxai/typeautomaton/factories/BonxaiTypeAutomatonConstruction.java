@@ -1,29 +1,5 @@
 package eu.fox7.bonxai.typeautomaton.factories;
 
-import gjb.flt.automata.NFA;
-import gjb.flt.automata.NoSuchStateException;
-import gjb.flt.automata.NoSuchSymbolException;
-import gjb.flt.automata.NoSuchTransitionException;
-import gjb.flt.automata.NotDFAException;
-import gjb.flt.automata.converters.AbstractMinimizer;
-import gjb.flt.automata.factories.sparse.Determinizer;
-import gjb.flt.automata.factories.sparse.ProductDFAFactory;
-import gjb.flt.automata.factories.sparse.ProductNFAFactory;
-import gjb.flt.automata.factories.sparse.StateCondition;
-import gjb.flt.automata.impl.sparse.AnnotatedSparseDFA;
-import gjb.flt.automata.impl.sparse.AnnotatedSparseNFA;
-import gjb.flt.automata.impl.sparse.AnnotatedStateNFA;
-import gjb.flt.automata.impl.sparse.ModifiableAnnotatedStateNFA;
-import gjb.flt.automata.impl.sparse.ModifiableStateNFA;
-import gjb.flt.automata.impl.sparse.SparseDFA;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.StateDFA;
-import gjb.flt.automata.impl.sparse.StateNFA;
-import gjb.flt.automata.impl.sparse.Symbol;
-import gjb.flt.automata.impl.sparse.Transition;
-import gjb.flt.automata.measures.Simulator;
-import gjb.flt.automata.misc.NerodeEquivalenceRelation;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -62,6 +38,30 @@ import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.bonxai.xsd.AttributeGroup;
 import eu.fox7.bonxai.xsd.ElementRef;
 import eu.fox7.bonxai.xsd.Type;
+import eu.fox7.flt.automata.NFA;
+import eu.fox7.flt.automata.NoSuchStateException;
+import eu.fox7.flt.automata.NoSuchSymbolException;
+import eu.fox7.flt.automata.NoSuchTransitionException;
+import eu.fox7.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.converters.AbstractMinimizer;
+import eu.fox7.flt.automata.factories.sparse.Determinizer;
+import eu.fox7.flt.automata.factories.sparse.ProductDFAFactory;
+import eu.fox7.flt.automata.factories.sparse.ProductNFAFactory;
+import eu.fox7.flt.automata.factories.sparse.StateCondition;
+import eu.fox7.flt.automata.impl.sparse.AnnotatedSparseDFA;
+import eu.fox7.flt.automata.impl.sparse.AnnotatedSparseNFA;
+import eu.fox7.flt.automata.impl.sparse.AnnotatedStateNFA;
+import eu.fox7.flt.automata.impl.sparse.ModifiableAnnotatedStateNFA;
+import eu.fox7.flt.automata.impl.sparse.ModifiableStateNFA;
+import eu.fox7.flt.automata.impl.sparse.SparseDFA;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.StateDFA;
+import eu.fox7.flt.automata.impl.sparse.StateNFA;
+import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.flt.automata.impl.sparse.Transition;
+import eu.fox7.flt.automata.measures.Simulator;
+import eu.fox7.flt.automata.misc.NerodeEquivalenceRelation;
 
 public class BonxaiTypeAutomatonConstruction {
 	

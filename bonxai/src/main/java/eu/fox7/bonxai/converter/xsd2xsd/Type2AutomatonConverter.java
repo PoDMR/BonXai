@@ -1,11 +1,5 @@
 package eu.fox7.bonxai.converter.xsd2xsd;
 
-import gjb.flt.automata.FeatureNotSupportedException;
-import gjb.flt.automata.factories.sparse.GlushkovFactory;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.factories.RegexFactory;
-import gjb.flt.treeautomata.impl.ContentAutomaton;
 
 import java.util.Vector;
 
@@ -25,6 +19,12 @@ import eu.fox7.bonxai.xsd.Element;
 import eu.fox7.bonxai.xsd.SimpleContentType;
 import eu.fox7.bonxai.xsd.SimpleType;
 import eu.fox7.bonxai.xsd.Type;
+import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.automata.factories.sparse.GlushkovFactory;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.factories.RegexFactory;
+import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
 
 public class Type2AutomatonConverter {
 	public ContentAutomaton convertType(Type type) {

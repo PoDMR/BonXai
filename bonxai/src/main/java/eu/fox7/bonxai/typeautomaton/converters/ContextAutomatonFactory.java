@@ -1,14 +1,5 @@
 package eu.fox7.bonxai.typeautomaton.converters;
 
-import gjb.flt.automata.FeatureNotSupportedException;
-import gjb.flt.automata.factories.sparse.GlushkovFactory;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.misc.StateRemapper;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.factories.RegexFactory;
-import gjb.flt.treeautomata.impl.ContentAutomaton;
-import gjb.flt.treeautomata.impl.ContextAutomaton;
 import java.util.Map;
 import java.util.Vector;
 import java.util.Map.Entry;
@@ -31,6 +22,15 @@ import eu.fox7.bonxai.xsd.SimpleContentType;
 import eu.fox7.bonxai.xsd.SimpleType;
 import eu.fox7.bonxai.xsd.Type;
 import eu.fox7.bonxai.xsd.XSDSchema;
+import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.automata.factories.sparse.GlushkovFactory;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.misc.StateRemapper;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.factories.RegexFactory;
+import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
+import eu.fox7.flt.treeautomata.impl.ContextAutomaton;
 
 public class ContextAutomatonFactory {
 	private boolean addSimpleTypes = false; 

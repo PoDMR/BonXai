@@ -1,9 +1,5 @@
 package eu.fox7.bonxai.converter.bonxai2xsd;
 
-import gjb.flt.automata.NotDFAException;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.Symbol;
-import gjb.flt.automata.impl.sparse.Transition;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +20,10 @@ import eu.fox7.bonxai.xsd.Element;
 import eu.fox7.bonxai.xsd.Type;
 import eu.fox7.bonxai.xsd.XSDSchema;
 import eu.fox7.bonxai.xsd.XSDSchema.Qualification;
+import eu.fox7.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.flt.automata.impl.sparse.Transition;
 
 public class NewBonxai2XSDConverter {
 	public static Map<String,XSDSchema> convert(Bonxai bonxai) {

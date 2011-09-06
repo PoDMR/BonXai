@@ -1,12 +1,5 @@
 package eu.fox7.bonxai.converter.xsd2xsd;
 
-import gjb.flt.automata.NoSuchStateException;
-import gjb.flt.automata.factories.sparse.ProductNFAFactory;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.Symbol;
-import gjb.flt.automata.impl.sparse.Transition;
-import gjb.flt.automata.measures.EmptynessTest;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,6 +15,13 @@ import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.bonxai.typeautomaton.factories.XSDTypeAutomatonFactory;
 import eu.fox7.bonxai.xsd.Type;
 import eu.fox7.bonxai.xsd.XSDSchema;
+import eu.fox7.flt.automata.NoSuchStateException;
+import eu.fox7.flt.automata.factories.sparse.ProductNFAFactory;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.flt.automata.impl.sparse.Transition;
+import eu.fox7.flt.automata.measures.EmptynessTest;
 
 public class XSDEmptyTypeRemover {
 	private TypeAutomaton typeAutomaton;
