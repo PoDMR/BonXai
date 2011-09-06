@@ -1,13 +1,13 @@
-import gjb.flt.automata.converters.Minimizer;
-import gjb.flt.automata.converters.NFAMinimizer;
-import gjb.flt.automata.factories.sparse.CFGApproximationFactory;
-import gjb.flt.automata.factories.sparse.Determinizer;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.impl.sparse.StateDFA;
-import gjb.flt.grammar.CFG;
-import gjb.flt.regex.factories.StateEliminationFactory;
-import gjb.util.tree.Handle;
-import gjb.util.tree.Tree;
+import eu.fox7.flt.automata.converters.Minimizer;
+import eu.fox7.flt.automata.converters.NFAMinimizer;
+import eu.fox7.flt.automata.factories.sparse.CFGApproximationFactory;
+import eu.fox7.flt.automata.factories.sparse.Determinizer;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.StateDFA;
+import eu.fox7.flt.grammar.CFG;
+import eu.fox7.flt.regex.factories.StateEliminationFactory;
+import eu.fox7.util.tree.Handle;
+import eu.fox7.util.tree.Tree;
 
 import java.io.FileReader;
 import java.io.FileWriter;

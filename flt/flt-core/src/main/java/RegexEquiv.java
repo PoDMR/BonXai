@@ -1,8 +1,8 @@
-import gjb.flt.automata.factories.sparse.ProductNFAFactory;
-import gjb.flt.automata.factories.sparse.ThompsonBuilder;
-import gjb.flt.automata.factories.sparse.ThompsonFactory;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.measures.EmptynessTest;
+import eu.fox7.flt.automata.factories.sparse.ProductNFAFactory;
+import eu.fox7.flt.automata.factories.sparse.ThompsonBuilder;
+import eu.fox7.flt.automata.factories.sparse.ThompsonFactory;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.measures.EmptynessTest;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +13,7 @@ import java.util.Set;
  */
 
 /**
- * @author gjb
+ * @author eu.fox7
  * @version $Revision: 1.1 $
  * 
  */

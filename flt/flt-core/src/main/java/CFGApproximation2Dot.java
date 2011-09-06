@@ -1,9 +1,9 @@
-import gjb.flt.automata.factories.sparse.CFGApproximationFactory;
-import gjb.flt.automata.factories.sparse.Determinizer;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.io.DotWriter;
-import gjb.flt.automata.io.NFAWriter;
-import gjb.flt.grammar.CFG;
+import eu.fox7.flt.automata.factories.sparse.CFGApproximationFactory;
+import eu.fox7.flt.automata.factories.sparse.Determinizer;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.io.DotWriter;
+import eu.fox7.flt.automata.io.NFAWriter;
+import eu.fox7.flt.grammar.CFG;
 
 import java.io.FileReader;
 import java.io.FileWriter;

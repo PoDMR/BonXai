@@ -1,8 +1,8 @@
-import gjb.flt.automata.factories.sparse.GlushkovFactory;
-import gjb.flt.automata.factories.sparse.GlushkovReverser;
-import gjb.flt.automata.generators.LanguageGenerator;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.matchers.NFAMatcher;
+import eu.fox7.flt.automata.factories.sparse.GlushkovFactory;
+import eu.fox7.flt.automata.factories.sparse.GlushkovReverser;
+import eu.fox7.flt.automata.generators.LanguageGenerator;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.matchers.NFAMatcher;
 
 import java.util.Iterator;
 import java.util.List;

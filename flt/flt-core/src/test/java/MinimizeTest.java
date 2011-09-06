@@ -1,15 +1,15 @@
-import gjb.flt.automata.converters.Minimizer;
-import gjb.flt.automata.converters.NFAMinimizer;
-import gjb.flt.automata.factories.sparse.CFGApproximationFactory;
-import gjb.flt.automata.factories.sparse.Determinizer;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.impl.sparse.StateDFA;
-import gjb.flt.grammar.CFG;
-import gjb.flt.regex.NoRegularExpressionDefinedException;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.factories.StateEliminationFactory;
-import gjb.flt.regex.matchers.Matcher;
+import eu.fox7.flt.automata.converters.Minimizer;
+import eu.fox7.flt.automata.converters.NFAMinimizer;
+import eu.fox7.flt.automata.factories.sparse.CFGApproximationFactory;
+import eu.fox7.flt.automata.factories.sparse.Determinizer;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.StateDFA;
+import eu.fox7.flt.grammar.CFG;
+import eu.fox7.flt.regex.NoRegularExpressionDefinedException;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.factories.StateEliminationFactory;
+import eu.fox7.flt.regex.matchers.Matcher;
 
 import java.io.StringReader;
 

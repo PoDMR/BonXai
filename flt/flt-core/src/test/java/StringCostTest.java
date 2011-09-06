@@ -1,6 +1,6 @@
-import gjb.flt.automata.factories.sparse.GlushkovFactory;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.measures.StringCost;
+import eu.fox7.flt.automata.factories.sparse.GlushkovFactory;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.measures.StringCost;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
  */
 
 /**
- * @author gjb
+ * @author eu.fox7
  * @version $Revision: 1.1 $
  */
 public class StringCostTest extends TestCase {

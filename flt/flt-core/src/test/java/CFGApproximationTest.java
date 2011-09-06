@@ -1,7 +1,7 @@
-import gjb.flt.automata.factories.sparse.CFGApproximationFactory;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.matchers.NFAMatcher;
-import gjb.flt.grammar.CFG;
+import eu.fox7.flt.automata.factories.sparse.CFGApproximationFactory;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.matchers.NFAMatcher;
+import eu.fox7.flt.grammar.CFG;
 
 import java.io.StringReader;
 

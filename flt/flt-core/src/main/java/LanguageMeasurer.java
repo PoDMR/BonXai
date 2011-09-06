@@ -1,15 +1,15 @@
-import gjb.flt.automata.FeatureNotSupportedException;
-import gjb.flt.automata.ModifiableNFA;
-import gjb.flt.automata.factories.sparse.GlushkovFactory;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.measures.LanguageMeasure;
-import gjb.flt.automata.measures.LanguageTest;
-import gjb.flt.automata.measures.RelativeLanguageMeasure;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.converters.Converter;
-import gjb.util.cli.Application;
-import gjb.util.tree.SExpressionParseException;
+import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.automata.ModifiableNFA;
+import eu.fox7.flt.automata.factories.sparse.GlushkovFactory;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.measures.LanguageMeasure;
+import eu.fox7.flt.automata.measures.LanguageTest;
+import eu.fox7.flt.automata.measures.RelativeLanguageMeasure;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.converters.Converter;
+import eu.fox7.util.cli.Application;
+import eu.fox7.util.tree.SExpressionParseException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -23,7 +23,7 @@ import org.apache.commons.cli.CommandLine;
  */
 
 /**
- * @author gjb
+ * @author eu.fox7
  * @version $Revision: 1.1 $
  * 
  */

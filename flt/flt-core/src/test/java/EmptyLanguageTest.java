@@ -1,12 +1,12 @@
-import gjb.flt.automata.factories.sparse.ProductNFAFactory;
-import gjb.flt.automata.factories.sparse.ThompsonBuilder;
-import gjb.flt.automata.generators.ShortestStringGenerator;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.matchers.NFAMatcher;
-import gjb.flt.automata.measures.EmptynessTest;
-import gjb.flt.automata.measures.NonTrivialEmptynessTest;
-import gjb.util.tree.Node;
-import gjb.util.tree.Tree;
+import eu.fox7.flt.automata.factories.sparse.ProductNFAFactory;
+import eu.fox7.flt.automata.factories.sparse.ThompsonBuilder;
+import eu.fox7.flt.automata.generators.ShortestStringGenerator;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.matchers.NFAMatcher;
+import eu.fox7.flt.automata.measures.EmptynessTest;
+import eu.fox7.flt.automata.measures.NonTrivialEmptynessTest;
+import eu.fox7.util.tree.Node;
+import eu.fox7.util.tree.Tree;
 
 import java.io.StringReader;
 import java.util.Iterator;

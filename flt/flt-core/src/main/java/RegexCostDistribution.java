@@ -2,7 +2,7 @@
  * Created on Feb 24, 2005
  * Modified: $Date: 2009-10-27 14:14:01 $
  */
-import gjb.flt.regex.measures.CostDistribution;
+import eu.fox7.flt.regex.measures.CostDistribution;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -50,7 +50,7 @@ import org.apache.commons.cli.UnrecognizedOptionException;
  * </pre>
  * would be a valid sample file.  <strong>Beware of trailing new lines!</strong></p>
  * 
- * @author gjb
+ * @author eu.fox7
  * @version $Revision: 1.1 $
  */
 public class RegexCostDistribution {

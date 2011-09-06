@@ -1,7 +1,7 @@
-import gjb.flt.regex.RegexException;
-import gjb.flt.regex.converters.Simplifier;
-import gjb.util.cli.Application;
-import gjb.util.tree.SExpressionParseException;
+import eu.fox7.flt.regex.RegexException;
+import eu.fox7.flt.regex.converters.Simplifier;
+import eu.fox7.util.cli.Application;
+import eu.fox7.util.tree.SExpressionParseException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,7 +16,7 @@ import org.apache.commons.cli.CommandLine;
  */
 
 /**
- * @author gjb
+ * @author eu.fox7
  * @version $Revision: 1.1 $
  * 
  */

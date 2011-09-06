@@ -1,14 +1,14 @@
-import gjb.flt.automata.factories.sparse.ThompsonFactory;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.matchers.NFAMatcher;
-import gjb.flt.regex.NoRegularExpressionDefinedException;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.converters.InfixConverter;
-import gjb.flt.regex.io.XMLReader;
-import gjb.flt.regex.io.XMLWriter;
-import gjb.flt.regex.measures.ShortestAcceptedStringMeasure;
-import gjb.util.tree.SExpressionParseException;
+import eu.fox7.flt.automata.factories.sparse.ThompsonFactory;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.matchers.NFAMatcher;
+import eu.fox7.flt.regex.NoRegularExpressionDefinedException;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.converters.InfixConverter;
+import eu.fox7.flt.regex.io.XMLReader;
+import eu.fox7.flt.regex.io.XMLWriter;
+import eu.fox7.flt.regex.measures.ShortestAcceptedStringMeasure;
+import eu.fox7.util.tree.SExpressionParseException;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -120,7 +120,7 @@ public class RegexTest extends TestCase {
 	}
 	
 	public void test_matches1() throws Exception {
-        gjb.flt.regex.matchers.Matcher regex = new gjb.flt.regex.matchers.Matcher("(* (. (a) (b)))");
+        eu.fox7.flt.regex.matchers.Matcher regex = new eu.fox7.flt.regex.matchers.Matcher("(* (. (a) (b)))");
         assertTrue("empty string match", regex.matches(new String[0]));
         String[] s1 = {"a", "b"};
         assertTrue("1 match", regex.matches(s1));
@@ -131,7 +131,7 @@ public class RegexTest extends TestCase {
     }
 
     public void test_matches2() throws Exception {
-	    gjb.flt.regex.matchers.Matcher regex = new gjb.flt.regex.matchers.Matcher("(* (. (a) (b)))");
+	    eu.fox7.flt.regex.matchers.Matcher regex = new eu.fox7.flt.regex.matchers.Matcher("(* (. (a) (b)))");
 	    assertTrue("empty string match", regex.matches(new String[0]));
 	    String[] s1 = {"a", "b"};
 	    assertTrue("1 match", regex.matches(s1));

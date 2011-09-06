@@ -1,6 +1,6 @@
-import gjb.flt.regex.generators.LanguageGenerator;
-import gjb.util.tree.Node;
-import gjb.util.tree.Tree;
+import eu.fox7.flt.regex.generators.LanguageGenerator;
+import eu.fox7.util.tree.Node;
+import eu.fox7.util.tree.Tree;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * @author gjb
+ * @author eu.fox7
  * @version $Revision: 1.2 $
  * 
  */

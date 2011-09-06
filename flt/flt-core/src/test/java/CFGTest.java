@@ -1,4 +1,4 @@
-import gjb.flt.grammar.*;
+import eu.fox7.flt.grammar.*;
 import junit.framework.*;
 import java.io.StringReader;
 import java.util.*;

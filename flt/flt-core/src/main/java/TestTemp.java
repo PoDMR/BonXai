@@ -1,7 +1,8 @@
 import java.util.*;
 
-import gjb.flt.automata.generators.ShortestStringGenerator;
-import gjb.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.generators.ShortestStringGenerator;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+
 
 public class TestTemp {
 

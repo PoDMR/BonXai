@@ -6,7 +6,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-import gjb.flt.regex.measures.CostDistribution;
+import eu.fox7.flt.regex.measures.CostDistribution;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -16,7 +17,7 @@ import junit.framework.TestSuite;
  */
 
 /**
- * @author gjb
+ * @author eu.fox7
  * @version $Revision: 1.1 $
  */
 public class CostDistributionTest extends TestCase {

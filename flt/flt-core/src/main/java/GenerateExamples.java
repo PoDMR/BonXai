@@ -1,6 +1,6 @@
-import gjb.flt.automata.factories.sparse.GlushkovFactory;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.regex.generators.LanguageGenerator;
+import eu.fox7.flt.automata.factories.sparse.GlushkovFactory;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.regex.generators.LanguageGenerator;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -28,7 +28,7 @@ import org.apache.commons.lang.StringUtils;
  */
 
 /**
- * @author gjb
+ * @author eu.fox7
  * @version $Revision: 1.1 $
  * 
  * <p> GenerateExamples generates strings in the language of a given regular
@@ -145,7 +145,7 @@ public class GenerateExamples {
 
     protected static void printExampleSampleWithStopProb(SparseNFA nfa, double prob,
                                                          int numberOfExamples) {
-    	gjb.flt.automata.generators.LanguageGenerator g = new gjb.flt.automata.generators.LanguageGenerator(nfa);
+    	eu.fox7.flt.automata.generators.LanguageGenerator g = new eu.fox7.flt.automata.generators.LanguageGenerator(nfa);
         for (int i = 0; i < numberOfExamples; i++) {
             List<String> tokenList = g.generateRandomExample(prob);
             if (tokenList != null) {
@@ -155,7 +155,7 @@ public class GenerateExamples {
     }
 
     protected static void printAllExampleUptoLength(SparseNFA nfa, int length) {
-    	gjb.flt.automata.generators.LanguageGenerator g = new gjb.flt.automata.generators.LanguageGenerator(nfa);
+    	eu.fox7.flt.automata.generators.LanguageGenerator g = new eu.fox7.flt.automata.generators.LanguageGenerator(nfa);
         for (Iterator<List<String>> it = g.generatingRun(length); it.hasNext();) {
             List<String> list = it.next();
             System.out.println(StringUtils.join(list.iterator(), " "));

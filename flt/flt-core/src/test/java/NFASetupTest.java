@@ -1,11 +1,11 @@
-import gjb.flt.automata.NoSuchStateException;
-import gjb.flt.automata.converters.Simplifier;
-import gjb.flt.automata.factories.sparse.ThompsonBuilder;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.Symbol;
-import gjb.flt.automata.impl.sparse.Transition;
-import gjb.flt.automata.matchers.NFAMatcher;
+import eu.fox7.flt.automata.NoSuchStateException;
+import eu.fox7.flt.automata.converters.Simplifier;
+import eu.fox7.flt.automata.factories.sparse.ThompsonBuilder;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.flt.automata.impl.sparse.Transition;
+import eu.fox7.flt.automata.matchers.NFAMatcher;
 
 import java.util.HashSet;
 import java.util.Map;

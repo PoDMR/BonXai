@@ -5,8 +5,9 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
-import gjb.flt.automata.factories.sparse.ThompsonBuilder;
-import gjb.flt.automata.generators.LanguageGenerator;
+import eu.fox7.flt.automata.factories.sparse.ThompsonBuilder;
+import eu.fox7.flt.automata.generators.LanguageGenerator;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -17,7 +18,7 @@ import junit.framework.TestSuite;
  */
 
 /**
- * @author gjb
+ * @author eu.fox7
  * @version $Revision: 1.1 $
  */
 public class GeneratingNFATest extends TestCase {
