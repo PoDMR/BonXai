@@ -1,7 +1,5 @@
 package eu.fox7.console;
 
-import gjb.flt.schema.infer.ixsd.XsdLearner;
-import gjb.flt.treeautomata.impl.ContextAutomaton;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,14 +21,16 @@ import jline.MultiCompletor;
 import jline.NullCompletor;
 import jline.SimpleCompletor;
 
-import de.tudortmund.cs.bonxai.tools.PreferencesManager;
-import de.tudortmund.cs.bonxai.xsd.XSDSchema;
-import de.tudortmund.cs.bonxai.Schema;
-import de.tudortmund.cs.bonxai.SchemaType;
 
-import de.tudortmund.cs.bonxai.bonxai.Bonxai;
 
-import de.tudortmund.cs.bonxai.converter.ConversionFailedException;
+import eu.fox7.bonxai.Schema;
+import eu.fox7.bonxai.SchemaType;
+import eu.fox7.bonxai.bonxai.Bonxai;
+import eu.fox7.bonxai.converter.ConversionFailedException;
+import eu.fox7.bonxai.tools.PreferencesManager;
+import eu.fox7.bonxai.xsd.XSDSchema;
+import eu.fox7.flt.schema.infer.ixsd.XsdLearner;
+import eu.fox7.flt.treeautomata.impl.ContextAutomaton;
 import eu.fox7.learning.impl.SchemaLearner;
 import eu.fox7.treeautomata.converter.ContextAutomaton2XSDConverter;
 import eu.fox7.treeautomata.converter.XSD2ContextAutomatonConverter;
@@ -73,7 +73,7 @@ public class Console {
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("difference"), schemaNumberCompletor, schemaNumberCompletor, nullCompletor}));
 		completors.add(new SimpleCompletor("exit"));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("fixEDC"), schemaNumberCompletor, nullCompletor}));
-//		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("fixUPA"), schemaNumberCompletor, nullCompletor}));
+		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("fixUPA"), schemaNumberCompletor, nullCompletor}));
 		completors.add(new SimpleCompletor("help"));
 		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("intersect"), schemaNumberCompletor}));
 		completors.add(new ArgumentCompletor(new Completor[] { new SimpleCompletor("load"), fileNameCompletor } ));
