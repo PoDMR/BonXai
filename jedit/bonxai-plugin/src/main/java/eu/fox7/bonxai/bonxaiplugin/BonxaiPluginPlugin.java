@@ -1,9 +1,10 @@
 package eu.fox7.bonxai.bonxaiplugin;
 
-import de.tudortmund.cs.bonxai.Schema;
-import de.tudortmund.cs.bonxai.SchemaType;
-import de.tudortmund.cs.bonxai.bonxai.parser.ParseException;
-import de.tudortmund.cs.bonxai.converter.ConversionFailedException;
+import eu.fox7.bonxai.Schema;
+import eu.fox7.bonxai.SchemaType;
+import eu.fox7.bonxai.bonxai.parser.ParseException;
+import eu.fox7.bonxai.converter.ConversionFailedException;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
