@@ -1,16 +1,16 @@
 package eu.fox7.treeautomata.converter;
 
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.misc.StateRemapper;
-import gjb.flt.treeautomata.impl.ContentAutomaton;
-import gjb.flt.treeautomata.impl.ContextAutomaton;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import de.tudortmund.cs.bonxai.typeautomaton.TypeAutomaton;
-import de.tudortmund.cs.bonxai.typeautomaton.factories.XSDTypeAutomatonFactory;
-import de.tudortmund.cs.bonxai.xsd.Type;
-import de.tudortmund.cs.bonxai.xsd.XSDSchema;
+import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
+import eu.fox7.bonxai.typeautomaton.factories.XSDTypeAutomatonFactory;
+import eu.fox7.bonxai.xsd.Type;
+import eu.fox7.bonxai.xsd.XSDSchema;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.misc.StateRemapper;
+import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
+import eu.fox7.flt.treeautomata.impl.ContextAutomaton;
 
 public class XSD2ContextAutomatonConverter {
 	private boolean addSimpleTypes; 

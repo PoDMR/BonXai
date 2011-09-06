@@ -1,30 +1,30 @@
 package eu.fox7.treeautomata.converter;
 
-import gjb.flt.automata.FeatureNotSupportedException;
-import gjb.flt.automata.factories.sparse.GlushkovFactory;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.factories.RegexFactory;
-import gjb.flt.treeautomata.impl.ContentAutomaton;
 
 import java.util.Vector;
 
-import de.tudortmund.cs.bonxai.common.AllPattern;
-import de.tudortmund.cs.bonxai.common.AnyPattern;
-import de.tudortmund.cs.bonxai.common.ChoicePattern;
-import de.tudortmund.cs.bonxai.common.CountingPattern;
-import de.tudortmund.cs.bonxai.common.EmptyPattern;
-import de.tudortmund.cs.bonxai.common.GroupRef;
-import de.tudortmund.cs.bonxai.common.Particle;
-import de.tudortmund.cs.bonxai.common.ParticleContainer;
-import de.tudortmund.cs.bonxai.common.SequencePattern;
-import de.tudortmund.cs.bonxai.xsd.ComplexContentType;
-import de.tudortmund.cs.bonxai.xsd.ComplexType;
-import de.tudortmund.cs.bonxai.xsd.Content;
-import de.tudortmund.cs.bonxai.xsd.Element;
-import de.tudortmund.cs.bonxai.xsd.SimpleContentType;
-import de.tudortmund.cs.bonxai.xsd.SimpleType;
-import de.tudortmund.cs.bonxai.xsd.Type;
+import eu.fox7.bonxai.common.AllPattern;
+import eu.fox7.bonxai.common.AnyPattern;
+import eu.fox7.bonxai.common.ChoicePattern;
+import eu.fox7.bonxai.common.CountingPattern;
+import eu.fox7.bonxai.common.EmptyPattern;
+import eu.fox7.bonxai.common.GroupRef;
+import eu.fox7.bonxai.common.Particle;
+import eu.fox7.bonxai.common.ParticleContainer;
+import eu.fox7.bonxai.common.SequencePattern;
+import eu.fox7.bonxai.xsd.ComplexContentType;
+import eu.fox7.bonxai.xsd.ComplexType;
+import eu.fox7.bonxai.xsd.Content;
+import eu.fox7.bonxai.xsd.Element;
+import eu.fox7.bonxai.xsd.SimpleContentType;
+import eu.fox7.bonxai.xsd.SimpleType;
+import eu.fox7.bonxai.xsd.Type;
+import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.automata.factories.sparse.GlushkovFactory;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.factories.RegexFactory;
+import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
 
 public class Type2ContentAutomatonConverter {
 	public ContentAutomaton convertType(Type type) {

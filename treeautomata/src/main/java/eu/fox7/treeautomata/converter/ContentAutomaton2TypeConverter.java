@@ -1,34 +1,34 @@
 package eu.fox7.treeautomata.converter;
 
-import gjb.flt.automata.NotDFAException;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.StateNFA;
-import gjb.flt.automata.impl.sparse.Symbol;
-import gjb.flt.regex.Regex;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.regex.infer.rwr.NoOpportunityFoundException;
-import gjb.flt.regex.infer.rwr.RewriteEngine;
-import gjb.flt.regex.infer.rwr.Rewriter;
-import gjb.flt.regex.infer.rwr.impl.Automaton;
-import gjb.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
-import gjb.flt.treeautomata.impl.ContentAutomaton;
-import gjb.util.tree.Node;
-import gjb.util.tree.SExpressionParseException;
-import gjb.util.tree.Tree;
 
 import java.util.Vector;
 
-import de.tudortmund.cs.bonxai.common.ChoicePattern;
-import de.tudortmund.cs.bonxai.common.CountingPattern;
-import de.tudortmund.cs.bonxai.common.EmptyPattern;
-import de.tudortmund.cs.bonxai.common.Particle;
-import de.tudortmund.cs.bonxai.common.SequencePattern;
-import de.tudortmund.cs.bonxai.common.SymbolTableRef;
-import de.tudortmund.cs.bonxai.typeautomaton.TypeAutomaton;
-import de.tudortmund.cs.bonxai.xsd.ComplexContentType;
-import de.tudortmund.cs.bonxai.xsd.ComplexType;
-import de.tudortmund.cs.bonxai.xsd.Element;
-import de.tudortmund.cs.bonxai.xsd.Type;
+import eu.fox7.bonxai.common.ChoicePattern;
+import eu.fox7.bonxai.common.CountingPattern;
+import eu.fox7.bonxai.common.EmptyPattern;
+import eu.fox7.bonxai.common.Particle;
+import eu.fox7.bonxai.common.SequencePattern;
+import eu.fox7.bonxai.common.SymbolTableRef;
+import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
+import eu.fox7.bonxai.xsd.ComplexContentType;
+import eu.fox7.bonxai.xsd.ComplexType;
+import eu.fox7.bonxai.xsd.Element;
+import eu.fox7.bonxai.xsd.Type;
+import eu.fox7.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.StateNFA;
+import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.regex.infer.rwr.NoOpportunityFoundException;
+import eu.fox7.flt.regex.infer.rwr.RewriteEngine;
+import eu.fox7.flt.regex.infer.rwr.Rewriter;
+import eu.fox7.flt.regex.infer.rwr.impl.Automaton;
+import eu.fox7.flt.regex.infer.rwr.impl.GraphAutomatonFactory;
+import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
+import eu.fox7.util.tree.Node;
+import eu.fox7.util.tree.SExpressionParseException;
+import eu.fox7.util.tree.Tree;
 
 public class ContentAutomaton2TypeConverter {
 	private TypeAutomaton typeAutomaton;
@@ -89,7 +89,7 @@ public class ContentAutomaton2TypeConverter {
 	 * @param node
 	 * @return
 	 */
-	private Particle convertRegex(Node node, State typeAutomatonState) {
+	private Particle convertRegex(Node<Object> node, State typeAutomatonState) {
 		String key = node.getKey();
 		if (key.equals(Regex.CONCAT_OPERATOR)) { //concatenation
 			Vector<Particle> childParticles = new Vector<Particle>();

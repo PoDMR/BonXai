@@ -1,25 +1,25 @@
 package eu.fox7.treeautomata.converter;
 
 import java.util.Set;
-import gjb.flt.automata.NotDFAException;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.Symbol;
-import gjb.flt.treeautomata.impl.ContextAutomaton;
-import de.tudortmund.cs.bonxai.common.DefaultNamespace;
-import de.tudortmund.cs.bonxai.common.NamespaceList;
-import de.tudortmund.cs.bonxai.common.SymbolTable;
-import de.tudortmund.cs.bonxai.common.SymbolTableFoundation;
-import de.tudortmund.cs.bonxai.common.SymbolTableRef;
-import de.tudortmund.cs.bonxai.typeautomaton.TypeAutomaton;
-import de.tudortmund.cs.bonxai.xsd.Element;
-import de.tudortmund.cs.bonxai.xsd.Type;
-import de.tudortmund.cs.bonxai.xsd.XSDSchema;
+import eu.fox7.bonxai.common.DefaultNamespace;
+import eu.fox7.bonxai.common.NamespaceList;
+import eu.fox7.bonxai.common.SymbolTable;
+import eu.fox7.bonxai.common.SymbolTableFoundation;
+import eu.fox7.bonxai.common.SymbolTableRef;
+import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
+import eu.fox7.bonxai.xsd.Element;
+import eu.fox7.bonxai.xsd.Type;
+import eu.fox7.bonxai.xsd.XSDSchema;
+import eu.fox7.flt.automata.NotDFAException;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.flt.treeautomata.impl.ContextAutomaton;
 
 public class ContextAutomaton2XSDConverter {
 	public XSDSchema convert(ContextAutomaton contextAutomaton) {
 		XSDSchema xsdSchema = new XSDSchema();
 		
-		SymbolTableFoundation<de.tudortmund.cs.bonxai.xsd.Element> elementSymbolTable = xsdSchema.getElementSymbolTable();
+		SymbolTableFoundation<eu.fox7.bonxai.xsd.Element> elementSymbolTable = xsdSchema.getElementSymbolTable();
 
 		String targetNamespace = "";
 		

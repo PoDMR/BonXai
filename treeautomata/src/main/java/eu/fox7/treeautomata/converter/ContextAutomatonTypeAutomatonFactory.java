@@ -2,14 +2,14 @@ package eu.fox7.treeautomata.converter;
 
 import java.util.Map;
 import java.util.Map.Entry;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.misc.StateRemapper;
-import gjb.flt.treeautomata.impl.ContentAutomaton;
-import gjb.flt.treeautomata.impl.ContextAutomaton;
-import de.tudortmund.cs.bonxai.common.SymbolAlreadyRegisteredException;
-import de.tudortmund.cs.bonxai.typeautomaton.AnnotatedNFATypeAutomaton;
-import de.tudortmund.cs.bonxai.typeautomaton.TypeAutomaton;
-import de.tudortmund.cs.bonxai.xsd.Type;
+import eu.fox7.bonxai.common.SymbolAlreadyRegisteredException;
+import eu.fox7.bonxai.typeautomaton.AnnotatedNFATypeAutomaton;
+import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
+import eu.fox7.bonxai.xsd.Type;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.misc.StateRemapper;
+import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
+import eu.fox7.flt.treeautomata.impl.ContextAutomaton;
 
 public class ContextAutomatonTypeAutomatonFactory {
 	private ContentAutomaton2TypeConverter caConverter;
