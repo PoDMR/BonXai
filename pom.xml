@@ -1,6 +1,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+  <distributionManagement>
+    <downloadUrl>http://ls1-www.cs.tu-dortmund.de/~niewerth/fox-repository</downloadUrl>
+    <repository>
+      <id>eu.fox7</id>
+      <name>Fox Repository</name>
+      <url>file:///home/mt/fox-repository</url>
+    </repository>
+    <snapshotRepository>
+      <id>eu.fox</id>
+      <name>Fox Repository</name>
+      <url>file:///home/mt/fox-repository</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>eu.fox7</id>
+      <url>http://ls1-www.cs.tu-dortmund.de/~niewerth/fox-repository</url>
+    </repository>
+  </repositories>
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eu.fox7</groupId>
 	<artifactId>foxlib</artifactId>
@@ -42,6 +64,17 @@
 	      <configuration>
 	        <skipTests>true</skipTests>
 	      </configuration>
+	    </plugin>
+            <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-source-plugin</artifactId>
+	      <executions>
+	        <execution>
+	          <goals>
+	            <goal>jar</goal>
+	          </goals>
+	        </execution>
+	      </executions>
 	    </plugin>
 	  </plugins>
 	</build>

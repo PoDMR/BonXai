@@ -7,6 +7,19 @@
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
+    <distributionManagement>
+      <repository>
+        <id>eu.fox7</id>
+        <name>Fox Repository</name>
+        <url>file:///home/mt/fox-repository</url>
+      </repository>
+    <snapshotRepository>
+      <id>eu.fox</id>
+      <name>Fox Repository</name>
+      <url>file:///home/mt/fox-repository</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <name>JAMA</name>
   <url>http://math.nist.gov/javanumerics/jama/</url>
 

@@ -7,6 +7,20 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <distributionManagement>
+    <repository>
+      <id>eu.fox7</id>
+      <name>Fox Repository</name>
+      <url>file:///home/mt/fox-repository</url>
+    </repository>
+    <snapshotRepository>
+      <id>eu.fox</id>
+      <name>Fox Repository</name>
+      <url>file:///home/mt/fox-repository</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
+  </distributionManagement>
+
   <dependencies>
 
     <dependency>
