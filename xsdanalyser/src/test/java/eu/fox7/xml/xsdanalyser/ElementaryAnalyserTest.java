@@ -24,7 +24,7 @@ import org.junit.Test;
  */
 public class ElementaryAnalyserTest {
 
-    private XSDSchema xsd = Analyser.loadSchema("XSDs/test-01.xsd");
+    private XSDSchema xsd=Analyser.loadSchema(this.getClass().getResource("/XSDs/test-01.xsd").getFile());
 
     @Test
     public void elementNames() {

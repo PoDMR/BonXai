@@ -26,7 +26,7 @@ public class RestrictionTest {
 
     @Test
     public void restrictionRegexes() {
-        XSDSchema xsd = Analyser.loadSchema("XSDs/test-02.xsd");
+        XSDSchema xsd=Analyser.loadSchema(this.getClass().getResource("/XSDs/test-02.xsd").getFile());
         RegexAnalysis regexAnalysis = new RegexAnalysis(xsd);
         assertEquals("number of regexes", 2, regexAnalysis.numberOfRegexes());
         Set<String> regexSet = new HashSet<String>();

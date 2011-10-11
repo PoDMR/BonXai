@@ -25,7 +25,7 @@ import org.junit.Test;
  */
 public class RegexAnalysisTest {
 
-	private XSDSchema xsd = Analyser.loadSchema("XSDs/test-03.xsd");
+    private XSDSchema xsd=Analyser.loadSchema(this.getClass().getResource("/XSDs/test-03.xsd").getFile());
 
 	@Test
     public void countingRegex() {
