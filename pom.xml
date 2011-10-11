@@ -12,7 +12,7 @@
       <id>eu.fox</id>
       <name>Fox Repository</name>
       <url>file:///home/mt/fox-repository</url>
-      <uniqueVersion>false</uniqueVersion>
+      <uniqueVersion>true</uniqueVersion>
     </snapshotRepository>
   </distributionManagement>
 
