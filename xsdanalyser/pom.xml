@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>eu.fox7</groupId>
-  <artifactId>xsdanalyzer</artifactId>
+  <artifactId>xsdanalyser</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>xsdanalyzer</name>
+  <name>xsdanalyser</name>
   <url>http://maven.apache.org</url>
 
   <parent>
