@@ -21,8 +21,6 @@
   </properties>
 
   <dependencies>
-
-
     <dependency>
       <groupId>eu.fox7.flt</groupId>
       <artifactId>flt-core</artifactId>
@@ -54,5 +52,10 @@
     	<artifactId>junit</artifactId>
     	<version>4.10</version>
     </dependency>
+	<dependency>
+		<groupId>org.eclipse.emf</groupId>
+		<artifactId>org.eclipse.emf.common</artifactId>
+		<version>2.6.0.v20100614-1136</version>
+	</dependency>
   </dependencies>
 </project>
