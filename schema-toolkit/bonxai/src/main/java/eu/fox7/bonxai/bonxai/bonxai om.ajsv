@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--AgileJ Ltd. (http://www.agilej.com)-->
+<ajsv>
+    <diagram style="defaultDiagramStyle" version="1.7.4.v20110506-1155">
+        <class className="eu.fox7.bonxai.bonxai.Bonxai" project="bonxai" xLocation="7600" yLocation="741"/>
+        <class className="eu.fox7.bonxai.bonxai.OrExpression" project="bonxai" xLocation="4560" yLocation="1482"/>
+        <class className="eu.fox7.bonxai.bonxai.BonxaiType" project="bonxai" xLocation="13680" yLocation="741"/>
+        <class className="eu.fox7.bonxai.bonxai.ElementGroupElement" project="bonxai" xLocation="9120" yLocation="0"/>
+        <class className="eu.fox7.bonxai.bonxai.ChildPattern" project="bonxai" xLocation="10640" yLocation="741"/>
+        <class className="eu.fox7.bonxai.bonxai.AttributeGroupReference" project="bonxai" xLocation="6080" yLocation="1482"/>
+        <class className="eu.fox7.bonxai.bonxai.KeyConstraint" project="bonxai" xLocation="0" yLocation="741"/>
+        <class className="eu.fox7.bonxai.bonxai.AncestorPatternElement" project="bonxai" xLocation="0" yLocation="1482"/>
+        <class className="eu.fox7.bonxai.bonxai.Import" project="bonxai" xLocation="15200" yLocation="741"/>
+        <class className="eu.fox7.bonxai.bonxai.KeyRefConstraint" project="bonxai" xLocation="1520" yLocation="0"/>
+        <class className="eu.fox7.bonxai.bonxai.AncestorPattern" project="bonxai" xLocation="3040" yLocation="741"/>
+        <class className="eu.fox7.bonxai.bonxai.ElementPattern" project="bonxai" xLocation="12160" yLocation="741"/>
+        <class className="eu.fox7.bonxai.bonxai.AttributePattern" project="bonxai" xLocation="6080" yLocation="741"/>
+        <class className="eu.fox7.bonxai.bonxai.CardinalityParticle" project="bonxai" xLocation="3040" yLocation="1482"/>
+        <class className="eu.fox7.bonxai.bonxai.DoubleSlashPrefixedContainer" project="bonxai" xLocation="3040" yLocation="0"/>
+        <class className="eu.fox7.bonxai.bonxai.Attribute" project="bonxai" xLocation="12160" yLocation="0"/>
+        <class className="eu.fox7.bonxai.bonxai.UniqueConstraint" project="bonxai" xLocation="1520" yLocation="1482"/>
+        <class className="eu.fox7.bonxai.bonxai.GroupElement" project="bonxai" xLocation="7600" yLocation="0"/>
+        <class className="eu.fox7.bonxai.bonxai.AttributeGroupElement" project="bonxai" xLocation="7600" yLocation="1482"/>
+        <class className="eu.fox7.bonxai.bonxai.GroupReference" project="bonxai" xLocation="0" yLocation="0"/>
+        <class className="eu.fox7.bonxai.bonxai.ContainerParticle" project="bonxai" xLocation="4560" yLocation="741"/>
+        <class className="eu.fox7.bonxai.bonxai.DataType" project="bonxai" xLocation="15200" yLocation="0"/>
+        <class className="eu.fox7.bonxai.bonxai.Constraint" project="bonxai" xLocation="1520" yLocation="741"/>
+        <class className="eu.fox7.bonxai.bonxai.Annotation" project="bonxai" xLocation="10640" yLocation="0"/>
+        <class className="eu.fox7.bonxai.bonxai.Element" project="bonxai" xLocation="13680" yLocation="0"/>
+        <class className="eu.fox7.bonxai.bonxai.AttributeListElement" project="bonxai" xLocation="6080" yLocation="0"/>
+        <class className="eu.fox7.bonxai.bonxai.SequenceExpression" project="bonxai" xLocation="4560" yLocation="0"/>
+        <class className="eu.fox7.bonxai.bonxai.Expression" project="bonxai" xLocation="9120" yLocation="741"/>
+    </diagram>
+</ajsv>
