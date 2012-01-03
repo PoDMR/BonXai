@@ -13,4 +13,11 @@
   </parent>
 
   <name>XSD Object Model</name>
+  <dependencies>
+  	<dependency>
+  		<groupId>eu.fox7.schema-toolkit</groupId>
+  		<artifactId>schemahandler</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>

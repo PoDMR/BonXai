@@ -27,8 +27,6 @@ import org.w3c.dom.*;
 import eu.fox7.bonxai.common.IdentifiedNamespace;
 import eu.fox7.bonxai.xsd.*;
 
-import org.xml.sax.SAXException;
-
 /**
  *
  */
@@ -66,103 +64,36 @@ public class XSDWriter {
     }
 
     /**
-     * Returns the created XSD-XSDSchema as a String.
+     * Write XSD to writer
      *
      * @return
      * @throws Exception
      */
-    public String getXSDString() {
+    public void writeXSD(Writer writer) throws Exception {
     	System.setProperty("javax.xml.transform.TransformerFactory","com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
-        TransformerFactory transformerFactory;
-        Transformer transformer;
-        DOMSource source;
-        StringWriter sw;
-        String xsdString = "";
-        if (xmldoc == null) {
-            try {
-                createXSD();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            sw = new StringWriter();
-            transformerFactory = TransformerFactory.newInstance();
-            try {
-                transformerFactory.setAttribute("indent-number", 2);
-            } catch (IllegalArgumentException e) {
-                System.err.println("Indentation failed to set. transformerFactory used: "+transformerFactory.getClass() + System.getProperty("javax.xml.transform.TransformerFactory"));
-            }
-            
-            transformer = transformerFactory.newTransformer();
-            source = new DOMSource(xmldoc);
-            StreamResult result = new StreamResult(sw);
-            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
-            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            transformer.transform(source, result);
-            xsdString = sw.getBuffer().toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return xsdString;
+    	TransformerFactory transformerFactory;
+    	Transformer transformer;
+    	DOMSource source;
+    	if (xmldoc == null) {
+    		createXSD();
+    	}
+    	transformerFactory = TransformerFactory.newInstance();
+    	try {
+    		transformerFactory.setAttribute("indent-number", 2);
+    	} catch (IllegalArgumentException e) {
+    		System.err.println("Indentation failed to set. transformerFactory used: "+transformerFactory.getClass() + System.getProperty("javax.xml.transform.TransformerFactory"));
+    	}
+
+    	transformer = transformerFactory.newTransformer();
+    	source = new DOMSource(xmldoc);
+    	StreamResult result = new StreamResult(writer);
+    	transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+    	transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+    	transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
+    	transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+    	transformer.transform(source, result);
     }
 
-    /**
-     * returns a XML-Document of the created XSD-Document
-     *
-     * @return
-     * @throws Exception
-     */
-    @Deprecated
-    public Document getXSDDocument() throws Exception {
-        String docStr = "";
-        DocumentBuilderFactory dbf;
-        DocumentBuilder db;
-        Document doc = null;
-        InputStream input;
-        try {
-            docStr = getXSDString();
-            dbf = DocumentBuilderFactory.newInstance();
-            db = dbf.newDocumentBuilder();
-            input = new ByteArrayInputStream(docStr.getBytes());
-            doc = db.parse(input);
-        } catch (ParserConfigurationException pe) {
-            pe.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return doc;
-    }
-
-    /**
-     * Writes the created XML-XSDSchema to the given file;
-     *
-     * @param filename
-     * @throws Exception
-     */
-    @Deprecated
-    public void writeXSD(String filename) throws Exception {
-        FileWriter fw;
-        String doc;
-        fw = new FileWriter(filename, false);
-        doc = getXSDString();
-        fw.write(doc);
-        fw.close();
-    }
-
-    /**
-     * Writes the created XML-XSDSchema to the SchemaLocation;
-     *
-     * @throws Exception
-     */
-    @Deprecated
-    public void writeXSD() throws Exception {
-        writeXSD(schema.getSchemaLocation());
-    }
 
     /**
      * converts the given schema to an XSD. The XSD can then be retrieved using
@@ -413,24 +344,24 @@ public class XSDWriter {
                 }
                 AnnotationWriter.writeAnnotation(fsElement, fs, schema);
                 root.appendChild(fsElement);
-            } else if (fs instanceof RedefinedSchema) {
+//            } else if (fs instanceof RedefinedSchema) {
 //                <redefine id = ID
 //                schemaLocation = anyURI>
 //                Content: (annotation | (simpleType | complexType | group | attributeGroup))*
 //                </redefine>
-                RedefinedSchema rdf = (RedefinedSchema) fs;
-                fsElement = xmldoc.createElementNS("http://www.w3.org/2001/XMLSchema", "redefine");
-                DOMHelper.setXSDPrefix(fsElement, schema);
-                value = rdf.getSchemaLocation();
-                fsElement.setAttribute("schemaLocation", value);
-                writeTypes(fsElement, rdf.getTypes());
-                writeGroups(fsElement, rdf.getGroups());
-                writeAttributeGroups(fsElement, rdf.getAttributeGroups());
-                if (fs.getId() != null) {
-                    fsElement.setAttribute("id", fs.getId());
-                }
-                AnnotationWriter.writeAnnotation(fsElement, fs, schema);
-                root.appendChild(fsElement);
+//                RedefinedSchema rdf = (RedefinedSchema) fs;
+//                fsElement = xmldoc.createElementNS("http://www.w3.org/2001/XMLSchema", "redefine");
+//                DOMHelper.setXSDPrefix(fsElement, schema);
+//                value = rdf.getSchemaLocation();
+//                fsElement.setAttribute("schemaLocation", value);
+//                writeTypes(fsElement, rdf.getTypes());
+//                writeGroups(fsElement, rdf.getGroups());
+//                writeAttributeGroups(fsElement, rdf.getAttributeGroups());
+//                if (fs.getId() != null) {
+//                    fsElement.setAttribute("id", fs.getId());
+//                }
+//                AnnotationWriter.writeAnnotation(fsElement, fs, schema);
+//                root.appendChild(fsElement);
             }
 
         }

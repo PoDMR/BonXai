@@ -21,6 +21,8 @@ package eu.fox7.bonxai.common;
  */
 abstract public class Element extends Particle {
 
+	protected ElementProperties elementProperties = new ElementProperties();
+	
     /**
      * Name of the element.
      *
@@ -28,16 +30,6 @@ abstract public class Element extends Particle {
      * in xsd.Element extension, and the local name in bonxai.Element.
      */
     protected QualifiedName name;
-
-    /**
-     * Default value for the element.
-     */
-    protected String defaultValue;
-
-    /**
-     * Fixed value for the element.
-     */
-    protected String fixedValue;
     
     /**
      * Returns the name of the element.
@@ -52,7 +44,7 @@ abstract public class Element extends Particle {
      * Can be null for no default.
      */
     public void setDefault(String defaultValue) {
-        this.defaultValue = defaultValue;
+        this.elementProperties.setDefaultValue(defaultValue);
     }
 
     /**
@@ -61,7 +53,7 @@ abstract public class Element extends Particle {
      * Can be null for no default.
      */
     public String getDefault() {
-        return defaultValue;
+        return this.elementProperties.getDefaultValue();
     }
 
     /**
@@ -70,7 +62,7 @@ abstract public class Element extends Particle {
      * Can be null for no fixed value.
      */
     public void setFixed(String fixedValue) {
-        this.fixedValue = fixedValue;
+        this.elementProperties.setFixedValue(fixedValue);
     }
 
     /**
@@ -79,14 +71,21 @@ abstract public class Element extends Particle {
      * Can be null for no fixed value.
      */
     public String getFixed() {
-        return fixedValue;
+        return this.elementProperties.getFixedValue();
     }
 
     /**
      * Return element string representation for debugging
      */
-    public String toString()
-    {
+    public String toString() {
         return this.getClass().getName() + ": " + this.name;
+    }
+    
+    public void setProperties(ElementProperties elementProperties) {
+    	this.elementProperties = elementProperties;
+    }
+    
+    public ElementProperties getProperties() {
+    	return this.elementProperties;
     }
 }

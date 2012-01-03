@@ -119,14 +119,14 @@ public class XSDParser {
 
             if (this.validateEDC) {
 //                StatusLogger.logLastInfoMessage("XSDParser", "Checking EDC-Constraint...");
-                EDCChecker edcProcessor = new EDCChecker(this.schema);
-                if (edcProcessor.isValid()) {
+//                EDCChecker edcProcessor = new EDCChecker(this.schema);
+//                if (edcProcessor.isValid()) {
 //                    StatusLogger.logLastInfoMessage("XSDParser", "The parsed XML XSDSchema is valid with respect to the \"XSDSchema Component Constraint: Element Declarations Consistent\". :-)");
 //                    System.out.println("The parsed XML XSDSchema is valid with regards to the \"XSDSchema Component Constraint: Element Declarations Consistent\". :-)\n");
-                } else {
+//                } else {
 //                    StatusLogger.logLastInfoMessage("XSDParser", "The parsed XML XSDSchema is NOT valid with respect to the \"XSDSchema Component Constraint: Element Declarations Consistent\"! :-(");
 //                    System.out.println("The parsed XML XSDSchema is NOT valid with regards the \"XSDSchema Component Constraint: Element Declarations Consistent\"! :-(\n");
-                }
+//                }
             }
 
         } catch (Exception error) {

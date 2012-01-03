@@ -19,13 +19,11 @@ package eu.fox7.bonxai.xsd;
 import java.util.LinkedList;
 
 import eu.fox7.bonxai.common.*;
+import eu.fox7.schematoolkit.Schema;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -41,7 +39,8 @@ import java.util.List;
  * The {@link LinkedList}s in contrast represent the objects directly defined
  * below the <schema /> tag.
  */
-public class XSDSchema {
+public class XSDSchema implements Schema {
+    public static final String XMLSCHEMA_NAMESPACE = "http://www.w3.org/2001/XMLSchema";
 
     /**
      * In difference to the getSchemaLocation method of ForeignSchemas this method

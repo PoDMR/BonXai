@@ -102,9 +102,10 @@ public abstract class Processor extends NameChecker {
      * @return  Local name of this node without namespace
      */
     protected String getLocalName(Node node) {
-        String returnName = "";
-        if (node.getAttributes().getNamedItem("name") != null && !node.getAttributes().getNamedItem("name").getNodeValue().equals("")) {
-            returnName = node.getAttributes().getNamedItem("name").getNodeValue();
+        String returnName;
+        Node name = node.getAttributes().getNamedItem("name");
+        if (name != null && !name.getNodeValue().equals("")) {
+            returnName = name.getNodeValue();
         } else {
             // Generate new unique name
             returnName = this.generateUniqueName(node);

@@ -27,6 +27,7 @@ import java.util.HashSet;
  */
 public class Element extends eu.fox7.bonxai.common.Element {
 
+	
     public boolean getNillable() {
         return nillable;
     }
