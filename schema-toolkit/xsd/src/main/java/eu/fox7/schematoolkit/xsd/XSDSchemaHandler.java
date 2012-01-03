@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 
-import eu.fox7.bonxai.xsd.XSDSchema;
-import eu.fox7.bonxai.xsd.parser.XSDParser;
-import eu.fox7.bonxai.xsd.writer.XSDWriter;
 import eu.fox7.schematoolkit.SchemaHandler;
+import eu.fox7.schematoolkit.xsd.om.XSDSchema;
+import eu.fox7.schematoolkit.xsd.parser.XSDParser;
+import eu.fox7.schematoolkit.xsd.writer.XSDWriter;
 
 public class XSDSchemaHandler extends SchemaHandler {
 	public XSDSchemaHandler() {}
