@@ -1,6 +1,5 @@
 package eu.fox7.bonxai.relaxng.parser;
 
-import eu.fox7.bonxai.relaxng.Pattern;
 import eu.fox7.bonxai.relaxng.RelaxNGSchema;
 
 import java.io.*;
@@ -33,6 +32,10 @@ public class RNGParser {
             "grammar"));
 
 
+    public RNGParser(String URI, boolean debug) throws FileNotFoundException, SAXException, IOException {
+    	this(new FileInputStream(URI), debug);
+    }
+    
     /**
      * Starts parsing the XSD document beginning with the XSDSchema
      * @param uriString
@@ -41,7 +44,7 @@ public class RNGParser {
      * @throws SAXException
      * @throws IOException
      */
-    public RNGParser(String uriString, boolean debug) throws FileNotFoundException, SAXException, IOException {
+    public RNGParser(InputStream stream, boolean debug) throws FileNotFoundException, SAXException, IOException {
         // Create a new schema object and it's processor
         rngSchema = new RelaxNGSchema();
         rngRootProcessor = new RNGRootProcessor(rngSchema);
@@ -55,7 +58,7 @@ public class RNGParser {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
             
-            doc = factory.newDocumentBuilder().parse(uriString);
+            doc = factory.newDocumentBuilder().parse(stream);
             rngSchema.setAbsoluteUri(doc.getBaseURI());
             
             Node schemaNode = doc.getFirstChild();
@@ -73,49 +76,6 @@ public class RNGParser {
             error.printStackTrace();
         }
     }
-
-    /**
-     * Starts parsing the XSD document beginning with the XSDSchema
-     * @param uriString
-     * @param debug
-     * @param checkStartPattern
-     * @throws FileNotFoundException
-     * @throws SAXException
-     * @throws IOException
-     */
-    public RNGParser(String uriString, boolean debug, boolean checkStartPattern) throws FileNotFoundException, SAXException, IOException {
-        // Create a new schema object and it's processor
-        rngSchema = new RelaxNGSchema();
-        rngRootProcessor = new RNGRootProcessor(rngSchema);
-
-        RNGProcessorBase.setDebug(debug);
-
-        // Begin processing the Relax NG
-        try {
-
-            // Build the document tree from a file
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
-
-            doc = factory.newDocumentBuilder().parse(uriString);
-            rngSchema.setAbsoluteUri(doc.getBaseURI());
-
-            Node schemaNode = doc.getFirstChild();
-
-            while (schemaNode != null
-                    && !(schemaNode.getNodeType() == 1
-                    && ((checkStartPattern && this.startElements.contains(schemaNode.getLocalName())) || !checkStartPattern))) {
-                schemaNode = schemaNode.getNextSibling();
-            }
-            if (schemaNode != null) {
-                rngRootProcessor.processNode(schemaNode);
-            }
-
-        } catch (Exception error) {
-            error.printStackTrace();
-        }
-    }
-
 
     /**
      * Getter for the attribute schema holding the parsed Relax NG-XSDSchema

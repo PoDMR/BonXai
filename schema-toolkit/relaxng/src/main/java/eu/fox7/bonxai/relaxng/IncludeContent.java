@@ -1,8 +1,10 @@
 package eu.fox7.bonxai.relaxng;
 
 
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * Class representing an include content of Relax NG used in a "grammar"-element
@@ -28,7 +30,7 @@ public class IncludeContent {
      * be found in the definedPatternNames list of this include, too! If one
      * name is not specified there, it is an error!
      **/
-    private SymbolTable<LinkedList<Define>> defineLookUpTable;
+    private Map<String, LinkedList<Define>> defineLookUpTable;
     /**
      * Object holding the parsed external RELAX NG XSDSchema, if not null.
      */
@@ -39,8 +41,7 @@ public class IncludeContent {
      * @param href
      */
     public IncludeContent(String href) {
-        this.defineLookUpTable = new SymbolTable<LinkedList<Define>>();
-        this.definedPatternNames = new LinkedHashSet<String>();
+        this.defineLookUpTable = new HashMap<String,LinkedList<Define>>();
         this.startPatterns = new LinkedList<Pattern>();
         this.href = href;
     }
@@ -79,75 +80,37 @@ public class IncludeContent {
     }
 
     /**
-     * Getter of the defineLookUpTable SymbolTable within this include.
-     * @return SymbolTable<Define>
-     */
-    public SymbolTable<LinkedList<Define>> getDefineLookUpTable() {
-        return defineLookUpTable;
-    }
-
-    /**
      * Method for adding a define-pattern to the list of definedPatterns
      * This is used for declaration of a define-tag in this include.
      * The look-up table for all define-elements is updated, too.
      * @param definePattern
      */
     public void addDefinePattern(Define definePattern) {
-
-        /**
-         * Manage the look-up table:
-         *
-         **/
-        this.registerDefinePatternInLookUpTable(definePattern);
-
-        /**
-         * Manage the list of all defined pattern names of this include element
-         *
-         **/
-        if (!this.definedPatternNames.contains(definePattern.getName())) {
-            this.definedPatternNames.add(definePattern.getName());
-        }
-    }
-
-    /**
-     * Method for registering a given definePattern in the look-up table
-     *
-     * @param definePattern
-     * @return
-     */
-    public SymbolTableRef<LinkedList<Define>> registerDefinePatternInLookUpTable(Define definePattern) {
-        SymbolTableRef<LinkedList<Define>> returnSymbolTableRef;
-
         /**
          * Manage the look-up table:
          *
          * Check if there is already a Reference in the look-up table for the
          * name of the given definePattern
          **/
-        if (!this.getDefineLookUpTable().hasReference(definePattern.getName())) {
+        if (!this.defineLookUpTable.containsKey(definePattern.getName())) {
             // Case: No Entry in the look-up table
             LinkedList<Define> newDefineList = new LinkedList<Define>();
             if (definePattern.getPatterns() != null && !definePattern.getPatterns().isEmpty()) {
                 newDefineList.add(definePattern);
             }
-            returnSymbolTableRef = this.getDefineLookUpTable().updateOrCreateReference(definePattern.getName(), newDefineList);
+            this.defineLookUpTable.put(definePattern.getName(), newDefineList);
         } else {
             // Case: There is already an entry in the look-up table
-            LinkedList<Define> oldDefineList = this.getDefineLookUpTable().getReference(definePattern.getName()).getReference();
+            LinkedList<Define> oldDefineList = this.defineLookUpTable.get(definePattern.getName());
             // Check if the same java object is already in this list
             if (!oldDefineList.contains(definePattern)) {
-                // Case the given definePattern is not in this list
-                // ==> add this definePattern to the list
-                if (definePattern.getPatterns() != null && !definePattern.getPatterns().isEmpty()) {
-                    oldDefineList.add(definePattern);
-                }
-                // update of the look-up-table
-                returnSymbolTableRef = this.getDefineLookUpTable().updateOrCreateReference(definePattern.getName(), oldDefineList);
-            } else {
-                returnSymbolTableRef = this.getDefineLookUpTable().getReference(definePattern.getName());
+            	// Case the given definePattern is not in this list
+            	// ==> add this definePattern to the list
+            	if (definePattern.getPatterns() != null && !definePattern.getPatterns().isEmpty()) {
+            		oldDefineList.add(definePattern);
+            	}
             }
         }
-        return returnSymbolTableRef;
     }
 
     /**
@@ -155,7 +118,7 @@ public class IncludeContent {
      * @return definedPatterns      LinkedHashSet<Define>
      */
     public LinkedHashSet<String> getDefinedPatternNames() {
-        return new LinkedHashSet<String>(this.definedPatternNames);
+        return new LinkedHashSet<String>(this.defineLookUpTable.keySet());
     }
 
     /**
@@ -164,7 +127,7 @@ public class IncludeContent {
      * @return LinkedList<Define>
      */
     public LinkedList<Define> getDefinedPatternsFromLookUpTable(String defineName) {
-        return this.getDefineLookUpTable().getReference(defineName).getReference();
+        return this.defineLookUpTable.get(defineName);
     }
 
     /**

@@ -2,6 +2,7 @@ package eu.fox7.bonxai.relaxng;
 
 import eu.fox7.bonxai.common.DefaultNamespace;
 import eu.fox7.bonxai.common.NamespaceList;
+import eu.fox7.schematoolkit.Schema;
 
 /**
  * Class representing a RELAX NG-XSDSchema.
@@ -24,7 +25,7 @@ import eu.fox7.bonxai.common.NamespaceList;
  *
  * In the Simple XML Syntax there can only be a grammar pattern used as root.
  */
-public class RelaxNGSchema {
+public class RelaxNGSchema implements Schema {
 
     /**
      * The XML namespace.

@@ -47,7 +47,7 @@ public class RNGWriter {
      * Method for writing the given RNGSchema into a XML String
      * @return String   The generated XML Relax NG document
      */
-    public String getRNGString() {
+    public void writeRNG(Writer writer) throws Exception {
     	System.setProperty("javax.xml.transform.TransformerFactory","com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
         // Prepare all necessary Variables for writing the XML structure of the
         // Relax NG language.
@@ -56,60 +56,43 @@ public class RNGWriter {
 
         DOMSource domSource;
 
-        StringWriter stringWriter;
-        String rngString = "";
-
         DocumentBuilder documentBuilder;
         DocumentBuilderFactory documentBuilderFactory;
 
-        try {
+        documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        org.w3c.dom.DOMImplementation domImplementation = documentBuilder.getDOMImplementation();
 
-            documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            org.w3c.dom.DOMImplementation domImplementation = documentBuilder.getDOMImplementation();
+        // create a new document root node
+        this.rngDoc = domImplementation.createDocument(null, null, null);
 
-            // create a new document root node
-            this.rngDoc = domImplementation.createDocument(null, null, null);
+        // In RelaxNG there are two possible root nodes: grammar or element
+        // The complete document is built under this root node.
+        this.rngDoc.appendChild(this.createRootNodeFromRNGSchema(rngDoc));
 
-            // In RelaxNG there are two possible root nodes: grammar or element
-            // The complete document is built under this root node.
-            this.rngDoc.appendChild(this.createRootNodeFromRNGSchema(rngDoc));
+        rngDoc.setXmlStandalone(true);
 
-            rngDoc.setXmlStandalone(true);
+        // Transform the Document into a String
+        domSource = new DOMSource(this.rngDoc);
 
-            // Transform the Document into a String
-            domSource = new DOMSource(this.rngDoc);
+        // Initialize the TransformerFactory
+        transformerFactory = TransformerFactory.newInstance();
 
-            // Initialize the TransformerFactory
-            transformerFactory = TransformerFactory.newInstance();
+        // Setup the indentation number.
+        transformerFactory.setAttribute("indent-number", 2);
 
-            // Setup the indentation number.
-            transformerFactory.setAttribute("indent-number", 2);
+        // Setup the transformer with the right settings.
+        transformer = transformerFactory.newTransformer();
+        //transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 
-            // Setup the transformer with the right settings.
-            transformer = transformerFactory.newTransformer();
-            //transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
-            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        StreamResult streamResult = new StreamResult(writer);
 
-            // Initialize the StringWriter for holding the generated XML String
-            stringWriter = new StringWriter();
-
-            StreamResult streamResult = new StreamResult(stringWriter);
-
-            // Start the transformation
-            transformer.transform(domSource, streamResult);
-
-            rngString = stringWriter.getBuffer().toString();
-
-        } catch (Exception e) {
-            // Catch all exceptions and print the stack trace
-            e.printStackTrace();
-        }
-        // If no exceptions were thrown return the generated string.
-        return rngString;
+        // Start the transformation
+        transformer.transform(domSource, streamResult);
     }
 
     private org.w3c.dom.Element createRootNodeFromRNGSchema(org.w3c.dom.Document rngDocument) throws Exception {

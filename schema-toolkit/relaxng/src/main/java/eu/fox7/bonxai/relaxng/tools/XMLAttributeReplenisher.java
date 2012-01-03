@@ -48,8 +48,7 @@ public class XMLAttributeReplenisher {
     public void startReplenishment() {
         Pattern rootPattern = rngSchema.getRootPattern();
 
-        for (Iterator<IdentifiedNamespace> it = rootPattern.getNamespaceList().getIdentifiedNamespaces().iterator(); it.hasNext();) {
-            IdentifiedNamespace currentIdentifiedNamespace = it.next();
+        for (IdentifiedNamespace currentIdentifiedNamespace: rootPattern.getNamespaceList().getNamespaces()) {
             this.addIdentifiedNamespace(currentIdentifiedNamespace.getIdentifier(), currentIdentifiedNamespace.getUri());
         }
         this.addIdentifiedNamespace("rng", RelaxNGSchema.RELAXNG_NAMESPACE);
@@ -57,7 +56,7 @@ public class XMLAttributeReplenisher {
         if (rootPattern.getNamespaceList().getNamespaceByUri(RelaxNGSchema.XML_NAMESPACE) != null && rootPattern.getNamespaceList().getNamespaceByUri(RelaxNGSchema.XML_NAMESPACE).getIdentifier() != null) {
             // Nothing to do here
         } else {
-            rootPattern.getNamespaceList().addIdentifiedNamespace(new IdentifiedNamespace("xml", RelaxNGSchema.XML_NAMESPACE));
+            rootPattern.getNamespaceList().addNamespace(new IdentifiedNamespace("xml", RelaxNGSchema.XML_NAMESPACE));
         }
         replenishPattern(rootPattern, null);
     }
@@ -96,11 +95,11 @@ public class XMLAttributeReplenisher {
                     if (pattern.getNamespaceList() == null) {
                         pattern.setNamespaceList(parentPattern.getNamespaceList());
                     } else {
-                        for (Iterator<IdentifiedNamespace> it = parentPattern.getNamespaceList().getIdentifiedNamespaces().iterator(); it.hasNext();) {
+                        for (Iterator<IdentifiedNamespace> it = parentPattern.getNamespaceList().getNamespaces().iterator(); it.hasNext();) {
                             IdentifiedNamespace currentIdentifiedNamespace = it.next();
 
                             if (pattern.getNamespaceList().getNamespaceByIdentifier(currentIdentifiedNamespace.getIdentifier()).getUri() == null) {
-                                pattern.getNamespaceList().addIdentifiedNamespace(currentIdentifiedNamespace);
+                                pattern.getNamespaceList().addNamespace(currentIdentifiedNamespace);
                                 this.addIdentifiedNamespace(currentIdentifiedNamespace.getIdentifier(), currentIdentifiedNamespace.getUri());
                             }
                         }
@@ -324,15 +323,12 @@ public class XMLAttributeReplenisher {
                     this.replenishPattern(innerPattern, pattern);
                 }
 
-                for (Iterator<String> it = grammar.getDefinedPatternNames().iterator(); it.hasNext();) {
-                    String defineName = it.next();
+                for (String defineName: grammar.getDefinedPatternNames()) {
                     if (defineName != null) {
                         this.usedNames.add(defineName);
                     }
-                    for (Iterator<Define> it2 = grammar.getDefinedPatternsFromLookUpTable(defineName).iterator(); it2.hasNext();) {
-                        Define innerDefine = it2.next();
-                        for (Iterator<Pattern> it3 = innerDefine.getPatterns().iterator(); it3.hasNext();) {
-                            Pattern innerPattern = it3.next();
+                    for (Define innerDefine: grammar.getDefinedPattern(defineName)) {
+                        for (Pattern innerPattern: innerDefine.getPatterns()) {
                             this.replenishPattern(innerPattern, pattern);
                         }
                     }
@@ -352,10 +348,8 @@ public class XMLAttributeReplenisher {
                             if (defineName != null) {
                                 this.usedNames.add(defineName);
                             }
-                            for (Iterator<Define> it4 = grammar.getDefinedPatternsFromLookUpTable(defineName).iterator(); it4.hasNext();) {
-                                Define innerDefine = it4.next();
-                                for (Iterator<Pattern> it5 = innerDefine.getPatterns().iterator(); it5.hasNext();) {
-                                    Pattern innerPattern = it5.next();
+                            for (Define innerDefine: grammar.getDefinedPattern(defineName)) {
+                                for (Pattern innerPattern: innerDefine.getPatterns()) {
                                     this.replenishPattern(innerPattern, pattern);
                                 }
                             }
@@ -397,11 +391,11 @@ public class XMLAttributeReplenisher {
                     if (nameClass.getNamespaceList() == null) {
                         nameClass.setNamespaceList(parentNameClass.getNamespaceList());
                     } else {
-                        for (Iterator<IdentifiedNamespace> it = parentNameClass.getNamespaceList().getIdentifiedNamespaces().iterator(); it.hasNext();) {
+                        for (Iterator<IdentifiedNamespace> it = parentNameClass.getNamespaceList().getNamespaces().iterator(); it.hasNext();) {
                             IdentifiedNamespace currentIdentifiedNamespace = it.next();
 
                             if (nameClass.getNamespaceList().getNamespaceByIdentifier(currentIdentifiedNamespace.getIdentifier()).getUri() == null) {
-                                nameClass.getNamespaceList().addIdentifiedNamespace(currentIdentifiedNamespace);
+                                nameClass.getNamespaceList().addNamespace(currentIdentifiedNamespace);
                                 this.addIdentifiedNamespace(currentIdentifiedNamespace.getIdentifier(), currentIdentifiedNamespace.getUri());
                             }
                         }
@@ -490,11 +484,11 @@ public class XMLAttributeReplenisher {
                 if (nameClass.getNamespaceList() == null) {
                     nameClass.setNamespaceList(pattern.getNamespaceList());
                 } else {
-                    for (Iterator<IdentifiedNamespace> it = pattern.getNamespaceList().getIdentifiedNamespaces().iterator(); it.hasNext();) {
+                    for (Iterator<IdentifiedNamespace> it = pattern.getNamespaceList().getNamespaces().iterator(); it.hasNext();) {
                         IdentifiedNamespace currentIdentifiedNamespace = it.next();
 
                         if (nameClass.getNamespaceList().getNamespaceByIdentifier(currentIdentifiedNamespace.getIdentifier()).getUri() == null) {
-                            nameClass.getNamespaceList().addIdentifiedNamespace(currentIdentifiedNamespace);
+                            nameClass.getNamespaceList().addNamespace(currentIdentifiedNamespace);
                             this.addIdentifiedNamespace(currentIdentifiedNamespace.getIdentifier(), currentIdentifiedNamespace.getUri());
                         }
                     }

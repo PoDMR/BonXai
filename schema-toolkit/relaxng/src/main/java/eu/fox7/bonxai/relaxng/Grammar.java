@@ -234,4 +234,8 @@ public class Grammar extends Pattern {
 	public List<Define> getDefinedPattern(String refName) {
 		return this.defineLookUpTable.get(refName);
 	}
+
+	public void addDefinePattern(String name, List<Define> defineList) {
+		this.defineLookUpTable.put(name, defineList);
+	}
 }

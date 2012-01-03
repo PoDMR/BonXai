@@ -307,7 +307,7 @@ public class ExternalSchemaLoader {
                             }
 
                             // Parse the external schema
-                            RNGParser rngParser = new RNGParser(getCanonicalPath(absolutePath), false, false);
+                            RNGParser rngParser = new RNGParser(getCanonicalPath(absolutePath), false);
                             referencedRelaxNGSchema = rngParser.getRNGSchema();
 
                             referencedRelaxNGSchema.setAbsoluteUri(getCanonicalPath(absolutePath));
@@ -344,12 +344,9 @@ public class ExternalSchemaLoader {
                     System.out.println("Grammar: " + parentGrammar + "\n");
                 }
 
-                for (Iterator<String> it = grammar.getDefinedPatternNames().iterator(); it.hasNext();) {
-                    String defineName = it.next();
-                    for (Iterator<Define> it2 = grammar.getDefinedPatternsFromLookUpTable(defineName).iterator(); it2.hasNext();) {
-                        Define innerDefine = it2.next();
-                        for (Iterator<Pattern> it3 = innerDefine.getPatterns().iterator(); it3.hasNext();) {
-                            Pattern innerPattern = it3.next();
+                for (String defineName: grammar.getDefinedPatternNames()) {
+                    for (Define innerDefine: grammar.getDefinedPattern(defineName)) {
+                        for (Pattern innerPattern: innerDefine.getPatterns()) {
                             this.recursePattern(innerPattern, grammar, grammar);
                         }
                     }
@@ -409,7 +406,7 @@ public class ExternalSchemaLoader {
                                     }
 
                                     // Parse the external schema
-                                    RNGParser rngParser = new RNGParser(getCanonicalPath(absolutePath), false, false);
+                                    RNGParser rngParser = new RNGParser(getCanonicalPath(absolutePath), false);
                                     referencedRelaxNGSchema = rngParser.getRNGSchema();
 
                                     referencedRelaxNGSchema.setAbsoluteUri(getCanonicalPath(absolutePath));
@@ -431,12 +428,11 @@ public class ExternalSchemaLoader {
                                     if (currentIncludeContent.getRngSchema().getRootPattern() instanceof Grammar) {
                                         Grammar referencedGrammar = (Grammar) currentIncludeContent.getRngSchema().getRootPattern();
 
-                                        for (Iterator<IdentifiedNamespace> it1 = referencedGrammar.getNamespaceList().getIdentifiedNamespaces().iterator(); it1.hasNext();) {
-                                            IdentifiedNamespace identifiedNamespace = it1.next();
+                                        for (IdentifiedNamespace identifiedNamespace: referencedGrammar.getNamespaceList().getNamespaces()) {
                                             if (grammar.getNamespaceList().getNamespaceByUri(identifiedNamespace.getUri()) != null && grammar.getNamespaceList().getNamespaceByUri(identifiedNamespace.getUri()).getIdentifier() != null) {
                                                 // nothing
                                             } else {
-                                                grammar.getNamespaceList().addIdentifiedNamespace(identifiedNamespace);
+                                                grammar.getNamespaceList().addNamespace(identifiedNamespace);
                                             }
                                         }
 
@@ -463,9 +459,7 @@ public class ExternalSchemaLoader {
 
                                                 LinkedList<Define> tempDefineList = currentIncludeContent.getDefinedPatternsFromLookUpTable(definePatternName);
 
-                                                referencedGrammar.getDefineLookUpTable().updateOrCreateReference(definePatternName, tempDefineList);
-                                                referencedGrammar.getDefinedPatternNames().add(definePatternName);
-
+                                                referencedGrammar.addDefinePattern(definePatternName, tempDefineList);
                                             }
                                         }
 
@@ -475,7 +469,7 @@ public class ExternalSchemaLoader {
                                             for (Iterator<String> it1 = referencedGrammar.getDefinedPatternNames().iterator(); it1.hasNext();) {
                                                 String definePatternName = it1.next();
 
-                                                LinkedList<Define> tempDefineList = referencedGrammar.getDefinedPatternsFromLookUpTable(definePatternName);
+                                                java.util.List<Define> tempDefineList = referencedGrammar.getDefinedPattern(definePatternName);
 
                                                 for (Iterator<Define> it2 = tempDefineList.iterator(); it2.hasNext();) {
                                                     Define define = it2.next();
@@ -505,15 +499,15 @@ public class ExternalSchemaLoader {
                             for (Iterator<String> it1 = grammar.getDefinedPatternNames().iterator(); it1.hasNext();) {
                                 String definePatternName = it1.next();
 
-                                LinkedList<Define> tempDefineList = grammar.getDefinedPatternsFromLookUpTable(definePatternName);
+                                java.util.List<Define> tempDefineList = grammar.getDefinedPattern(definePatternName);
 
-                                if (!tempDefineList.isEmpty() && (currentReferencedGrammar.getDefinedPatternsFromLookUpTable(definePatternName) == null || currentReferencedGrammar.getDefinedPatternsFromLookUpTable(definePatternName).isEmpty())) {
+                                if (!tempDefineList.isEmpty() && (currentReferencedGrammar.getDefinedPattern(definePatternName) == null || currentReferencedGrammar.getDefinedPattern(definePatternName).isEmpty())) {
 
                                     if (this.getDebug()) {
                                         System.out.println("put into Referenced grammar:\n" + definePatternName + "\n");
                                     }
 
-                                    currentReferencedGrammar.getDefineLookUpTable().updateOrCreateReference(definePatternName, tempDefineList);
+                                    currentReferencedGrammar.addDefinePattern(definePatternName, tempDefineList);
 //                                    currentReferencedGrammar.getDefinedPatternNames().add(definePatternName);
                                 }
                             }
@@ -762,7 +756,7 @@ public class ExternalSchemaLoader {
                     for (Iterator<String> it1 = grammar.getDefinedPatternNames().iterator(); it1.hasNext();) {
                         String definePatternName = it1.next();
 
-                        LinkedList<Define> tempDefineList = grammar.getDefinedPatternsFromLookUpTable(definePatternName);
+                        java.util.List<Define> tempDefineList = grammar.getDefinedPattern(definePatternName);
 
                         for (Iterator<Define> it2 = tempDefineList.iterator(); it2.hasNext();) {
                             Define define = it2.next();
