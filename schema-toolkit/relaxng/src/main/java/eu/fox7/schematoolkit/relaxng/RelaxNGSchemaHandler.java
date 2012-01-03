@@ -6,10 +6,10 @@ import java.io.Writer;
 
 import org.xml.sax.SAXException;
 
-import eu.fox7.bonxai.relaxng.RelaxNGSchema;
-import eu.fox7.bonxai.relaxng.parser.RNGParser;
-import eu.fox7.bonxai.relaxng.writer.RNGWriter;
 import eu.fox7.schematoolkit.SchemaHandler;
+import eu.fox7.schematoolkit.relaxng.om.RelaxNGSchema;
+import eu.fox7.schematoolkit.relaxng.parser.RNGParser;
+import eu.fox7.schematoolkit.relaxng.writer.RNGWriter;
 
 public class RelaxNGSchemaHandler extends SchemaHandler {
 	@Override
