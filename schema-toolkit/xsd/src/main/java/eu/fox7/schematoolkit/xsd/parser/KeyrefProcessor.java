@@ -103,9 +103,7 @@ public class KeyrefProcessor extends Processor {
 
         // Creates the unique object and visits all children to set selector and fields
         keyRefName = getName(node);
-        if (!isNCName(getLocalName(node))) {
-            throw new InvalidNCNameException(getLocalName(node), "keyRef");
-        }
+
         // Checks if the refer attribute is set and not empty than adds it to the object
         NamedNodeMap attributes = node.getAttributes();
         if (attributes != null && attributes.getNamedItem("refer") != null) {
@@ -115,10 +113,10 @@ public class KeyrefProcessor extends Processor {
                     throw new InvalidQNameException(((Attr) attributes.getNamedItem("refer")).getValue(), "keyRef");
                 }
             } else {
-                throw new EmptyReferException("keyRef: " + getLocalName(node));
+                throw new EmptyReferException("keyRef: " + getName(node));
             }
         } else {
-            throw new MissingReferException("keyRef: " + getLocalName(node));
+            throw new MissingReferException("keyRef: " + getName(node));
         }
 
         // Creates the keyref with a correct reference from the KeySymbolTable

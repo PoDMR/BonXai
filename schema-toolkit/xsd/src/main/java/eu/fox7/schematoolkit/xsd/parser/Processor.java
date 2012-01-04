@@ -89,57 +89,29 @@ public abstract class Processor extends NameChecker {
      * Returns the fullqualified name of a node
      * @param node      Node which name needs to be known
      * @return Fullqualified node name
+     * @throws DOMException 
+     * @throws UnknownNamespaceException 
      */
-    protected QualifiedName getName(Node node) {
-        String returnName = this.getLocalName(node);
-        Namespace namespace = this.getNamespace(node);
-        return new QualifiedName(namespace, returnName);
+    protected QualifiedName getName(Node node) throws UnknownNamespaceException, DOMException {
+    	return getName(node, true);
     }
-
-    /**
-     * Returns the name of a node without namespace
-     * @param node      Node which local name needs to be known
-     * @return  Local name of this node without namespace
-     */
-    protected String getLocalName(Node node) {
-        String returnName;
-        Node name = node.getAttributes().getNamedItem("name");
-        if (name != null && !name.getNodeValue().equals("")) {
-            returnName = name.getNodeValue();
-        } else {
-            // Generate new unique name
-            returnName = this.generateUniqueName(node);
+    
+    protected QualifiedName getAttributeName(Node node) throws UnknownNamespaceException, DOMException {
+    	return getName(node, false);
+    }
+    
+    protected QualifiedName getName(Node node, boolean useDefaultNamespace) throws UnknownNamespaceException, DOMException {
+        Node nameNode = node.getAttributes().getNamedItem("name");
+        if (nameNode != null && !nameNode.getNodeValue().equals(""))
+        	return this.getName(nameNode.getNodeValue(), useDefaultNamespace);
+        else {
+        	String returnName = this.generateUniqueName(node);
+        	Namespace namespace = this.schema.getTargetNamespace();
+        	return new QualifiedName(namespace, returnName);
         }
-        return returnName;
     }
 
-    /**
-     *  Returns a correct namespace following this rules: All
-     *  Elements/Types/Attributes defined in this schema are defined in
-     *  the targetNamespace, if there is no targetNamespace they are defined
-     *  in the defaultNamespace (which is in the current implementation equal
-     *  to the targeNamespace). If there is no targetNamespace or
-     *  defaultNamespace we use the namespace of the node or its parent. In
-     *  this case we assume the namespace as the XML schema namespace.
-     * @param node     Node for which the namespace is computed
-     * @return namespace of the specified node
-     */
-    protected Namespace getNamespace(Node node) {
-        Namespace namespace = null;
-         if (schema.getDefaultNamespace() != null) {
-            namespace = schema.getDefaultNamespace();
-        } 
-//         else {
-//            if (node != null && node.getNamespaceURI() != null) {
-//                namespaceResult = node.getNamespaceURI();
-//            } else {
-//                if (node != null) {
-//                    namespaceResult = getNamespace(node.getParentNode());
-//                }
-//            }
-//        }
-        return namespace;
-    }
+
 
     /**
      * Returns a name for a node which has no name, because it represents an
@@ -167,6 +139,11 @@ public abstract class Processor extends NameChecker {
      * @throws eu.fox7.schematoolkit.xsd.om.parser.exceptions.UnknownNamespaceException
      */
     protected QualifiedName getName(String xmlNameReference) throws UnknownNamespaceException {
+    	return this.getName(xmlNameReference, true);
+    }
+
+    
+    protected QualifiedName getName(String xmlNameReference, boolean useDefaultNamespace) throws UnknownNamespaceException {
         String returnName = "";
         Namespace namespace = null;
         
@@ -183,13 +160,11 @@ public abstract class Processor extends NameChecker {
         }
         // The name is unqualified and therefore not prefixed with a namespace
         // abbreviation ==> look up the default namespace
-        else if (schema.getDefaultNamespace() != null) {
-            namespace = schema.getDefaultNamespace();
-            returnName = xmlNameReference;
-        }
-        // If default namespace is null
-        if (returnName.equals("")) {
-            System.err.print("No default namespace");
+        else {
+            if (useDefaultNamespace)
+            	namespace = schema.getDefaultNamespace();
+            else
+            	namespace = Namespace.EMPTY_NAMESPACE;
             returnName = xmlNameReference;
         }
         return new QualifiedName(namespace, returnName);

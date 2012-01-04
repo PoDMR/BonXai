@@ -84,7 +84,7 @@ public abstract class ParticleWriter {
     protected static void writeElement(Node root, eu.fox7.schematoolkit.xsd.om.Element element, XSDSchema schema, Integer min, Integer max) {
         org.w3c.dom.Element elementNode = root.getOwnerDocument().createElementNS("http://www.w3.org/2001/XMLSchema", "element");
         DOMHelper.setXSDPrefix(elementNode, schema);
-        elementNode.setAttribute("name", element.getName().getName());
+        elementNode.setAttribute("name", element.getName().getQualifiedName());
         setOccurrence(elementNode, min, max);
         if (element.getDefault() != null) {
             elementNode.setAttribute("default", element.getDefault());

@@ -218,11 +218,11 @@ public class XSDWriter {
         }
         // Do we have to differ between the targetNamespace and the defaultNamespace?
         // If we have to, we have to change the datastructure in the schema class regarding to this.
-        if (schema.getDefaultNamespace() != null && !schema.getDefaultNamespace().getUri().equals("")) {
-            root.setAttribute("targetNamespace", schema.getDefaultNamespace().getUri());
+        if (schema.getTargetNamespace() != null && !schema.getTargetNamespace().getUri().equals("")) {
+            root.setAttribute("targetNamespace", schema.getTargetNamespace().getUri());
         }
         // Write identified namespaces
-        for (IdentifiedNamespace ns : schema.getNamespaceList().getNamespaces()) {
+        for (IdentifiedNamespace ns : schema.getNamespaces()) {
             root.setAttribute("xmlns:" + ns.getIdentifier(), ns.getUri());
         }
         if (schema.getElementFormDefault().equals(XSDSchema.Qualification.qualified)) {

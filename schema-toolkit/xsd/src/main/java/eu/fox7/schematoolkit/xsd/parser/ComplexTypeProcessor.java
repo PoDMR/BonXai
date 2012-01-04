@@ -59,11 +59,6 @@ public class ComplexTypeProcessor extends Processor {
      */
     @Override
     protected QualifiedName processNode(Node node) throws Exception {
-
-        // Fetch correct namespace
-        if (!isNCName(getLocalName(node))) {
-            throw new InvalidNCNameException(getLocalName(node), "complexType");
-        }
         this.complexTypeName = this.getName(node);
 
         // Generate XSD complexType object

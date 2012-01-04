@@ -7,7 +7,9 @@ public class NamespaceList {
     /**
      * Default namespace of the schema
      */
-    private DefaultNamespace defaultNamespace;
+    private DefaultNamespace defaultNamespace = new DefaultNamespace("");
+    
+    private Namespace targetNamespace;
     
     /**
      * Namespacelist
@@ -16,6 +18,12 @@ public class NamespaceList {
 
 	public NamespaceList(DefaultNamespace defaultNamespace) {
 		this.defaultNamespace = defaultNamespace;
+		this.targetNamespace = defaultNamespace;
+	}
+	
+	public NamespaceList(DefaultNamespace defaultNamespace, Namespace targetNamespace) {
+		this.defaultNamespace = defaultNamespace;
+		this.targetNamespace = targetNamespace;
 	}
 
 	public NamespaceList() {
@@ -24,9 +32,17 @@ public class NamespaceList {
 	public void setDefaultNamespace(DefaultNamespace defaultNamespace) {
 		this.defaultNamespace = defaultNamespace;
 	}
+	
+	public void setTargetNamespace(Namespace targetNamespace) {
+		this.targetNamespace = targetNamespace;
+	}
 
 	public DefaultNamespace getDefaultNamespace() {
 		return defaultNamespace;
+	}
+
+	public Namespace getTargetNamespace() {
+		return targetNamespace;
 	}
 
 	public List<IdentifiedNamespace> getNamespaces() {
@@ -62,5 +78,9 @@ public class NamespaceList {
 				if (namespace.getUri().equals(uri))
 					return namespace;
 		return null;
+	}
+
+	public void setTargetNamespace(String targetNamespaceURI) {
+		this.targetNamespace = this.getNamespaceByUri(targetNamespaceURI);
 	}
 }

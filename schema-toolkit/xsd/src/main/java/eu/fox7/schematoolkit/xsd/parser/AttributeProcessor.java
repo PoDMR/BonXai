@@ -52,10 +52,7 @@ public class AttributeProcessor extends Processor {
      */
     @Override
     protected AttributeParticle processNode(Node node) throws Exception {
-        if (!isNCName(getLocalName(node))) {
-            throw new InvalidNCNameException(getLocalName(node), "attribute");
-        }
-        attributeName = getName(node);       
+        attributeName = getAttributeName(node);       
         attributes = node.getAttributes();
         visitChildren(node);
         if (attributes != null) {

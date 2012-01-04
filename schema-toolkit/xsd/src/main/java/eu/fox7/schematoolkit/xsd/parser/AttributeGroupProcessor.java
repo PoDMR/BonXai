@@ -59,10 +59,6 @@ public class AttributeGroupProcessor extends Processor {
         	throw new XSDParseException("AttributeGroup has a reference: " + attributeGroupName.getQualifiedName());
         }
 
-        if (!isNCName(getLocalName(node))) {
-            throw new InvalidNCNameException(getLocalName(node), "attributeGroup");
-        }
-
         // The following part sets the ID of a group.
         // This is necessary at this point, because the setting of the ID above is only for attributeGroupRefs.
         if (node.getAttributes().getNamedItem("id") != null) {

@@ -66,9 +66,7 @@ public class GroupProcessor extends Processor {
             throw new ExclusiveAttributesException("name and ref", groupName);
         }
 
-        if (!isNCName(getLocalName(node))) {
-            throw new InvalidNCNameException(getLocalName(node), "group");
-        }
+
         // Generate XSD group object
 
         Group group = new Group(groupName, container);

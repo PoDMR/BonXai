@@ -101,9 +101,7 @@ public class KeyProcessor extends Processor {
         // Creates the key and visits all children to set selector and fields
         keyName = getName(node);
         key = new Key(keyName, "");
-        if(!isNCName(getLocalName(node))){
-            throw new InvalidNCNameException(getLocalName(node), "key");
-        }
+
         visitChildren(node);
 
         // For every key a selector has to be present. If not an exception is thrown.

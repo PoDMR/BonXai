@@ -66,15 +66,15 @@ public class SchemaProcessor extends Processor {
                 if (!isAnyUri(targetNamespace)) {
                     throw new InvalidAnyUriException(targetNamespace, "the targetnamespace of schema element");
                 }
-                schema.setDefaultNamespace(new DefaultNamespace(targetNamespace));
-                schema.addIdentifiedNamespace(new IdentifiedNamespace("xml", "http://www.w3.org/XML/1998/namespace"));
+                schema.setTargetNamespace(targetNamespace);
+                //schema.addIdentifiedNamespace(new IdentifiedNamespace("xml", "http://www.w3.org/XML/1998/namespace"));
             } else {
                 if (this.includeTargetNamespace != null) {
                     if (!this.includeTargetNamespace.equals("") && !isAnyUri(includeTargetNamespace)) {
                         throw new InvalidAnyUriException(includeTargetNamespace, "the includeTargetNamespace of schema element");
                     }
-                    schema.setDefaultNamespace(new DefaultNamespace(includeTargetNamespace));
-                    schema.addIdentifiedNamespace(new IdentifiedNamespace("xml", "http://www.w3.org/XML/1998/namespace"));
+                    schema.setTargetNamespace(includeTargetNamespace);
+                    //schema.addIdentifiedNamespace(new IdentifiedNamespace("xml", "http://www.w3.org/XML/1998/namespace"));
                 }
             }
             if (attributes.getNamedItem("id") != null) {

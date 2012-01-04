@@ -21,7 +21,9 @@ package eu.fox7.schematoolkit.common;
  */
 public abstract class Namespace {
 
-    /* (non-Javadoc)
+    public static final Namespace EMPTY_NAMESPACE = new DefaultNamespace("");
+
+	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override

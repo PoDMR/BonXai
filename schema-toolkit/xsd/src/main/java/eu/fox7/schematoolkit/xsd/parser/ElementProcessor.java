@@ -44,11 +44,6 @@ public class ElementProcessor extends Processor {
      */
     @Override
     protected Particle processNode(Node node) throws Exception {
-
-        // Generate XSD element object with correct name
-        if (!isNCName(getLocalName(node))) {
-            throw new InvalidNCNameException(getLocalName(node), "element");
-        }
         element = new Element(getName(node));
 
         // Check all element attributes

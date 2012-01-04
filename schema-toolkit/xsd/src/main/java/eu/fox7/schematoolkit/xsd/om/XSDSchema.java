@@ -75,7 +75,7 @@ public class XSDSchema implements Schema {
      * Note that {@link AttributeGroup}s can only be defined in the top level
      * of the <schema /> tag.
      */
-    protected List<AttributeGroup> attributeGroups;
+    protected LinkedHashMap<QualifiedName, AttributeGroup> attributeGroups;
     /**
      * Element groups.
      *
@@ -125,9 +125,18 @@ public class XSDSchema implements Schema {
 	/**
 	 * @param defaultNamespace the defaultNamespace to set
 	 */
+	public void setTargetNamespace(Namespace targetNamespace) {
+		this.namespaceList.setTargetNamespace(targetNamespace);
+	}
+	
 	public void setDefaultNamespace(DefaultNamespace defaultNamespace) {
 		this.namespaceList.setDefaultNamespace(defaultNamespace);
 	}
+	
+	public Namespace getTargetNamespace() {
+		return this.namespaceList.getTargetNamespace();
+	}
+	
 	private String schemaLocation;
 
     public void setSchemaLocation(String documentURI) {
@@ -188,7 +197,7 @@ public class XSDSchema implements Schema {
         // Initialize item lists
         foreignSchemas = new LinkedList<ForeignSchema>();
         types = new LinkedHashMap<QualifiedName,Type>();
-        attributeGroups = new LinkedList<AttributeGroup>();
+        attributeGroups = new LinkedHashMap<QualifiedName,AttributeGroup>();
         groups = new LinkedList<Group>();
         attributes = new LinkedList<Attribute>();
         elements = new LinkedList<Element>();
@@ -318,7 +327,7 @@ public class XSDSchema implements Schema {
         LinkedList<AttributeGroup> list = new LinkedList<AttributeGroup>();
 
         if (attributeGroups != null) {
-            for (AttributeGroup st : attributeGroups) {
+            for (AttributeGroup st : attributeGroups.values()) {
                 list.add(st);
             }
         }
@@ -332,7 +341,7 @@ public class XSDSchema implements Schema {
      * SymbolTable} returned from {@link getAttributeGroupSymbolTable()}.
      */
     public void addAttributeGroup(AttributeGroup val) {
-        this.attributeGroups.add(val);
+        this.attributeGroups.put(val.getName(), val);
     }
 
     /**
@@ -509,8 +518,13 @@ public class XSDSchema implements Schema {
      * The targetNamespace of the schema is defined in the NamespaceList as the
      * defaultNamespace.
      */
+    @Deprecated
     public NamespaceList getNamespaceList() {
         return namespaceList;
+    }
+    
+    public List<IdentifiedNamespace> getNamespaces() {
+    	return this.namespaceList.getNamespaces();
     }
 
 //    public void addSubstitutionElement(SymbolTableRef<Element> headElement, SymbolTableRef<Element> element) {
@@ -574,6 +588,23 @@ public class XSDSchema implements Schema {
 			if (attribute.name.equals(attributeName))
 				return attribute;
 		return null;
+	}
+
+	public AttributeGroup getAttributeGroup(QualifiedName name) {
+		return this.attributeGroups.get(name);
+	}
+
+	public AttributeGroup getAttributeGroup(
+			AttributeGroupReference attributeGroupReference) {
+		return this.getAttributeGroup(attributeGroupReference.getName());
+	}
+
+	public eu.fox7.schematoolkit.xsd.om.Attribute getAttribute(AttributeRef attributeRef) {
+		return this.getAttribute(attributeRef.getAttributeName());
+	}
+
+	public void setTargetNamespace(String targetNamespaceURI) {
+		this.namespaceList.setTargetNamespace(targetNamespaceURI);
 	}
 }
 

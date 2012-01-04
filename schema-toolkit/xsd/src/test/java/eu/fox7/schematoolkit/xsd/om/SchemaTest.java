@@ -288,7 +288,7 @@ public class SchemaTest extends junit.framework.TestCase {
     }
 
     public final void testSetTargetNamespace() {
-        this.schema.setDefaultNamespace(new DefaultNamespace("foobar"));
+        this.schema.setTargetNamespace(new DefaultNamespace("foobar"));
         assertEquals(new DefaultNamespace("foobar"), this.schema.getDefaultNamespace());
     }
 }

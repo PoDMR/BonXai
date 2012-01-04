@@ -61,9 +61,6 @@ public class SimpleTypeProcessor extends Processor {
             throw new MissingSimpleTypeInheritanceException(this.getName(node));
         } else {
             // Create simpleType
-            if (!isNCName(getLocalName(node))) {
-                throw new InvalidNCNameException(getLocalName(node), "simpleType");
-            }
 
             if (node.getAttributes().getNamedItem("name") != null && !node.getAttributes().getNamedItem("name").getNodeValue().equals("")) {
                 this.simpleType = new SimpleType(this.getName(node), this.inheritance);

@@ -100,9 +100,6 @@ public class UniqueProcessor extends Processor {
         // Creates the unique object and visits all children to set selector and fields
         uniqueName = getName(node);
         unique = new Unique(uniqueName, "");
-        if(!isNCName(getLocalName(node))){
-            throw new InvalidNCNameException(getLocalName(node), "unique");
-        }
         visitChildren(node);
 
         // For every unique a selector has to be present. If not an exception is thrown.
