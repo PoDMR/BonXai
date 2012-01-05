@@ -58,4 +58,8 @@ public abstract class SchemaHandler {
 	public Schema getSchema() {
 		return schema;
 	}
+
+	public String getSchemaLanguage() {
+		return this.getSchema().getClass().getSimpleName();
+	}
 }
