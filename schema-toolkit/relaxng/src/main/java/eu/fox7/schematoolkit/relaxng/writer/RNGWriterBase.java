@@ -1,9 +1,9 @@
 package eu.fox7.schematoolkit.relaxng.writer;
 
-import eu.fox7.bonxai.common.IdentifiedNamespace;
-import eu.fox7.bonxai.common.NamespaceList;
-import eu.fox7.bonxai.xsd.tools.NameChecker;
+import eu.fox7.schematoolkit.common.IdentifiedNamespace;
+import eu.fox7.schematoolkit.common.NamespaceList;
 import eu.fox7.schematoolkit.relaxng.om.Pattern;
+import eu.fox7.schematoolkit.xsd.tools.NameChecker;
 
 import org.w3c.dom.Document;
 
@@ -70,7 +70,7 @@ public abstract class RNGWriterBase extends NameChecker{
      */
     protected void setPatternAttributes(org.w3c.dom.Element elementNode, Pattern pattern) {
         if (pattern.getAttributeNamespace() != null) {
-            elementNode.setAttribute("ns", pattern.getAttributeNamespace());
+            elementNode.setAttribute("ns", pattern.getAttributeNamespace().getUri());
         }
 
         if (pattern.getAttributeDatatypeLibrary() != null) {

@@ -1,6 +1,6 @@
 package eu.fox7.schematoolkit.relaxng.writer;
 
-import eu.fox7.bonxai.common.NamespaceList;
+import eu.fox7.schematoolkit.common.NamespaceList;
 import eu.fox7.schematoolkit.relaxng.*;
 import eu.fox7.schematoolkit.relaxng.om.Attribute;
 import eu.fox7.schematoolkit.relaxng.om.Choice;

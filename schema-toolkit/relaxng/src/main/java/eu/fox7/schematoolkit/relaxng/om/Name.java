@@ -1,5 +1,7 @@
 package eu.fox7.schematoolkit.relaxng.om;
 
+import eu.fox7.schematoolkit.common.AnonymousNamespace;
+
 /**
  * Class representing the Name element of RelaxNG
  * @author Lars Schmidt
@@ -26,7 +28,7 @@ public class Name extends NameClass {
     public Name(String content, String attributeNamespace) {
         super();
         this.content = content;
-        this.attributeNamespace = attributeNamespace;
+        this.attributeNamespace = new AnonymousNamespace(attributeNamespace);
     }
 
     /**

@@ -1,9 +1,9 @@
 package eu.fox7.schematoolkit.relaxng.parser;
 
-import eu.fox7.bonxai.xsd.tools.NameChecker;
 import eu.fox7.schematoolkit.relaxng.om.Name;
 import eu.fox7.schematoolkit.relaxng.om.RelaxNGSchema;
 import eu.fox7.schematoolkit.relaxng.parser.exceptions.InvalidQNameException;
+import eu.fox7.schematoolkit.xsd.tools.NameChecker;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;

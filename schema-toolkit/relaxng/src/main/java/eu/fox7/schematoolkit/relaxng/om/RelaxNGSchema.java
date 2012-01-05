@@ -1,8 +1,8 @@
 package eu.fox7.schematoolkit.relaxng.om;
 
-import eu.fox7.bonxai.common.DefaultNamespace;
-import eu.fox7.bonxai.common.NamespaceList;
 import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.common.DefaultNamespace;
+import eu.fox7.schematoolkit.common.NamespaceList;
 
 /**
  * Class representing a RELAX NG-XSDSchema.

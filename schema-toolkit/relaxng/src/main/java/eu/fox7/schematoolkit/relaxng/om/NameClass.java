@@ -1,7 +1,9 @@
 package eu.fox7.schematoolkit.relaxng.om;
 
-import eu.fox7.bonxai.common.DefaultNamespace;
-import eu.fox7.bonxai.common.NamespaceList;
+import eu.fox7.schematoolkit.common.AnonymousNamespace;
+import eu.fox7.schematoolkit.common.DefaultNamespace;
+import eu.fox7.schematoolkit.common.Namespace;
+import eu.fox7.schematoolkit.common.NamespaceList;
 
 /**
  * Abstract class for identification of all the nameClass Elements of RelaxNG
@@ -19,7 +21,7 @@ public abstract class NameClass {
     /**
      * String variable for the namespace attribute "ns"
      */
-    protected String attributeNamespace;
+    protected Namespace attributeNamespace;
     /**
      * Variable for holding the list of identified namespaces
      */
@@ -36,7 +38,7 @@ public abstract class NameClass {
      * Getter of the XML attribute namespace.
      * @return String   A string containing the value of the namespace
      */
-    public String getAttributeNamespace() {
+    public Namespace getAttributeNamespace() {
         return attributeNamespace;
     }
 
@@ -45,6 +47,14 @@ public abstract class NameClass {
      * @param namespace
      */
     public void setAttributeNamespace(String namespace) {
+        this.attributeNamespace = new AnonymousNamespace(namespace);
+    }
+
+    /**
+     * Setter of the XML attribute namespace.
+     * @param namespace
+     */
+    public void setAttributeNamespace(Namespace namespace) {
         this.attributeNamespace = namespace;
     }
 
@@ -94,4 +104,5 @@ public abstract class NameClass {
     public void setNamespaceList(NamespaceList namespaceList) {
         this.namespaceList = namespaceList;
     }
+
 }

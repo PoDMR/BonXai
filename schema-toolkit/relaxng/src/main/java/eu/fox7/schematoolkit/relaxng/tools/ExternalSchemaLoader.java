@@ -1,6 +1,6 @@
 package eu.fox7.schematoolkit.relaxng.tools;
 
-import eu.fox7.bonxai.common.IdentifiedNamespace;
+import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.relaxng.*;
 import eu.fox7.schematoolkit.relaxng.om.Attribute;
 import eu.fox7.schematoolkit.relaxng.om.Choice;

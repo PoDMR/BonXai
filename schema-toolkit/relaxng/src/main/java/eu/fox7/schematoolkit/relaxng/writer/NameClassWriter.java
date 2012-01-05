@@ -1,6 +1,6 @@
 package eu.fox7.schematoolkit.relaxng.writer;
 
-import eu.fox7.bonxai.common.NamespaceList;
+import eu.fox7.schematoolkit.common.NamespaceList;
 import eu.fox7.schematoolkit.relaxng.*;
 import eu.fox7.schematoolkit.relaxng.om.AnyName;
 import eu.fox7.schematoolkit.relaxng.om.Name;
@@ -78,7 +78,7 @@ public class NameClassWriter extends RNGWriterBase {
     private org.w3c.dom.Element createNodeForName(Name name) throws InvalidQNameException {
         org.w3c.dom.Element nameNode = createElementNode("name");
         if (name.getAttributeNamespace() != null) {
-            nameNode.setAttribute("ns", name.getAttributeNamespace());
+            nameNode.setAttribute("ns", name.getAttributeNamespace().getUri());
         }
         if (!isQName(name.getContent())) {
             throw new InvalidQNameException(name.getContent(), "content of name");
@@ -96,7 +96,7 @@ public class NameClassWriter extends RNGWriterBase {
     private org.w3c.dom.Element createNodeForNsName(NsName nsName) throws Exception {
         org.w3c.dom.Element nsNameNode = createElementNode("nsName");
         if (nsName.getAttributeNamespace() != null) {
-            nsNameNode.setAttribute("ns", nsName.getAttributeNamespace());
+            nsNameNode.setAttribute("ns", nsName.getAttributeNamespace().getUri());
         }
         if (nsName.getExceptNames() != null && !nsName.getExceptNames().isEmpty()) {
             org.w3c.dom.Element exceptNode = createElementNode("except");
@@ -121,7 +121,7 @@ public class NameClassWriter extends RNGWriterBase {
     private org.w3c.dom.Element createNodeForAnyName(AnyName anyName) throws Exception {
         org.w3c.dom.Element anyNameNode = createElementNode("anyName");
         if (anyName.getAttributeNamespace() != null) {
-            anyNameNode.setAttribute("ns", anyName.getAttributeNamespace());
+            anyNameNode.setAttribute("ns", anyName.getAttributeNamespace().getUri());
         }
         if (anyName.getExceptNames() != null && !anyName.getExceptNames().isEmpty()) {
             org.w3c.dom.Element exceptNode = createElementNode("except");

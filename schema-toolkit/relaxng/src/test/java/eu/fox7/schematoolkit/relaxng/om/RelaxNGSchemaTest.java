@@ -1,6 +1,6 @@
 package eu.fox7.schematoolkit.relaxng.om;
 
-import eu.fox7.bonxai.common.NamespaceList;
+import eu.fox7.schematoolkit.common.NamespaceList;
 import eu.fox7.schematoolkit.relaxng.om.Element;
 import eu.fox7.schematoolkit.relaxng.om.Pattern;
 import eu.fox7.schematoolkit.relaxng.om.RelaxNGSchema;

@@ -1,6 +1,5 @@
 package eu.fox7.schematoolkit.relaxng.parser;
 
-import eu.fox7.bonxai.xsd.tools.NameChecker;
 import eu.fox7.schematoolkit.relaxng.om.Element;
 import eu.fox7.schematoolkit.relaxng.om.Grammar;
 import eu.fox7.schematoolkit.relaxng.om.Pattern;
@@ -9,6 +8,7 @@ import eu.fox7.schematoolkit.relaxng.parser.exceptions.EmptyNameClassException;
 import eu.fox7.schematoolkit.relaxng.parser.exceptions.EmptyPatternException;
 import eu.fox7.schematoolkit.relaxng.parser.exceptions.InvalidQNameException;
 import eu.fox7.schematoolkit.relaxng.parser.exceptions.MultipleNameClassException;
+import eu.fox7.schematoolkit.xsd.tools.NameChecker;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;

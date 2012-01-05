@@ -1,11 +1,11 @@
 package eu.fox7.schematoolkit.relaxng.parser;
 
-import eu.fox7.bonxai.common.IdentifiedNamespace;
-import eu.fox7.bonxai.xsd.tools.NameChecker;
+import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.relaxng.om.Grammar;
 import eu.fox7.schematoolkit.relaxng.om.Pattern;
 import eu.fox7.schematoolkit.relaxng.om.RelaxNGSchema;
 import eu.fox7.schematoolkit.relaxng.parser.exceptions.InvalidAnyUriException;
+import eu.fox7.schematoolkit.xsd.tools.NameChecker;
 
 import org.w3c.dom.*;
 

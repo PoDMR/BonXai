@@ -2,9 +2,9 @@ package eu.fox7.schematoolkit.relaxng.writer;
 
 import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
 
-import eu.fox7.bonxai.common.DefaultNamespace;
-import eu.fox7.bonxai.common.IdentifiedNamespace;
-import eu.fox7.bonxai.common.NamespaceList;
+import eu.fox7.schematoolkit.common.DefaultNamespace;
+import eu.fox7.schematoolkit.common.IdentifiedNamespace;
+import eu.fox7.schematoolkit.common.NamespaceList;
 import eu.fox7.schematoolkit.relaxng.om.RelaxNGSchema;
 import eu.fox7.schematoolkit.relaxng.om.Text;
 import eu.fox7.schematoolkit.relaxng.writer.RNGWriterBase;

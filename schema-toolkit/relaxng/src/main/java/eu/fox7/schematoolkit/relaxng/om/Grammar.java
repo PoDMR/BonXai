@@ -1,10 +1,12 @@
 package eu.fox7.schematoolkit.relaxng.om;
 
-import eu.fox7.bonxai.common.DefaultNamespace;
-import eu.fox7.bonxai.common.NamespaceList;
+import eu.fox7.schematoolkit.common.DefaultNamespace;
+import eu.fox7.schematoolkit.common.NamespaceList;
 
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +40,7 @@ public class Grammar extends Pattern {
      * be found in the definedPatternNames list of this grammar, too! If one
      * name is not specified there, it is an error!
      **/
-    private HashMap<String,List<Define>> defineLookUpTable;
+    private LinkedHashMap<String,List<Define>> defineLookUpTable;
 
     /**
      * List of include contents of this grammar
@@ -51,7 +53,7 @@ public class Grammar extends Pattern {
      */
     public Grammar() {
         super(null, null, new NamespaceList(new DefaultNamespace(RelaxNGSchema.RELAXNG_NAMESPACE)));
-        this.defineLookUpTable = new HashMap<String,List<Define>>();
+        this.defineLookUpTable = new LinkedHashMap<String,List<Define>>();
         this.includeContents = new LinkedList<IncludeContent>();
         this.startPatterns = new LinkedList<Pattern>();
     }
@@ -62,7 +64,7 @@ public class Grammar extends Pattern {
      */
     public Grammar(String defaultNamespace) {
         super(null, null, new NamespaceList(new DefaultNamespace(defaultNamespace)));
-        this.defineLookUpTable = new HashMap<String,List<Define>>();
+        this.defineLookUpTable = new LinkedHashMap<String,List<Define>>();
         this.includeContents = new LinkedList<IncludeContent>();
         this.startPatterns = new LinkedList<Pattern>();
     }
@@ -75,7 +77,7 @@ public class Grammar extends Pattern {
      */
     public Grammar(String attributeDatatypeLibrary, String attributeNamespace, String defaultNamespace) {
         super(attributeDatatypeLibrary, attributeNamespace, new NamespaceList(new DefaultNamespace(defaultNamespace)));
-        this.defineLookUpTable = new HashMap<String,List<Define>>();
+        this.defineLookUpTable = new LinkedHashMap<String,List<Define>>();
         this.includeContents = new LinkedList<IncludeContent>();
         this.startPatterns = new LinkedList<Pattern>();
     }
@@ -237,5 +239,9 @@ public class Grammar extends Pattern {
 
 	public void addDefinePattern(String name, List<Define> defineList) {
 		this.defineLookUpTable.put(name, defineList);
+	}
+
+	public Collection<List<Define>> getDefinedPatterns() {
+		return this.defineLookUpTable.values();
 	}
 }

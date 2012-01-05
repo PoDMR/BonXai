@@ -1,5 +1,5 @@
 package eu.fox7.schematoolkit.relaxng.tools;
-import eu.fox7.bonxai.common.IdentifiedNamespace;
+import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.relaxng.*;
 import eu.fox7.schematoolkit.relaxng.parser.RNGParser;
 import eu.fox7.schematoolkit.relaxng.tools.XMLAttributeReplenisher;

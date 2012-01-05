@@ -1,6 +1,6 @@
 package eu.fox7.schematoolkit.relaxng.tools;
 
-import eu.fox7.bonxai.common.IdentifiedNamespace;
+import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.relaxng.*;
 import eu.fox7.schematoolkit.relaxng.om.AnyName;
 import eu.fox7.schematoolkit.relaxng.om.Attribute;
@@ -108,7 +108,7 @@ public class XMLAttributeReplenisher {
                         if (parentPattern.getAttributeNamespace().equals(RelaxNGSchema.RELAXNG_NAMESPACE)) {
                             this.addIdentifiedNamespace("rng", RelaxNGSchema.RELAXNG_NAMESPACE);
                         } else {
-                            this.addIdentifiedNamespace("ns_" + this.identifiedNamespaces.size(), parentPattern.getAttributeNamespace());
+                            this.addIdentifiedNamespace("ns_" + this.identifiedNamespaces.size(), parentPattern.getAttributeNamespace().getUri());
                         }
                     }
                 }
@@ -410,7 +410,7 @@ public class XMLAttributeReplenisher {
                         if (parentNameClass.getAttributeNamespace().equals(RelaxNGSchema.RELAXNG_NAMESPACE)) {
                             this.addIdentifiedNamespace("rng", RelaxNGSchema.RELAXNG_NAMESPACE);
                         } else {
-                            this.addIdentifiedNamespace("ns_" + this.identifiedNamespaces.size(), parentNameClass.getAttributeNamespace());
+                            this.addIdentifiedNamespace("ns_" + this.identifiedNamespaces.size(), parentNameClass.getAttributeNamespace().getUri());
                         }
                     }
                 }
@@ -503,7 +503,7 @@ public class XMLAttributeReplenisher {
                     if (pattern.getAttributeNamespace().equals(RelaxNGSchema.RELAXNG_NAMESPACE)) {
                         this.addIdentifiedNamespace("rng", RelaxNGSchema.RELAXNG_NAMESPACE);
                     } else {
-                        this.addIdentifiedNamespace("ns_" + this.identifiedNamespaces.size(), pattern.getAttributeNamespace());
+                        this.addIdentifiedNamespace("ns_" + this.identifiedNamespaces.size(), pattern.getAttributeNamespace().getUri());
                     }
                 }
             }

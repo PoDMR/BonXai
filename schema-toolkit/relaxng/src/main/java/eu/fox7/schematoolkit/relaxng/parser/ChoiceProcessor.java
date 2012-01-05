@@ -1,6 +1,5 @@
 package eu.fox7.schematoolkit.relaxng.parser;
 
-import eu.fox7.bonxai.xsd.tools.NameChecker;
 import eu.fox7.schematoolkit.relaxng.om.Choice;
 import eu.fox7.schematoolkit.relaxng.om.Define;
 import eu.fox7.schematoolkit.relaxng.om.Empty;
@@ -20,6 +19,7 @@ import eu.fox7.schematoolkit.relaxng.parser.exceptions.MissingHrefException;
 import eu.fox7.schematoolkit.relaxng.parser.exceptions.MultiplePatternException;
 import eu.fox7.schematoolkit.relaxng.parser.exceptions.ParentGrammarIsNullException;
 import eu.fox7.schematoolkit.relaxng.parser.exceptions.UnsupportedContentException;
+import eu.fox7.schematoolkit.xsd.tools.NameChecker;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;

@@ -1,7 +1,9 @@
 package eu.fox7.schematoolkit.relaxng.om;
 
-import eu.fox7.bonxai.common.DefaultNamespace;
-import eu.fox7.bonxai.common.NamespaceList;
+import eu.fox7.schematoolkit.common.AnonymousNamespace;
+import eu.fox7.schematoolkit.common.DefaultNamespace;
+import eu.fox7.schematoolkit.common.Namespace;
+import eu.fox7.schematoolkit.common.NamespaceList;
 
 /**
  * Abstract class representing a RELAX NG pattern with the standard XML attributes
@@ -16,7 +18,7 @@ public abstract class Pattern {
     /**
      * Variable holding the namespace attribute ("ns")
      */
-    protected String attributeNamespace;
+    protected Namespace attributeNamespace;
     /**
      * Variable holding the list of identified namespaces
      */
@@ -30,7 +32,7 @@ public abstract class Pattern {
      */
     public Pattern(String attributeDatatypeLibrary, String attributeNamespace, NamespaceList namespaceList) {
         this.attributeDatatypeLibrary = attributeDatatypeLibrary;
-        this.attributeNamespace = attributeNamespace;
+        this.attributeNamespace = new AnonymousNamespace(attributeNamespace);
         this.namespaceList = namespaceList;
     }
 
@@ -61,7 +63,7 @@ public abstract class Pattern {
      * Getter of the XML attribute namespace.
      * @return String   A string containing the value of the namespace
      */
-    public String getAttributeNamespace() {
+    public Namespace getAttributeNamespace() {
         return this.attributeNamespace;
     }
 
@@ -70,6 +72,14 @@ public abstract class Pattern {
      * @param namespace
      */
     public void setAttributeNamespace(String namespace) {
+        this.attributeNamespace = new AnonymousNamespace(namespace);
+    }
+
+    /**
+     * Setter of the XML attribute namespace.
+     * @param namespace
+     */
+    public void setAttributeNamespace(Namespace namespace) {
         this.attributeNamespace = namespace;
     }
 
