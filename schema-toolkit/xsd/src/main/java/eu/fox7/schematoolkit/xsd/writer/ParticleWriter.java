@@ -16,6 +16,8 @@
  */
 package eu.fox7.schematoolkit.xsd.writer;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import org.w3c.dom.Node;
 
@@ -274,8 +276,18 @@ public abstract class ParticleWriter {
         org.w3c.dom.Element anyPatternNode = root.getOwnerDocument().createElementNS("http://www.w3.org/2001/XMLSchema", "any");
         DOMHelper.setXSDPrefix(anyPatternNode, schema);
         setOccurrence(anyPatternNode, min, max);
-        if (anyPattern.getNamespace() != null && !anyPattern.getNamespace().equals("##any")) {
-            anyPatternNode.setAttribute("namespace", anyPattern.getNamespace());
+        Collection<Namespace> namespaces = anyPattern.getNamespaces();
+        if (!namespaces.isEmpty()) {
+        	String namespacesString = "";
+        	Iterator<Namespace> it = namespaces.iterator();
+            Namespace namespace = it.next();
+        	if (namespaces.size()>1 || (namespaces.size()==1 && !namespace.equals(Namespace.ANY_NAMESPACE))) {
+        		while (it.hasNext()) {
+        			namespacesString=namespacesString+namespace.getUri()+" ";
+        			namespace = it.next();
+        		}
+    			namespacesString=namespacesString+namespace.getUri();        		
+        	}
         }
         if (anyPattern.getId() != null) {
             anyPatternNode.setAttribute("id", anyPattern.getId());

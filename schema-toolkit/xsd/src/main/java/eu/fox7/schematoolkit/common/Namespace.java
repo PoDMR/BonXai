@@ -22,6 +22,7 @@ package eu.fox7.schematoolkit.common;
 public abstract class Namespace {
 
     public static final Namespace EMPTY_NAMESPACE = new DefaultNamespace("");
+	public static final Namespace ANY_NAMESPACE = new AnonymousNamespace("##ANY");
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()

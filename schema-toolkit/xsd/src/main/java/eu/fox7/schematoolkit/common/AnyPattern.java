@@ -15,6 +15,11 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 package eu.fox7.schematoolkit.common;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.LinkedList;
+
 /*
  * implements class AnyPattern
  */
@@ -22,19 +27,25 @@ package eu.fox7.schematoolkit.common;
 public class AnyPattern extends Particle {
 
     protected ProcessContentsInstruction processContentsInstruction;
-    protected String namespace;
+    protected List<Namespace> namespaces = new LinkedList<Namespace>();
 
     public AnyPattern(ProcessContentsInstruction processContentsInstruction, String namespace) {
         this.processContentsInstruction = processContentsInstruction;
-        this.namespace = namespace;
+        this.setNamespace(namespace);
     }
+    
+    public AnyPattern(ProcessContentsInstruction processContentsInstruction, Namespace namespace) {
+        this.processContentsInstruction = processContentsInstruction;
+        this.addNamespace(namespace);
+    }
+    
 
     /*
      * method getNamespaces return the namespace from which the possible
      * "any"-Elements may be used.
      */
-    public String getNamespace() {
-        return this.namespace;
+    public Collection<Namespace> getNamespaces() {
+        return this.namespaces;
     }
 
     /*
@@ -50,7 +61,7 @@ public class AnyPattern extends Particle {
      * content
      */
     public boolean equals(AnyPattern that) {
-        return (super.equals(that) && this.namespace.equals(that.namespace) && this.processContentsInstruction.equals(that.processContentsInstruction));
+        return (super.equals(that) && this.namespaces.equals(that.namespaces) && this.processContentsInstruction.equals(that.processContentsInstruction));
     }
 
     /**
@@ -63,7 +74,7 @@ public class AnyPattern extends Particle {
         int hash = super.hashCode();
         int multiplier = 13;
 //        if (this.namespace != null) {
-        	hash = hash * multiplier + this.namespace.hashCode();
+        	hash = hash * multiplier + this.namespaces.hashCode();
 //        }
         hash = hash * multiplier + this.processContentsInstruction.hashCode();
         return hash;
@@ -74,7 +85,16 @@ public class AnyPattern extends Particle {
      * @param namespace New namespace attribute of the any pattern.
      */
     public void setNamespace(String namespace) {
-        this.namespace = namespace;
+        this.setNamespace(new AnonymousNamespace(namespace));;
+    }
+    
+    public void setNamespace(Namespace namespace) {
+        this.namespaces = new LinkedList<Namespace>();
+        this.namespaces.add(namespace);
+    }
+    
+    public void addNamespace(Namespace namespace) {
+    	this.namespaces.add(namespace);
     }
 }
 
