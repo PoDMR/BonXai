@@ -331,7 +331,7 @@ public class XSDWriter {
 //                Content: (annotation?) </import>
                 fsElement = xmldoc.createElementNS("http://www.w3.org/2001/XMLSchema", "import");
                 DOMHelper.setXSDPrefix(fsElement, schema);
-                value = ((ImportedSchema) fs).getNamespace();
+                value = ((ImportedSchema) fs).getNamespace().getUri();
                 if (value != null && !value.equals("")) {
                     fsElement.setAttribute("namespace", value);
                 }

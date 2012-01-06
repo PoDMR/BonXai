@@ -21,7 +21,7 @@ import java.util.LinkedList;
 import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.QualifiedName;
 
-public class SimpleContentRestriction extends Inheritance implements SimpleContentInheritance, SimpleTypeInheritance {
+public class SimpleContentRestriction extends SimpleContentInheritance implements SimpleTypeInheritance {
 
     protected SimpleContentFixableRestrictionProperty<String> minExclusive;
     protected SimpleContentFixableRestrictionProperty<String> maxExclusive;

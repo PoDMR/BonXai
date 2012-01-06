@@ -23,6 +23,9 @@ public abstract class Namespace {
 
     public static final Namespace EMPTY_NAMESPACE = new DefaultNamespace("");
 	public static final Namespace ANY_NAMESPACE = new AnonymousNamespace("##ANY");
+	public static final Namespace TARGET_NAMESPACE = new AnonymousNamespace("##TARGETNAMESPACE");
+	public static final Namespace OTHER_NAMESPACE = new AnonymousNamespace("##OTHER");
+	public static final Namespace LOCAL_NAMESPACE = new AnonymousNamespace("##LOCAL");
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -73,13 +76,6 @@ public abstract class Namespace {
      */
     public String getUri() {
         return this.uri;
-    }
-
-    /**
-     * Set namesapce URI.
-     */
-    public void setUri(String uri) {
-        this.uri = uri;
     }
 
     public abstract String getPrefix();

@@ -15,6 +15,9 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 package eu.fox7.schematoolkit.xsd.om;
+
+import eu.fox7.schematoolkit.common.Namespace;
+
 /**
  * The ImportedSchema class represents the namespace of an imported schema which
  * elements can be used within the current schema.
@@ -22,7 +25,7 @@ package eu.fox7.schematoolkit.xsd.om;
  */
 public class ImportedSchema extends ForeignSchema {
 
-    protected String namespace = "";
+    protected Namespace namespace;
 
     /**
      * Creates a new Foreignschema with namespace and location of the imported
@@ -35,7 +38,7 @@ public class ImportedSchema extends ForeignSchema {
      * @param namespace
      * @param schemaLocation
      **/
-    public ImportedSchema (String namespace, String schemaLocation) {
+    public ImportedSchema (Namespace namespace, String schemaLocation) {
         super(schemaLocation);
         this.namespace = namespace;
     }
@@ -44,7 +47,7 @@ public class ImportedSchema extends ForeignSchema {
      * Returns the namespace of the imported schema.
      * @return namespace    String
      */
-    public String getNamespace () {
+    public Namespace getNamespace () {
         return namespace;
     }
 }

@@ -40,12 +40,23 @@ public class AnyPattern extends Particle {
     }
     
 
-    /*
+    public AnyPattern(ProcessContentsInstruction processContentsInstruction, Collection<Namespace> namespaces) {
+    	this.processContentsInstruction = processContentsInstruction;
+    	this.namespaces = new LinkedList<Namespace>(namespaces);
+    }
+
+	/*
      * method getNamespaces return the namespace from which the possible
      * "any"-Elements may be used.
      */
     public Collection<Namespace> getNamespaces() {
         return this.namespaces;
+    }
+    
+    public boolean isAnyNamespace() {
+    	return (this.namespaces==null ||
+    			this.namespaces.isEmpty() ||
+    			(this.namespaces.size()==1 && this.namespaces.iterator().next().equals(Namespace.ANY_NAMESPACE)));
     }
 
     /*

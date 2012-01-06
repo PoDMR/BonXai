@@ -23,6 +23,7 @@ import org.w3c.dom.*;
 import eu.fox7.schematoolkit.common.AnyAttribute;
 import eu.fox7.schematoolkit.common.AttributeGroupReference;
 import eu.fox7.schematoolkit.common.AttributeParticle;
+import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.*;
 
@@ -166,8 +167,18 @@ public abstract class AttributeWriter {
         DOMHelper.setXSDPrefix(attrNode, schema);
         AnnotationWriter.writeAnnotation(attrNode, anyAttr, schema);
 
-        if (anyAttr.getNamespace() != null && !anyAttr.getNamespace().equals("##any")) {
-            attrNode.setAttribute("namespace", anyAttr.getNamespace());
+        if (!anyAttr.isAnyNamespace()) {
+        	Collection<Namespace> namespaces = anyAttr.getNamespaces();
+        	StringBuilder sb = new StringBuilder();
+        	Iterator<Namespace> it = namespaces.iterator();
+        	while(it.hasNext()) {
+            	Namespace namespace = it.next();
+            	sb.append(namespace.getUri());
+            	if (it.hasNext())
+            		sb.append(' ');
+        	}
+        	
+            attrNode.setAttribute("namespace", sb.toString());
         }
 
         switch (anyAttr.getProcessContentsInstruction()) {

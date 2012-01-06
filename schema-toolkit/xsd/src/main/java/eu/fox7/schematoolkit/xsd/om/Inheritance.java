@@ -16,7 +16,10 @@
  */
 package eu.fox7.schematoolkit.xsd.om;
 
+import java.util.LinkedList;
+
 import eu.fox7.schematoolkit.common.AnnotationElement;
+import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.QualifiedName;
 
 /**
@@ -27,7 +30,7 @@ import eu.fox7.schematoolkit.common.QualifiedName;
  * the base type is stored in the Inheritance base class.
  */
 
-public class Inheritance extends AnnotationElement{
+public abstract class Inheritance extends AnnotationElement{
     private QualifiedName baseType;
 
     /**

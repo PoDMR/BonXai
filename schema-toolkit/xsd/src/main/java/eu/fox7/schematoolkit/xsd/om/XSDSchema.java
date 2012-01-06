@@ -83,7 +83,7 @@ public class XSDSchema implements Schema {
      * {@link Group}s can only be defined in the top level of the <schema />
      * tag.
      */
-    protected List<Group> groups;
+    protected LinkedHashMap<QualifiedName, Group> groups;
     /**
      * Globally defined Attributes.
      *
@@ -198,7 +198,7 @@ public class XSDSchema implements Schema {
         foreignSchemas = new LinkedList<ForeignSchema>();
         types = new LinkedHashMap<QualifiedName,Type>();
         attributeGroups = new LinkedHashMap<QualifiedName,AttributeGroup>();
-        groups = new LinkedList<Group>();
+        groups = new LinkedHashMap<QualifiedName,Group>();
         attributes = new LinkedList<Attribute>();
         elements = new LinkedList<Element>();
 
@@ -448,7 +448,7 @@ public class XSDSchema implements Schema {
      * referenced! To do this, use the {@link addGroup()}; method!
      */
     public Collection<eu.fox7.schematoolkit.xsd.om.Group> getGroups() {
-        return groups;
+        return groups.values();
     }
 
     /**
@@ -457,12 +457,12 @@ public class XSDSchema implements Schema {
      * Make sure to submit a {@link SymbolTableRef} created by the {@link
      * SymbolTable} returned from {@link getGroupSymbolTable()}.
      */
-    public void addGroup(eu.fox7.schematoolkit.xsd.om.Group val) {
-        this.groups.add(val);
+    public void addGroup(Group group) {
+        this.groups.put(group.getName(),group);
     }
 
-    public void removeGroup(Group val) {
-        this.groups.remove(val);
+    public void removeGroup(Group group) {
+        this.groups.remove(group.getName());
     }
 
     /**
@@ -605,6 +605,18 @@ public class XSDSchema implements Schema {
 
 	public void setTargetNamespace(String targetNamespaceURI) {
 		this.namespaceList.setTargetNamespace(targetNamespaceURI);
+	}
+
+	public Group getGroup(GroupReference groupRef) {
+		return this.getGroup(groupRef.getName());
+	}
+
+	public Group getGroup(QualifiedName name) {
+		return this.groups.get(name);
+	}
+
+	public Element getElement(ElementRef elementRef) {
+		return this.getElement(elementRef.getElementName());
 	}
 }
 

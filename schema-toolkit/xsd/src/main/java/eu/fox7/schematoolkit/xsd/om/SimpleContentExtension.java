@@ -26,7 +26,7 @@ import eu.fox7.schematoolkit.common.QualifiedName;
  * base class which is inherited. No further information is
  * needed for this type of inheritance.
  */
-public class SimpleContentExtension extends Inheritance implements SimpleContentInheritance {
+public class SimpleContentExtension extends SimpleContentInheritance {
 
     /**
      * LinkedList holding the AttributeParticle of the SimpleContentInheritance

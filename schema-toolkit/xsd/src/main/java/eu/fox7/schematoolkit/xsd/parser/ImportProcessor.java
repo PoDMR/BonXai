@@ -1,6 +1,7 @@
 package eu.fox7.schematoolkit.xsd.parser;
 
 import eu.fox7.schematoolkit.common.Annotation;
+import eu.fox7.schematoolkit.common.AnonymousNamespace;
 import eu.fox7.schematoolkit.xsd.om.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.attribute.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.content.*;
@@ -60,7 +61,7 @@ class ImportProcessor extends Processor {
                 }
             }
         }
-        ImportedSchema importedSchema = new ImportedSchema(namespace, schemaLocation);
+        ImportedSchema importedSchema = new ImportedSchema(new AnonymousNamespace(namespace), schemaLocation);
         if (node.getAttributes().getNamedItem("id") != null) {
             if (node.getAttributes().getNamedItem("id").getNodeValue().equals("")) {
                     throw new EmptyIdException("Import");

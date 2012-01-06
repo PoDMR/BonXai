@@ -16,6 +16,10 @@
  */
 package eu.fox7.schematoolkit.common;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 
 /**
  * The AnyAttribute class represents the XSD attribute definition with the
@@ -26,65 +30,45 @@ package eu.fox7.schematoolkit.common;
  */
 public class AnyAttribute extends AttributeParticle {
 
-    /**
-     * The namespaces which defines the allowed attributes.
-     */
-    protected String namespace;
-
-    /**
-     * Specifies how the XML processor handles the validation.
-     */
     protected ProcessContentsInstruction processContentsInstruction;
+    protected List<Namespace> namespaces = new LinkedList<Namespace>();
 
-    /**
-     * Creates an AnyAttribute object with the passed
-     * process contents instruction and namespace value.
-     */
-    public AnyAttribute (ProcessContentsInstruction processContentsInstruction, String namespace) {
+    public AnyAttribute(ProcessContentsInstruction processContentsInstruction, String namespace) {
         this.processContentsInstruction = processContentsInstruction;
-        this.namespace = namespace;
+        this.setNamespace(namespace);
+    }
+    
+    public AnyAttribute(ProcessContentsInstruction processContentsInstruction, Namespace namespace) {
+        this.processContentsInstruction = processContentsInstruction;
+        this.addNamespace(namespace);
+    }
+    
+
+    public AnyAttribute(ProcessContentsInstruction processContentsInstruction,
+			Collection<Namespace> namespaceList) {
+		this.processContentsInstruction = processContentsInstruction;
+		this.namespaces=new LinkedList<Namespace>(namespaceList);
+	}
+
+	/*
+     * method getNamespaces return the namespace from which the possible
+     * "any"-Elements may be used.
+     */
+    public Collection<Namespace> getNamespaces() {
+        return this.namespaces;
+    }
+    
+    public boolean isAnyNamespace() {
+    	return (this.namespaces==null ||
+    			this.namespaces.isEmpty() ||
+    			(this.namespaces.size()==1 && this.namespaces.iterator().next().equals(Namespace.ANY_NAMESPACE)));
     }
 
-    /**
-     * Constructor with only processing instruction.
-     *
-     * Sets namespace to the XSD default ##any.
+    /*
+     * method getProcessContentsInstruction returns processContentsinstruction
+     * (one of skip, lax, strict)
      */
-    public AnyAttribute(ProcessContentsInstruction processContentsInstruction) {
-        this(processContentsInstruction, "##any");
-    }
-
-    /**
-     * Constructor with only Namespace.
-     *
-     * Sets processing instruction to XSD default {@link
-     * ProcessContentsInstruction.Strict}.
-     */
-    public AnyAttribute(String namespace) {
-        this(ProcessContentsInstruction.Strict, namespace);
-    }
-
-    /**
-     * Default constructor.
-     *
-     * Sets processing instruction to XSD default {@link
-     * ProcessContentsInstruction.Strict} and namespace to XSD default ##any.
-     */
-    public AnyAttribute() {
-        this(ProcessContentsInstruction.Strict, "##any");
-    }
-
-    /**
-     * Returns the namespace.
-     */
-    public String getNamespace () {
-        return namespace;
-    }
-
-    /**
-     * Returns the process contents instruction.
-     */
-    public eu.fox7.schematoolkit.common.ProcessContentsInstruction getProcessContentsInstruction () {
+    public ProcessContentsInstruction getProcessContentsInstruction() {
         return processContentsInstruction;
     }
 
@@ -92,23 +76,41 @@ public class AnyAttribute extends AttributeParticle {
      * Compare two objects of this type to check if they represent the same
      * content
      */
-    public boolean equals( AnyAttribute that ) {
-        return (
-            super.equals( that )
-            && this.namespace.equals( that.namespace )
-            && this.processContentsInstruction.equals( that.processContentsInstruction )
-        );
+    public boolean equals(AnyPattern that) {
+        return (super.equals(that) && this.namespaces.equals(that.namespaces) && this.processContentsInstruction.equals(that.processContentsInstruction));
     }
 
     /**
-     * Set new namespace.
+     * Return a hashCode for this object
      *
-     * @param namespace New namespace of the any attribute.
+     * This needs to be overwritten to fullfill the hashCode/equals contract
+     * enforced by java
      */
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
+    public int hashCode() {
+        int hash = super.hashCode();
+        int multiplier = 13;
+//        if (this.namespace != null) {
+        	hash = hash * multiplier + this.namespaces.hashCode();
+//        }
+        hash = hash * multiplier + this.processContentsInstruction.hashCode();
+        return hash;
     }
 
-
+    /**
+     * Set new namespace attribute of the any pattern.
+     * @param namespace New namespace attribute of the any pattern.
+     */
+    public void setNamespace(String namespace) {
+        this.setNamespace(new AnonymousNamespace(namespace));;
+    }
+    
+    public void setNamespace(Namespace namespace) {
+        this.namespaces = new LinkedList<Namespace>();
+        this.namespaces.add(namespace);
+    }
+    
+    public void addNamespace(Namespace namespace) {
+    	this.namespaces.add(namespace);
+    }
 }
 

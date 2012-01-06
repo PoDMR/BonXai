@@ -15,6 +15,9 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 package eu.fox7.schematoolkit.xsd.om;
+
+import eu.fox7.schematoolkit.common.QualifiedName;
+
 /**
  * {@code SimpleContentInheritance} can be applied to
  * {@code ComplexType}s which include a {@code SimpleContent}
@@ -23,7 +26,14 @@ package eu.fox7.schematoolkit.xsd.om;
  * inheritance features with {@code SimpleTypeInheritance}
  * which may be fully reused in this manner.
  */
-public interface SimpleContentInheritance  {
+public abstract class SimpleContentInheritance extends Inheritance  {
+
+	public SimpleContentInheritance(QualifiedName baseType) {
+		super(baseType);
+	}
+
+	public SimpleContentInheritance() {
+	}
 
 }
 

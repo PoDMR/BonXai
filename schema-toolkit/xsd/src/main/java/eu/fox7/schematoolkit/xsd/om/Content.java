@@ -20,5 +20,6 @@ import eu.fox7.schematoolkit.common.AnnotationElement;
 
 public abstract class Content extends AnnotationElement{
 
+	public abstract Inheritance getInheritance();
 
 }
