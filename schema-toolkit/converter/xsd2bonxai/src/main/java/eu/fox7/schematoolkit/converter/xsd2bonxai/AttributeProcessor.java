@@ -14,21 +14,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
-package eu.fox7.bonxai.converter.xsd2bonxai;
+package eu.fox7.schematoolkit.converter.xsd2bonxai;
 
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import eu.fox7.bonxai.bonxai.Attribute;
-import eu.fox7.bonxai.bonxai.AttributePattern;
-import eu.fox7.bonxai.bonxai.BonxaiType;
-import eu.fox7.bonxai.common.AnyAttribute;
-import eu.fox7.bonxai.common.AttributeGroupReference;
-import eu.fox7.bonxai.common.AttributeParticle;
-import eu.fox7.bonxai.common.QualifiedName;
-import eu.fox7.bonxai.xsd.AttributeRef;
-import eu.fox7.bonxai.xsd.AttributeUse;
-import eu.fox7.bonxai.xsd.XSDSchema;
+
+import eu.fox7.schematoolkit.bonxai.om.Attribute;
+import eu.fox7.schematoolkit.bonxai.om.AttributePattern;
+import eu.fox7.schematoolkit.bonxai.om.BonxaiType;
+import eu.fox7.schematoolkit.common.AnyAttribute;
+import eu.fox7.schematoolkit.common.AttributeGroupReference;
+import eu.fox7.schematoolkit.common.AttributeParticle;
+import eu.fox7.schematoolkit.common.Namespace;
+import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.xsd.om.AttributeRef;
+import eu.fox7.schematoolkit.xsd.om.AttributeUse;
+import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 /**
  * Processor class to convert Attributes from XSD to Bonxai.
@@ -62,7 +64,7 @@ class AttributeProcessor {
      * Will create a new Bonxai Attribute instance, which corresponds to the
      * given XSD Attribute, and return it.
      */
-    public eu.fox7.bonxai.bonxai.Attribute convertAttribute(eu.fox7.bonxai.xsd.Attribute xsdAttribute) {
+    public eu.fox7.schematoolkit.bonxai.om.Attribute convertAttribute(eu.fox7.schematoolkit.xsd.om.Attribute xsdAttribute) {
         BonxaiType bonxaiType;
         
         if(xsdAttribute.getSimpleTypeName() == null){
@@ -72,7 +74,7 @@ class AttributeProcessor {
             bonxaiType.setDefaultValue(xsdAttribute.getDefault());
             bonxaiType.setFixedValue(xsdAttribute.getFixed());
         }
-        return new eu.fox7.bonxai.bonxai.Attribute(
+        return new eu.fox7.schematoolkit.bonxai.om.Attribute(
             xsdAttribute.getName(),
             bonxaiType,
             (xsdAttribute.getUse() == AttributeUse.Required)
@@ -86,10 +88,10 @@ class AttributeProcessor {
      * inlined. Note, that the "required" flag defined in the ref overwrites
      * the one potentially provided in the target.
      */
-    public AttributeParticle convertAttributeRef(eu.fox7.bonxai.xsd.AttributeRef xsdAttributeRef) {
+    public AttributeParticle convertAttributeRef(eu.fox7.schematoolkit.xsd.om.AttributeRef xsdAttributeRef) {
         AttributeParticle particle;
     	if (this.schema.getDefaultNamespace().equals(xsdAttributeRef.getAttributeName().getNamespace())) {
-        	eu.fox7.bonxai.xsd.Attribute xsdAttribute = schema.getAttribute(xsdAttributeRef.getAttributeName());
+        	eu.fox7.schematoolkit.xsd.om.Attribute xsdAttribute = schema.getAttribute(xsdAttributeRef.getAttributeName());
     		BonxaiType type = new BonxaiType(xsdAttribute.getSimpleTypeName());
         	Attribute bonxaiAttribute = new Attribute(xsdAttribute.getName(), type);
             if (xsdAttributeRef.getUse() == AttributeUse.Required) {
@@ -125,7 +127,7 @@ class AttributeProcessor {
      * the corresponding Bonxai representation. Attributes, AttributeRefs,
      * AttributeGroupRefs and AnyAttribute values are converted in this step.
      */
-    public eu.fox7.bonxai.bonxai.AttributePattern convertAttributes(
+    public eu.fox7.schematoolkit.bonxai.om.AttributePattern convertAttributes(
             List<AttributeParticle> attributeParticles
     ) {
         AttributePattern bonxaiAttrPattern = new AttributePattern();
@@ -135,11 +137,11 @@ class AttributeProcessor {
         bonxaiAttrPattern.setAttributeList(bonxaiAttrList);
 
         for (AttributeParticle xsdAttrParticle : attributeParticles) {
-            if (xsdAttrParticle instanceof eu.fox7.bonxai.xsd.Attribute)
+            if (xsdAttrParticle instanceof eu.fox7.schematoolkit.xsd.om.Attribute)
             {
                 bonxaiAttrList.add(
                     convertAttribute(
-                        (eu.fox7.bonxai.xsd.Attribute) xsdAttrParticle
+                        (eu.fox7.schematoolkit.xsd.om.Attribute) xsdAttrParticle
                     )
                 );
             } else if (xsdAttrParticle instanceof AttributeGroupReference) {
@@ -155,33 +157,7 @@ class AttributeProcessor {
             } else if (xsdAttrParticle instanceof AnyAttribute) {
                 AnyAttribute anyAttribute = (AnyAttribute) xsdAttrParticle;
                 // Replace all occurrences of " " in the namespace attribute with ",".
-                String namespaceList = "";
-                if (anyAttribute.getNamespace() == null) {
-                    namespaceList = "any";
-                } else if (anyAttribute.getNamespace().equals("##any")) {
-                    namespaceList = "any";
-                } else if (anyAttribute.getNamespace().equals("##other")) {
-                    namespaceList = "other";
-                } else {
-                    String[] namespaceArray = anyAttribute.getNamespace().split(" ");
-                    for (String namespace : namespaceArray) {
-                        if (namespace.equals("##local")) {
-                            namespace = "local";
-                        } else if (namespace.equals("##targetNamespace")) {
-                            namespace = "targetNamespace";
-                        } else {
-                            namespaceList = "any";
-                        }
-                        if (!namespaceList.equals("any")) {
-                            if (namespaceList.equals("")) {
-                                namespaceList = namespace;
-                            } else {
-                                namespaceList = "," + namespace;
-                            }
-                        }
-                    }
-                }
-                AnyAttribute resultAnyAttribute = new AnyAttribute(anyAttribute.getProcessContentsInstruction(), namespaceList);
+                AnyAttribute resultAnyAttribute = new AnyAttribute(anyAttribute.getProcessContentsInstruction(), anyAttribute.getNamespaces());
                 bonxaiAttrPattern.setAnyAttribute(resultAnyAttribute);
             } else {
                 // This should never happen!

@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
-package eu.fox7.bonxai.converter.xsd2bonxai;
+package eu.fox7.schematoolkit.converter.xsd2bonxai;
 
-import eu.fox7.bonxai.bonxai.*;
-import eu.fox7.bonxai.common.*;
-import eu.fox7.bonxai.xsd.*;
+import eu.fox7.schematoolkit.bonxai.om.*;
+import eu.fox7.schematoolkit.common.*;
+import eu.fox7.schematoolkit.xsd.om.*;
 
 class ParticleProcessor {
     private XSDSchema schema;
@@ -52,8 +52,8 @@ class ParticleProcessor {
             );
         } else if (particle instanceof AnyPattern) {
             resultParticle = convertAnyPattern((AnyPattern) particle);
-        } else if (particle instanceof eu.fox7.bonxai.xsd.Element) {
-            resultParticle = convertElement((eu.fox7.bonxai.xsd.Element) particle);
+        } else if (particle instanceof eu.fox7.schematoolkit.xsd.om.Element) {
+            resultParticle = convertElement((eu.fox7.schematoolkit.xsd.om.Element) particle);
         } else if (particle instanceof ElementRef) {
             resultParticle = convertElementRef((ElementRef) particle);
         } else if (particle instanceof GroupReference) {
@@ -101,7 +101,7 @@ class ParticleProcessor {
     /**
      * Converts a single Element.
      */
-    public eu.fox7.bonxai.bonxai.Element convertElement(eu.fox7.bonxai.xsd.Element xsdElement) {
+    public eu.fox7.schematoolkit.bonxai.om.Element convertElement(eu.fox7.schematoolkit.xsd.om.Element xsdElement) {
     	// TODO: decide whether to produce a BonxaiType a BonxaiSimpleType or just a plain Element
     	QualifiedName typename = xsdElement.getTypeName();
     	Type type = schema.getType(typename);
@@ -113,7 +113,7 @@ class ParticleProcessor {
     		bonxaiType.setDefaultValue(xsdElement.getDefault());
     	}
     	
-    	eu.fox7.bonxai.bonxai.Element bonxaiElement = new eu.fox7.bonxai.bonxai.Element(
+    	eu.fox7.schematoolkit.bonxai.om.Element bonxaiElement = new eu.fox7.schematoolkit.bonxai.om.Element(
             xsdElement.getName(),
             bonxaiType,
             xsdElement.isNillable()
@@ -129,7 +129,7 @@ class ParticleProcessor {
      */
     public Particle convertElementRef(ElementRef elementRef) {
     	if (elementRef.getElementName().getNamespace().equals(schema.getDefaultNamespace())) {
-    		eu.fox7.bonxai.xsd.Element element = schema.getElement(elementRef.getElementName());
+    		eu.fox7.schematoolkit.xsd.om.Element element = schema.getElement(elementRef.getElementName());
         	return convertElement(element);
     	} else {
     		return new ElementRef(elementRef.getElementName());
@@ -154,34 +154,7 @@ class ParticleProcessor {
      * Converts the AnyPattern.
      */
     public AnyPattern convertAnyPattern(AnyPattern anyPattern) {
-        // Replace all occurrences of " " in the namespace attribute with ",".
-        String namespaceList = "";
-        if (anyPattern.getNamespace() == null) {
-            namespaceList = "any";
-        } else if (anyPattern.getNamespace().equals("##any")) {
-            namespaceList = "any";
-        } else if (anyPattern.getNamespace().equals("##other")) {
-            namespaceList = "other";
-        } else {
-            String[] namespaceArray = anyPattern.getNamespace().split(" ");
-            for (String namespace : namespaceArray) {
-                if (namespace.equals("##local")) {
-                    namespace = "local";
-                } else if (namespace.equals("##targetNamespace")) {
-                    namespace = "targetNamespace";
-                } else {
-                    namespaceList = "any";
-                }
-                if (!namespaceList.equals("any")) {
-                    if (namespaceList.equals("")) {
-                        namespaceList = namespace;
-                    } else {
-                        namespaceList = "," + namespace;
-                    }
-                }
-            }
-        }
-        anyPattern = new AnyPattern(anyPattern.getProcessContentsInstruction(), namespaceList);
+        anyPattern = new AnyPattern(anyPattern.getProcessContentsInstruction(), anyPattern.getNamespaces());
         return anyPattern;
     }
 }

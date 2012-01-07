@@ -1,4 +1,4 @@
-package eu.fox7.bonxai.typeautomaton.factories;
+package eu.fox7.schematoolkit.typeautomaton.factories;
 
 
 import java.util.Collection;
@@ -9,18 +9,18 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import eu.fox7.bonxai.common.Particle;
-import eu.fox7.bonxai.common.ParticleContainer;
 import eu.fox7.bonxai.typeautomaton.AnnotatedNFATypeAutomaton;
 import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
-import eu.fox7.bonxai.xsd.ComplexContentType;
-import eu.fox7.bonxai.xsd.ComplexType;
-import eu.fox7.bonxai.xsd.Content;
-import eu.fox7.bonxai.xsd.Element;
-import eu.fox7.bonxai.xsd.Type;
-import eu.fox7.bonxai.xsd.XSDSchema;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.schematoolkit.common.Particle;
+import eu.fox7.schematoolkit.common.ParticleContainer;
+import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
+import eu.fox7.schematoolkit.xsd.om.ComplexType;
+import eu.fox7.schematoolkit.xsd.om.Content;
+import eu.fox7.schematoolkit.xsd.om.Element;
+import eu.fox7.schematoolkit.xsd.om.Type;
+import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 public class XSDTypeAutomatonFactory {
     /**
