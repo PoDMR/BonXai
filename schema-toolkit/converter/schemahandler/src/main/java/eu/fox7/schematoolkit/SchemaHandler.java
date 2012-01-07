@@ -17,6 +17,12 @@ public abstract class SchemaHandler {
 	
 	protected StringBuffer schemaStringBuffer = null;
 	
+	public SchemaHandler() {}
+	
+	public SchemaHandler(Schema schema) {
+		this.schema = schema;
+	}
+
 	public void parseSchema(String schemaString) throws IOException, Exception {
 		StringBufferInputStream inputStream = new StringBufferInputStream(schemaString); 
 		parseSchema(inputStream);
@@ -60,6 +66,6 @@ public abstract class SchemaHandler {
 	}
 
 	public String getSchemaLanguage() {
-		return this.getSchema().getClass().getSimpleName();
+		return this.getSchema().getSchemaLanguage().toString();
 	}
 }
