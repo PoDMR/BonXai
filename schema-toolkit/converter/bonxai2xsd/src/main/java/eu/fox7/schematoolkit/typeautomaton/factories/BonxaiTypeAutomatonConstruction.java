@@ -1,4 +1,4 @@
-package eu.fox7.bonxai.typeautomaton.factories;
+package eu.fox7.schematoolkit.typeautomaton.factories;
 
 
 import java.util.HashSet;
@@ -12,7 +12,6 @@ import java.util.Vector;
 import org.apache.commons.collections15.BidiMap;
 import org.apache.commons.collections15.bidimap.DualHashBidiMap;
 
-import eu.fox7.bonxai.converter.bonxai2xsd.ChildPatternConverter;
 import eu.fox7.bonxai.typeautomaton.AnnotatedNFATypeAutomaton;
 import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.NoSuchStateException;
@@ -53,6 +52,7 @@ import eu.fox7.schematoolkit.common.GroupReference;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.ParticleContainer;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.converter.bonxai2xsd.ChildPatternConverter;
 import eu.fox7.schematoolkit.xsd.om.Type;
 
 public class BonxaiTypeAutomatonConstruction {

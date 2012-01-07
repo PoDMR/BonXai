@@ -1,4 +1,4 @@
-package eu.fox7.bonxai.converter.bonxai2xsd;
+package eu.fox7.schematoolkit.converter.bonxai2xsd;
 
 
 import java.util.HashSet;
