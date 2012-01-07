@@ -30,6 +30,7 @@ public class SimpleContentType extends Content {
      * Gets the inheritance of SimpleContentType
      * @return SimpleContentInheritance
      */
+    @Override
     public SimpleContentInheritance getInheritance() {
         return this.inheritance;
     }

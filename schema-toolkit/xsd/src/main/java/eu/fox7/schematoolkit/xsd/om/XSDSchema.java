@@ -19,7 +19,10 @@ package eu.fox7.schematoolkit.xsd.om;
 import java.util.LinkedList;
 
 import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.SchemaHandler;
+import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.schematoolkit.common.*;
+import eu.fox7.schematoolkit.xsd.XSDSchemaHandler;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -617,6 +620,16 @@ public class XSDSchema implements Schema {
 
 	public Element getElement(ElementRef elementRef) {
 		return this.getElement(elementRef.getElementName());
+	}
+
+	@Override
+	public SchemaHandler getSchemaHandler() {
+		return new XSDSchemaHandler(this);
+	}
+
+	@Override
+	public SchemaLanguage getSchemaLanguage() {
+		return SchemaLanguage.XMLSCHEMA;
 	}
 }
 

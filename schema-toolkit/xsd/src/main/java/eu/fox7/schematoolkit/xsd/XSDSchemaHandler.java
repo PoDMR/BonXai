@@ -12,7 +12,7 @@ import eu.fox7.schematoolkit.xsd.writer.XSDWriter;
 public class XSDSchemaHandler extends SchemaHandler {
 	public XSDSchemaHandler() {}
 	public XSDSchemaHandler(XSDSchema schema) {
-		this.schema = schema;
+		super(schema);
 	}
 	
 	@Override
