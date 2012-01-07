@@ -4,6 +4,8 @@ import java.io.File;
 
 import jline.Completor;
 import eu.fox7.console.Command;
+import eu.fox7.schematoolkit.SchemaHandler;
+import eu.fox7.schematoolkit.SchemaLanguage;
 
 public class LoadCmd extends Command {
 	private static final String command = "load";
@@ -28,20 +30,32 @@ public class LoadCmd extends Command {
 		if (nameComponents.length>0) { 
 			extension = nameComponents[nameComponents.length - 1];
 		}
+
+		String schemaName;
+		if (parameters.length == 3)
+			schemaName = parameters[2];
+		else
+			schemaName = getNewSchemaName();
+
+		SchemaLanguage language;
 		
 		if (extension.equals("xsd")) {
-			parameters[0] = "load-xsd";
+			language = SchemaLanguage.XMLSCHEMA;
 		} else if (extension.equals("dtd") || extension.equals("xml")) {
-			parameters[0] = "load-dtd";
+			language = SchemaLanguage.DTD;
 		} else if (extension.equals("rng")) {
-			parameters[0] = "load-relaxng";
+			language = SchemaLanguage.RELAXNG;
 		} else if (extension.equals("bonxai")) {
-			parameters[0] = "load-bonxai";
+			language = SchemaLanguage.BONXAI;
 		} else {
 			System.out.println("Unknown filetype " + extension);
 			return;
 		}
+		
+		SchemaHandler schemaHandler = language.getSchemaHandler();
 
-		this.console.parseCommand(parameters);
+		schemaHandler.loadSchema(getFile(parameters[1]));
+		
+		this.console.addSchema(schemaName, schemaHandler);
 	}
 }

@@ -4,6 +4,7 @@ import java.io.File;
 
 import eu.fox7.schematoolkit.Schema;
 import eu.fox7.schematoolkit.SchemaHandler;
+import eu.fox7.schematoolkit.SchemaLanguage;
 import jline.Completor;
 import jline.SimpleCompletor;
 
@@ -50,6 +51,10 @@ public abstract class Command implements Comparable<Command>{
 	
 	protected String getNewSchemaName() {
 		return "schema" + Integer.toString(schemaNumber++);
+	}
+	
+	protected SchemaLanguage getLanguage(String language) {
+		return SchemaLanguage.valueOf(language);
 	}
 	
 	public int compareTo(Command command) {

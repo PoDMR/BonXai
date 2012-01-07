@@ -19,6 +19,7 @@ import jline.SimpleCompletor;
 
 import eu.fox7.schematoolkit.Schema;
 import eu.fox7.schematoolkit.SchemaHandler;
+import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.console.commands.*;
 
 
@@ -200,14 +201,13 @@ public class Console {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		System.out.println(SchemaLanguage.class.getCanonicalName());
 		Console console = new Console();
 		console.addCommand(console.new HelpCmd());
 		console.addCommand(new WriteCmd());
 		console.addCommand(new LoadCmd());
-		console.addCommand(new LoadBonxaiCmd());		
-		console.addCommand(new LoadXSDCmd());		
-		console.addCommand(new LoadRelaxNGCmd());
 		console.addCommand(new PrintCmd());
+		console.addCommand(new ConvertCmd());
 		console.addCommand(new ExitCmd());
 		console.addCommand(console.new ListCmd());
 		console.work();
