@@ -12,6 +12,12 @@ import eu.fox7.schematoolkit.relaxng.parser.RNGParser;
 import eu.fox7.schematoolkit.relaxng.writer.RNGWriter;
 
 public class RelaxNGSchemaHandler extends SchemaHandler {
+	public RelaxNGSchemaHandler() {}
+	
+	public RelaxNGSchemaHandler(RelaxNGSchema relaxNGSchema) {
+		super(relaxNGSchema);
+	}
+
 	@Override
 	public void parseSchema(InputStream stream) throws IOException, SAXException {
 		RNGParser parser = new RNGParser(stream, true);

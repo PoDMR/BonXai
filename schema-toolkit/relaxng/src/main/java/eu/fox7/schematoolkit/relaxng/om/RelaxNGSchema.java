@@ -1,8 +1,11 @@
 package eu.fox7.schematoolkit.relaxng.om;
 
 import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.SchemaHandler;
+import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.schematoolkit.common.DefaultNamespace;
 import eu.fox7.schematoolkit.common.NamespaceList;
+import eu.fox7.schematoolkit.relaxng.RelaxNGSchemaHandler;
 
 /**
  * Class representing a RELAX NG-XSDSchema.
@@ -111,7 +114,7 @@ public class RelaxNGSchema implements Schema {
      * @param xmlns
      */
     public void setDefaultNamespace(String xmlns) {
-        namespaceList.getDefaultNamespace().setUri(xmlns);
+        namespaceList.setDefaultNamespace(new DefaultNamespace(xmlns));
     }
 
     /**
@@ -145,4 +148,14 @@ public class RelaxNGSchema implements Schema {
     public void setAbsoluteUri(String absoluteUri) {
         this.absoluteUri = absoluteUri;
     }
+
+	@Override
+	public SchemaHandler getSchemaHandler() {
+		return new RelaxNGSchemaHandler(this);
+	}
+
+	@Override
+	public SchemaLanguage getSchemaLanguage() {
+		return SchemaLanguage.RELAXNG;
+	}
 }

@@ -105,11 +105,7 @@ public class Grammar extends Pattern {
      */
     @Override
     public String getDefaultNamespace() {
-        if (this.namespaceList.getDefaultNamespace() != null) {
-            return this.namespaceList.getDefaultNamespace().getUri();
-        } else {
-            return null;
-        }
+    	return this.namespaceList.getDefaultNamespace().getUri();
     }
 
     /**
@@ -118,9 +114,7 @@ public class Grammar extends Pattern {
      */
     @Override
     public void setDefaultNamespace(String xmlns) {
-        if (this.namespaceList.getDefaultNamespace() != null) {
-            this.namespaceList.getDefaultNamespace().setUri(xmlns);
-        }
+        this.namespaceList.setDefaultNamespace(new DefaultNamespace(xmlns));
     }
 
     /**
