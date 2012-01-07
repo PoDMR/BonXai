@@ -21,12 +21,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.SchemaHandler;
+import eu.fox7.schematoolkit.SchemaLanguage;
+import eu.fox7.schematoolkit.bonxai.BonxaiSchemaHandler;
 import eu.fox7.schematoolkit.common.*;
 
 /**
  * Class representing an Bonxai XSDSchema
  */
-public class Bonxai {
+public class Bonxai implements Schema {
 
     private static Set<String> keywords = null;
     
@@ -230,6 +234,18 @@ public class Bonxai {
 				return (BonxaiGroup) group;
 		}
 		return null;
+	}
+
+
+	@Override
+	public SchemaHandler getSchemaHandler() {
+		return new BonxaiSchemaHandler(this);
+	}
+
+
+	@Override
+	public SchemaLanguage getSchemaLanguage() {
+		return SchemaLanguage.BONXAI;
 	}
 
 }
