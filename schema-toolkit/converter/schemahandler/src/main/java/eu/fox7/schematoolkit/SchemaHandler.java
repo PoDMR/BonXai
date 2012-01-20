@@ -23,39 +23,39 @@ public abstract class SchemaHandler {
 		this.schema = schema;
 	}
 
-	public void parseSchema(String schemaString) throws IOException, Exception {
+	public void parseSchema(String schemaString) throws IOException, SchemaToolkitException {
 		StringBufferInputStream inputStream = new StringBufferInputStream(schemaString); 
 		parseSchema(inputStream);
 	}
 	
-	public abstract void parseSchema(InputStream stream) throws IOException, Exception;
-	public abstract void writeSchema(Writer writer) throws IOException, Exception;
+	public abstract void parseSchema(InputStream stream) throws IOException, SchemaToolkitException;
+	public abstract void writeSchema(Writer writer) throws IOException, SchemaToolkitException;
 	
-	public void loadSchema(File file) throws IOException, Exception {
+	public void loadSchema(File file) throws IOException, SchemaToolkitException {
 		InputStream stream = new BufferedInputStream(new FileInputStream(file));
 		parseSchema(stream);
 	}
 	
-	public void writeSchema(File file) throws Exception {
+	public void writeSchema(File file) throws IOException, SchemaToolkitException {
 		Writer fileWriter = new FileWriter(file);
 		BufferedWriter writer = new BufferedWriter(fileWriter);
 		writeSchema(writer);
 		writer.close();
 	}
 	
-	public String getSchemaString() throws IOException, Exception {
+	public String getSchemaString() throws IOException, SchemaToolkitException {
 		if (schemaStringBuffer == null)
 			fillSchemaString();
 		return schemaStringBuffer.toString();
 	}
 	
-	public StringBuffer getSchemaStringBuffer() throws IOException, Exception {
+	public StringBuffer getSchemaStringBuffer() throws IOException, SchemaToolkitException {
 		if (schemaStringBuffer == null)
 			fillSchemaString();
 		return this.schemaStringBuffer;
 	}
 	
-	protected void fillSchemaString() throws IOException, Exception {
+	protected void fillSchemaString() throws IOException, SchemaToolkitException {
 		StringWriter writer = new StringWriter();
 		writeSchema(writer);
 		schemaStringBuffer = writer.getBuffer();
@@ -65,7 +65,7 @@ public abstract class SchemaHandler {
 		return schema;
 	}
 
-	public String getSchemaLanguage() {
-		return this.getSchema().getSchemaLanguage().toString();
+	public SchemaLanguage getSchemaLanguage() {
+		return this.getSchema().getSchemaLanguage();
 	}
 }
