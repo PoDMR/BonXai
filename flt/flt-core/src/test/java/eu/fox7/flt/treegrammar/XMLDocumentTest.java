@@ -16,7 +16,6 @@ import eu.fox7.flt.treegrammar.io.UserObjectsReader;
 import eu.fox7.math.GaussianIntegerDistribution;
 import eu.fox7.math.IllDefinedDistributionException;
 import eu.fox7.math.UserDefinedDistribution;
-import eu.fox7.util.xml.XmlDtdValidator;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -29,9 +28,6 @@ import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerConfigurationException;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
