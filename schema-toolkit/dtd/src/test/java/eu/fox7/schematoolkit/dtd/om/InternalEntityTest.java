@@ -1,0 +1,46 @@
+package eu.fox7.schematoolkit.dtd.om;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import eu.fox7.schematoolkit.dtd.om.DocumentTypeDefinition;
+import eu.fox7.schematoolkit.dtd.om.InternalEntity;
+
+/**
+ * Test of class InternalEntity
+ * @author Lars Schmidt
+ */
+public class InternalEntityTest extends junit.framework.TestCase {
+
+    private DocumentTypeDefinition dtd;
+
+    @Before
+    @Override
+    public void setUp() {
+        this.dtd = new DocumentTypeDefinition();
+    }
+
+
+    /**
+     * Test of getValue method, of class InternalEntity.
+     */
+    @Test
+    public void testGetValue() {
+        InternalEntity instance = new InternalEntity("name", "value");
+        String expResult = "value";
+        String result = instance.getValue();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setValue method, of class InternalEntity.
+     */
+    @Test
+    public void testSetValue() {
+        InternalEntity instance = new InternalEntity("name", "value");
+        assertEquals("value", instance.getValue());
+        instance.setValue("new value");
+        assertEquals("new value", instance.getValue());
+    }
+
+}
