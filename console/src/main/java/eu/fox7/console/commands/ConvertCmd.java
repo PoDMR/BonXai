@@ -41,15 +41,19 @@ public class ConvertCmd extends Command {
 		SchemaLanguage sourceLanguage = sourceHandler.getSchema().getSchemaLanguage();
 		SchemaLanguage targetLanguage = this.getLanguage(parameters[2]);
 		SchemaConverter converter = sourceLanguage.getConverter(targetLanguage);
-		SchemaHandler targetHandler = converter.convert(sourceHandler);
-		
-		String schemaName;
-		if (parameters.length>3)
-			schemaName = parameters[3];
-		else
-			schemaName = this.getNewSchemaName();
-		
-		this.console.addSchema(schemaName, targetHandler);
+		if ( converter == null ) {
+			System.err.println("No converter found for converting from "+sourceLanguage+" to "+targetLanguage);
+		} else { 
+			SchemaHandler targetHandler = converter.convert(sourceHandler);
+
+			String schemaName;
+			if (parameters.length>3)
+				schemaName = parameters[3];
+			else
+				schemaName = this.getNewSchemaName();
+
+			this.console.addSchema(schemaName, targetHandler);
+		}
 	}
 
 }

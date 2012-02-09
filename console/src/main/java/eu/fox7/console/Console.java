@@ -91,10 +91,10 @@ public class Console {
 						
 		
 		languageCompletor = new SimpleCompletor(new String[] {
-			SchemaLanguage.BONXAI.toString(), 
-			SchemaLanguage.DTD.toString(), 
-			SchemaLanguage.RELAXNG.toString(), 
-			SchemaLanguage.XMLSCHEMA.toString() 
+			SchemaLanguage.BONXAI.name(), 
+			SchemaLanguage.DTD.name(), 
+			SchemaLanguage.RELAXNG.name(), 
+			SchemaLanguage.XMLSCHEMA.name() 
 		} );
 //		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("addXML"), fileNameCompletor } ));
 //		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("convert"), schemaNumberCompletor, new SimpleCompletor(new String[]{"DTD", "XSD", "RelaxNG", "BonXai"}), nullCompletor}));
@@ -143,12 +143,8 @@ public class Console {
 			try {
 				String commandline = readInput();
 				parseCommand(commandline);
-
-				String[] numbers = new String[schemas.size()];
-				for (int i=0; i<schemas.size(); ++i)
-					numbers[i]=""+i;
-			
-				schemaCompletor.setCandidateStrings(numbers);
+				
+				schemaCompletor.setCandidateStrings(this.schemas.keySet().toArray(new String[0]));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
