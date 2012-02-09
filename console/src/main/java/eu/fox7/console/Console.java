@@ -131,8 +131,8 @@ public class Console {
 	
 	public void addCommand(Command command) {
 		this.commands.put(command.getCommand(), command);
-		this.completors.add(command.getCompletor());
 		command.registerConsole(this);
+		this.completors.add(command.getCompletor());
 	}
 	
 	public void work() {
