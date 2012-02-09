@@ -3,6 +3,10 @@ package eu.fox7.schematoolkit.converter.bonxai2xsd;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.collections15.BidiMap;
 
 import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.NotDFAException;
@@ -12,6 +16,8 @@ import eu.fox7.schematoolkit.AbstractSchemaConverter;
 import eu.fox7.schematoolkit.Schema;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
 import eu.fox7.schematoolkit.bonxai.om.BonxaiAbstractGroup;
+import eu.fox7.schematoolkit.bonxai.om.Expression;
+import eu.fox7.schematoolkit.common.DefaultNamespace;
 import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
@@ -24,6 +30,12 @@ import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema.Qualification;
 
 public class Bonxai2XSDConverter extends AbstractSchemaConverter {
+	private Map<Expression, Set<State>> expressionStateMap;
+	private Map<State, Expression> stateExpressionMap;
+	private Map<State, Type> stateTypeMap;
+	private TypeAutomaton typeAutomaton;
+	
+	
 	public XSDSchema convert(Schema schema) throws ConversionFailedException {
 		if (!(schema instanceof Bonxai))
 			throw new ConversionFailedException("Can only convert BonXai schemas.");
@@ -37,6 +49,7 @@ public class Bonxai2XSDConverter extends AbstractSchemaConverter {
 		
 		xsdSchema.setElementFormDefault(Qualification.qualified);
 		xsdSchema.setTargetNamespace(bonxai.getDefaultNamespace());
+		xsdSchema.setDefaultNamespace(new DefaultNamespace(XSDSchema.XMLSCHEMA_NAMESPACE));
 		
 		//convert groups
 		for (BonxaiAbstractGroup group: bonxai.getGroups()) {
@@ -45,9 +58,10 @@ public class Bonxai2XSDConverter extends AbstractSchemaConverter {
 
 		BonxaiTypeAutomatonConstruction btac = new BonxaiTypeAutomatonConstruction();
 		TypeNameGenerator tng = new TrivialTypeNameGenerator(bonxai.getDefaultNamespace());
-		TypeAutomaton typeAutomaton = btac.constructTypeAutomaton(bonxai, tng);
+		typeAutomaton = btac.constructTypeAutomaton(bonxai, tng);
+		expressionStateMap = btac.getExpressionStateMap();
 
-		System.err.println(typeAutomaton);
+		//System.err.println(typeAutomaton);
 		
 		//add root elements
 		List<QualifiedName> rootElements = bonxai.getRootElementNames();
@@ -64,8 +78,7 @@ public class Bonxai2XSDConverter extends AbstractSchemaConverter {
 		}
 		
 		
-		Collection<Type> typeList = typeAutomaton.getTypes();;
-		
+		Collection<Type> typeList = typeAutomaton.getTypes();
 		
 		//convert type automaton to xsd
 		for (Type type: typeList)
@@ -74,5 +87,33 @@ public class Bonxai2XSDConverter extends AbstractSchemaConverter {
 		//TODO: convert simple types
 		
 		return xsdSchema;
+	}
+
+	/**
+	 * @return the expressionStateMap
+	 */
+	public Map<Expression, Set<State>> getExpressionStateMap() {
+		return expressionStateMap;
+	}
+
+	/**
+	 * @return the stateExpressionMap
+	 */
+	public Map<State, Expression> getStateExpressionMap() {
+		return stateExpressionMap;
+	}
+
+	/**
+	 * @return the stateTypeMap
+	 */
+	public Map<State, Type> getStateTypeMap() {
+		return stateTypeMap;
+	}
+
+	/**
+	 * @return the typeAutomaton
+	 */
+	public TypeAutomaton getTypeAutomaton() {
+		return typeAutomaton;
 	}
 }
