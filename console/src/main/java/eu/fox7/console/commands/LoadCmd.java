@@ -1,7 +1,10 @@
 package eu.fox7.console.commands;
 
 import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
+import jline.ArgumentCompletor;
 import jline.Completor;
 import eu.fox7.console.Command;
 import eu.fox7.schematoolkit.SchemaHandler;
@@ -17,8 +20,16 @@ public class LoadCmd extends Command {
 
 	@Override
 	public Completor getCompletor() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Completor> completors = new LinkedList<Completor>();
+		completors.add(commandCompletor());
+		completors.add(filenameCompletor());
+		completors.add(nullCompletor());
+		return new ArgumentCompletor(completors);
+	}
+
+	@Override
+	public String getUsage() {
+		return getCommand()+" <filename> [<schemaname>]";
 	}
 
 	@Override

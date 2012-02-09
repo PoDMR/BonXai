@@ -39,6 +39,8 @@ public class Console {
 	private SortedMap<String,Command> commands = new TreeMap<String,Command>();
 
 	private List<Completor> completors = new ArrayList<Completor>();
+	private Completor filenameCompletor = new FileNameCompletor();
+	private Completor languageCompletor;
 	
 	private class HelpCmd extends Command {
 		private static final String command = "help";
@@ -49,7 +51,7 @@ public class Console {
 
 		@Override
 		public Completor getCompletor() {
-			return new SimpleCompletor("help");
+			return commandCompletor();
 		}
 
 		@Override
@@ -88,12 +90,12 @@ public class Console {
 		}
 						
 		
-		FileNameCompletor fileNameCompletor = new FileNameCompletor();
-		NullCompletor nullCompletor = new NullCompletor();
-//		settingNameCompletor = new SimpleCompletor(PreferencesManager.getPreferencesManager().getSettingNames());
-
-
-		
+		languageCompletor = new SimpleCompletor(new String[] {
+			SchemaLanguage.BONXAI.toString(), 
+			SchemaLanguage.DTD.toString(), 
+			SchemaLanguage.RELAXNG.toString(), 
+			SchemaLanguage.XMLSCHEMA.toString() 
+		} );
 //		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("addXML"), fileNameCompletor } ));
 //		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("convert"), schemaNumberCompletor, new SimpleCompletor(new String[]{"DTD", "XSD", "RelaxNG", "BonXai"}), nullCompletor}));
 //		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("difference"), schemaNumberCompletor, schemaNumberCompletor, nullCompletor}));
@@ -123,18 +125,18 @@ public class Console {
 //		completors.add(new ArgumentCompletor(new Completor[] {new SimpleCompletor("write"), schemaNumberCompletor, fileNameCompletor, nullCompletor}));
 
 		consoleReader.setDefaultPrompt(DEFAULT_PROMPT);
-		consoleReader.addCompletor(new MultiCompletor(completors));
 		
 		workingDirectory = System.getProperty("user.dir");
-
 	}
 	
 	public void addCommand(Command command) {
 		this.commands.put(command.getCommand(), command);
+		this.completors.add(command.getCompletor());
 		command.registerConsole(this);
 	}
 	
 	public void work() {
+		consoleReader.addCompletor(new MultiCompletor(completors));
 		running = true;
 
 		while (running) {
@@ -219,5 +221,13 @@ public class Console {
 
 	public void addSchema(String schemaName, SchemaHandler schemaHandler) {
 		this.schemas.put(schemaName, schemaHandler);
+	}
+
+	public Completor getFilenameCompletor() {
+		return this.filenameCompletor ;
+	}
+
+	public Completor getLanguageCompletor() {
+		return this.languageCompletor;
 	}
 }

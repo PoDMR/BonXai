@@ -1,5 +1,9 @@
 package eu.fox7.console.commands;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import jline.ArgumentCompletor;
 import jline.Completor;
 import eu.fox7.console.Command;
 import eu.fox7.schematoolkit.Schema;
@@ -18,7 +22,17 @@ public class ConvertCmd extends Command {
 
 	@Override
 	public Completor getCompletor() {
-		return commandCompletor();
+		List<Completor> completors = new LinkedList<Completor>();
+		completors.add(commandCompletor());
+		completors.add(schemaCompletor());
+		completors.add(languageCompletor());
+		completors.add(nullCompletor());
+		return new ArgumentCompletor(completors);
+	}
+	
+	@Override
+	public String getUsage() {
+		return getCommand()+" <schemaname> <targetLanguage> [<new schemaname>]";
 	}
 
 	@Override

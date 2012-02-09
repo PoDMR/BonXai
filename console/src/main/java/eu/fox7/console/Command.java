@@ -6,6 +6,7 @@ import eu.fox7.schematoolkit.Schema;
 import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaLanguage;
 import jline.Completor;
+import jline.NullCompletor;
 import jline.SimpleCompletor;
 
 public abstract class Command implements Comparable<Command>{
@@ -45,13 +46,26 @@ public abstract class Command implements Comparable<Command>{
 		return console.getSchemaCompletor(); 
 	}
 	
+	protected Completor filenameCompletor() {
+		return console.getFilenameCompletor();
+	}
+
 	protected Completor commandCompletor() {
 		return new SimpleCompletor(getCommand());
 	}
+
+	protected Completor languageCompletor() {
+		return console.getLanguageCompletor();
+	}
 	
+	protected Completor nullCompletor() {
+		return new NullCompletor();
+	}
+
 	protected String getNewSchemaName() {
 		return "schema" + Integer.toString(schemaNumber++);
 	}
+	
 	
 	protected SchemaLanguage getLanguage(String language) {
 		return SchemaLanguage.valueOf(language);
