@@ -390,7 +390,7 @@ NameChar            ::= Letter | Digit | "." | "-" | "_" | ":" | CombiningChar |
 ##
 # Valid number definition
 # 
-# Used for example for regex repeation.
+# Used for example for regex repetition.
 ##
 Number              ::= Digit+
 

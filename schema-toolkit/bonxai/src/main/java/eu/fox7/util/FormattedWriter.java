@@ -17,19 +17,22 @@ public class FormattedWriter extends FilterWriter {
 	private String lineSeparator = System.getProperty("line.separator");
 	private StringBuffer lineBuffer = new StringBuffer(200);
 	private boolean startOfRow = true;
+	private String oldIndent = "";
 	
 	public void pushIndent() throws IOException {
-		if (startOfRow) {
+		++indentLevel;
+		currentIndent+=indent;
+		if (startOfRow  && lineBuffer.length()==0) {
 			this.out.append(currentIndent);
 			startOfRow = false;
 		}
-		++indentLevel;
-		currentIndent+=indent;
 	}
 	
 	public void popIndent() {
 		--indentLevel;
 		currentIndent=currentIndent.substring(0, currentIndent.length() - indent.length());
+		if (startOfRow && lineBuffer.length() == 0)
+			oldIndent = currentIndent;
 	}
 	
 	public void appendLine(String str) throws IOException {
@@ -50,16 +53,17 @@ public class FormattedWriter extends FilterWriter {
 	}
 	
 	public void allowBreak() throws IOException {
-		if (lineWidth + lineBuffer.length() <= maxLineWidth) {
-			if (startOfRow) {
-				this.out.append(currentIndent);
-				startOfRow = false;
-			}
-			this.out.append(lineBuffer);
-			lineWidth += lineBuffer.length();
-			lineBuffer.setLength(0);
-		} else
+		if (lineWidth + lineBuffer.length() > maxLineWidth)
 			doLineBreak();
+			
+		if (startOfRow) {
+			this.out.append(oldIndent);
+			startOfRow = false;
+		}
+		this.out.append(lineBuffer);
+		lineWidth += lineBuffer.length();
+		lineBuffer.setLength(0);
+		oldIndent = currentIndent;
 	}
 	
 	private void doLineBreak() throws IOException {

@@ -7,6 +7,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import eu.fox7.schematoolkit.common.Namespace;
+import eu.fox7.schematoolkit.common.QualifiedName;
+
 import static org.junit.Assert.*;
 
 /**
@@ -38,16 +41,16 @@ public class AttributeTest extends junit.framework.TestCase {
      */
     @Test
     public void testGetType() {
-        BonxaiType expResult = new BonxaiType("", "type");
-        Attribute instance = new Attribute("", "name", expResult);
+        BonxaiType expResult = new BonxaiType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"type"));
+        Attribute instance = new Attribute(new QualifiedName(Namespace.EMPTY_NAMESPACE,"name"), expResult, true);
         BonxaiType result = instance.getType();
         assertEquals(expResult, result);
     }
 
     @Test
     public void testCtorNameAndType() {
-        BonxaiType type = new BonxaiType("", "type");
-        Attribute attribute = new Attribute("", "name", type);
+        BonxaiType type = new BonxaiType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"type"));
+        Attribute attribute = new Attribute(new QualifiedName(Namespace.EMPTY_NAMESPACE,"name"), type, true);
 
         assertEquals(type, attribute.getType());
         assertFalse(attribute.isRequired());
@@ -55,8 +58,8 @@ public class AttributeTest extends junit.framework.TestCase {
 
     @Test
     public void testCtorNameTypeAndRequired() {
-        BonxaiType type = new BonxaiType("", "type");
-        Attribute attribute = new Attribute("", "name", type, true);
+        BonxaiType type = new BonxaiType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"type"));
+        Attribute attribute = new Attribute(new QualifiedName(Namespace.EMPTY_NAMESPACE,"name"), type, true);
 
         assertEquals(type, attribute.getType());
         assertTrue(attribute.isRequired());
@@ -64,8 +67,8 @@ public class AttributeTest extends junit.framework.TestCase {
 
     @Test
     public void testSetGetRequired() {
-        BonxaiType type = new BonxaiType("", "type");
-        Attribute attribute = new Attribute("", "name", type);
+        BonxaiType type = new BonxaiType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"type"));
+        Attribute attribute = new Attribute(new QualifiedName(Namespace.EMPTY_NAMESPACE,"name"), type, true);
 
         assertFalse(attribute.isRequired());
         attribute.setRequired();
@@ -74,35 +77,4 @@ public class AttributeTest extends junit.framework.TestCase {
         assertFalse(attribute.isRequired());
     }
 
-    @Test
-    public void testSetGetDefault() {
-        BonxaiType type = new BonxaiType("", "type");
-        Attribute attribute = new Attribute("", "name", type);
-
-        assertNull(attribute.getDefault());
-
-        attribute.setDefault("default");
-
-        assertEquals("default", attribute.getDefault());
-
-        attribute.setDefault(null);
-
-        assertNull(attribute.getDefault());
-    }
-
-    @Test
-    public void testSetGetFixed() {
-        BonxaiType type = new BonxaiType("", "type");
-        Attribute attribute = new Attribute("", "name", type);
-
-        assertNull(attribute.getFixed());
-
-        attribute.setFixed("fixed");
-
-        assertEquals("fixed", attribute.getFixed());
-
-        attribute.setFixed(null);
-
-        assertNull(attribute.getFixed());
-    }
 }

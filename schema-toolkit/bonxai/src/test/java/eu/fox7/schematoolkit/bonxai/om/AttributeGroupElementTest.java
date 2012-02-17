@@ -7,6 +7,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import eu.fox7.schematoolkit.common.Namespace;
+import eu.fox7.schematoolkit.common.QualifiedName;
+
 import static org.junit.Assert.*;
 
 /**
@@ -39,7 +42,7 @@ public class AttributeGroupElementTest extends junit.framework.TestCase {
     @Test
     public void testGetAttributePattern() {
         AttributePattern expResult = new AttributePattern();
-        BonxaiAttributeGroup instance = new BonxaiAttributeGroup("name", expResult);
+        BonxaiAttributeGroup instance = new BonxaiAttributeGroup(new QualifiedName(Namespace.EMPTY_NAMESPACE,"name"), expResult);
         AttributePattern result = instance.getAttributePattern();
         assertEquals(expResult, result);
     }

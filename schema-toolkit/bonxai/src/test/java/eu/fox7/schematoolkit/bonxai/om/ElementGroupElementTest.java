@@ -42,7 +42,7 @@ public class ElementGroupElementTest extends junit.framework.TestCase {
     public void testGetParticle() {
         SequencePattern pattern = new SequencePattern();
         BonxaiGroup instance = new BonxaiGroup("name", pattern);
-        Particle result = instance.getParticleContainer();
+        Particle result = instance.getParticle();
         assertSame(pattern, result);
     }
 }

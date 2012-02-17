@@ -25,41 +25,42 @@ public interface BonxaiJJParserConstants {
   int MIXED = 23;
   int EMPTY = 24;
   int MISSING = 25;
-  int ELEMENT = 26;
-  int STRICT = 27;
-  int LAX = 28;
-  int SKIPP = 29;
-  int FIXED = 30;
-  int CONSTANT = 31;
-  int OPENING_ROUND_BRACKET = 32;
-  int CLOSING_ROUND_BRACKET = 33;
-  int OPENING_SQUARED_BRACKET = 34;
-  int CLOSING_SQUARED_BRACKET = 35;
-  int OPENING_CURLY_BRACKET = 36;
-  int CLOSING_CURLY_BRACKET = 37;
-  int EQUALS = 38;
-  int COMMA = 39;
-  int AT = 40;
-  int OR = 41;
-  int ANDLITERAL = 42;
-  int DOUBLESLASH = 43;
-  int SLASH = 44;
-  int STAR = 45;
-  int PLUS = 46;
-  int QUESTION_MARK = 47;
-  int COLON = 48;
-  int POINT = 49;
-  int ANNOTATION_VALUE = 50;
-  int DIGIT = 51;
-  int BASECHAR = 52;
-  int IDEOGRAPHIC = 53;
-  int COMBINING_CHAR = 54;
-  int EXTENDER = 55;
-  int LABEL = 56;
-  int PROTOCOL = 57;
-  int URI = 58;
-  int QUOTATION = 59;
-  int QUOT_QUOTE = 60;
+  int ELEMENTREF = 26;
+  int ELEMENT = 27;
+  int STRICT = 28;
+  int LAX = 29;
+  int SKIPP = 30;
+  int FIXED = 31;
+  int CONSTANT = 32;
+  int OPENING_ROUND_BRACKET = 33;
+  int CLOSING_ROUND_BRACKET = 34;
+  int OPENING_SQUARED_BRACKET = 35;
+  int CLOSING_SQUARED_BRACKET = 36;
+  int OPENING_CURLY_BRACKET = 37;
+  int CLOSING_CURLY_BRACKET = 38;
+  int EQUALS = 39;
+  int COMMA = 40;
+  int AT = 41;
+  int OR = 42;
+  int ANDLITERAL = 43;
+  int DOUBLESLASH = 44;
+  int SLASH = 45;
+  int STAR = 46;
+  int PLUS = 47;
+  int QUESTION_MARK = 48;
+  int COLON = 49;
+  int POINT = 50;
+  int ANNOTATION_VALUE = 51;
+  int DIGIT = 52;
+  int BASECHAR = 53;
+  int IDEOGRAPHIC = 54;
+  int COMBINING_CHAR = 55;
+  int EXTENDER = 56;
+  int LABEL = 57;
+  int PROTOCOL = 58;
+  int URI = 59;
+  int QUOTATION = 60;
+  int QUOT_QUOTE = 61;
 
   int DEFAULT = 0;
   int NAME = 1;
@@ -93,6 +94,7 @@ public interface BonxaiJJParserConstants {
     "\"mixed\"",
     "\"empty\"",
     "\"missing\"",
+    "\"elementref\"",
     "\"element\"",
     "\"strict\"",
     "\"lax\"",

@@ -39,7 +39,7 @@ public class CountingPatternTest extends junit.framework.TestCase {
     @Test
     public void testGetMax() {
         Integer expResult = 10;
-        CountingPattern instance = new CountingPattern(5, expResult);
+        CountingPattern instance = new CountingPattern(null, 5, expResult);
         Integer result = instance.getMax();
         assertEquals(expResult, result);
     }
@@ -50,7 +50,7 @@ public class CountingPatternTest extends junit.framework.TestCase {
     @Test
     public void testGetMin() {
         Integer expResult = 10;
-        CountingPattern instance = new CountingPattern(expResult, 5);
+        CountingPattern instance = new CountingPattern(null, expResult, 5);
         Integer result = instance.getMin();
         assertEquals(expResult, result);
     }

@@ -26,7 +26,7 @@ public class BonxaiGroup extends BonxaiAbstractGroup {
     /**
      * Regular expression describing this element group
      */
-    private ParticleContainer particleContainer;
+    private Particle particle;
 
     /**
      * Constructor for the class BonxaiGroup
@@ -35,20 +35,20 @@ public class BonxaiGroup extends BonxaiAbstractGroup {
      */
     public BonxaiGroup(QualifiedName name, Particle particle) {
         super(name);
-        this.particleContainer = (ParticleContainer) particle;
+        this.particle = particle;
     }
 
     /**
      * Returns the Regular expression of this element group
      * @return
      */
-    public ParticleContainer getParticleContainer() {
-        return this.particleContainer;
+    public Particle getParticle() {
+        return this.particle;
     }
 
     @Override
     public String toString(){
-         return this.getClass() + "{name = '" + this.getName() + "', particle = " + this.getParticleContainer() + "}";
+         return this.getClass() + "{name = '" + this.getName() + "', particle = " + this.getParticle() + "}";
     }
 }
 

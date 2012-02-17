@@ -36,6 +36,7 @@ import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.ChoicePattern;
 import eu.fox7.schematoolkit.common.CountingPattern;
 import eu.fox7.schematoolkit.common.DefaultNamespace;
+import eu.fox7.schematoolkit.common.ElementRef;
 import eu.fox7.schematoolkit.common.EmptyPattern;
 import eu.fox7.schematoolkit.common.GroupReference;
 import eu.fox7.schematoolkit.common.IdentifiedNamespace;
@@ -45,7 +46,6 @@ import eu.fox7.schematoolkit.common.ParticleContainer;
 import eu.fox7.schematoolkit.common.ProcessContentsInstruction;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.common.SequencePattern;
-import eu.fox7.schematoolkit.xsd.om.ElementRef;
 import eu.fox7.util.FormattedWriter;
 
 public class CompactSyntaxWriter {
@@ -155,25 +155,33 @@ public class CompactSyntaxWriter {
     	writer.allowBreak();
 
     	if (group instanceof BonxaiGroup) {
-    		writeParticle(((BonxaiGroup) group).getParticleContainer());
+    		writeParticle(((BonxaiGroup) group).getParticle());
     	} else {
     		writeAttributePattern(((BonxaiAttributeGroup) group).getAttributePattern());
     	}
+    	writer.append(" }");
+    	writer.newLine();
     	writer.popIndent();
     }
 
     /**
      * Visit attribute pattern object.
+     * @return if sth. has been written
      * @throws IOException 
      */
-    protected void writeAttributePattern(AttributePattern attributePattern) throws IOException {
-        if (attributePattern!=null) {
+    protected boolean writeAttributePattern(AttributePattern attributePattern) throws IOException {
+        boolean output = false;
+    	if (attributePattern!=null) {
         	if (attributePattern.getAnyAttribute() != null) {
+        		output = true;
         		writeAnyAttribute(attributePattern.getAnyAttribute());
         	}	
-        	if (attributePattern.getAttributeList() != null)
+        	if (attributePattern.getAttributeList() != null && attributePattern.getAttributeList().size()>0) {
+        		output = true;
         		writeAttributeList(attributePattern.getAttributeList());
+        	}
         }
+    	return output;
     }
 
     /**
@@ -228,14 +236,16 @@ public class CompactSyntaxWriter {
         writer.append("attribute ");
         writeName(attribute.getName());
         if (attribute.getType() != null)
+        	writer.append(" { ");
             writeBonxaiType(attribute.getType());
+        	writer.append(" }");
         if (!attribute.isRequired()) {
             writer.append('?');
         }
 	}
 
 	private void writeBonxaiType(BonxaiType type) throws IOException {
-        writer.append(" { type ");
+        writer.append("type ");
         writeName(type.getTypename());
 
         if (type.getFixedValue() != null) {
@@ -247,7 +257,6 @@ public class CompactSyntaxWriter {
             writer.append(type.getDefaultValue());
             writer.append('"');
         }
-        writer.append(" }");
 	}
 
 	/**
@@ -268,7 +277,7 @@ public class CompactSyntaxWriter {
         } else if (particle instanceof eu.fox7.schematoolkit.bonxai.om.Element) {
             writeElement((eu.fox7.schematoolkit.bonxai.om.Element) particle);
         } else if (particle instanceof ElementRef) {
-            throw new RuntimeException("ElementRef is not supported by Bonxai. Data structure b0rked.");
+            writeElementRef((ElementRef) particle);
         } else if (particle instanceof GroupReference) {
             writeGroupReference((GroupReference) particle);
         } else if (particle instanceof EmptyPattern) {
@@ -283,13 +292,20 @@ public class CompactSyntaxWriter {
     	writeName(particle.getName());
         
         if (particle.getType() != null) {
+        	writer.append(" { ");
         	writeBonxaiType(particle.getType());
+        	writer.append(" }");
         }
 
         if (particle.isMissing()) {
         	writer.append(" | missing");
         }        
 	}
+
+    private void writeElementRef(ElementRef particle) throws IOException {
+    	writer.append("elementref ");
+    	writeName(particle.getElementName());
+   	}
 
 	private void writeGroupReference(GroupReference particle) throws IOException {
     	writer.append("group ");
@@ -450,13 +466,14 @@ public class CompactSyntaxWriter {
             throw new RuntimeException("Missing ChildPattern.");
         }
         writer.append("{ ");
+        writer.pushIndent();
         boolean first = true;
         if (cPattern.getAttributePattern() != null) {
-        	writeAttributePattern(cPattern.getAttributePattern());
-        	first = false;
+        	first = !(writeAttributePattern(cPattern.getAttributePattern()));
         }
         writeElementPattern(cPattern.getElementPattern(), first);
         writer.append(" }");
+        writer.popIndent();
     }
 
     /**
@@ -469,8 +486,11 @@ public class CompactSyntaxWriter {
         		writer.allowBreak(", ");
         	}
             writeParticle(ePattern.getRegexp());
-        } else {
-            //TODO: type
+        } else if (ePattern != null && ePattern.getBonxaiType() != null ) {
+        	if (!first) {
+        		writer.allowBreak(", ");
+        	}
+            writeBonxaiType(ePattern.getBonxaiType());
         }
     }
 

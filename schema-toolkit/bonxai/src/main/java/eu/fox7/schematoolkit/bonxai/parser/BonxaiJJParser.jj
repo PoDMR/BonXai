@@ -107,6 +107,7 @@ TOKEN:
 |	< MIXED: "mixed" >
 |	< EMPTY: "empty" >
 |	< MISSING: "missing" >
+|	< ELEMENTREF: "elementref" >: NAME
 |	< ELEMENT: "element" >: NAME
 |	< STRICT: "strict" >
 |	< LAX: "lax" >
@@ -576,8 +577,8 @@ void GroupBlock(): {}
 void GroupRule() : {QualifiedName name; Particle particle; AttributePattern attributePattern; }
 {
 	(
-		<GROUP> name=Name() <EQUALS> particle=Regex() { this.bonxai.addGroup(new BonxaiGroup(name, particle)); } |
-		<ATTRIBUTEGROUP> name=Name() <EQUALS> <OPENING_CURLY_BRACKET> attributePattern=AttributePattern() <CLOSING_CURLY_BRACKET> { this.bonxai.addGroup(new BonxaiAttributeGroup(name, attributePattern)); }
+		<GROUP> name=Name() <EQUALS> { setState(DEFAULT); } <OPENING_CURLY_BRACKET> particle=Regex() <CLOSING_CURLY_BRACKET> { this.bonxai.addGroup(new BonxaiGroup(name, particle)); } |
+		<ATTRIBUTEGROUP> name=Name() <EQUALS> { setState(DEFAULT); } <OPENING_CURLY_BRACKET> attributePattern=AttributePattern() <CLOSING_CURLY_BRACKET> { this.bonxai.addGroup(new BonxaiAttributeGroup(name, attributePattern)); }
 	)
 	{ setState(DEFAULT); }
 }
@@ -805,8 +806,8 @@ Particle NamedType(): {BonxaiType type; Particle p; QualifiedName name; boolean 
 		<ELEMENT> name=Name() { p = new Element(name); } 
 			[ <OPENING_CURLY_BRACKET> { setState(DEFAULT); } [ <MISSING> <OR> { missing=true; } ] type=BonxaiType() <CLOSING_CURLY_BRACKET> 
 			{ ((Element) p).setType(type,missing); setState(DEFAULT); } ]  
-		| <GROUP> name=Name()  { p = new GroupReference(name); setState(DEFAULT); } 
-//| foreign=Foreign() <ELEMENT_STAR> [ <OPENING_SQUARED_BRACKET> numberBefore=Number() [ <COMMA> numberAfter=Number() ]  <CLOSING_SQUARED_BRACKET> ] lst=NameSpaceList()  { jjtThis.setNodeChoice("foreign"); }
+		| <GROUP> name=Name()  { p = new GroupReference(name); setState(DEFAULT); }
+		| <ELEMENTREF> name=Name() { p = new ElementRef(name); }//| foreign=Foreign() <ELEMENT_STAR> [ <OPENING_SQUARED_BRACKET> numberBefore=Number() [ <COMMA> numberAfter=Number() ]  <CLOSING_SQUARED_BRACKET> ] lst=NameSpaceList()  { jjtThis.setNodeChoice("foreign"); }
 	)
 	{ return p; }
 }
