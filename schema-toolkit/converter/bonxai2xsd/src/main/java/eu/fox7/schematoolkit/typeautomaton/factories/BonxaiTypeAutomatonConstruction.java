@@ -1,10 +1,12 @@
 package eu.fox7.schematoolkit.typeautomaton.factories;
 
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Vector;
@@ -37,6 +39,7 @@ import eu.fox7.flt.automata.misc.NerodeEquivalenceRelation;
 import eu.fox7.schematoolkit.bonxai.om.AncestorPattern;
 import eu.fox7.schematoolkit.bonxai.om.AncestorPatternElement;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
+import eu.fox7.schematoolkit.bonxai.om.BonxaiGroup;
 import eu.fox7.schematoolkit.bonxai.om.CardinalityParticle;
 import eu.fox7.schematoolkit.bonxai.om.ChildPattern;
 import eu.fox7.schematoolkit.bonxai.om.DoubleSlashPrefixedContainer;
@@ -54,9 +57,31 @@ import eu.fox7.schematoolkit.common.ParticleContainer;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.converter.bonxai2xsd.ChildPatternConverter;
 import eu.fox7.schematoolkit.xsd.om.Type;
+import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 public class BonxaiTypeAutomatonConstruction {
 	
+	/**
+	 * @return the typeAutomaton from the last conversion
+	 */
+	public TypeAutomaton getTypeAutomaton() {
+		return typeAutomaton;
+	}
+
+	/**
+	 * @return the stateExpressionMap from the last conversion
+	 */
+	public Map<State, Expression> getStateExpressionMap() {
+		return stateExpressionMap;
+	}
+
+	/**
+	 * @return the expressionStateMap from the last conversion
+	 */
+	public Map<Expression, Set<State>> getExpressionStateMap() {
+		return expressionStateMap;
+	}
+
 	private class ProductEquivalenceCondition implements StateCondition {
 
 	    protected AnnotatedStateNFA<Integer, Object> nfa1, nfa2;
@@ -118,6 +143,16 @@ public class BonxaiTypeAutomatonConstruction {
 	 */
 	private BidiMap<State,State> stateMap;
 	
+	/** 
+	 * Mapping between states and expressions
+	 */
+	private Map<State, Expression> stateExpressionMap;
+	
+	/**
+	 * Mapping between expression and states
+	 */
+	private Map<Expression, Set<State>> expressionStateMap;
+	
 	/**
 	 * productAutomaton representing all ancestor patterns.
 	 * final states are annotated with the matching ancestor pattern
@@ -143,12 +178,16 @@ public class BonxaiTypeAutomatonConstruction {
 	public BonxaiTypeAutomatonConstruction() {
 	}
 	
-	public TypeAutomaton constructTypeAutomaton(Bonxai bonxai, TypeNameGenerator typeNameGenerator) {
+	public TypeAutomaton constructTypeAutomaton(Bonxai bonxai, TypeNameGenerator typeNameGenerator, boolean eliminateGroups) {
+		this.bonxai = bonxai;
 		this.typeNameGenerator = typeNameGenerator;
 		typeAutomaton = new AnnotatedNFATypeAutomaton();
 		stateMap = new DualHashBidiMap<State,State>();
+		expressionStateMap = new HashMap<Expression, Set<State>>();
+		stateExpressionMap = new HashMap<State, Expression>();
 		
-		childPatternConverter = new ChildPatternConverter(typeAutomaton, bonxai.getDefaultNamespace());
+		this.childPatternConverter = new ChildPatternConverter(typeAutomaton, bonxai.getDefaultNamespace(), eliminateGroups);
+
 
 		expressions = new Vector<Expression>(bonxai.getExpressions());
 		List<QualifiedName> rootElements = bonxai.getRootElementNames();
@@ -215,6 +254,8 @@ public class BonxaiTypeAutomatonConstruction {
 			State productState = stateMap.get(state);
 			if (productState!=null) {
 				Integer matchingExpression = productDFA.getAnnotation(productState);
+				
+				this.mapStateToExpression(state, matchingExpression);
 			
 				Set<Symbol> children = getChildSymbols(expressions.get(matchingExpression).getChildPattern());
 				for (Symbol symbol: children) {
@@ -268,6 +309,17 @@ public class BonxaiTypeAutomatonConstruction {
 		return typeAutomaton;
 	}
 	
+	private void mapStateToExpression(State state, int matchingExpression) {
+		Expression expression = this.expressions.get(matchingExpression);
+		this.stateExpressionMap.put(state, expression);
+		Set<State> states = this.expressionStateMap.get(expression);
+		if (states == null) {
+			states = new HashSet<State>();
+			this.expressionStateMap.put(expression, states);
+		}
+		states.add(state);
+	}
+
 	private void insertChild(State state, State productState, Symbol symbol) {
 		State newState;
 		State newProductState;
@@ -283,9 +335,15 @@ public class BonxaiTypeAutomatonConstruction {
 		if (! stateMap.containsValue(newProductState)) {
 			newState = new State();
 			typeAutomaton.addState(newState);
-			AncestorPattern ap = expressions.get(productDFA.getAnnotation(newProductState)).getAncestorPattern();
-			QualifiedName typeName = typeNameGenerator.generateTypeName(ap);
-			typeAutomaton.setTypeName(newState, typeName);
+			Expression expression = expressions.get(productDFA.getAnnotation(newProductState));
+			AncestorPattern ap = expression.getAncestorPattern();
+			ChildPattern cp = expression.getChildPattern();
+			QualifiedName typename;
+			if (cp.getElementPattern().getBonxaiType()!=null)
+				typename = cp.getElementPattern().getBonxaiType().getTypename();
+			else
+				typename = typeNameGenerator.generateTypeName(ap);
+			typeAutomaton.setTypeName(newState, typename);
 			stateMap.put(newState, newProductState);
 			workingQueue.add(newState);
 		} else {
@@ -320,7 +378,8 @@ public class BonxaiTypeAutomatonConstruction {
 		} else if (particle instanceof GroupReference) {
 			GroupReference groupRef = (GroupReference) particle;
 			QualifiedName groupName = groupRef.getName();
-			symbols = getSymbols(bonxai.getElementGroup(groupName).getParticleContainer());
+			BonxaiGroup group = bonxai.getElementGroup(groupName);
+			symbols = getSymbols(group.getParticle());
 		} // just ignore other Particles. We just need the child symbols here. An error may be thrown during the actual conversion .
 		return symbols;
 	}
@@ -494,4 +553,9 @@ public class BonxaiTypeAutomatonConstruction {
 			}
 		}
 	}
+	
+	public void convertGroups(XSDSchema xsdSchema) {
+		this.childPatternConverter.convertGroups(bonxai, xsdSchema);
+	}
+
 }

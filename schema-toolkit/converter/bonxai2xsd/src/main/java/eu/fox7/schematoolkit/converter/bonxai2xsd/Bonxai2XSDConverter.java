@@ -49,16 +49,12 @@ public class Bonxai2XSDConverter extends AbstractSchemaConverter {
 		
 		xsdSchema.setElementFormDefault(Qualification.qualified);
 		xsdSchema.setTargetNamespace(bonxai.getDefaultNamespace());
-		xsdSchema.setDefaultNamespace(new DefaultNamespace(XSDSchema.XMLSCHEMA_NAMESPACE));
+		xsdSchema.setDefaultNamespace(bonxai.getDefaultNamespace());
 		
-		//convert groups
-		for (BonxaiAbstractGroup group: bonxai.getGroups()) {
-		//TODO: Convert groups	
-		}		
-
 		BonxaiTypeAutomatonConstruction btac = new BonxaiTypeAutomatonConstruction();
 		TypeNameGenerator tng = new TrivialTypeNameGenerator(bonxai.getDefaultNamespace());
-		typeAutomaton = btac.constructTypeAutomaton(bonxai, tng);
+		typeAutomaton = btac.constructTypeAutomaton(bonxai, tng, false);
+		btac.convertGroups(xsdSchema);
 		expressionStateMap = btac.getExpressionStateMap();
 
 		//System.err.println(typeAutomaton);
@@ -76,6 +72,8 @@ public class Bonxai2XSDConverter extends AbstractSchemaConverter {
 			element.setTypeName(typeAutomaton.getTypeName(state));
 			xsdSchema.addElement(element);
 		}
+		
+		
 		
 		
 		Collection<Type> typeList = typeAutomaton.getTypes();

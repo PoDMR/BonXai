@@ -1,37 +1,29 @@
 package eu.fox7.schematoolkit.converter.bonxai2xsd;
 
 
-import java.util.HashSet;
-
 import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.impl.sparse.State;
-import eu.fox7.schematoolkit.bonxai.om.AttributePattern;
-import eu.fox7.schematoolkit.bonxai.om.BonxaiAttributeGroup;
+import eu.fox7.schematoolkit.bonxai.om.Bonxai;
 import eu.fox7.schematoolkit.bonxai.om.ChildPattern;
-import eu.fox7.schematoolkit.common.AttributeGroupReference;
 import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.DefaultNamespace;
 import eu.fox7.schematoolkit.common.EmptyPattern;
 import eu.fox7.schematoolkit.common.QualifiedName;
-import eu.fox7.schematoolkit.xsd.om.AttributeGroup;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.SimpleContentExtension;
 import eu.fox7.schematoolkit.xsd.om.SimpleContentType;
 import eu.fox7.schematoolkit.xsd.om.SimpleType;
 import eu.fox7.schematoolkit.xsd.om.Type;
+import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 public class ChildPatternConverter {
 	
 	ParticleConverter converter;
-    private HashSet<String> attributeGroupNames;
     private DefaultNamespace targetNamespace;
-    private TypeAutomaton typeAutomaton;
-    
-    public ChildPatternConverter(TypeAutomaton typeAutomaton, DefaultNamespace targetNamespace) {
+    public ChildPatternConverter(TypeAutomaton typeAutomaton, DefaultNamespace targetNamespace, boolean eliminateGroups) {
     	this.targetNamespace = targetNamespace;
-    	this.typeAutomaton = typeAutomaton;
-    	this.converter = new ParticleConverter(typeAutomaton);
+    	this.converter = new ParticleConverter(typeAutomaton, eliminateGroups);
     }
     
     /**
@@ -105,5 +97,9 @@ public class ChildPatternConverter {
         }
         
         return type;
+    }
+    
+    public void convertGroups(Bonxai bonxai, XSDSchema xsdSchema) {
+    	this.converter.convertGroups(bonxai, xsdSchema);
     }
  }

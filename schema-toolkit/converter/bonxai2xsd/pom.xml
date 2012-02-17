@@ -26,7 +26,7 @@
   	</dependency>
   	<dependency>
   		<groupId>eu.fox7.schema-toolkit</groupId>
-  		<artifactId>treeautomata</artifactId>
+  		<artifactId>typeautomaton</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</dependency>
   </dependencies>
