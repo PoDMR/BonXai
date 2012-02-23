@@ -2,6 +2,11 @@ package eu.fox7.schematoolkit.exceptions;
 
 public class ConversionFailedException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public ConversionFailedException() {
 	}
 
