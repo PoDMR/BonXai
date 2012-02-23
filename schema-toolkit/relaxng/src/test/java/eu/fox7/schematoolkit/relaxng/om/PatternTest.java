@@ -47,7 +47,7 @@ public class PatternTest extends junit.framework.TestCase {
         };
         instance.setAttributeNamespace("http://www.example.org/");
         String expResult = "http://www.example.org/";
-        String result = instance.getAttributeNamespace();
+        String result = instance.getAttributeNamespace().getUri();
         assertEquals(expResult, result);
     }
 
@@ -60,7 +60,7 @@ public class PatternTest extends junit.framework.TestCase {
         };
         instance.setAttributeNamespace("http://www.example.org/");
         String expResult = "http://www.example.org/";
-        String result = instance.getAttributeNamespace();
+        String result = instance.getAttributeNamespace().getUri();
         assertEquals(expResult, result);
     }
 

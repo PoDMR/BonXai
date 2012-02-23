@@ -46,7 +46,7 @@ public class NsNameTest extends junit.framework.TestCase {
         NsName instance = new NsName();
         instance.setAttributeNamespace("http://www.example.org/");
         String expResult = "http://www.example.org/";
-        String result = instance.getAttributeNamespace();
+        String result = instance.getAttributeNamespace().getUri();
         assertEquals(expResult, result);
     }
 
@@ -58,7 +58,7 @@ public class NsNameTest extends junit.framework.TestCase {
         NsName instance = new NsName();
         instance.setAttributeNamespace("http://www.example.org/");
         String expResult = "http://www.example.org/";
-        String result = instance.getAttributeNamespace();
+        String result = instance.getAttributeNamespace().getUri();
         assertEquals(expResult, result);
     }
 

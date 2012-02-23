@@ -19,7 +19,7 @@ public class NameTest extends junit.framework.TestCase {
         Name instance = new Name("myName");
         instance.setAttributeNamespace("http://www.example.org/");
         String expResult = "http://www.example.org/";
-        String result = instance.getAttributeNamespace();
+        String result = instance.getAttributeNamespace().getUri();
         assertEquals(expResult, result);
     }
 
@@ -31,7 +31,7 @@ public class NameTest extends junit.framework.TestCase {
         Name instance = new Name("myName");
         instance.setAttributeNamespace("http://www.example.org/");
         String expResult = "http://www.example.org/";
-        String result = instance.getAttributeNamespace();
+        String result = instance.getAttributeNamespace().getUri();
         assertEquals(expResult, result);
     }
 
