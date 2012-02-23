@@ -11,7 +11,6 @@ import java.util.SortedSet;
 import java.util.Stack;
 import java.util.TreeSet;
 
-import eu.fox7.flt.automata.impl.sparse.SparseDFA;
 import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
@@ -31,10 +30,10 @@ public class Determinizer {
      * 
      * @return a DFA constructed from the NFA object
      */
-    public static SparseDFA dfa(StateNFA nfa) {
+    public static SparseNFA dfa(StateNFA nfa) {
         if (nfa.isDFA())
-            return new SparseDFA(nfa);
-        SparseDFA dfa = new SparseDFA();
+            return new SparseNFA(nfa);
+        SparseNFA dfa = new SparseNFA();
         NFAMatcher matcher = new NFAMatcher(nfa);
         dfa.addSymbols(nfa.getSymbols());
         Stack<String> toDo = new Stack<String>();
@@ -57,18 +56,16 @@ public class Determinizer {
                 epsilonExtension = matcher.doEpsilonMoves(toStates);
                 String newDFAStateValue;
                 if (!epsilonExtension.isEmpty()) {
-                    newDFAStateValue = encodeSet(nfa, epsilonExtension);
-                } else {
-                	newDFAStateValue = "sink";
+                	newDFAStateValue = encodeSet(nfa, epsilonExtension);
+
+
+                	if (!dfaSets.containsKey(newDFAStateValue)) {
+                		toDo.push(newDFAStateValue);
+                		dfaSets.put(newDFAStateValue, epsilonExtension);
+                	}
+                	dfa.addTransition(symbol.toString(), dfaStateValue,
+                			newDFAStateValue);
                 }
-                
-                if (!dfaSets.containsKey(newDFAStateValue)) {
-                        toDo.push(newDFAStateValue);
-                        dfaSets.put(newDFAStateValue, epsilonExtension);
-                    }
-                    dfa.addTransition(symbol.toString(), dfaStateValue,
-                            newDFAStateValue);
-//                }
             }
         }
         for (State finalState : nfa.getFinalStates())
