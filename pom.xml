@@ -2,24 +2,28 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <distributionManagement>
-    <downloadUrl>http://ls1-www.cs.tu-dortmund.de/~niewerth/fox-repository</downloadUrl>
+    <downloadUrl>http://ls1-www.cs.tu-dortmund.de/nexus/content/repositories/fox</downloadUrl>
     <repository>
-      <id>eu.fox7</id>
+      <id>fox</id>
       <name>Fox Repository</name>
-      <url>file:///home/mt/fox-repository</url>
+      <url>http://ls1-www.cs.tu-dortmund.de/nexus/content/repositories/fox</url>
     </repository>
     <snapshotRepository>
-      <id>eu.fox</id>
-      <name>Fox Repository</name>
-      <url>file:///home/mt/fox-repository</url>
+      <id>fox-snapshot</id>
+      <name>Fox Snapshot Repository</name>
+      <url>http://ls1-www.cs.tu-dortmund.de/nexus/content/repositories/fox-snapshot</url>
       <uniqueVersion>true</uniqueVersion>
     </snapshotRepository>
   </distributionManagement>
 
   <repositories>
     <repository>
-      <id>eu.fox7</id>
-      <url>http://ls1-www.cs.tu-dortmund.de/~niewerth/fox-repository</url>
+      <id>fox</id>
+      <url>http://ls1-www.cs.tu-dortmund.de/nexus/content/repositories/fox</url>
+    </repository>
+    <repository>
+      <id>fox-snapshot</id>
+      <url>http://ls1-www.cs.tu-dortmund.de/nexus/content/repositories/fox-snapshot</url>
     </repository>
   </repositories>
 
@@ -88,7 +92,7 @@
 	<modules>
 		<module>external</module>
 		<module>flt</module>
-		<module>bonxai</module>
+		<module>schema-toolkit/schema-toolkit</module>
 		<module>console</module>
 		<module>treeautomata</module>
 		<module>upafixer</module>
