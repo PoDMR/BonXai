@@ -90,6 +90,7 @@ public class Rewriter implements RewriteEngine {
         return automaton;
     }
 
+    @SuppressWarnings("rawtypes")
     protected String unmark(String regexStr) {
         try {
             Regex regex = new Regex();

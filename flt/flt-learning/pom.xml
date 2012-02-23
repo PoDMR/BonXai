@@ -3,7 +3,6 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>flt-learning</artifactId>
-  <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>flt-learning</name>

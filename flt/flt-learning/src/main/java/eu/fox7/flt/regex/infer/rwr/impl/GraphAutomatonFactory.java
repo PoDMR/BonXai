@@ -99,6 +99,7 @@ public class GraphAutomatonFactory {
         return create(nfa);
     }
 
+    @SuppressWarnings("rawtypes")
     public Automaton reverse(String regexStr)
             throws SExpressionParseException, FeatureNotSupportedException {
         Regex regex = new Regex();
@@ -106,6 +107,7 @@ public class GraphAutomatonFactory {
         return reverse(tree.getRoot());
     }
 
+    @SuppressWarnings("rawtypes")
     protected Automaton reverse(Node node) throws FeatureNotSupportedException {
         String symbol = node.getKey();
         if (regex.isEmptySymbol(symbol))
@@ -128,6 +130,7 @@ public class GraphAutomatonFactory {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     protected Automaton disjunctionAutomaton(Node node1, Node node2)
             throws FeatureNotSupportedException {
         Automaton subautomaton1 = reverse(node1);
@@ -162,6 +165,7 @@ public class GraphAutomatonFactory {
         return automaton;
     }
 
+    @SuppressWarnings("rawtypes")
     protected Automaton concatAutomaton(Node node1, Node node2)
             throws FeatureNotSupportedException {
         String symbol1 = node1.getKey();
@@ -234,6 +238,7 @@ public class GraphAutomatonFactory {
         return automaton;
     }
 
+    @SuppressWarnings("rawtypes")
     protected Automaton optionalAutomaton(Node node)
             throws FeatureNotSupportedException {
         Automaton subautomaton = reverse(node);
@@ -248,6 +253,7 @@ public class GraphAutomatonFactory {
         return automaton;
     }
 
+    @SuppressWarnings("rawtypes")
     protected Automaton repetitionAutomaton(Node node)
             throws FeatureNotSupportedException {
         Automaton subautomaton = reverse(node);
