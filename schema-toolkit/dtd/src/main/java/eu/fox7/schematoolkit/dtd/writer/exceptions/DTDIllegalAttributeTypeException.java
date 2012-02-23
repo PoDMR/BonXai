@@ -1,10 +1,12 @@
 package eu.fox7.schematoolkit.dtd.writer.exceptions;
 
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
+
 /**
  * There is an illegal attributetype for an attribute
  * @author Lars Schmidt
  */
-public class DTDIllegalAttributeTypeException extends Exception {
+public class DTDIllegalAttributeTypeException extends DTDException {
 
     /**
 	 * 

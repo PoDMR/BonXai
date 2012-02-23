@@ -3,14 +3,18 @@ package eu.fox7.schematoolkit.dtd.om;
 import java.util.Collection;
 import java.util.Map;
 
+import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.SchemaHandler;
+import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.dtd.DTDSchemaHandler;
 
 /**
  * Main class of a datastructure for representing Document Type Definitions of XML
  * @author Lars Schmidt
  */
-public class DocumentTypeDefinition {
+public class DocumentTypeDefinition implements Schema {
     /**
      * This SymbolTable holds references for ALL elements of the DTD
      */
@@ -31,7 +35,6 @@ public class DocumentTypeDefinition {
      * These two variables hold the public and system ID of the current DTD schema
      */
     private String publicID, systemID;
-	private Element rootElement = null;
 
     /**
      * Constructor of the class DocumentTypeDefinition
@@ -99,20 +102,12 @@ public class DocumentTypeDefinition {
         this.notations.put(notation.getName(), notation);
     }
 
-	public void setRootElement(Element rootElement) {
-		this.rootElement = rootElement;
-	}
-
 	public void addElement(Element element) {
 		this.elements.put(element.getName(), element);
 	}
 
 	public Element getElement(String elementName) {
 		return this.elements.get(new QualifiedName(Namespace.EMPTY_NAMESPACE, elementName));
-	}
-
-	public Element getRootElement() {
-		return this.rootElement;
 	}
 
 	public Collection<Element> getElements() {
@@ -125,5 +120,15 @@ public class DocumentTypeDefinition {
 
 	public Collection<Notation> getNotations() {
 		return this.notations.values();
+	}
+
+	@Override
+	public SchemaHandler getSchemaHandler() {
+		return new DTDSchemaHandler(this);
+	}
+
+	@Override
+	public SchemaLanguage getSchemaLanguage() {
+		return SchemaLanguage.DTD;
 	}
 }

@@ -4,7 +4,7 @@ package eu.fox7.schematoolkit.dtd.common.exceptions;
  * A particle is null in a DTD element content model
  * @author Lars Schmidt
  */
-public class ContentModelNullParticleException extends Exception {
+public class ContentModelNullParticleException extends DTDException {
 
     /**
 	 * 

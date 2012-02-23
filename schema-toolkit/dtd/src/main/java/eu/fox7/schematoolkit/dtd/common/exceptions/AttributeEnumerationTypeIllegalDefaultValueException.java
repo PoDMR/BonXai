@@ -4,7 +4,7 @@ package eu.fox7.schematoolkit.dtd.common.exceptions;
  * Attribute Default value is not allowed in the given enumeration
  * @author Lars Schmidt
  */
-public class AttributeEnumerationTypeIllegalDefaultValueException extends Exception {
+public class AttributeEnumerationTypeIllegalDefaultValueException extends DTDException {
 
     /**
 	 * 

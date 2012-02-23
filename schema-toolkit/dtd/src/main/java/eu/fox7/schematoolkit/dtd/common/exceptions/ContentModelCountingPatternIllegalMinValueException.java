@@ -4,7 +4,7 @@ package eu.fox7.schematoolkit.dtd.common.exceptions;
  * The minOccurs value of a countingPattern is not allowed
  * @author Lars Schmidt
  */
-public class ContentModelCountingPatternIllegalMinValueException extends Exception {
+public class ContentModelCountingPatternIllegalMinValueException extends DTDException {
 
     /**
 	 * 

@@ -1,10 +1,12 @@
 package eu.fox7.schematoolkit.dtd.writer.exceptions;
 
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
+
 /**
  * There is no name defined for an internal entity in the current DTD
  * @author Lars Schmidt
  */
-public class DTDInternalEntityEmptyNameException extends Exception {
+public class DTDInternalEntityEmptyNameException extends DTDException {
 
     /**
 	 * 

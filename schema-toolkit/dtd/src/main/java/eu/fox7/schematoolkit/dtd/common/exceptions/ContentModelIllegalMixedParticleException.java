@@ -4,7 +4,7 @@ package eu.fox7.schematoolkit.dtd.common.exceptions;
  * The content model of an element with \"mixed\" content is illegal
  * @author Lars Schmidt
  */
-public class ContentModelIllegalMixedParticleException extends Exception {
+public class ContentModelIllegalMixedParticleException extends DTDException {
 
     /**
 	 * 

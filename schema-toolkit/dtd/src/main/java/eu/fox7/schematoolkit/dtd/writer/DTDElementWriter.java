@@ -1,7 +1,9 @@
 package eu.fox7.schematoolkit.dtd.writer;
 
+import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.dtd.common.DTDNameChecker;
 import eu.fox7.schematoolkit.dtd.common.ElementContentModelProcessor;
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.IllegalNAMEStringException;
 import eu.fox7.schematoolkit.dtd.om.Attribute;
 import eu.fox7.schematoolkit.dtd.om.Element;
@@ -36,7 +38,7 @@ public class DTDElementWriter {
      * @return String
      * @throws Exception
      */
-    public String getElementDeclarationString() throws Exception {
+    public String getElementDeclarationString() throws DTDException {
         DTDNameChecker nameChecker = new DTDNameChecker();
         String elementString = "";
 
@@ -69,7 +71,7 @@ public class DTDElementWriter {
      * @return String
      * @throws Exception
      */
-    public String getElementAttachedAttributesString() throws Exception {
+    public String getElementAttachedAttributesString() throws DTDException {
         String attributeString = "";
         if (!this.element.getAttributes().isEmpty()) {
 

@@ -1,6 +1,7 @@
 package eu.fox7.schematoolkit.dtd.common;
 
 import eu.fox7.schematoolkit.dtd.common.exceptions.AttributeTypeIllegalValueException;
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.IllegalNMTOKENStringException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.NotationNotDeclaredException;
 import eu.fox7.schematoolkit.dtd.om.Attribute;
@@ -38,7 +39,7 @@ public class AttributeTypeProcessor {
      * @param typeString - String
      * @throws Exception 
      */
-    public void setTypeToAttribute(String typeString) throws Exception {
+    public void setTypeToAttribute(String typeString) throws DTDException {
         DTDNameChecker nameChecker = new DTDNameChecker();
 
         // Strip whitespace from typeString

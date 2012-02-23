@@ -1,6 +1,8 @@
 package eu.fox7.schematoolkit.dtd.writer;
 
+import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.dtd.common.DTDNameChecker;
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.IllegalNAMEStringException;
 import eu.fox7.schematoolkit.dtd.om.DocumentTypeDefinition;
 import eu.fox7.schematoolkit.dtd.om.Element;
@@ -56,54 +58,52 @@ public class DTDWriter {
      * @return
      * @throws Exception
      */
-    public String getXMLWithFullDTDDeclarationString() throws Exception {
-        DTDNameChecker nameChecker = new DTDNameChecker();
-        String xmlString = "";
-
-        Element rootElement = this.dtd.getRootElement();
-
-        if (rootElement != null) {
-
-            // Write xml header
-            xmlString += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-
-            // Start the DocType block of the DTD
-            xmlString += "<!DOCTYPE ";
-
-            // Write the name of the root element
-            if (!nameChecker.checkForXMLName(rootElement.getName())) {
-                throw new IllegalNAMEStringException("Root element: ", rootElement.getName().getName());
-            }
-            xmlString += rootElement.getName() + " ";
-
-            // Handle external identifier imports:
-            // SYSTEM/PUBLIC + Identifier + location of included DTD?
-
-            // Write the opening bracket of the DocType block
-            xmlString += "[\n\n";
-
-            xmlString += getExternalSubsetString();
-
-            // Close the docType block of the DTD
-            xmlString += "]>\n";
-
-            // Write the root element of the XML Part of the file.
-            // This makes the file a valid XML file.
-            xmlString += "<" + rootElement.getName() + "/>";
-
-        } else {
-            throw new DTDNoRootElementDefinedException("");
-        }
-
-        return xmlString;
-    }
+//    public String getXMLWithFullDTDDeclarationString() throws Exception {
+//        DTDNameChecker nameChecker = new DTDNameChecker();
+//        String xmlString = "";
+//
+//        if (rootElement != null) {
+//
+//            // Write xml header
+//            xmlString += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+//
+//            // Start the DocType block of the DTD
+//            xmlString += "<!DOCTYPE ";
+//
+//            // Write the name of the root element
+//            if (!nameChecker.checkForXMLName(rootElement.getName())) {
+//                throw new IllegalNAMEStringException("Root element: ", rootElement.getName().getName());
+//            }
+//            xmlString += rootElement.getName() + " ";
+//
+//            // Handle external identifier imports:
+//            // SYSTEM/PUBLIC + Identifier + location of included DTD?
+//
+//            // Write the opening bracket of the DocType block
+//            xmlString += "[\n\n";
+//
+//            xmlString += getExternalSubsetString();
+//
+//            // Close the docType block of the DTD
+//            xmlString += "]>\n";
+//
+//            // Write the root element of the XML Part of the file.
+//            // This makes the file a valid XML file.
+//            xmlString += "<" + rootElement.getName() + "/>";
+//
+//        } else {
+//            throw new DTDNoRootElementDefinedException("");
+//        }
+//
+//        return xmlString;
+//    }
 
     /**
      * Returns the fully generated DTD String without declarationblock
      * @return String
      * @throws Exception
      */
-    public String getExternalSubsetString() throws Exception {
+    public String getExternalSubsetString() throws DTDException {
         String doctypeString = "";
 
         // Write entities
@@ -122,7 +122,7 @@ public class DTDWriter {
      * Returns the all entity declarations defined in the DTD
      * @return String
      */
-    private String getEntityDeclarationsString() throws Exception {
+    private String getEntityDeclarationsString() throws DTDException {
         String entityString = "";
 
 //TODO:
@@ -146,7 +146,7 @@ public class DTDWriter {
      * Returns the all element declarations defined in the DTD
      * @return String
      */
-    private String getElementDeclarationsString() throws Exception {
+    private String getElementDeclarationsString() throws DTDException {
         String elementString = "";
 
         for (Element currentElement: dtd.getElements()) {
@@ -162,7 +162,7 @@ public class DTDWriter {
      * Returns the all notation declarations defined in the DTD
      * @return String
      */
-    private String getNotationDeclarationsString() throws Exception {
+    private String getNotationDeclarationsString() throws DTDException {
         String notationString = "";
 //TODO
 //        if (!this.dtd.getNotationSymbolTable().getAllReferencedObjects().isEmpty()) {

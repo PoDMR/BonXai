@@ -3,12 +3,12 @@ package eu.fox7.schematoolkit.dtd.common;
 import eu.fox7.schematoolkit.common.AnyPattern;
 import eu.fox7.schematoolkit.common.ChoicePattern;
 import eu.fox7.schematoolkit.common.CountingPattern;
+import eu.fox7.schematoolkit.common.ElementRef;
 import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.ProcessContentsInstruction;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.common.SequencePattern;
-import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelCountingPatternIllegalMinValueException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelCountingPatternNotAllowedDTDValueException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelEmptyChildParticleListException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelIllegalChildParticleException;
@@ -19,10 +19,10 @@ import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelIllegalStringForM
 import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelNullParticleException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelStringEmptyException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelStringTokenizerIllegalStateException;
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.IllegalNAMEStringException;
 import eu.fox7.schematoolkit.dtd.om.DocumentTypeDefinition;
 import eu.fox7.schematoolkit.dtd.om.Element;
-import eu.fox7.schematoolkit.xsd.om.ElementRef;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -114,7 +114,7 @@ public class ElementContentModelProcessor {
      * @return Particle
      * @throws Exception
      */
-    public Particle convertRegExpStringToParticle(String contentModelRegExp) throws Exception {
+    public Particle convertRegExpStringToParticle(String contentModelRegExp) throws DTDException {
         this.mixed = false;
         this.mixedStar = false;
         this.regExpString = contentModelRegExp;
@@ -178,7 +178,7 @@ public class ElementContentModelProcessor {
      * @return Particle     this is the fully generated particle structure.
      * @throws Exception
      */
-    private Particle convertTokenToCorrespondingParticle(ElementContentModelStringTokenizer tokenizer) throws Exception {
+    private Particle convertTokenToCorrespondingParticle(ElementContentModelStringTokenizer tokenizer) throws DTDException {
         DTDNameChecker nameChecker = new DTDNameChecker();
 
         // Prepare the variable of type Particle for use as result of this method
@@ -361,7 +361,7 @@ public class ElementContentModelProcessor {
      * @return String
      * @throws Exception
      */
-    public String convertParticleToRegExpString(Element element) throws Exception {
+    public String convertParticleToRegExpString(Element element) throws DTDException {
         DTDNameChecker nameChecker = new DTDNameChecker();
         String currentRegExpString = "";
 
@@ -477,7 +477,7 @@ public class ElementContentModelProcessor {
      * @return String
      * @throws Exception
      */
-    private String convertParticleToRegExpString(Particle particle, QualifiedName elementName) throws Exception {
+    private String convertParticleToRegExpString(Particle particle, QualifiedName elementName) throws DTDException {
         DTDNameChecker nameChecker = new DTDNameChecker();
         String currentRegExpString = "";
 

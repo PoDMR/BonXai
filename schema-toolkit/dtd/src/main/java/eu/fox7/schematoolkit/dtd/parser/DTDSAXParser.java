@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.xml.sax.XMLReader;
@@ -124,39 +125,18 @@ public class DTDSAXParser extends DefaultHandler {
      * @return DocumentTypeDefinition
      * @throws Exception
      */
-    public DocumentTypeDefinition parseDTDOnly(String dtdURI)
-            throws Exception {
-        String filePath = dtdURI;
-        int dot = filePath.lastIndexOf(".");
-        if (dot == -1) {
-            dot = filePath.length();
-        }
-        int sep = filePath.lastIndexOf("/");
-        String rootName = filePath.substring(sep + 1, dot);
-
-        return this.parseDTDOnly(dtdURI, rootName);
-    }
-
 
     /**
      * Method parse. This is the "main" method of this class for parsing the DTD
      * content directly from a DTD File.
      * @param dtdURI
-     * @param rootName
      * @return DocumentTypeDefinition
-     * @throws Exception
+     * @throws SAXException 
+     * @throws IOException 
      */
-    public DocumentTypeDefinition parseDTDOnly(String dtdURI, String rootLocalName)
-            throws Exception {
+    public DocumentTypeDefinition parseDTDOnly(InputStream inputStream) throws SAXException, IOException {
 
-    	QualifiedName rootName = new QualifiedName(Namespace.EMPTY_NAMESPACE, rootLocalName);
-    	
-        DTDNameChecker nameChecker = new DTDNameChecker();
-        if (!nameChecker.checkForXMLName(rootName)) {
-            throw new IllegalNAMEStringException("DOCTYPE DTD root element", rootLocalName);
-        }
-
-        // Initialize the xmlReader
+    	// Initialize the xmlReader
         XMLReader xr = XMLReaderFactory.createXMLReader();
 
         // Define this class as the handler for the used SAXParser
@@ -207,30 +187,15 @@ public class DTDSAXParser extends DefaultHandler {
         xr.setFeature("http://xml.org/sax/features/lexical-handler/parameter-entities", true);
 
         String uniqueRandID = java.util.UUID.randomUUID().toString();
-        String fileLocalName = dtdURI.substring(dtdURI.lastIndexOf("/") + 1);
-        this.tempFileName = dtdURI + "_" + uniqueRandID + "_temp.xml";
 
-        // It is necessary to use InputSources to define a SystemId. This
-        // handles the setting of the correct workingdirectory!
-
-        File tempFile = new File(tempFileName);
-
-        // create writer for file to append to
-        BufferedWriter out = new BufferedWriter(new FileWriter(tempFile));
-
-        out.write("<?xml version=\"1.0\"?>\n<!DOCTYPE " + rootName + " SYSTEM \"" + fileLocalName + "\">\n<" + rootName + "/>\n");
-        out.close();
-
-        InputSource inputSource = new InputSource(new java.io.FileInputStream(tempFile));
-        inputSource.setSystemId(dtdURI);
+        InputSource inputSource = new InputSource(inputStream);
+//        inputSource.setSystemId(dtdURI);
 
         /***********************************************************************
          * Call the 'parse'-method of the XMLReader to start the main parsing
          * progress
          **********************************************************************/
         xr.parse(inputSource);
-
-        tempFile.delete();
 
         // return the generated DTD Structure
         return myDTDHandler.getDTD();

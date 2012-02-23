@@ -1,10 +1,12 @@
 package eu.fox7.schematoolkit.dtd.parser.exceptions;
 
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
+
 /**
  * There are duplicate attribute-names in the DTD file
  * @author Lars Schmidt
  */
-public class DuplicateAttributeNameException extends Exception {
+public class DuplicateAttributeNameException extends DTDException {
 
     /**
 	 * 

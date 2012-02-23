@@ -1,5 +1,6 @@
 package eu.fox7.schematoolkit.dtd.writer;
 
+import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.dtd.common.DTDNameChecker;
 import eu.fox7.schematoolkit.dtd.common.exceptions.IllegalNAMEStringException;
 import eu.fox7.schematoolkit.dtd.om.DocumentTypeDefinition;
@@ -36,7 +37,7 @@ public class DTDEntityWriter {
      * @return String
      * @throws Exception 
      */
-    public String getInternalEntitiesString() throws Exception {
+    public String getInternalEntitiesString() throws SchemaToolkitException {
         /**
          * <!ENTITY [%] name "value" >
          */

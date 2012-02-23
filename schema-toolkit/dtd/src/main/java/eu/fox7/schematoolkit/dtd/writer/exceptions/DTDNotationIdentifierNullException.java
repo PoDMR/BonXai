@@ -1,10 +1,12 @@
 package eu.fox7.schematoolkit.dtd.writer.exceptions;
 
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
+
 /**
  * There is no SystemID and no publicID defined in a DTD notation
  * @author Lars Schmidt
  */
-public class DTDNotationIdentifierNullException extends Exception {
+public class DTDNotationIdentifierNullException extends DTDException {
 
     /**
 	 * 

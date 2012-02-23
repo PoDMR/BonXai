@@ -4,7 +4,7 @@ package eu.fox7.schematoolkit.dtd.common.exceptions;
  * AttributeType is not allowed
  * @author Lars Schmidt
  */
-public class AttributeTypeIllegalValueException extends Exception {
+public class AttributeTypeIllegalValueException extends DTDException {
 
     /**
 	 * 

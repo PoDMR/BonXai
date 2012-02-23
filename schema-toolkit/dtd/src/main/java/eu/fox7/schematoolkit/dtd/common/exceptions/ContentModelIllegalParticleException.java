@@ -4,7 +4,7 @@ package eu.fox7.schematoolkit.dtd.common.exceptions;
  * A particle is illegal in a DTD element content model
  * @author Lars Schmidt
  */
-public class ContentModelIllegalParticleException extends Exception {
+public class ContentModelIllegalParticleException extends DTDException {
 
     /**
 	 * 

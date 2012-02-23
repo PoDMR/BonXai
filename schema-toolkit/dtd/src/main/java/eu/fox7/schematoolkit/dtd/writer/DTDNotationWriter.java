@@ -1,6 +1,7 @@
 package eu.fox7.schematoolkit.dtd.writer;
 
 import eu.fox7.schematoolkit.dtd.common.DTDNameChecker;
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.IllegalNAMEStringException;
 import eu.fox7.schematoolkit.dtd.om.DocumentTypeDefinition;
 import eu.fox7.schematoolkit.dtd.om.Notation;
@@ -38,7 +39,7 @@ public class DTDNotationWriter {
      * @return String
      * @throws Exception 
      */
-    public String getNotationsString() throws Exception {
+    public String getNotationsString() throws DTDException {
         DTDNameChecker nameChecker = new DTDNameChecker();
         String notationString = "";
         // Iterate over all notations in the DTD

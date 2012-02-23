@@ -4,7 +4,7 @@ package eu.fox7.schematoolkit.dtd.common.exceptions;
  * A regular expression string for an element content model is empty or null
  * @author Lars Schmidt
  */
-public class ContentModelStringEmptyException extends Exception {
+public class ContentModelStringEmptyException extends DTDException {
 
     /**
 	 * 

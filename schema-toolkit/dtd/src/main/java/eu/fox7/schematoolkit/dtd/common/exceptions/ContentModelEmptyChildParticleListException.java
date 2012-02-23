@@ -4,7 +4,7 @@ package eu.fox7.schematoolkit.dtd.common.exceptions;
  * A particle has an empty child particle list
  * @author Lars Schmidt
  */
-public class ContentModelEmptyChildParticleListException extends Exception {
+public class ContentModelEmptyChildParticleListException extends DTDException {
 
     /**
 	 * 

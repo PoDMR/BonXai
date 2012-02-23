@@ -4,7 +4,7 @@ package eu.fox7.schematoolkit.dtd.common.exceptions;
  * The values of a countingPattern is not allowed
  * @author Lars Schmidt
  */
-public class ContentModelCountingPatternNotAllowedDTDValueException extends Exception {
+public class ContentModelCountingPatternNotAllowedDTDValueException extends DTDException {
 
     /**
 	 * 

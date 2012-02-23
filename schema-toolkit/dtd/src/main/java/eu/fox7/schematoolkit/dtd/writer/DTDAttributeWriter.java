@@ -1,8 +1,10 @@
 package eu.fox7.schematoolkit.dtd.writer;
 
+import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.dtd.common.DTDNameChecker;
 import eu.fox7.schematoolkit.dtd.common.exceptions.AttributeEnumerationTypeIllegalDefaultValueException;
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.IllegalNAMEStringException;
 import eu.fox7.schematoolkit.dtd.om.Attribute;
 import eu.fox7.schematoolkit.dtd.om.AttributeType;
@@ -41,7 +43,7 @@ public class DTDAttributeWriter {
      * @return String
      * @throws Exception
      */
-    public String getAttributeDeclarationString(QualifiedName qualifiedName) throws Exception {
+    public String getAttributeDeclarationString(QualifiedName qualifiedName) throws DTDException {
         DTDNameChecker nameChecker = new DTDNameChecker();
         String attributeString = "";
 
@@ -67,7 +69,7 @@ public class DTDAttributeWriter {
         return attributeString;
     }
 
-    private String getAttributeTypeString(QualifiedName qualifiedName) throws Exception {
+    private String getAttributeTypeString(QualifiedName qualifiedName) throws DTDException {
         String typeString = "";
         if (this.attribute.getType() == null) {
             throw new DTDAttributeTypeNullException(this.attribute.getName());
@@ -113,7 +115,7 @@ public class DTDAttributeWriter {
         return typeString;
     }
 
-    private String getAttributePresenceAndValueString(QualifiedName qualifiedName) throws Exception {
+    private String getAttributePresenceAndValueString(QualifiedName qualifiedName) throws DTDException {
         String attributeValueString = "";
         if (this.attribute.getAttributeDefaultPresence() != null) {
             // Case: AttributeDefaultPresence = FIXED

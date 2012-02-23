@@ -1,10 +1,12 @@
 package eu.fox7.schematoolkit.dtd.writer.exceptions;
 
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
+
 /**
  * There is no value defined for an attribute in the current DTD
  * @author Lars Schmidt
  */
-public class DTDAttributeValueEmptyException extends Exception {
+public class DTDAttributeValueEmptyException extends DTDException {
 
     /**
 	 * 

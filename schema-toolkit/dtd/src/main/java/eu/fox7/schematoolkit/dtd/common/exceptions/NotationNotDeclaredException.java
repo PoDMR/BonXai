@@ -4,7 +4,7 @@ package eu.fox7.schematoolkit.dtd.common.exceptions;
  * Notation is not declared but used.
  * @author Lars Schmidt
  */
-public class NotationNotDeclaredException extends Exception {
+public class NotationNotDeclaredException extends DTDException {
 
     /**
 	 * 

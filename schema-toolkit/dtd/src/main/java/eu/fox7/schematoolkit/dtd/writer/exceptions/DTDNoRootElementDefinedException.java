@@ -1,10 +1,12 @@
 package eu.fox7.schematoolkit.dtd.writer.exceptions;
 
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
+
 /**
  * There is no root element defined in the current DTD
  * @author Lars Schmidt
  */
-public class DTDNoRootElementDefinedException extends Exception {
+public class DTDNoRootElementDefinedException extends DTDException {
 
     /**
 	 * 

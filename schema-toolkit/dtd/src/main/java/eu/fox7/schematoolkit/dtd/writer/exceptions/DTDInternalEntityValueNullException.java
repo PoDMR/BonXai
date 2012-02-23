@@ -1,10 +1,12 @@
 package eu.fox7.schematoolkit.dtd.writer.exceptions;
 
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
+
 /**
  * There is no value defined in a DTD internal entity
  * @author Lars Schmidt
  */
-public class DTDInternalEntityValueNullException extends Exception {
+public class DTDInternalEntityValueNullException extends DTDException {
 
     /**
 	 * 

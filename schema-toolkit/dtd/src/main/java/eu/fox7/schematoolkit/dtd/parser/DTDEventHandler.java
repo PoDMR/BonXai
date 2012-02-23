@@ -63,7 +63,7 @@ public class DTDEventHandler implements LexicalHandler, DeclHandler, DTDHandler 
     @Override
     public void startDTD(String rootElementName, String publicId, String systemId) throws SAXException {
         // Set the root element of the DTD
-        this.dtd.setRootElement(new Element(new QualifiedName(Namespace.EMPTY_NAMESPACE, rootElementName)));
+//        this.dtd.setRootElement(new Element(new QualifiedName(Namespace.EMPTY_NAMESPACE, rootElementName)));
 //        if (getDebug()) {
 //            System.out.println("DTD for '" + rootElementName + "'");
 //        }

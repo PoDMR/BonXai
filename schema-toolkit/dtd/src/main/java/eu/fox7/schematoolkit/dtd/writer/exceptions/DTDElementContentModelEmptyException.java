@@ -1,10 +1,12 @@
 package eu.fox7.schematoolkit.dtd.writer.exceptions;
 
+import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
+
 /**
  * There is an empty content model for an element
  * @author Lars Schmidt
  */
-public class DTDElementContentModelEmptyException extends Exception {
+public class DTDElementContentModelEmptyException extends DTDException {
 
     /**
 	 * 
