@@ -12,6 +12,7 @@ import eu.fox7.util.tree.Tree;
 
 public class BKWUPAFixer extends AbstractUPAFixer {
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Regex fixUPA(ContentAutomaton contentAutomaton) {
 		DeterministicExpression deFactory = new DeterministicExpressionBKW();
