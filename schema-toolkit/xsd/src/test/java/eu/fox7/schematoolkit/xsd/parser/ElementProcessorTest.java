@@ -1,6 +1,7 @@
 package eu.fox7.schematoolkit.xsd.parser;
 
 import eu.fox7.schematoolkit.common.CountingPattern;
+import eu.fox7.schematoolkit.common.ElementRef;
 import eu.fox7.schematoolkit.common.SequencePattern;
 import eu.fox7.schematoolkit.xsd.om.*;
 import eu.fox7.schematoolkit.xsd.parser.SchemaProcessor;

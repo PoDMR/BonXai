@@ -2,26 +2,17 @@ package eu.fox7.schematoolkit.xsd.om;
 
 import org.junit.*;
 
-import eu.fox7.schematoolkit.common.SymbolTableRef;
+import eu.fox7.schematoolkit.common.AttributeGroupReference;
+import eu.fox7.schematoolkit.common.Namespace;
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.AttributeGroup;
-import eu.fox7.schematoolkit.xsd.om.AttributeGroupRef;
 
 public class AttributeGroupRefTest extends junit.framework.TestCase {
 
     @Test
     public void testCreateAttributeGroupRef() {
-        SymbolTableRef<AttributeGroup> symbolTableRef = new SymbolTableRef<AttributeGroup>("someKey");
-        AttributeGroupRef attributeGroupRef = new AttributeGroupRef(symbolTableRef);
-        assertEquals(attributeGroupRef.attributeGroupRef, symbolTableRef);
+    	QualifiedName name = new QualifiedName(Namespace.EMPTY_NAMESPACE, "localname");
+        AttributeGroupReference attributeGroupRef = new AttributeGroupReference(name);
+        assertEquals(attributeGroupRef.getName(), name);
     }
-
-    @Test
-    public void testGetAttributeGroup() {
-        SymbolTableRef<AttributeGroup> symbolTableRef = new SymbolTableRef<AttributeGroup>("someKey");
-        AttributeGroup attributeGroup = new AttributeGroup("{}someName");
-        symbolTableRef.setReference(attributeGroup);
-        AttributeGroupRef attributeGroupRef = new AttributeGroupRef(symbolTableRef);
-        assertEquals(attributeGroupRef.getAttributeGroup(), attributeGroup);
-    }
-
 }

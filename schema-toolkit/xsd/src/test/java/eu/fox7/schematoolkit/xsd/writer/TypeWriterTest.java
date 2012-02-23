@@ -15,7 +15,6 @@ import org.w3c.dom.NodeList;
 
 import eu.fox7.schematoolkit.common.*;
 import eu.fox7.schematoolkit.xsd.om.*;
-import eu.fox7.schematoolkit.xsd.om.writer.FoundElements;
 import eu.fox7.schematoolkit.xsd.writer.DOMHelper;
 import eu.fox7.schematoolkit.xsd.writer.ParticleWriter;
 import eu.fox7.schematoolkit.xsd.writer.TypeWriter;
@@ -23,8 +22,10 @@ import eu.fox7.schematoolkit.xsd.writer.TypeWriter;
 public class TypeWriterTest extends junit.framework.TestCase
 {
     private Document xmlDoc;
-    private Element testElement;
-    private FoundElements foundElements;
+    private org.w3c.dom.Element testElement;
+    private XSDSchema xsdSchema;
+    private DefaultNamespace defaultNameSpace;
+    private IdentifiedNamespace identifiedNamespace;
 
     @Before
     public void setUp()
@@ -46,7 +47,14 @@ public class TypeWriterTest extends junit.framework.TestCase
         }
 
         testElement = xmlDoc.createElement("testElement");
-        foundElements = new FoundElements();
+
+        defaultNameSpace = new DefaultNamespace("http://defNS");
+        identifiedNamespace = new IdentifiedNamespace("ns", "myNamespace");
+
+        xsdSchema = new XSDSchema();
+        xsdSchema.addIdentifiedNamespace(identifiedNamespace);
+        xsdSchema.setDefaultNamespace(defaultNameSpace);
+        xsdSchema.setTargetNamespace(identifiedNamespace);
     }
 
     @Test
@@ -59,29 +67,15 @@ public class TypeWriterTest extends junit.framework.TestCase
     public void testWriteFoundType()
     {
         SimpleType sType;
-        SymbolTableRef<Type> symRef;
         eu.fox7.schematoolkit.xsd.om.Element element;
         Element tmpEl;//, tmpEl2;
-        DefaultNamespace defaultNameSpace;
-        IdentifiedNamespace identifiedNamespace;
 
-        defaultNameSpace = new DefaultNamespace("http://defNS");
-        NamespaceList nslist = new NamespaceList(defaultNameSpace);
-        identifiedNamespace = new IdentifiedNamespace("ns", "myNamespace");
-        nslist.addIdentifiedNamespace(identifiedNamespace);
-        foundElements.setNamespaceList(nslist);
 
-        sType = new SimpleType("{myNamespace}myType", null);
-        symRef = new SymbolTableRef<Type>("myKey");
-        symRef.setReference(sType);
+        sType = new SimpleType(new QualifiedName(identifiedNamespace, "sTypeName"), null);
 
-        element = new eu.fox7.schematoolkit.xsd.om.Element("{}myElement");
-        element.setType(symRef);
-        ParticleWriter.writeElement(testElement, element, foundElements);
-
-        element = new eu.fox7.schematoolkit.xsd.om.Element("{}myElement");
-        element.setType(symRef);
-        ParticleWriter.writeElement(testElement, element, foundElements);
+        element = new eu.fox7.schematoolkit.xsd.om.Element(new QualifiedName(identifiedNamespace, "myElement"));
+        element.setTypeName(sType.getName());
+        ParticleWriter.writeElement(testElement, element, xsdSchema);
 
         tmpEl = (Element)DOMHelper.findChildNode(testElement, "element");
         assert(tmpEl != null);
@@ -110,8 +104,6 @@ public class TypeWriterTest extends junit.framework.TestCase
 
         SimpleType sType, baseType;
         SimpleContentList scList, scListBase;
-        SymbolTableRef<Type> symRef;
-
 
         scListBase = new SimpleContentList(null);
         baseType = new SimpleType("{}baseType", scListBase);
@@ -671,19 +663,16 @@ public class TypeWriterTest extends junit.framework.TestCase
         ComplexType cType;
         SimpleContentType sCont;
         SimpleContentInheritance inheritance;
-        SymbolTableRef<Type> symRefExt;
 
         sType = new SimpleType("{}myBaseType", null);
-        symRefExt = new SymbolTableRef<Type>("extension");
-        symRefExt.setReference(sType);
 
-        inheritance = new SimpleContentExtension(symRefExt);
+        inheritance = new SimpleContentExtension(sType.getName());
 
         sCont = new SimpleContentType();
         sCont.setInheritance(inheritance);
         cType = new ComplexType("{}myType", sCont);
 
-        TypeWriter.writeSimpleContent(testElement, cType, foundElements);
+        TypeWriter.writeSimpleContent(testElement, cType, xsdSchema);
 
         testElement = (Element)testElement.getFirstChild();
         assertEquals("simpleContent", testElement.getNodeName());

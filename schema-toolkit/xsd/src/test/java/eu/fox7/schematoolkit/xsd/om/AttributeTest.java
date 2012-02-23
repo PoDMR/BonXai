@@ -4,7 +4,8 @@ import static org.junit.Assert.fail;
 
 import org.junit.*;
 
-import eu.fox7.schematoolkit.common.SymbolTableRef;
+import eu.fox7.schematoolkit.common.Namespace;
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.Attribute;
 import eu.fox7.schematoolkit.xsd.om.AttributeUse;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
@@ -16,89 +17,35 @@ public class AttributeTest extends junit.framework.TestCase {
 
     @Test
     public void testCreateAttributeNameOnly() {
-        Attribute attribute = new Attribute("{}someName");
-        assertEquals(attribute.simpleTypeRef, null);
+    	QualifiedName attributeName= new QualifiedName(Namespace.EMPTY_NAMESPACE,"someName");
+        Attribute attribute = new Attribute(attributeName);
+        assertEquals(attribute.simpleTypeName, null);
         assertEquals(attribute.name, "{}someName");
 
     }
 
     @Test
     public void testCreateAttributeNameAndTypeSuccess() {
-        SymbolTableRef<Type> typeRef = new SymbolTableRef<Type>(
-            "someType",
-            new SimpleType("{}someType", null)
-        );
-        Attribute attribute = new Attribute("{}someName", typeRef);
-        assertEquals(typeRef, attribute.simpleTypeRef);
-        assertEquals("{}someName", attribute.name);
+    	QualifiedName attributeName= new QualifiedName(Namespace.EMPTY_NAMESPACE,"someName");
+        QualifiedName typeName = new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType");
+        Attribute attribute = new Attribute(attributeName, typeName);
+        assertEquals(typeName, attribute.simpleTypeName);
+        assertEquals(attributeName, attribute.name);
 
-    }
-
-    /*
-     * Using (expected=...) annotation parameter does not work.
-     */
-    @Test
-    public void testCreateAttributeNameAndTypeFailure() {
-        SymbolTableRef<Type> typeRef = new SymbolTableRef<Type>(
-            "someType",
-            new ComplexType("{}someType", null)
-        );
-
-        try
-        {
-            Attribute attribute = new Attribute("{}someName", typeRef);
-            fail("Exception not thrown on ComplexType for Attribute.");
-        }
-        catch (UnexpectedTypeException e) {}
     }
 
     @Test
     public void testGetName() {
-        Attribute attribute = new Attribute("{}someName");
-        assertEquals(attribute.getName(), "{}someName");
-    }
-
-    @Test
-    public void testGetSimpleTypeWithoutRef() {
-        Attribute attribute = new Attribute("{}someName");
-        assertEquals(attribute.getSimpleType(), null);
-    }
-
-    @Test
-    public void testGetSimpleTypeWithRef() {
-        Attribute attribute = new Attribute("{}someName");
-        SimpleType simpleType = new SimpleType("{}someType", null);
-        SymbolTableRef<Type> simpleTypeRef= new SymbolTableRef<Type>("someKey", simpleType);
-        attribute.simpleTypeRef = simpleTypeRef;
-        assertEquals(attribute.getSimpleType(), simpleType);
-    }
-
-    @Test
-    public void testSetSimpleTypeSuccess() {
-        Attribute attribute = new Attribute("{}someName");
-        SimpleType simpleType = new SimpleType("{}someType", null);
-        SymbolTableRef<Type> simpleTypeRef= new SymbolTableRef<Type>("someKey", simpleType);
-        attribute.setSimpleType(simpleTypeRef);
-        assertEquals(attribute.simpleTypeRef.getReference(), simpleType);
-    }
-
-    @Test
-    public void testSetComplexTypeFailure() {
-        Attribute attribute = new Attribute("{}someName");
-        ComplexType simpleType = new ComplexType("{}someType", null);
-        SymbolTableRef<Type> simpleTypeRef= new SymbolTableRef<Type>("someKey", simpleType);
-        try
-        {
-            attribute.setSimpleType(simpleTypeRef);
-            fail( "Exception not thrown on ComplexType for Attribute.");
-        }
-        catch (UnexpectedTypeException e) {}
+    	QualifiedName attributeName= new QualifiedName(Namespace.EMPTY_NAMESPACE,"someName");
+        Attribute attribute = new Attribute(attributeName);
+        assertEquals(attribute.getName(), attributeName);
     }
 
     @Test
     public void testSetGetUse()
     {
-        Attribute attribute = new Attribute("{}someName");
+    	QualifiedName attributeName= new QualifiedName(Namespace.EMPTY_NAMESPACE,"someName");
+        Attribute attribute = new Attribute(attributeName);
 
         assertEquals(AttributeUse.Optional, attribute.getUse());
 
@@ -117,7 +64,8 @@ public class AttributeTest extends junit.framework.TestCase {
 
     public void testSetGetDefault()
     {
-        Attribute attribute = new Attribute("{}someName");
+    	QualifiedName attributeName= new QualifiedName(Namespace.EMPTY_NAMESPACE,"someName");
+        Attribute attribute = new Attribute(attributeName);
 
         assertNull(attribute.getDefault());
 
@@ -132,7 +80,8 @@ public class AttributeTest extends junit.framework.TestCase {
 
     public void testSetGetFixed()
     {
-        Attribute attribute = new Attribute("{}someName");
+    	QualifiedName attributeName= new QualifiedName(Namespace.EMPTY_NAMESPACE,"someName");
+        Attribute attribute = new Attribute(attributeName);
 
         assertNull(attribute.getFixed());
 

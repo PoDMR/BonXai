@@ -1,13 +1,13 @@
 package eu.fox7.schematoolkit.xsd.tools;
 
 import eu.fox7.schematoolkit.common.AllPattern;
+import eu.fox7.schematoolkit.common.ElementRef;
 import eu.fox7.schematoolkit.common.GroupRef;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.ParticleContainer;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.Element;
-import eu.fox7.schematoolkit.xsd.om.ElementRef;
 import eu.fox7.schematoolkit.xsd.om.ForeignSchema;
 import eu.fox7.schematoolkit.xsd.om.Group;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;

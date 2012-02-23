@@ -41,15 +41,6 @@ public class ElementTest extends junit.framework.TestCase {
     }
 
     @Test
-    public void testInvalidName() {
-        try {
-            Element element = new Element("fooElement");
-            fail("Expected RuntimeException.");
-        } catch (RuntimeException e)
-        { /* Expected */ }
-    }
-
-    @Test
     public void testCtorFullyQualifiedName() {
         Element element = new Element("{http://example.com/fooNamespace}fooElement");
 
@@ -63,36 +54,8 @@ public class ElementTest extends junit.framework.TestCase {
     }
 
     @Test
-    public void testCtorNamespaceAndName() {
-        Element element = new Element("http://example.com/fooNamespace", "fooElement");
-
-        assertEquals("fooElement", element.getLocalName());
-        assertEquals("http://example.com/fooNamespace", element.getNamespace());
-        assertEquals("{http://example.com/fooNamespace}fooElement", element.getName());
-        assertNull(element.getType());
-        assertNull(element.getDefault());
-        assertNull(element.getFixed());
-        assertFalse(element.nillable);
-    }
-
-    @Test
     public void testCtorNameAndType() {
-        SymbolTableRef<Type> typeRef = new SymbolTableRef<Type>("fooType");
         Element element = new Element("{http://example.com/fooNamespace}fooElement", typeRef);
-
-        assertEquals("fooElement", element.getLocalName());
-        assertEquals("http://example.com/fooNamespace", element.getNamespace());
-        assertEquals("{http://example.com/fooNamespace}fooElement", element.getName());
-        assertSame(typeRef.getReference(), element.getType());
-        assertNull(element.getDefault());
-        assertNull(element.getFixed());
-        assertFalse(element.nillable);
-    }
-
-    @Test
-    public void testCtorNamespaceNameAndType() {
-        SymbolTableRef<Type> typeRef = new SymbolTableRef<Type>("fooType");
-        Element element = new Element("http://example.com/fooNamespace", "fooElement", typeRef);
 
         assertEquals("fooElement", element.getLocalName());
         assertEquals("http://example.com/fooNamespace", element.getNamespace());
@@ -107,11 +70,8 @@ public class ElementTest extends junit.framework.TestCase {
     public void testSetGetType() {
         Element element = new Element("http://example.com/anotherNamespace", "anotherElement");
         String typeName = "{}typeName";
-        SymbolTableRef<Type> test = new SymbolTableRef<Type>("NameRef");
         SimpleContentList typeInheritance = new SimpleContentList(test);
         SimpleType type = new SimpleType(typeName, typeInheritance);
-        SymbolTableRef<Type> reftype = new SymbolTableRef<Type>("SomeTypeRef",
-                type);
         element.setType(reftype);
         assertEquals(type, element.getType());
     }

@@ -5,29 +5,27 @@ import org.junit.Before;
 
 import eu.fox7.schematoolkit.common.*;
 import eu.fox7.schematoolkit.xsd.om.*;
-import eu.fox7.schematoolkit.xsd.om.writer.FoundElements;
+import eu.fox7.schematoolkit.xsd.om.Group;
 import eu.fox7.schematoolkit.xsd.writer.GroupWriter;
 import eu.fox7.schematoolkit.xsd.writer.XSDWriter;
 
 public class GroupWriterTest extends junit.framework.TestCase {
 
     XSDWriter writer;
-    FoundElements foundElements;
-
+    XSDSchema s;
+    DefaultNamespace defaultNameSpace;
+	private IdentifiedNamespace xsdNamespace;
+	private IdentifiedNamespace barNamespace;
+    
     @Before
     public void setUp() {
-        DefaultNamespace defaultNameSpace;
-
-        XSDSchema s = new XSDSchema();
-        foundElements = new FoundElements();
+        s = new XSDSchema();
 
         defaultNameSpace = new DefaultNamespace("http://example.com/xyz");
-        NamespaceList nslist = new NamespaceList(defaultNameSpace);
-        nslist.addIdentifiedNamespace(new IdentifiedNamespace("xs", "http://www.w3.org/2001/XMLSchema"));
-        nslist.addIdentifiedNamespace(new IdentifiedNamespace("bar", "http://example.com/bar"));
-        foundElements.setNamespaceList(nslist);
-
-        s.setNamespaceList(nslist);
+        xsdNamespace = new IdentifiedNamespace("xs", "http://www.w3.org/2001/XMLSchema");
+        barNamespace = new IdentifiedNamespace("bar", "http://example.com/bar");
+        s.addIdentifiedNamespace(xsdNamespace);
+        s.addIdentifiedNamespace(barNamespace);
 
         writer = new XSDWriter(s);
         try {
@@ -40,8 +38,8 @@ public class GroupWriterTest extends junit.framework.TestCase {
     @Test
     public void testWriteParticleContainerWithStandardOccurrence() {
         SequencePattern sequencePattern = new SequencePattern();
-        Group group = new Group("{}someGroup", sequencePattern);
-        GroupWriter.writeGroup(writer.root, group, foundElements);
+        Group group = new Group(new QualifiedName(barNamespace,"someGroup"), sequencePattern);
+        GroupWriter.writeGroup(writer.root, group, s);
         assertTrue(writer.root.getFirstChild().getLocalName().equals("group"));
         assertTrue(writer.root.getFirstChild().getFirstChild().getLocalName().equals("sequence"));
     }

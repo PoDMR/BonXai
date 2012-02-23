@@ -6,31 +6,28 @@ import org.junit.Before;
 import eu.fox7.schematoolkit.common.DefaultNamespace;
 import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.common.NamespaceList;
-import eu.fox7.schematoolkit.common.SymbolTableRef;
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.*;
-import eu.fox7.schematoolkit.xsd.om.writer.FoundElements;
 import eu.fox7.schematoolkit.xsd.writer.ConstraintWriter;
 import eu.fox7.schematoolkit.xsd.writer.XSDWriter;
 
 public class ConstraintWriterTest extends junit.framework.TestCase {
 
     XSDWriter writer;
-    FoundElements foundElements;
+    XSDSchema s;
+    DefaultNamespace defaultNameSpace;
+	private IdentifiedNamespace xsdNamespace;
+	private IdentifiedNamespace barNamespace;
 
     @Before
     public void setUp() {
-        DefaultNamespace defaultNameSpace;
-
-        XSDSchema s = new XSDSchema();
-        foundElements = new FoundElements();
+        s = new XSDSchema();
 
         defaultNameSpace = new DefaultNamespace("http://example.com/xyz");
-        NamespaceList nslist = new NamespaceList(defaultNameSpace);
-        nslist.addIdentifiedNamespace(new IdentifiedNamespace("xs", "http://www.w3.org/2001/XMLSchema"));
-        nslist.addIdentifiedNamespace(new IdentifiedNamespace("bar", "http://example.com/bar"));
-        foundElements.setNamespaceList(nslist);
-
-        s.setNamespaceList(nslist);
+        xsdNamespace = new IdentifiedNamespace("xs", "http://www.w3.org/2001/XMLSchema");
+        barNamespace = new IdentifiedNamespace("bar", "http://example.com/bar");
+        s.addIdentifiedNamespace(xsdNamespace);
+        s.addIdentifiedNamespace(barNamespace);
 
         writer = new XSDWriter(s);
         try {
@@ -42,10 +39,10 @@ public class ConstraintWriterTest extends junit.framework.TestCase {
 
     @Test
     public void testWriteUnique() {
-        Unique unique = new Unique("someUnique", "foo/bar");
+        Unique unique = new Unique(new QualifiedName(defaultNameSpace,"someUnique"), "foo/bar");
         unique.addField("@id");
         unique.addField("name");
-        ConstraintWriter.writeConstraint(writer.root, unique, foundElements);
+        ConstraintWriter.writeConstraint(writer.root, unique, s);
         assertTrue(writer.root.getFirstChild().getLocalName().equals("unique"));
         assertTrue(writer.root.getFirstChild().getAttributes().getNamedItem("name").getTextContent().equals("someUnique"));
         assertTrue(writer.root.getFirstChild().getChildNodes().item(0).getLocalName().equals("selector"));
@@ -58,10 +55,10 @@ public class ConstraintWriterTest extends junit.framework.TestCase {
 
     @Test
     public void testWriteKey() {
-        Key key = new Key("{}someKey", "foo/bar");
+        Key key = new Key(new QualifiedName(defaultNameSpace,"someKey"), "foo/bar");
         key.addField("@id");
         key.addField("name");
-        ConstraintWriter.writeConstraint(writer.root, key, foundElements);
+        ConstraintWriter.writeConstraint(writer.root, key, s);
         assertTrue(writer.root.getFirstChild().getLocalName().equals("key"));
         assertTrue(writer.root.getFirstChild().getAttributes().getNamedItem("name").getTextContent().equals("someKey"));
         assertTrue(writer.root.getFirstChild().getChildNodes().item(0).getLocalName().equals("selector"));
@@ -74,12 +71,11 @@ public class ConstraintWriterTest extends junit.framework.TestCase {
 
     @Test
     public void testWriteKeyRef() {
-        Key key = new Key("{}someKey", "foo/bar");
-        SymbolTableRef<SimpleConstraint> ref = new SymbolTableRef<SimpleConstraint>("someKey", key);
-        KeyRef keyRef = new KeyRef("someKeyRef", "foo/bar", ref);
+        Key key = new Key(new QualifiedName(defaultNameSpace,"someKey"), "foo/bar");
+        KeyRef keyRef = new KeyRef(new QualifiedName(defaultNameSpace,"someKeyRef"), "foo/bar", key);
         keyRef.addField("@id");
         keyRef.addField("name");
-        ConstraintWriter.writeConstraint(writer.root, keyRef, foundElements);
+        ConstraintWriter.writeConstraint(writer.root, keyRef, s);
         assertTrue(writer.root.getFirstChild().getLocalName().equals("keyref"));
         assertTrue(writer.root.getFirstChild().getAttributes().getNamedItem("name").getTextContent().equals("someKeyRef"));
         assertTrue(writer.root.getFirstChild().getAttributes().getNamedItem("refer").getTextContent().equals("someKey"));
@@ -93,12 +89,11 @@ public class ConstraintWriterTest extends junit.framework.TestCase {
 
     @Test
     public void testWriteKeyRefWithNamespacePrefix() {
-        Key key = new Key("{http://example.com/bar}someKey", "foo/bar");
-        SymbolTableRef<SimpleConstraint> ref = new SymbolTableRef<SimpleConstraint>("someKey", key);
-        KeyRef keyRef = new KeyRef("someKeyRef", "foo/bar", ref);
+        Key key = new Key(new QualifiedName(barNamespace,"someUnique"), "foo/bar");
+        KeyRef keyRef = new KeyRef(new QualifiedName(defaultNameSpace,"someKeyRef"), "foo/bar", key);
         keyRef.addField("@id");
         keyRef.addField("name");
-        ConstraintWriter.writeConstraint(writer.root, keyRef, foundElements);
+        ConstraintWriter.writeConstraint(writer.root, keyRef, s);
         assertTrue(writer.root.getFirstChild().getLocalName().equals("keyref"));
         assertTrue(writer.root.getFirstChild().getAttributes().getNamedItem("name").getTextContent().equals("someKeyRef"));
         assertTrue(writer.root.getFirstChild().getAttributes().getNamedItem("refer").getTextContent().equals("bar:someKey"));

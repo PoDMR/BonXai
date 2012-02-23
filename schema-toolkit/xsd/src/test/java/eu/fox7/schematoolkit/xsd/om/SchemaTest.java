@@ -1,5 +1,6 @@
 package eu.fox7.schematoolkit.xsd.om;
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 import org.junit.Test;
@@ -21,74 +22,44 @@ import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 public class SchemaTest extends junit.framework.TestCase {
 
     private XSDSchema schema;
+    private DefaultNamespace defaultNamespace;
 
     public void setUp() {
         this.schema = new XSDSchema();
     }
 
-    public void testTypeSymbolTableConstruction() {
-        //@TODO: Does anyone know how to check for generic type?
-        assertTrue(this.schema.getTypeSymbolTable() instanceof SymbolTable<?>);
-    }
-
-    public void testAttributeGroupSymbolTableConstruction() {
-        //@TODO: Does anyone know how to check for generic type?
-        assertTrue(this.schema.getAttributeGroupSymbolTable() instanceof SymbolTable<?>);
-    }
-
-    public void testGroupSymbolTableConstruction() {
-        //@TODO: Does anyone know how to check for generic type?
-        assertTrue(this.schema.getGroupSymbolTable() instanceof SymbolTable<?>);
-    }
-
-    public void testGlobalAttributeSymbolTableConstruction() {
-        //@TODO: Does anyone know how to check for generic type?
-        assertTrue(this.schema.getAttributeSymbolTable() instanceof SymbolTable<?>);
-    }
-
-    public void testGlobalElementSymbolTableConstruction() {
-        //@TODO: Does anyone know how to check for generic type?
-        assertTrue(this.schema.getElementSymbolTable() instanceof SymbolTable<?>);
-    }
-
-    public void testKeySymbolTableConstruction() {
-        //@TODO: Does anyone know how to check for generic type?
-        assertTrue(this.schema.getKeyAndUniqueSymbolTable() instanceof SymbolTable<?>);
-    }
 
     public void testClearForeignSchemaList() {
         IncludedSchema included = new IncludedSchema("included");
+        defaultNamespace = new DefaultNamespace("http://test.com/xyz");
+        this.schema.setDefaultNamespace(defaultNamespace);
+        this.schema.setTargetNamespace(defaultNamespace);
         this.schema.addForeignSchema(included);
         this.schema.clearForeignSchemas();
         assertEquals(0, this.schema.getForeignSchemas().size());
     }
 
     public void testAddAttributeGroup() {
-        SymbolTableRef<AttributeGroup> symref;
-        String key1, key2, gr1, gr2;
+        QualifiedName gr1, gr2;
         AttributeGroup ag1, ag2;
 
-        LinkedList<AttributeGroup> list;
+        Collection<AttributeGroup> list;
         int tmpSize;
 
-        key1 = "key1";
-        key2 = "key2";
-        gr1 = "{}group1";
-        gr2 = "{}group2";
+        gr1 = new QualifiedName(defaultNamespace,"group1");
+        gr2 = new QualifiedName(defaultNamespace,"group2");
 
         ag1 = new AttributeGroup(gr1);
-        symref = new SymbolTableRef<AttributeGroup>(key1, ag1);
-        schema.addAttributeGroup(symref);
+        schema.addAttributeGroup(ag1);
 
         ag2 = new AttributeGroup(gr2);
-        symref = new SymbolTableRef<AttributeGroup>(key2, ag2);
-        schema.addAttributeGroup(symref);
+        schema.addAttributeGroup(ag2);
 
         list = schema.getAttributeGroups();
         tmpSize = list.size();
 
         if (tmpSize > 0) {
-            list.remove();
+            list.clear();
             assertTrue("AttributeGroup-List can be manipulated from outside the schema",
                     schema.getAttributeGroups().size() == tmpSize);
         }
@@ -100,22 +71,19 @@ public class SchemaTest extends junit.framework.TestCase {
     }
 
     public void testAddAttribute() {
-        SymbolTableRef<Attribute> symref;
-        String key1, key2;
+        QualifiedName key1, key2;
         Attribute a1, a2;
 
-        LinkedList<Attribute> list;
+        Collection<Attribute> list;
         int tmpSize;
 
-        key1 = "key1";
-        key2 = "key2";
+        key1 = new QualifiedName(defaultNamespace,"key1");
+        key2 = new QualifiedName(defaultNamespace,"key2");
 
         a1 = new Attribute("{}name1");
-        symref = new SymbolTableRef<Attribute>(key1, a1);
         schema.addAttribute(symref);
 
         a2 = new Attribute("{}name2");
-        symref = new SymbolTableRef<Attribute>(key2, a2);
         schema.addAttribute(symref);
 
         list = schema.getAttributes();
@@ -134,28 +102,26 @@ public class SchemaTest extends junit.framework.TestCase {
     }
 
     public void testAddElement() {
-        SymbolTableRef<Element> symref;
         Element e1, e2;
-        String key1, key2;
+        QualifiedName key1, key2;
 
-        LinkedList<Element> list;
+        Collection<Element> list;
         int tmpSize;
 
-        key1 = "key1";
-        e1 = new Element("{}element1");
-        symref = new SymbolTableRef<Element>(key1, e1);
-        schema.addElement(symref);
+        key1 = new QualifiedName(defaultNamespace,"key1");
+        key2 = new QualifiedName(defaultNamespace,"key2");
 
-        key2 = "key2";
-        e2 = new Element("{}element2");
-        symref = new SymbolTableRef<Element>(key2, e2);
-        schema.addElement(symref);
+        e1 = new Element(new QualifiedName(defaultNamespace,"element1"));
+        schema.addElement(e1);
+
+        e2 = new Element(new QualifiedName(defaultNamespace,"element2"));
+        schema.addElement(e2);
 
         list = schema.getElements();
         tmpSize = list.size();
 
         if (tmpSize > 0) {
-            list.remove();
+            list.clear();
             assertTrue("AttributeGroup-List can be manipulated from outside the schema",
                     schema.getElements().size() == tmpSize);
         }
@@ -203,36 +169,30 @@ public class SchemaTest extends junit.framework.TestCase {
     }
 
     public void testAddGroup() {
-        SymbolTableRef<eu.fox7.schematoolkit.xsd.om.Group> symref;
-        String key1, key2;
         Group g1, g2;
-        String name1, name2;
-        ParticleContainer pc1, pc2;
+        QualifiedName name1, name2;
+        Particle pc1, pc2;
 
-        LinkedList<eu.fox7.schematoolkit.xsd.om.Group> list;
+        Collection<eu.fox7.schematoolkit.xsd.om.Group> list;
         int tmpSize;
 
-        key1 = "key1";
-        key2 = "key2";
-        name1 = "{}g1n1";
-        name2 = "{}g2n2";
+        name1 = new QualifiedName(defaultNamespace,"g1n1");
+        name2 = new QualifiedName(defaultNamespace,"g2n2");
 
         pc1 = new ChoicePattern();
 
         g1 = new Group(name1, pc1);
-        symref = new SymbolTableRef<eu.fox7.schematoolkit.xsd.om.Group>(key1, g1);
-        schema.addGroup(symref);
+        schema.addGroup(g1);
 
         pc2 = new ChoicePattern();
         g2 = new Group(name2, pc2);
-        symref = new SymbolTableRef<eu.fox7.schematoolkit.xsd.om.Group>(key2, g2);
-        schema.addGroup(symref);
+        schema.addGroup(g2);
 
         list = schema.getGroups();
         tmpSize = list.size();
 
         if (tmpSize > 0) {
-            list.remove();
+            list.clear();
             assertTrue("AttributeGroup-List can be manipulated from outside the schema",
                     schema.getGroups().size() == tmpSize);
         }
@@ -243,13 +203,12 @@ public class SchemaTest extends junit.framework.TestCase {
     }
 
     public void testAddType() {
-        SymbolTableRef<Type> symref;
         String key1, key2;
         ComplexType ct1, ct2;
         String name1, name2;
         Content c1, c2;
 
-        LinkedList<Type> list;
+        Collection<Type> list;
         int tmpSize;
 
         key1 = "key1";
@@ -259,20 +218,18 @@ public class SchemaTest extends junit.framework.TestCase {
 
         c1 = new SimpleContentType();
         ct1 = new ComplexType(name1, c1);
-        symref = new SymbolTableRef<Type>(key1, ct1);
         schema.addType(symref);
 
         c2 = new SimpleContentType();
         ct2 = new ComplexType(name2, c2);
-        symref = new SymbolTableRef<Type>(key2, ct2);
         schema.addType(symref);
 
         list = schema.getTypes();
         tmpSize = list.size();
 
         if (tmpSize > 0) {
-            list.remove();
-            assertTrue("AttributeGroup-List can be manipulated from outside the schema",
+            list.clear();
+            assertTrue("Type-List can be manipulated from outside the schema",
                     schema.getTypes().size() == tmpSize);
         }
 

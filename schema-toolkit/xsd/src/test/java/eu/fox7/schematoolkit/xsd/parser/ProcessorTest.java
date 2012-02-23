@@ -3,11 +3,15 @@ package eu.fox7.schematoolkit.xsd.parser;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 import eu.fox7.schematoolkit.xsd.parser.Processor;
 import eu.fox7.schematoolkit.xsd.parser.SchemaProcessor;
+import eu.fox7.schematoolkit.xsd.parser.exceptions.UnknownNamespaceException;
+import eu.fox7.schematoolkit.xsd.tools.NameChecker;
 
 import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 
 /**
@@ -89,45 +93,15 @@ public class ProcessorTest extends junit.framework.TestCase {
             fail("Exception was thrown: " + error);
         }
         
-        assertEquals("{http://www.w3.org/2001/XMLSchema}complexTypeOne", schemaProcessor.getName(newNode));
-    }
-
-
-    /**
-     * Test of getLocalName method, of class Processor.
-     */
-    @Test
-    public void testGetLocalName() {
-        Node node = null;
-        Node newNode = null;
         try {
-            node = Utilities.getSchemaNode("tests/eu/fox7/bonxai/xsd/parser/xsds/processorTests/processor_getname_node.xsd");
-            schema = schemaProcessor.processNode(node);
-            newNode = node.getChildNodes().item(1);
-        } catch (Exception error) {
-            fail("Exception was thrown: " + error);
-        }
-
-        assertEquals("complexTypeOne", schemaProcessor.getLocalName(newNode));
+			assertEquals("{http://www.w3.org/2001/XMLSchema}complexTypeOne", schemaProcessor.getName(newNode));
+		} catch (UnknownNamespaceException e) {
+            fail("Exception was thrown: " + e);
+		} catch (DOMException e) {
+            fail("Exception was thrown: " + e);
+		}
     }
 
-    /**
-     * Test of getNamespace method, of class Processor.
-     */
-    @Test
-    public void testGetNamespace() {
-        Node node = null;
-        Node newNode = null;
-        try {
-            node = Utilities.getSchemaNode("tests/eu/fox7/bonxai/xsd/parser/xsds/processorTests/processor_getname_node.xsd");
-            schema = schemaProcessor.processNode(node);
-            newNode = node.getChildNodes().item(1);
-        } catch (Exception error) {
-            fail("Exception was thrown: " + error);
-        }
-
-        assertEquals("http://www.w3.org/2001/XMLSchema", schemaProcessor.getNamespace(newNode));
-    }
 
     /**
      * Test of generateUniqueName method, of class Processor.
@@ -160,7 +134,6 @@ public class ProcessorTest extends junit.framework.TestCase {
      */
     @Test
     public void testGetName_String() throws Exception {
-        Node node = null;
         try {
             schema = schemaProcessor.processNode(Utilities.getSchemaNode("tests/eu/fox7/bonxai/xsd/parser/xsds/processorTests/processor_getname_node.xsd"));
         } catch (Exception error) {
@@ -182,21 +155,21 @@ public class ProcessorTest extends junit.framework.TestCase {
          */
 
         // RegExp: "[a-zA-Z\\_\\:][0-9a-zA-Z\\. \\-\\:\\_]*"
-        assertFalse(schemaProcessor.isName(""));
-        assertFalse(schemaProcessor.isName(" "));
-        assertFalse(schemaProcessor.isName("8"));
-        assertTrue(schemaProcessor.isName("MyName"));
-        assertTrue(schemaProcessor.isName("My Name"));
-        assertTrue(schemaProcessor.isName("My_Name"));
-        assertTrue(schemaProcessor.isName("My-Name"));
-        assertFalse(schemaProcessor.isName("1MyName"));
-        assertTrue(schemaProcessor.isName("::::"));
-        assertFalse(schemaProcessor.isName("@MyName"));
-        assertTrue(schemaProcessor.isName("My:Name"));
-        assertFalse(schemaProcessor.isName("http://www.myDomain.com"));
-        assertFalse(schemaProcessor.isName("http://www.myDomain.com/"));
-        assertFalse(schemaProcessor.isName("http://www.myDomain.com////"));
-        assertFalse(schemaProcessor.isName("http://///w\\\\ww.myDomain.com////"));
+        assertFalse(NameChecker.isName(""));
+        assertFalse(NameChecker.isName(" "));
+        assertFalse(NameChecker.isName("8"));
+        assertTrue(NameChecker.isName("MyName"));
+        assertTrue(NameChecker.isName("My Name"));
+        assertTrue(NameChecker.isName("My_Name"));
+        assertTrue(NameChecker.isName("My-Name"));
+        assertFalse(NameChecker.isName("1MyName"));
+        assertTrue(NameChecker.isName("::::"));
+        assertFalse(NameChecker.isName("@MyName"));
+        assertTrue(NameChecker.isName("My:Name"));
+        assertFalse(NameChecker.isName("http://www.myDomain.com"));
+        assertFalse(NameChecker.isName("http://www.myDomain.com/"));
+        assertFalse(NameChecker.isName("http://www.myDomain.com////"));
+        assertFalse(NameChecker.isName("http://///w\\\\ww.myDomain.com////"));
 
     }
 
@@ -212,21 +185,21 @@ public class ProcessorTest extends junit.framework.TestCase {
          */
 
         // An XML Name, minus the ":"
-        assertFalse(schemaProcessor.isNCName(""));
-        assertFalse(schemaProcessor.isNCName(" "));
-        assertFalse(schemaProcessor.isNCName("8"));
-        assertTrue(schemaProcessor.isNCName("MyName"));
-        assertTrue(schemaProcessor.isNCName("My Name"));
-        assertTrue(schemaProcessor.isNCName("My_Name"));
-        assertTrue(schemaProcessor.isNCName("My-Name"));
-        assertFalse(schemaProcessor.isNCName("1MyName"));
-        assertFalse(schemaProcessor.isNCName("::::"));
-        assertFalse(schemaProcessor.isNCName("@MyName"));
-        assertFalse(schemaProcessor.isNCName("My:Name"));
-        assertFalse(schemaProcessor.isNCName("http://www.myDomain.com"));
-        assertFalse(schemaProcessor.isNCName("http://www.myDomain.com/"));
-        assertFalse(schemaProcessor.isNCName("http://www.myDomain.com////"));
-        assertFalse(schemaProcessor.isNCName("http://///w\\\\ww.myDomain.com////"));
+        assertFalse(NameChecker.isNCName(""));
+        assertFalse(NameChecker.isNCName(" "));
+        assertFalse(NameChecker.isNCName("8"));
+        assertTrue(NameChecker.isNCName("MyName"));
+        assertTrue(NameChecker.isNCName("My Name"));
+        assertTrue(NameChecker.isNCName("My_Name"));
+        assertTrue(NameChecker.isNCName("My-Name"));
+        assertFalse(NameChecker.isNCName("1MyName"));
+        assertFalse(NameChecker.isNCName("::::"));
+        assertFalse(NameChecker.isNCName("@MyName"));
+        assertFalse(NameChecker.isNCName("My:Name"));
+        assertFalse(NameChecker.isNCName("http://www.myDomain.com"));
+        assertFalse(NameChecker.isNCName("http://www.myDomain.com/"));
+        assertFalse(NameChecker.isNCName("http://www.myDomain.com////"));
+        assertFalse(NameChecker.isNCName("http://///w\\\\ww.myDomain.com////"));
 
     }
 
@@ -242,21 +215,21 @@ public class ProcessorTest extends junit.framework.TestCase {
          * is an anyURI and local part is an NCName.
          */
 
-        assertFalse(schemaProcessor.isQName(""));
-        assertFalse(schemaProcessor.isQName(" "));
-        assertFalse(schemaProcessor.isQName("8"));
-        assertTrue(schemaProcessor.isQName("MyName"));
-        assertTrue(schemaProcessor.isQName("My Name"));
-        assertTrue(schemaProcessor.isQName("My_Name"));
-        assertTrue(schemaProcessor.isQName("My-Name"));
-        assertFalse(schemaProcessor.isQName("1MyName"));
-        assertFalse(schemaProcessor.isQName("::::"));
-        assertFalse(schemaProcessor.isQName("@MyName"));
-        assertTrue(schemaProcessor.isQName("My:Name"));
-        assertFalse(schemaProcessor.isQName("http://www.myDomain.com"));
-        assertFalse(schemaProcessor.isQName("http://www.myDomain.com/"));
-        assertFalse(schemaProcessor.isQName("http://www.myDomain.com////"));
-        assertFalse(schemaProcessor.isQName("http://///w\\\\ww.myDomain.com////"));
+        assertFalse(NameChecker.isQName(""));
+        assertFalse(NameChecker.isQName(" "));
+        assertFalse(NameChecker.isQName("8"));
+        assertTrue(NameChecker.isQName("MyName"));
+        assertTrue(NameChecker.isQName("My Name"));
+        assertTrue(NameChecker.isQName("My_Name"));
+        assertTrue(NameChecker.isQName("My-Name"));
+        assertFalse(NameChecker.isQName("1MyName"));
+        assertFalse(NameChecker.isQName("::::"));
+        assertFalse(NameChecker.isQName("@MyName"));
+        assertTrue(NameChecker.isQName("My:Name"));
+        assertFalse(NameChecker.isQName("http://www.myDomain.com"));
+        assertFalse(NameChecker.isQName("http://www.myDomain.com/"));
+        assertFalse(NameChecker.isQName("http://www.myDomain.com////"));
+        assertFalse(NameChecker.isQName("http://///w\\\\ww.myDomain.com////"));
 
     }
 
@@ -276,20 +249,20 @@ public class ProcessorTest extends junit.framework.TestCase {
 
         // RegExp: "(([a-zA-Z][0-9a-zA-Z+\\-\\.]*:)?/{0,2}[0-9a-zA-Z;/?:@&=+$\\.\\-_!~*'()%]+)?(#[0-9a-zA-Z;/?:@&=+$\\.\\-_!~*'()%]+)?"
 
-        assertTrue(schemaProcessor.isAnyUri(""));
-        assertFalse(schemaProcessor.isAnyUri(" "));
-        assertTrue(schemaProcessor.isAnyUri("8"));
-        assertTrue(schemaProcessor.isAnyUri("MyName"));
-        assertFalse(schemaProcessor.isAnyUri("My Name"));
-        assertTrue(schemaProcessor.isAnyUri("My_Name"));
-        assertTrue(schemaProcessor.isAnyUri("My-Name"));
-        assertTrue(schemaProcessor.isAnyUri("1MyName"));
-        assertTrue(schemaProcessor.isAnyUri("::::"));
-        assertTrue(schemaProcessor.isAnyUri("@MyName"));
-        assertTrue(schemaProcessor.isAnyUri("My:Name"));
-        assertTrue(schemaProcessor.isAnyUri("http://www.myDomain.com"));
-        assertTrue(schemaProcessor.isAnyUri("http://www.myDomain.com/"));
-        assertTrue(schemaProcessor.isAnyUri("http://www.myDomain.com////"));
-        assertFalse(schemaProcessor.isAnyUri("http://///w\\\\ww.myDomain.com////"));
+        assertTrue(NameChecker.isAnyUri(""));
+        assertFalse(NameChecker.isAnyUri(" "));
+        assertTrue(NameChecker.isAnyUri("8"));
+        assertTrue(NameChecker.isAnyUri("MyName"));
+        assertFalse(NameChecker.isAnyUri("My Name"));
+        assertTrue(NameChecker.isAnyUri("My_Name"));
+        assertTrue(NameChecker.isAnyUri("My-Name"));
+        assertTrue(NameChecker.isAnyUri("1MyName"));
+        assertTrue(NameChecker.isAnyUri("::::"));
+        assertTrue(NameChecker.isAnyUri("@MyName"));
+        assertTrue(NameChecker.isAnyUri("My:Name"));
+        assertTrue(NameChecker.isAnyUri("http://www.myDomain.com"));
+        assertTrue(NameChecker.isAnyUri("http://www.myDomain.com/"));
+        assertTrue(NameChecker.isAnyUri("http://www.myDomain.com////"));
+        assertFalse(NameChecker.isAnyUri("http://///w\\\\ww.myDomain.com////"));
     }
 }

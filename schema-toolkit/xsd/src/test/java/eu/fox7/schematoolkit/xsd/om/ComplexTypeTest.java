@@ -9,6 +9,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import eu.fox7.schematoolkit.common.AttributeParticle;
+import eu.fox7.schematoolkit.common.Namespace;
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.Attribute;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.ComplexTypeInheritanceModifier;
@@ -43,10 +45,10 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testGetAttributes() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
 
         LinkedList<AttributeParticle> inputAttributeParticleList = new LinkedList<AttributeParticle>();
-        inputAttributeParticleList.add(new Attribute( "{}attribute" ));
+        inputAttributeParticleList.add(new Attribute(new QualifiedName(Namespace.EMPTY_NAMESPACE, "attribute")));
 
         instance.setAttributes(inputAttributeParticleList);
 
@@ -61,9 +63,9 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testAddAttribute() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
 
-        Attribute testAttribute = new Attribute( "{}attribute" );
+        Attribute testAttribute = new Attribute(new QualifiedName(Namespace.EMPTY_NAMESPACE, "attribute"));
         instance.addAttribute(testAttribute);
 
         // Check if testAttribute is part of the LinkedList
@@ -76,7 +78,7 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testGetBlockModifiers() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
 
         HashSet<ComplexTypeInheritanceModifier> inputComplexTypeInheritanceModifierSet = new HashSet<ComplexTypeInheritanceModifier>();
         inputComplexTypeInheritanceModifierSet.add(ComplexTypeInheritanceModifier.Extension);
@@ -94,7 +96,7 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testAddBlockModifier() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
 
         instance.addBlockModifier(ComplexTypeInheritanceModifier.Extension);
 
@@ -108,7 +110,7 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testGetContent() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
         assertEquals(inputSimpleContentType, instance.getContent());
     }
 
@@ -118,7 +120,7 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testGetFinalModifiers() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
 
         HashSet<ComplexTypeInheritanceModifier> inputComplexTypeInheritanceModifierSet = new HashSet<ComplexTypeInheritanceModifier>();
         inputComplexTypeInheritanceModifierSet.add(ComplexTypeInheritanceModifier.Extension);
@@ -136,7 +138,7 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testAddFinalModifier() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
 
         instance.addFinalModifier(ComplexTypeInheritanceModifier.Extension);
 
@@ -150,7 +152,7 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testSetFinalModifiers() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
 
         HashSet<ComplexTypeInheritanceModifier> inputComplexTypeInheritanceModifierSet = new HashSet<ComplexTypeInheritanceModifier>();
         inputComplexTypeInheritanceModifierSet.add(ComplexTypeInheritanceModifier.Extension);
@@ -168,7 +170,7 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testSetBlockModifiers() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
 
         HashSet<ComplexTypeInheritanceModifier> inputComplexTypeInheritanceModifierSet = new HashSet<ComplexTypeInheritanceModifier>();
         inputComplexTypeInheritanceModifierSet.add(ComplexTypeInheritanceModifier.Extension);
@@ -186,10 +188,10 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testSetAttributes() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
 
         LinkedList<AttributeParticle> inputAttributeParticleList = new LinkedList<AttributeParticle>();
-        inputAttributeParticleList.add(new Attribute( "{}attribute" ));
+    inputAttributeParticleList.add(new Attribute(new QualifiedName(Namespace.EMPTY_NAMESPACE, "attribute")));
 
         instance.setAttributes(inputAttributeParticleList);
 
@@ -204,7 +206,7 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testSetContent() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
         instance.setContent(inputSimpleContentType);
         assertEquals(inputSimpleContentType, instance.getContent());
     }
@@ -215,7 +217,7 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testIsAbstract() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
         instance.setAbstract(true);
 
         // Check if it is not the same, but an equal object
@@ -228,7 +230,7 @@ public class ComplexTypeTest extends junit.framework.TestCase {
     @Test
     public void testSetAbstract() {
         SimpleContentType inputSimpleContentType = new SimpleContentType();
-        ComplexType instance = new ComplexType("{}someType", inputSimpleContentType);
+        ComplexType instance = new ComplexType(new QualifiedName(Namespace.EMPTY_NAMESPACE,"someType"), inputSimpleContentType);
         instance.setAbstract(true);
 
         // Check if it is not the same, but an equal object
