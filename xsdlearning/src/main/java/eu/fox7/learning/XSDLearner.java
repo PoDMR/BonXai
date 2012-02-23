@@ -1,10 +1,7 @@
 package eu.fox7.learning;
 
-import java.io.File;
-import java.io.IOException;
-
-import eu.fox7.bonxai.Schema;
+import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 public interface XSDLearner extends Learner {
-	public Schema learnXSD();
+	public XSDSchema learnXSD();
 } 

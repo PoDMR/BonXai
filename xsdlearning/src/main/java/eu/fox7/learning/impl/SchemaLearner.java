@@ -7,8 +7,8 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Iterator;
 
-import eu.fox7.bonxai.Schema;
-import eu.fox7.bonxai.xsd.XSDSchema;
+import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 import eu.fox7.flt.automata.measures.MutualExclusionDistance;
 import eu.fox7.flt.schema.infer.ixsd.ContentEquivalenceRelation;
 import eu.fox7.flt.schema.infer.ixsd.ContextMap;
@@ -62,13 +62,13 @@ public class SchemaLearner implements XSDLearner {
 	}
 
 	@Override
-	public Schema learnXSD() {
+	public XSDSchema learnXSD() {
 		try {
 			ContextMap contextMap = this.computeContextMap();
 			ContextAutomaton contextAutomaton = this.learnContextAutomaton(contextMap);
 			ContextAutomaton2XSDConverter caConverter = new ContextAutomaton2XSDConverter();
 			XSDSchema xsdSchema = caConverter.convert(contextAutomaton);
-			return new Schema(xsdSchema);
+			return xsdSchema;
 		} catch (ExampleParsingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
