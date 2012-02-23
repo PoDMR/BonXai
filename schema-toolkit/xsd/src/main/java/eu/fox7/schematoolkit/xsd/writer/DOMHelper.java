@@ -20,7 +20,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
@@ -94,7 +93,7 @@ public abstract class DOMHelper
     }
     
     protected static void setXSDPrefix(Node node, XSDSchema schema) {
-    	Namespace namespace = schema.getNamespaceByURI("http://www.w3.org/2001/XMLSchema");
+    	Namespace namespace = schema.getNamespaceByURI(XSDSchema.XMLSCHEMA_NAMESPACE);
     	if (namespace != null) {
     		node.setPrefix(namespace.getIdentifier());
     	}

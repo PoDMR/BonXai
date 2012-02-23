@@ -631,5 +631,6 @@ public class XSDSchema implements Schema {
 	public SchemaLanguage getSchemaLanguage() {
 		return SchemaLanguage.XMLSCHEMA;
 	}
+
 }
 

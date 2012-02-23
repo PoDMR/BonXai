@@ -100,10 +100,9 @@ public abstract class AttributeWriter {
             } catch (ClassCastException e) {
             	throw new RuntimeException("Attribute has a complex type.", e);
             }
-            // Fixed Bug with containsType: if(foundElements.containsType(sType) || (sType.getInheritance() == null && sType.getFinalModifiers() == null))
-            // Changed to write types when needed
-            if (!sType.isAnonymous() || (sType.getInheritance() == null && sType.getFinalModifiers() == null)) {
-                attrNode.setAttribute("type", sType.getName().getQualifiedName());
+
+            if (sType == null || !sType.isAnonymous() || (sType.getInheritance() == null && sType.getFinalModifiers() == null)) {
+                attrNode.setAttribute("type", typeName.getQualifiedName());
             } else {
                 TypeWriter.writeSimpleType(attrNode, sType, schema, false);
             }

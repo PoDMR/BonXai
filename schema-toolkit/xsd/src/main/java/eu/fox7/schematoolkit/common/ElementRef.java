@@ -14,13 +14,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
-package eu.fox7.schematoolkit.xsd.om;
+package eu.fox7.schematoolkit.common;
 /*
  * implements class ElementRef
  */
 
-import eu.fox7.schematoolkit.common.Particle;
-import eu.fox7.schematoolkit.common.QualifiedName;
 
 public class ElementRef extends Particle {
 
