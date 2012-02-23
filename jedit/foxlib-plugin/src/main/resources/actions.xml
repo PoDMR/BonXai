@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE ACTIONS SYSTEM "actions.dtd">
+<ACTIONS>
+  <ACTION NAME="foxlib.fixupa">
+    <CODE>
+      jEdit.getPlugin("eu.fox7.jedit.FoxlibPlugin").handleBufferAction(view, "fixupa");
+    </CODE>
+  </ACTION>
+<ACTIONS/>
+

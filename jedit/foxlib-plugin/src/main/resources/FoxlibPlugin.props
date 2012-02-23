@@ -1,0 +1,24 @@
+plugin.eu.fox7.jedit.FoxlibPlugin.name=FoxlibPlugin
+plugin.eu.fox7.jedit.FoxlibPlugin.author=TUDO
+plugin.eu.fox7.jedit.FoxlibPlugin.version=1.0.0
+plugin.eu.fox7.jedit.FoxlibPlugin.activate=startup #defer
+plugin.eu.fox7.jedit.FoxlibPlugin.description=Foxlib plugin
+plugin.eu.fox7.jedit.FoxlibPlugin.longdescription=description.html
+
+# Dependencies
+plugin.eu.fox7.jedit.FoxlibPlugin.depend.0=jdk 1.6
+plugin.eu.fox7.jedit.FoxlibPlugin.depend.1=jedit 04.03.09.00
+#plugin.eu.fox7.jedit.FoxlibPlugin.depend.2=plugin jakartacommons.JakartaCommonsPlugin 0.2
+#plugin.eu.fox7.jedit.FoxlibPlugin.depend.2=optional plugin archive.ArchivePlugin 0.2
+plugin.eu.fox7.jedit.FoxlibPlugin.jars=xsd.jar upafixer.jar schemahandler.jar
+
+# Option pane
+#plugin.eu.fox7.jedit.FoxlibPlugin.option-pane=eu.fox7
+#options.eu.fox7.bonxai.bonxaiplugin.code = new eu.fox7.BonxaiOptionPane();
+#options.eu.fox7.bonxai.bonxaiplugin.title=Bonxai
+#options.eu.fox7.bonxai.bonxaiplugin.label=Bonxai
+
+# Action labels
+plugin.eu.fox7.jedit.FoxlibPlugin.browser-menu=foxlib.fixupa
+plugin.eu.fox7.jedit.FoxlibPlugin.menu=foxlib.fixupa
+foxlib.upafix.label=FixUPA
