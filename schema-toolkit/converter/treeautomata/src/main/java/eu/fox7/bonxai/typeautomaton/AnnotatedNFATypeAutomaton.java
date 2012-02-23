@@ -4,13 +4,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import eu.fox7.bonxai.common.QualifiedName;
-import eu.fox7.bonxai.common.ElementProperties;
 
-import eu.fox7.bonxai.xsd.Type;
 import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
+import eu.fox7.schematoolkit.common.ElementProperties;
+import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.xsd.om.Type;
 
 public class AnnotatedNFATypeAutomaton extends
 		SparseNFA implements TypeAutomaton {
@@ -67,6 +67,12 @@ public class AnnotatedNFATypeAutomaton extends
 	@Override
 	public Collection<Type> getTypes() {
 		return this.types.values();
+	}
+
+	@Override
+	public Collection<QualifiedName> getRootElements() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
