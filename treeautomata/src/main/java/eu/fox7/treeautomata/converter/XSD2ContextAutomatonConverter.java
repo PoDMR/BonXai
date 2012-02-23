@@ -4,13 +4,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
-import eu.fox7.bonxai.typeautomaton.factories.XSDTypeAutomatonFactory;
-import eu.fox7.bonxai.xsd.Type;
-import eu.fox7.bonxai.xsd.XSDSchema;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.misc.StateRemapper;
 import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
 import eu.fox7.flt.treeautomata.impl.ContextAutomaton;
+import eu.fox7.schematoolkit.typeautomaton.factories.XSDTypeAutomatonFactory;
+import eu.fox7.schematoolkit.xsd.om.Type;
+import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 public class XSD2ContextAutomatonConverter {
 	private boolean addSimpleTypes; 
@@ -43,7 +43,7 @@ public class XSD2ContextAutomatonConverter {
 			State origState = entry.getKey();
 			State newState = entry.getValue();
 			if (! typeAutomaton.isInitialState(origState)) {
-				Type type = typeAutomaton.getType(origState).getReference();
+				Type type = typeAutomaton.getType(origState);
 				ContentAutomaton contentAutomaton = this.typeConverter.convertType(type);
 				contextAutomaton.annotate(newState, contentAutomaton);
 			}			

@@ -1,56 +1,46 @@
 package eu.fox7.treeautomata.converter;
 
-import java.util.Set;
-import eu.fox7.bonxai.common.DefaultNamespace;
-import eu.fox7.bonxai.common.NamespaceList;
-import eu.fox7.bonxai.common.SymbolTable;
-import eu.fox7.bonxai.common.SymbolTableFoundation;
-import eu.fox7.bonxai.common.SymbolTableRef;
+import java.util.Collection;
 import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
-import eu.fox7.bonxai.xsd.Element;
-import eu.fox7.bonxai.xsd.Type;
-import eu.fox7.bonxai.xsd.XSDSchema;
 import eu.fox7.flt.automata.NotDFAException;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
 import eu.fox7.flt.treeautomata.impl.ContextAutomaton;
+import eu.fox7.schematoolkit.common.DefaultNamespace;
+import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.xsd.om.Element;
+import eu.fox7.schematoolkit.xsd.om.Type;
+import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 public class ContextAutomaton2XSDConverter {
 	public XSDSchema convert(ContextAutomaton contextAutomaton) {
 		XSDSchema xsdSchema = new XSDSchema();
 		
-		SymbolTableFoundation<eu.fox7.bonxai.xsd.Element> elementSymbolTable = xsdSchema.getElementSymbolTable();
-
-		String targetNamespace = "";
-		
-		NamespaceList namespaceList = new NamespaceList(new DefaultNamespace(targetNamespace));
-		
-		xsdSchema.setNamespaceList(namespaceList);
-		
-		ContextAutomatonTypeAutomatonFactory taFactory = new ContextAutomatonTypeAutomatonFactory();
+		@SuppressWarnings("deprecation")
+		ContextAutomatonTypeAutomatonFactory taFactory = new ContextAutomatonTypeAutomatonFactory(xsdSchema.getNamespaceList());
 		TypeAutomaton typeAutomaton = taFactory.convertContextAutomaton(contextAutomaton);
 
-		Set<String> rootElements = typeAutomaton.getSymbolValuesFrom(typeAutomaton.getInitialStateValue());
+		Collection<QualifiedName> rootElements = typeAutomaton.getRootElements();
+
+		DefaultNamespace targetNamespace = new DefaultNamespace(rootElements.iterator().next().getNamespace().getUri());
 		
-		for (String rootElement: rootElements) {
-			Element element = new Element("{}"+rootElement);
+		xsdSchema.setDefaultNamespace(targetNamespace);
+		xsdSchema.setTargetNamespace(targetNamespace);
+
+		for (QualifiedName rootElement: rootElements) {
+			Element element = new Element(rootElement);
 			State state;
 			try {
-				state = typeAutomaton.getNextState(Symbol.create(rootElement), typeAutomaton.getInitialState());
+				state = typeAutomaton.getNextState(Symbol.create(rootElement.getFullyQualifiedName()), typeAutomaton.getInitialState());
 			} catch (NotDFAException e) {
 				throw new RuntimeException(e);
 			}
-			element.setType(typeAutomaton.getType(state));
-			elementSymbolTable.updateOrCreateReference(rootElement, element);
-			xsdSchema.addElement(elementSymbolTable.getReference(rootElement));
+			element.setTypeName(typeAutomaton.getType(state).getName());
+			xsdSchema.addElement(element);
 		}
 		
-		//convert TypeAutomaton to XSD
-		SymbolTableFoundation<Type> typeSymbolTable = typeAutomaton.getTypeSymbolTable();
-		
-		for (SymbolTableRef<Type> typeRef: typeSymbolTable.getReferences())
-			if (! typeRef.getReference().isAnonymous())
-				xsdSchema.addType(typeRef);
+		for (Type type: typeAutomaton.getTypes())
+			xsdSchema.addType(type);
 	
 		return xsdSchema;
 	}
