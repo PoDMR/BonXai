@@ -15,8 +15,7 @@
 
 
 	<modules>
-		<module>flt-plugin</module>
-		<module>bonxai-plugin</module>
+		<module>foxlib-plugin</module>
 		<module>jedit-workbench</module>
 	</modules>
 
