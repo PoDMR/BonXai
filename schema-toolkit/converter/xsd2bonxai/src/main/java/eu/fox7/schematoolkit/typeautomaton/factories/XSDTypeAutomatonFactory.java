@@ -13,12 +13,16 @@ import eu.fox7.bonxai.typeautomaton.AnnotatedNFATypeAutomaton;
 import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.schematoolkit.common.CountingPattern;
+import eu.fox7.schematoolkit.common.GroupReference;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.ParticleContainer;
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.Content;
 import eu.fox7.schematoolkit.xsd.om.Element;
+import eu.fox7.schematoolkit.xsd.om.Group;
 import eu.fox7.schematoolkit.xsd.om.Type;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
@@ -36,7 +40,7 @@ public class XSDTypeAutomatonFactory {
     /** 
      * Maps types to states of the type automaton
      */
-    private Map<Type, State> typeMap;
+    private Map<QualifiedName, State> typeMap;
     
 	private Queue<State> workingQueue;
 	
@@ -53,7 +57,7 @@ public class XSDTypeAutomatonFactory {
 
 	public TypeAutomaton createTypeAutomaton(XSDSchema schema) {
     	this.typeAutomaton = new AnnotatedNFATypeAutomaton();
-    	this.typeMap = new HashMap<Type,State>();
+    	this.typeMap = new HashMap<QualifiedName,State>();
     	this.workingQueue = new LinkedList<State>();
     	this.schema = schema;
     	
@@ -105,7 +109,15 @@ public class XSDTypeAutomatonFactory {
 			for (Particle childParticle: particleContainer.getParticles()) {
 				childs.addAll(getChilds(childParticle));
 			}
-		}
+		} else if (particle instanceof CountingPattern) {
+			CountingPattern countingPattern = (CountingPattern) particle;
+			childs.addAll(getChilds(countingPattern.getParticle()));
+		} else if (particle instanceof GroupReference) {
+			GroupReference groupReference = (GroupReference) particle;
+			Group group = schema.getGroup(groupReference);
+			childs.addAll(getChilds(group.getParticle()));
+		} else
+			throw new RuntimeException("Unkown Particle of class " + particle.getClass());
 		return childs;
 	}
 
@@ -113,17 +125,21 @@ public class XSDTypeAutomatonFactory {
     	String name = child.getName().getFullyQualifiedName();
 		Symbol symbol = Symbol.create(name);
     	typeAutomaton.addSymbol(symbol);
-    	Type type = schema.getType(child.getTypeName());
+    	QualifiedName typename = child.getTypeName();
+    	Type type = schema.getType(typename);
     	State newState;
     	
-    	if (typeMap.containsKey(type)) {
-    		newState = typeMap.get(type);
+    	if (typeMap.containsKey(typename)) {
+    		newState = typeMap.get(typename);
     	} else {
     		newState = new State();
     		typeAutomaton.addState(newState);
-    		typeAutomaton.setType(newState, type);
+    		if (type!= null) 
+    			typeAutomaton.setType(newState, type);
+    		else
+    			typeAutomaton.setTypeName(newState, typename);
     		typeAutomaton.setElementProperties(newState, child.getProperties());
-    		typeMap.put(type, newState);
+    		typeMap.put(typename, newState);
     		workingQueue.add(newState);
     	}
     	

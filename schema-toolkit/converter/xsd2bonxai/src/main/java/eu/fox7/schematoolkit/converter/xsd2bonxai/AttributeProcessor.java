@@ -26,7 +26,6 @@ import eu.fox7.schematoolkit.bonxai.om.BonxaiType;
 import eu.fox7.schematoolkit.common.AnyAttribute;
 import eu.fox7.schematoolkit.common.AttributeGroupReference;
 import eu.fox7.schematoolkit.common.AttributeParticle;
-import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.AttributeRef;
 import eu.fox7.schematoolkit.xsd.om.AttributeUse;

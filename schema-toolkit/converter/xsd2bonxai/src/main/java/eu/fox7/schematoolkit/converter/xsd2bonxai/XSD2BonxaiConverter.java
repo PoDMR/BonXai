@@ -3,7 +3,11 @@ package eu.fox7.schematoolkit.converter.xsd2bonxai;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
+
+import org.apache.commons.collections15.BidiMap;
 
 import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.impl.sparse.ModifiableStateDFA;
@@ -15,11 +19,11 @@ import eu.fox7.flt.regex.converters.Normalizer;
 import eu.fox7.flt.regex.factories.StateEliminationFactory;
 import eu.fox7.schematoolkit.AbstractSchemaConverter;
 import eu.fox7.schematoolkit.Schema;
-import eu.fox7.schematoolkit.SchemaConverter;
 import eu.fox7.schematoolkit.bonxai.om.AncestorPattern;
 import eu.fox7.schematoolkit.bonxai.om.AncestorPatternElement;
 import eu.fox7.schematoolkit.bonxai.om.AttributePattern;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
+import eu.fox7.schematoolkit.bonxai.om.BonxaiGroup;
 import eu.fox7.schematoolkit.bonxai.om.CardinalityParticle;
 import eu.fox7.schematoolkit.bonxai.om.ChildPattern;
 import eu.fox7.schematoolkit.bonxai.om.ElementPattern;
@@ -40,6 +44,7 @@ import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.Content;
 import eu.fox7.schematoolkit.xsd.om.Element;
+import eu.fox7.schematoolkit.xsd.om.Group;
 import eu.fox7.schematoolkit.xsd.om.SimpleContentType;
 import eu.fox7.schematoolkit.xsd.om.Type;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
@@ -81,8 +86,44 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
 	private ParticleProcessor particleProcessor;
 	
 	private AttributeProcessor attributeProcessor;
+	
+	private BidiMap<State, Type> stateTypeMap;
+	
+	private Map<State, Expression> stateExpressionMap;
+	
+	private Map<Expression, Set<State>> expressionStateMap;
+	
+	private XSDSchema xmlSchema;
     
     /**
+	 * @return the typeAutomaton
+	 */
+	public TypeAutomaton getTypeAutomaton() {
+		return typeAutomaton;
+	}
+
+	/**
+	 * @return the stateTypeMap
+	 */
+	public BidiMap<State, Type> getStateTypeMap() {
+		return stateTypeMap;
+	}
+
+	/**
+	 * @return the stateExpressionMap
+	 */
+	public Map<State, Expression> getStateExpressionMap() {
+		return stateExpressionMap;
+	}
+
+	/**
+	 * @return the expressionStateMap
+	 */
+	public Map<Expression, Set<State>> getExpressionStateMap() {
+		return expressionStateMap;
+	}
+
+	/**
      * Creates a new XSD2BonxaiConverter for the given schema.
      */
     public XSD2BonxaiConverter( ) {
@@ -91,7 +132,7 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
     public Bonxai convert(Schema schema ) throws ConversionFailedException {
     	if (!(schema instanceof XSDSchema))
     		throw new ConversionFailedException("Can only convert XML Schema schemas.");
-    	XSDSchema xmlSchema = (XSDSchema) schema;
+    	xmlSchema = (XSDSchema) schema;
     	this.attributeProcessor = new AttributeProcessor(xmlSchema);
     	this.particleProcessor = new ParticleProcessor(xmlSchema);
     	XSDTypeAutomatonFactory factory = new XSDTypeAutomatonFactory();
@@ -102,6 +143,7 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
     	
     	bonxai = new Bonxai();
     	
+    	createGroups();
     	createDeclaration();
     	createExpressions();
     	
@@ -111,7 +153,16 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
     	return bonxai;
     }
     
-    private void createExpressions() {
+    private void createGroups() {
+		for (Group group: xmlSchema.getGroups()) {
+			Particle particle = group.getParticle();
+			Particle bonxaiParticle = particleProcessor.convertParticle(particle);
+			BonxaiGroup bonxaiGroup = new BonxaiGroup(group.getName(), bonxaiParticle);
+			bonxai.addGroup(bonxaiGroup);
+		}
+	}
+
+	private void createExpressions() {
     	for (State state: typeAutomaton.getStates()) 
     		if (! typeAutomaton.isInitialState(state)) 
     	    	bonxai.addExpression(getExpression(state));
@@ -141,14 +192,15 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
 		}
 		
 		bonxai.setDefaultNamespace(defaultNamespace);
-		for (IdentifiedNamespace namespace: schema.getNamespaceList().getNamespaces()) {
+		for (IdentifiedNamespace namespace: schema.getNamespaces()) {
 			bonxai.addNamespace(namespace);
 		}
 		
     	// TODO add imports and dataTypes
 	}
     
-    private AncestorPattern createAncestorPattern(State state) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	private AncestorPattern createAncestorPattern(State state) {
     	//Create a dfa from typeAutomaton by choosing a final state.
     	ModifiableStateDFA dfa = new SparseNFA(typeAutomaton);
     	State dfaState = dfa.getState(typeAutomaton.getStateValue(state));
@@ -197,7 +249,7 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
 				mixed = complexContentType.getMixed();
 				particle = convertParticle(complexContentType.getParticle());
 			} else if (content instanceof SimpleContentType) {
-				SimpleContentType simpleContentType = (SimpleContentType) content;
+//				SimpleContentType simpleContentType = (SimpleContentType) content;
 				particle = new EmptyPattern();
 			} else if (content == null) {
 				//TODO
@@ -227,6 +279,7 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
 		return particleProcessor.convertParticle(particle);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private AncestorPattern convertTreeNode(Node<Object> node) {
 		String key = node.getKey();
 		if (key.equals(Regex.CONCAT_OPERATOR)) { //concatenation

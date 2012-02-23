@@ -45,11 +45,7 @@ class ParticleProcessor {
         if (particle instanceof ParticleContainer) {
             resultParticle = convertParticleContainer((ParticleContainer) particle);
         } else if (particle instanceof CountingPattern) {
-            resultParticle = new CountingPattern(
-            	((CountingPattern) particle).getParticle(),
-                ((CountingPattern) particle).getMin(),
-                ((CountingPattern) particle).getMax()
-            );
+            resultParticle = convertCountingPattern((CountingPattern) particle);
         } else if (particle instanceof AnyPattern) {
             resultParticle = convertAnyPattern((AnyPattern) particle);
         } else if (particle instanceof eu.fox7.schematoolkit.xsd.om.Element) {
@@ -65,7 +61,17 @@ class ParticleProcessor {
         return resultParticle;
     }
 
-    /**
+    private Particle convertCountingPattern(CountingPattern countingPattern) {
+        CountingPattern newCountingPattern = new CountingPattern(
+            	convertParticle(countingPattern.getParticle()),
+            	countingPattern.getMin(),
+            	countingPattern.getMax()
+            );
+		return newCountingPattern;
+	}
+
+
+	/**
      * Converts particleContainer, depending on its realization.
      *
      * There are no dedicated methods for the different ParticleContainers,
