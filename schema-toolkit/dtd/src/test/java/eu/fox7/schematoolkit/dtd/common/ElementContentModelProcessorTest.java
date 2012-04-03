@@ -1,12 +1,14 @@
 package eu.fox7.schematoolkit.dtd.common;
 
 import eu.fox7.schematoolkit.common.AllPattern;
+import eu.fox7.schematoolkit.common.ElementRef;
 import eu.fox7.schematoolkit.common.ChoicePattern;
 import eu.fox7.schematoolkit.common.CountingPattern;
+import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.Particle;
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.common.SequencePattern;
 import eu.fox7.schematoolkit.dtd.common.ElementContentModelProcessor;
-import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelCountingPatternIllegalMinValueException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelCountingPatternNotAllowedDTDValueException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelEmptyChildParticleListException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelIllegalMixedDuplicateElementException;
@@ -16,12 +18,9 @@ import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelIllegalStringForM
 import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelNullParticleException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelStringEmptyException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.ContentModelStringTokenizerIllegalStateException;
-import eu.fox7.schematoolkit.dtd.om.DocumentTypeDefinition;
 import eu.fox7.schematoolkit.dtd.om.Element;
-import eu.fox7.schematoolkit.dtd.om.ElementRef;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Test of class ElementContentModelProcessor
@@ -29,7 +28,11 @@ import static org.junit.Assert.*;
  */
 public class ElementContentModelProcessorTest extends junit.framework.TestCase {
 
-    /**
+	private QualifiedName elementRefName = new QualifiedName(Namespace.EMPTY_NAMESPACE,"myElementRef");
+	private QualifiedName elementRefName2 = new QualifiedName(Namespace.EMPTY_NAMESPACE,"myElementRef2");
+	private QualifiedName elementName = new QualifiedName(Namespace.EMPTY_NAMESPACE,"myElement");
+
+	/**
      * Test of isMixed method, of class ElementContentModelProcessor.
      */
     @Test
@@ -127,32 +130,30 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
 
             particle = instance.convertRegExpStringToParticle("(test)");
             assertTrue(particle instanceof ElementRef);
-            assertEquals("test", ((ElementRef) particle).getElement().getName());
+            assertEquals("test", ((ElementRef) particle).getElementName());
 
             particle = instance.convertRegExpStringToParticle("(test)*");
             assertTrue(particle instanceof CountingPattern);
             CountingPattern countingPattern = ((CountingPattern) particle);
-            assertEquals(0, countingPattern.getMin().intValue());
+            assertEquals(0, countingPattern.getMin());
             assertTrue(countingPattern.getMax() == null);
-            assertEquals(1, countingPattern.getParticles().size());
-            assertEquals("test", ((ElementRef) countingPattern.getParticles().getFirst()).getElement().getName());
+            assertEquals("test", ((ElementRef) countingPattern.getParticle()).getElementName());
 
             particle = instance.convertRegExpStringToParticle("(test|temp|foo)");
             assertTrue(particle instanceof ChoicePattern);
             ChoicePattern ChoicePattern = ((ChoicePattern) particle);
             assertEquals(3, ChoicePattern.getParticles().size());
-            assertEquals("temp", ((ElementRef) ChoicePattern.getParticles().get(1)).getElement().getName());
+            assertEquals("temp", ((ElementRef) ChoicePattern.getParticles().get(1)).getElementName());
 
 
             particle = instance.convertRegExpStringToParticle("(test, temp, foo)+");
             assertTrue(particle instanceof CountingPattern);
             CountingPattern countingPatternSequence = ((CountingPattern) particle);
-            assertEquals(1, countingPatternSequence.getMin().intValue());
+            assertEquals(1, countingPatternSequence.getMin());
             assertTrue(countingPatternSequence.getMax() == null);
-            assertEquals(1, countingPatternSequence.getParticles().size());
-            SequencePattern sequencePattern = ((SequencePattern) countingPatternSequence.getParticles().getFirst());
+            SequencePattern sequencePattern = ((SequencePattern) countingPatternSequence.getParticle());
             assertEquals(3, sequencePattern.getParticles().size());
-            assertEquals("foo", ((ElementRef) sequencePattern.getParticles().get(2)).getElement().getName());
+            assertEquals("foo", ((ElementRef) sequencePattern.getParticles().get(2)).getElementName());
 
             particle = instance.convertRegExpStringToParticle("(#PCDATA)");
             assertTrue(particle == null);
@@ -167,17 +168,17 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
             particle = instance.convertRegExpStringToParticle("(#PCDATA|test)*");
             assertTrue(particle instanceof CountingPattern);
             CountingPattern countingPatternMixed = (CountingPattern) particle;
-            assertEquals(0, countingPatternMixed.getMin().intValue());
+            assertEquals(0, countingPatternMixed.getMin());
             assertTrue(countingPatternMixed.getMax() == null);
-            assertEquals("test", ((ElementRef) countingPatternMixed.getParticles().getFirst()).getElement().getName());
+            assertEquals("test", ((ElementRef) countingPatternMixed.getParticle()).getElementName());
 
             particle = instance.convertRegExpStringToParticle("(#PCDATA|test|foobar)*");
             assertTrue(particle instanceof CountingPattern);
             CountingPattern countingPatternMixed2 = (CountingPattern) particle;
-            assertEquals(0, countingPatternMixed2.getMin().intValue());
+            assertEquals(0, countingPatternMixed2.getMin());
             assertTrue(countingPatternMixed2.getMax() == null);
-            ChoicePattern choicePatternMixed = (ChoicePattern) countingPatternMixed2.getParticles().getLast();
-            assertEquals("foobar", ((ElementRef) choicePatternMixed.getParticles().getLast()).getElement().getName());
+            ChoicePattern choicePatternMixed = (ChoicePattern) countingPatternMixed2.getParticle();
+            assertEquals("foobar", ((ElementRef) choicePatternMixed.getParticles().getLast()).getElementName());
 
         } catch (Exception ex) {
             fail("Exception was thrown: " + ex.getMessage());
@@ -191,14 +192,9 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
     public void testConvertParticleToRegExpString() throws Exception {
         ElementContentModelProcessor instance = new ElementContentModelProcessor();
 
-        DocumentTypeDefinition dtd = new DocumentTypeDefinition();
-
-
-        Element elementRefElement = new Element("myRefElement");
-        dtd.getElementSymbolTable().updateOrCreateReference("myRefElement", elementRefElement);
-        ElementRef elementRef = new ElementRef(dtd.getElementSymbolTable().getReference("myRefElement"));
+        ElementRef elementRef = new ElementRef(elementRefName);
         Particle particle = elementRef;
-        Element element = new Element("myElement");
+        Element element = new Element(elementName);
         element.setParticle(particle);
 
         try {
@@ -208,8 +204,7 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
             fail("Exception was thrown: " + ex.getMessage());
         }
 
-        CountingPattern countingPattern = new CountingPattern(0, 1);
-        countingPattern.addParticle(elementRef);
+        CountingPattern countingPattern = new CountingPattern(elementRef, 0, 1);
         element.setParticle(countingPattern);
 
         try {
@@ -228,9 +223,7 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
             fail("Exception was thrown: " + ex.getMessage());
         }
 
-        Element elementRefElement2 = new Element("myRefElement2");
-        dtd.getElementSymbolTable().updateOrCreateReference("myRefElement2", elementRefElement2);
-        ElementRef elementRef2 = new ElementRef(dtd.getElementSymbolTable().getReference("myRefElement2"));
+        ElementRef elementRef2 = new ElementRef(elementRefName2);
 
         choicePattern.addParticle(elementRef2);
         element.setParticle(choicePattern);
@@ -242,7 +235,7 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
         }
 
 
-        Element elementMixed = new Element("myMixedElement");
+        Element elementMixed = new Element(elementName);
         elementMixed.setMixed(true);
 
         try {
@@ -251,7 +244,7 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
             fail("Exception was thrown: " + ex.getMessage());
         }
 
-        Element elementMixed2 = new Element("myMixedElement");
+        Element elementMixed2 = new Element(elementName);
         elementMixed2.setMixedStar(true);
 
         try {
@@ -260,9 +253,8 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
             fail("Exception was thrown: " + ex.getMessage());
         }
 
-        Element elementMixed3 = new Element("myMixedElement");
-        CountingPattern countingPattern1 = new CountingPattern(0, null);
-        countingPattern1.addParticle(elementRef);
+        Element elementMixed3 = new Element(elementName);
+        CountingPattern countingPattern1 = new CountingPattern(elementRef, 0, null);
         elementMixed3.setParticle(countingPattern1);
         elementMixed3.setMixed(true);
         elementMixed3.setMixedStar(true);
@@ -294,9 +286,8 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
     public void testContentModelNullParticleException() throws Exception {
         try {
             ElementContentModelProcessor instance = new ElementContentModelProcessor();
-            Element element = new Element("myElement");
-            CountingPattern countingPattern = new CountingPattern(0, 1);
-            countingPattern.addParticle(null);
+            Element element = new Element(elementName);
+            CountingPattern countingPattern = new CountingPattern(null, 0, 1);
             element.setParticle(countingPattern);
 
             instance.convertParticleToRegExpString(element);
@@ -311,9 +302,8 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
     public void testContentModelIllegalParticleException() throws Exception {
         try {
             ElementContentModelProcessor instance = new ElementContentModelProcessor();
-            Element element = new Element("myElement");
-            CountingPattern countingPattern = new CountingPattern(0, 1);
-            countingPattern.addParticle(new AllPattern());
+            Element element = new Element(elementName);
+            CountingPattern countingPattern = new CountingPattern(new AllPattern(), 0, 1);
             element.setParticle(countingPattern);
 
             instance.convertParticleToRegExpString(element);
@@ -325,41 +315,13 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
     }
 
     @Test
-    public void testContentModelCountingPatternIllegalMinValueException() throws Exception {
-        try {
-            DocumentTypeDefinition dtd = new DocumentTypeDefinition();
-            ElementContentModelProcessor instance = new ElementContentModelProcessor();
-            Element element = new Element("myElement");
-            CountingPattern countingPattern = new CountingPattern(null, 1);
-
-            Element elementRefElement2 = new Element("myRefElement2");
-            dtd.getElementSymbolTable().updateOrCreateReference("myRefElement2", elementRefElement2);
-            ElementRef elementRef2 = new ElementRef(dtd.getElementSymbolTable().getReference("myRefElement2"));
-
-            countingPattern.addParticle(elementRef2);
-            element.setParticle(countingPattern);
-
-            instance.convertParticleToRegExpString(element);
-
-        } catch (ContentModelCountingPatternIllegalMinValueException error) {
-            return;
-        }
-        fail("The contentModel of Type CountingPattern has an illegal MinValue, but this was not detected.");
-    }
-
-    @Test
     public void testContentModelCountingPatternNotAllowedDTDValueException() throws Exception {
         try {
-            DocumentTypeDefinition dtd = new DocumentTypeDefinition();
             ElementContentModelProcessor instance = new ElementContentModelProcessor();
-            Element element = new Element("myElement");
-            CountingPattern countingPattern = new CountingPattern(5, 1);
+            Element element = new Element(elementName);
+            ElementRef elementRef2 = new ElementRef(elementRefName2);
+            CountingPattern countingPattern = new CountingPattern(elementRef2, 5, 1);
 
-            Element elementRefElement2 = new Element("myRefElement2");
-            dtd.getElementSymbolTable().updateOrCreateReference("myRefElement2", elementRefElement2);
-            ElementRef elementRef2 = new ElementRef(dtd.getElementSymbolTable().getReference("myRefElement2"));
-
-            countingPattern.addParticle(elementRef2);
             element.setParticle(countingPattern);
 
             instance.convertParticleToRegExpString(element);
@@ -373,9 +335,8 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
     @Test
     public void testContentModelEmptyChildParticleListException() throws Exception {
         try {
-            DocumentTypeDefinition dtd = new DocumentTypeDefinition();
             ElementContentModelProcessor instance = new ElementContentModelProcessor();
-            Element element = new Element("myElement");
+            Element element = new Element(elementName);
             ChoicePattern choicePattern = new ChoicePattern();
             element.setParticle(choicePattern);
 
@@ -390,9 +351,8 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
     @Test
     public void testContentModelIllegalMixedParticleExceptionWithoutCountingPattern() throws Exception {
         try {
-            DocumentTypeDefinition dtd = new DocumentTypeDefinition();
             ElementContentModelProcessor instance = new ElementContentModelProcessor();
-            Element element = new Element("myElement");
+            Element element = new Element(elementName);
             element.setMixed(true);
             ChoicePattern choicePattern = new ChoicePattern();
             element.setParticle(choicePattern);
@@ -406,44 +366,14 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
     }
 
     @Test
-    public void testContentModelIllegalMixedParticleExceptionWithCountingPatternWithTwoElementRefs() throws Exception {
-        try {
-            DocumentTypeDefinition dtd = new DocumentTypeDefinition();
-            ElementContentModelProcessor instance = new ElementContentModelProcessor();
-            Element element = new Element("myElement");
-            element.setMixed(true);
-            CountingPattern countingPattern = new CountingPattern(0, null);
-
-            Element elementRefElement2 = new Element("myRefElement2");
-            dtd.getElementSymbolTable().updateOrCreateReference("myRefElement2", elementRefElement2);
-            ElementRef elementRef2 = new ElementRef(dtd.getElementSymbolTable().getReference("myRefElement2"));
-
-            countingPattern.addParticle(elementRef2);
-            countingPattern.addParticle(elementRef2);
-            element.setParticle(countingPattern);
-
-            instance.convertParticleToRegExpString(element);
-
-        } catch (ContentModelIllegalMixedParticleException error) {
-            return;
-        }
-        fail("The contentModel of a mixed element has more than one Particle in a CountingPattern, but this was not detected.");
-    }
-
-    @Test
     public void testContentModelIllegalMixedParticleExceptionWithCountingPatternWithInvalidValues() throws Exception {
         try {
-            DocumentTypeDefinition dtd = new DocumentTypeDefinition();
             ElementContentModelProcessor instance = new ElementContentModelProcessor();
-            Element element = new Element("myElement");
+            Element element = new Element(elementName);
             element.setMixed(true);
-            CountingPattern countingPattern = new CountingPattern(0, 3);
+            ElementRef elementRef2 = new ElementRef(elementRefName2);
+            CountingPattern countingPattern = new CountingPattern(elementRef2, 0, 3);
 
-            Element elementRefElement2 = new Element("myRefElement2");
-            dtd.getElementSymbolTable().updateOrCreateReference("myRefElement2", elementRefElement2);
-            ElementRef elementRef2 = new ElementRef(dtd.getElementSymbolTable().getReference("myRefElement2"));
-
-            countingPattern.addParticle(elementRef2);
             element.setParticle(countingPattern);
 
             instance.convertParticleToRegExpString(element);
@@ -454,37 +384,16 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
         fail("The contentModel of a mixed element has a CountingPattern with invalid min/max values, but this was not detected.");
     }
 
-    @Test
-    public void testContentModelIllegalMixedParticleExceptionWithInvalidParticleInCP() throws Exception {
-        try {
-            DocumentTypeDefinition dtd = new DocumentTypeDefinition();
-            ElementContentModelProcessor instance = new ElementContentModelProcessor();
-            Element element = new Element("myElement");
-            element.setMixed(true);
-            CountingPattern countingPattern = new CountingPattern(0, null);
-
-            countingPattern.addParticle(countingPattern);
-            element.setParticle(countingPattern);
-
-            instance.convertParticleToRegExpString(element);
-
-        } catch (ContentModelIllegalMixedParticleException error) {
-            return;
-        }
-        fail("The contentModel of a mixed element has a CountingPattern with an invalid particle, but this was not detected.");
-    }
 
     @Test
     public void testContentModelIllegalMixedParticleExceptionWithChoicePatternEmpty() throws Exception {
         try {
-            DocumentTypeDefinition dtd = new DocumentTypeDefinition();
             ElementContentModelProcessor instance = new ElementContentModelProcessor();
-            Element element = new Element("myElement");
+            Element element = new Element(elementName);
             element.setMixed(true);
-            CountingPattern countingPattern = new CountingPattern(0, null);
             ChoicePattern choicePattern = new ChoicePattern();
+            CountingPattern countingPattern = new CountingPattern(choicePattern, 0, null);
 
-            countingPattern.addParticle(choicePattern);
             element.setParticle(countingPattern);
 
             instance.convertParticleToRegExpString(element);
@@ -498,14 +407,12 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
     @Test
     public void testContentModelIllegalMixedParticleExceptionWithChoicePatternWrongContent() throws Exception {
         try {
-            DocumentTypeDefinition dtd = new DocumentTypeDefinition();
             ElementContentModelProcessor instance = new ElementContentModelProcessor();
-            Element element = new Element("myElement");
+            Element element = new Element(elementName);
             element.setMixed(true);
-            CountingPattern countingPattern = new CountingPattern(0, null);
             ChoicePattern choicePattern = new ChoicePattern();
             choicePattern.addParticle(new AllPattern());
-            countingPattern.addParticle(choicePattern);
+            CountingPattern countingPattern = new CountingPattern(choicePattern, 0, null);
             element.setParticle(countingPattern);
 
             instance.convertParticleToRegExpString(element);
@@ -519,15 +426,14 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
     @Test
     public void testContentModelIllegalMixedParticleExceptionWithElementRefNull() throws Exception {
         try {
-            DocumentTypeDefinition dtd = new DocumentTypeDefinition();
             ElementContentModelProcessor instance = new ElementContentModelProcessor();
-            Element element = new Element("myElement");
+            Element element = new Element(elementName);
             element.setMixed(true);
-            CountingPattern countingPattern = new CountingPattern(0, null);
 
             ElementRef elementRef = new ElementRef(null);
+            CountingPattern countingPattern = new CountingPattern(elementRef, 0, null);
 
-            countingPattern.addParticle(elementRef);
+
             element.setParticle(countingPattern);
 
             instance.convertParticleToRegExpString(element);
@@ -591,24 +497,17 @@ public class ElementContentModelProcessorTest extends junit.framework.TestCase {
         try {
             ElementContentModelProcessor instance = new ElementContentModelProcessor();
 
-            DocumentTypeDefinition dtd = new DocumentTypeDefinition();
+            ElementRef elementRef = new ElementRef(elementRefName);
 
-            Element elementRefElement = new Element("myRefElement");
-            dtd.getElementSymbolTable().updateOrCreateReference("myRefElement", elementRefElement);
-            ElementRef elementRef = new ElementRef(dtd.getElementSymbolTable().getReference("myRefElement"));
+            ElementRef elementRef2 = new ElementRef(elementRefName2);
 
-            Element elementRefElement2 = new Element("myRefElement");
-            dtd.getElementSymbolTable().updateOrCreateReference("myRefElement2", elementRefElement2);
-            ElementRef elementRef2 = new ElementRef(dtd.getElementSymbolTable().getReference("myRefElement2"));
-
-            Element elementMixed3 = new Element("myMixedElement");
-            CountingPattern countingPattern1 = new CountingPattern(0, null);
+            Element elementMixed3 = new Element(elementName);
 
             ChoicePattern choicePattern = new ChoicePattern();
             choicePattern.addParticle(elementRef);
             choicePattern.addParticle(elementRef2);
 
-            countingPattern1.addParticle(choicePattern);
+            CountingPattern countingPattern1 = new CountingPattern(choicePattern, 0, null);
 
             elementMixed3.setParticle(countingPattern1);
             elementMixed3.setMixed(true);

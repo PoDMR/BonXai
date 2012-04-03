@@ -1,6 +1,7 @@
 package eu.fox7.schematoolkit.dtd.om;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import eu.fox7.schematoolkit.Schema;
@@ -18,7 +19,7 @@ public class DocumentTypeDefinition implements Schema {
     /**
      * This SymbolTable holds references for ALL elements of the DTD
      */
-    private Map<QualifiedName,Element> elements;
+    private Map<QualifiedName,Element> elements = new HashMap<QualifiedName, Element>();
     /**
      * This SymbolTable holds references for ALL internal entities of the DTD
      */
@@ -30,7 +31,7 @@ public class DocumentTypeDefinition implements Schema {
     /**
      * This SymbolTable holds references for ALL notation of the DTD
      */
-    private Map<String,Notation> notations;
+    private Map<String,Notation> notations = new HashMap<String,Notation>();
     /**
      * These two variables hold the public and system ID of the current DTD schema
      */
@@ -106,8 +107,13 @@ public class DocumentTypeDefinition implements Schema {
 		this.elements.put(element.getName(), element);
 	}
 
+	@Deprecated
 	public Element getElement(String elementName) {
 		return this.elements.get(new QualifiedName(Namespace.EMPTY_NAMESPACE, elementName));
+	}
+
+	public Element getElement(QualifiedName elementName) {
+		return this.elements.get(elementName);
 	}
 
 	public Collection<Element> getElements() {

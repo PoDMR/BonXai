@@ -3,7 +3,6 @@ package eu.fox7.schematoolkit.dtd.common;
 import eu.fox7.schematoolkit.dtd.common.exceptions.AttributeTypeIllegalValueException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.DTDException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.IllegalNMTOKENStringException;
-import eu.fox7.schematoolkit.dtd.common.exceptions.NotationNotDeclaredException;
 import eu.fox7.schematoolkit.dtd.om.Attribute;
 import eu.fox7.schematoolkit.dtd.om.AttributeType;
 import eu.fox7.schematoolkit.dtd.om.DocumentTypeDefinition;

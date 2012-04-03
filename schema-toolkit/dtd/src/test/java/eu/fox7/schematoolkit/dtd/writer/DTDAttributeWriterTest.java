@@ -1,5 +1,7 @@
 package eu.fox7.schematoolkit.dtd.writer;
 
+import eu.fox7.schematoolkit.common.Namespace;
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.dtd.common.exceptions.AttributeEnumerationTypeIllegalDefaultValueException;
 import eu.fox7.schematoolkit.dtd.om.Attribute;
 import eu.fox7.schematoolkit.dtd.om.AttributeType;
@@ -18,6 +20,7 @@ import org.junit.Test;
  * @author Lars Schmidt
  */
 public class DTDAttributeWriterTest extends junit.framework.TestCase {
+	private QualifiedName elementName = new QualifiedName(Namespace.EMPTY_NAMESPACE,"myElement");
 
     /**
      * Test of getAttributeDeclarationString method, of class DTDAttributeWriter.
@@ -31,21 +34,21 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
 
         DTDAttributeWriter attributeWriter = new DTDAttributeWriter(attribute);
         String expResult = "<!ATTLIST myElement myAttribute CDATA \"one\">\n";
-        String result = attributeWriter.getAttributeDeclarationString("myElement");
+        String result = attributeWriter.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
 
         attribute = new Attribute("myAttribute", "one");
         attribute.setType(AttributeType.ENTITIES);
         attributeWriter = new DTDAttributeWriter(attribute);
         expResult = "<!ATTLIST myElement myAttribute ENTITIES \"one\">\n";
-        result = attributeWriter.getAttributeDeclarationString("myElement");
+        result = attributeWriter.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
 
         attribute = new Attribute("myAttribute", "one");
         attribute.setType(AttributeType.ENTITY);
         attributeWriter = new DTDAttributeWriter(attribute);
         expResult = "<!ATTLIST myElement myAttribute ENTITY \"one\">\n";
-        result = attributeWriter.getAttributeDeclarationString("myElement");
+        result = attributeWriter.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
 
         Attribute attribute2 = new Attribute("myAttribute2", "foo");
@@ -56,42 +59,42 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
         attribute2.setEnumerationOrNotationTokens(tokens);
         DTDAttributeWriter attributeWriter2 = new DTDAttributeWriter(attribute2);
         expResult = "<!ATTLIST myElement myAttribute2 (test|foo) \"foo\">\n";
-        result = attributeWriter2.getAttributeDeclarationString("myElement");
+        result = attributeWriter2.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
 
         attribute = new Attribute("myAttribute", "one");
         attribute.setType(AttributeType.ID);
         attributeWriter = new DTDAttributeWriter(attribute);
         expResult = "<!ATTLIST myElement myAttribute ID \"one\">\n";
-        result = attributeWriter.getAttributeDeclarationString("myElement");
+        result = attributeWriter.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
 
         attribute = new Attribute("myAttribute", "one");
         attribute.setType(AttributeType.IDREF);
         attributeWriter = new DTDAttributeWriter(attribute);
         expResult = "<!ATTLIST myElement myAttribute IDREF \"one\">\n";
-        result = attributeWriter.getAttributeDeclarationString("myElement");
+        result = attributeWriter.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
 
         attribute = new Attribute("myAttribute", "one");
         attribute.setType(AttributeType.IDREFS);
         attributeWriter = new DTDAttributeWriter(attribute);
         expResult = "<!ATTLIST myElement myAttribute IDREFS \"one\">\n";
-        result = attributeWriter.getAttributeDeclarationString("myElement");
+        result = attributeWriter.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
 
         attribute = new Attribute("myAttribute", "one");
         attribute.setType(AttributeType.NMTOKEN);
         attributeWriter = new DTDAttributeWriter(attribute);
         expResult = "<!ATTLIST myElement myAttribute NMTOKEN \"one\">\n";
-        result = attributeWriter.getAttributeDeclarationString("myElement");
+        result = attributeWriter.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
 
         attribute = new Attribute("myAttribute", "one");
         attribute.setType(AttributeType.NMTOKENS);
         attributeWriter = new DTDAttributeWriter(attribute);
         expResult = "<!ATTLIST myElement myAttribute NMTOKENS \"one\">\n";
-        result = attributeWriter.getAttributeDeclarationString("myElement");
+        result = attributeWriter.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
 
         Attribute attribute3 = new Attribute("myAttribute3", "foo");
@@ -102,7 +105,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
         attribute3.setEnumerationOrNotationTokens(tokens);
         DTDAttributeWriter attributeWriter3 = new DTDAttributeWriter(attribute3);
         expResult = "<!ATTLIST myElement myAttribute3 NOTATION (test|foo) \"foo\">\n";
-        result = attributeWriter3.getAttributeDeclarationString("myElement");
+        result = attributeWriter3.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
     }
 
@@ -118,21 +121,21 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
 
         DTDAttributeWriter attributeWriter = new DTDAttributeWriter(attribute);
         String expResult = "<!ATTLIST myElement myAttribute CDATA #FIXED \"one\">\n";
-        String result = attributeWriter.getAttributeDeclarationString("myElement");
+        String result = attributeWriter.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
 
         attribute = new Attribute("myAttribute", "#IMPLIED", "one");
         attribute.setType(AttributeType.ENTITIES);
         attributeWriter = new DTDAttributeWriter(attribute);
         expResult = "<!ATTLIST myElement myAttribute ENTITIES #IMPLIED>\n";
-        result = attributeWriter.getAttributeDeclarationString("myElement");
+        result = attributeWriter.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
 
         attribute = new Attribute("myAttribute", "#REQUIRED", "one");
         attribute.setType(AttributeType.ID);
         attributeWriter = new DTDAttributeWriter(attribute);
         expResult = "<!ATTLIST myElement myAttribute ID #REQUIRED>\n";
-        result = attributeWriter.getAttributeDeclarationString("myElement");
+        result = attributeWriter.getAttributeDeclarationString(elementName);
         assertEquals(expResult, result);
     }
 
@@ -147,7 +150,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
             attribute.setType(AttributeType.CDATA);
 
             DTDAttributeWriter attributeWriter = new DTDAttributeWriter(attribute);
-            attributeWriter.getAttributeDeclarationString("myElement");
+            attributeWriter.getAttributeDeclarationString(elementName);
 
         } catch (DTDAttributeNameEmptyException ex) {
             return;
@@ -164,7 +167,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
         try {
             Attribute attribute = null;
             DTDAttributeWriter attributeWriter = new DTDAttributeWriter(attribute);
-            attributeWriter.getAttributeDeclarationString("myElement");
+            attributeWriter.getAttributeDeclarationString(elementName);
 
         } catch (DTDAttributeNullException ex) {
             return;
@@ -181,7 +184,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
         try {
             Attribute attribute = new Attribute("test", "one");
             DTDAttributeWriter attributeWriter = new DTDAttributeWriter(attribute);
-            attributeWriter.getAttributeDeclarationString("myElement");
+            attributeWriter.getAttributeDeclarationString(elementName);
 
         } catch (DTDAttributeTypeNullException ex) {
             return;
@@ -201,7 +204,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
             LinkedHashSet<String> tokens = new LinkedHashSet<String>();
             attribute2.setEnumerationOrNotationTokens(tokens);
             DTDAttributeWriter attributeWriter2 = new DTDAttributeWriter(attribute2);
-            attributeWriter2.getAttributeDeclarationString("myElement");
+            attributeWriter2.getAttributeDeclarationString(elementName);
         } catch (DTDAttributeTypeEnumOrNotationWithEmptyTokensException ex) {
             return;
         }
@@ -222,7 +225,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
             tokens.add("foo");
             attribute2.setEnumerationOrNotationTokens(tokens);
             DTDAttributeWriter attributeWriter2 = new DTDAttributeWriter(attribute2);
-            attributeWriter2.getAttributeDeclarationString("myElement");
+            attributeWriter2.getAttributeDeclarationString(elementName);
 
         } catch (AttributeEnumerationTypeIllegalDefaultValueException ex) {
             return;
@@ -245,7 +248,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
         attribute.setType(AttributeType.CDATA);
 
         DTDAttributeWriter attributeWriter = new DTDAttributeWriter(attribute);
-        attributeWriter.getAttributeDeclarationString("myElement");
+        attributeWriter.getAttributeDeclarationString(elementName);
 
 
         } catch (DTDAttributeValueEmptyException ex) {
@@ -265,7 +268,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
         attribute.setType(AttributeType.CDATA);
 
         DTDAttributeWriter attributeWriter = new DTDAttributeWriter(attribute);
-        attributeWriter.getAttributeDeclarationString("myElement");
+        attributeWriter.getAttributeDeclarationString(elementName);
 
 
         } catch (DTDAttributeValueEmptyException ex) {

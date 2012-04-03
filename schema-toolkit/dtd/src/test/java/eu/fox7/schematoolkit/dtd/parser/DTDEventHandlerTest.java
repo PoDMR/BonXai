@@ -16,14 +16,6 @@ import static org.junit.Assert.*;
  */
 public class DTDEventHandlerTest extends junit.framework.TestCase {
 
-    private DocumentTypeDefinition dtd;
-
-    @Before
-    @Override
-    public void setUp() {
-        this.dtd = new DocumentTypeDefinition();
-    }
-
     /**
      * Test of startDTD method, of class DTDEventHandler.
      * @throws Exception 
@@ -38,7 +30,7 @@ public class DTDEventHandlerTest extends junit.framework.TestCase {
         assertEquals("test1", instance.getDTD().getPublicID());
         assertEquals("test2", instance.getDTD().getSystemID());
         assertEquals("rootElement", instance.getDTD().getRootElement().getName());
-        assertEquals(1, instance.getDTD().getElementSymbolTable().getAllReferencedObjects().size());
+        assertEquals(1, instance.getDTD().getElements().size());
     }
 
     /**
