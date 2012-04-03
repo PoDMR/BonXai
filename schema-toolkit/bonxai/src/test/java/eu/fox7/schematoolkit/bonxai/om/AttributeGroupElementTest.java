@@ -10,8 +10,6 @@ import org.junit.Test;
 import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
 
-import static org.junit.Assert.*;
-
 /**
  *
  */

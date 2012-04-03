@@ -46,10 +46,10 @@ public class AttributePatternTest extends junit.framework.TestCase {
     @Test
     public void testGetAttributeList() {
         AttributePattern instance = new AttributePattern();
-        Vector<AttributeListElement> expResult = new Vector<AttributeListElement>();
+        Vector<Attribute> expResult = new Vector<Attribute>();
         expResult.add(new Attribute("", "name", new BonxaiType("", "string")));
         instance.setAttributeList(expResult);
-        Vector<AttributeListElement> result = instance.getAttributeList();
+        Vector<Attribute> result = instance.getAttributeList();
         assertEquals(expResult, result);
     }
 
@@ -59,10 +59,10 @@ public class AttributePatternTest extends junit.framework.TestCase {
     @Test
     public void testSetAttributeList() {
         AttributePattern instance = new AttributePattern();
-        Vector<AttributeListElement> expResult = new Vector<AttributeListElement>();
+        Vector<Attribute> expResult = new Vector<Attribute>();
         expResult.add(new Attribute("", "name", new BonxaiType("", "string")));
         instance.setAttributeList(expResult);
-        Vector<AttributeListElement> result = instance.getAttributeList();
+        Collection<Attribute> result = instance.getAttributeList();
         assertEquals(expResult, result);
     }
 }

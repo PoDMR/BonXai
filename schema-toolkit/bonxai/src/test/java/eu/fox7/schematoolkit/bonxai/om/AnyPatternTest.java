@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import eu.fox7.schematoolkit.common.AnyPattern;
 import eu.fox7.schematoolkit.common.ProcessContentsInstruction;
-import static org.junit.Assert.*;
 
 /**
  *
