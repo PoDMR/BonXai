@@ -13,4 +13,21 @@
   </parent>
 
   <name>DTD2XSD Converter</name>
+  <dependencies>
+  	<dependency>
+  		<groupId>eu.fox7.schema-toolkit</groupId>
+  		<artifactId>dtd</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>eu.fox7.schema-toolkit</groupId>
+  		<artifactId>xsd</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>eu.fox7.schema-toolkit</groupId>
+  		<artifactId>schemahandler</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>
