@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE ACTIONS SYSTEM "actions.dtd">
+
+<ACTIONS>
+	<ACTION NAME="action.xsd">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.jedit.schematoolkit.SchemaToolkitPlugin").handleBufferAction(view, "xsd");
+		</CODE>
+	</ACTION>
+    <ACTION NAME="action.dtd">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.jedit.schematoolkit.SchemaToolkitPlugin").handleBufferAction(view, "dtd");
+		</CODE>
+	</ACTION>
+    <ACTION NAME="action.rng">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.jedit.schematoolkit.SchemaToolkitPlugin").handleBufferAction(view, "rng");
+		</CODE>
+	</ACTION>
+    <ACTION NAME="action.bonxai">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.jedit.schematoolkit.SchemaToolkitPlugin").handleBufferAction(view, "bonxai");
+		</CODE>
+	</ACTION>
+    <ACTION NAME="action.removeEmptyTypes">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.jedit.schematoolkit.SchemaToolkitPlugin").handleBufferAction(view, "removeEmptyTypes");
+		</CODE>
+	</ACTION>
+    <ACTION NAME="action.removeUnreachableTypes">
+		<CODE>
+			jEdit.getPlugin("eu.fox7.jedit.schematoolkit.SchemaToolkitPlugin").handleBufferAction(view, "removeUnreachableTypes");
+		</CODE>
+	</ACTION>
+</ACTIONS>
