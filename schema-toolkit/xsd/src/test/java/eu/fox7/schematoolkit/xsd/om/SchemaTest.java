@@ -80,17 +80,20 @@ public class SchemaTest extends junit.framework.TestCase {
         key1 = new QualifiedName(defaultNamespace,"key1");
         key2 = new QualifiedName(defaultNamespace,"key2");
 
-        a1 = new Attribute("{}name1");
+        QualifiedName a1Name = new QualifiedName(defaultNamespace,"name1");
+        QualifiedName a2Name = new QualifiedName(defaultNamespace,"name2");
+        
+        a1 = new Attribute(a1Name);
         schema.addAttribute(symref);
 
-        a2 = new Attribute("{}name2");
+        a2 = new Attribute(a2Name);
         schema.addAttribute(symref);
 
         list = schema.getAttributes();
         tmpSize = list.size();
 
         if (tmpSize > 0) {
-            list.remove();
+            list.clear();
             assertTrue("AttributeGroup-List can be manipulated from outside the schema",
                     schema.getAttributes().size() == tmpSize);
         }

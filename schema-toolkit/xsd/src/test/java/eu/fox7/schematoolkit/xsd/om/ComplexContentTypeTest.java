@@ -41,7 +41,7 @@ public class ComplexContentTypeTest extends junit.framework.TestCase {
      */
     @Test
     public void testGetInheritance() {
-        SymbolTableRef<Type> test = new SymbolTableRef<Type>("NameRef");
+        QualifiedName test = new QualifiedName(Namespace.EMPTY_NAMESPACE,"NameRef");
         ComplexContentExtension inputInheritanceTest = new ComplexContentExtension( test );
         ComplexContentType instance = new ComplexContentType();
         instance.setInheritance(inputInheritanceTest);
@@ -53,7 +53,7 @@ public class ComplexContentTypeTest extends junit.framework.TestCase {
      */
     @Test
     public void testSetInheritance() {
-        SymbolTableRef<Type> test = new SymbolTableRef<Type>("NameRef");
+        QualifiedName test = new QualifiedName(Namespace.EMPTY_NAMESPACE,"NameRef");
         ComplexContentExtension inputInheritanceTest = new ComplexContentExtension( test );
         ComplexContentType instance = new ComplexContentType();
         instance.setInheritance(inputInheritanceTest);

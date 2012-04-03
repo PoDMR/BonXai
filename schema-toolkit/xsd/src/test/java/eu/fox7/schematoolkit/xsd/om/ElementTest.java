@@ -8,8 +8,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import eu.fox7.schematoolkit.common.SymbolTable;
-import eu.fox7.schematoolkit.common.SymbolTableRef;
 import eu.fox7.schematoolkit.xsd.om.Constraint;
 import eu.fox7.schematoolkit.xsd.om.Element;
 import eu.fox7.schematoolkit.xsd.om.SimpleContentList;
