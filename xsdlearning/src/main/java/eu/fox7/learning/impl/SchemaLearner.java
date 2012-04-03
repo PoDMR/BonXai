@@ -3,11 +3,16 @@ package eu.fox7.learning.impl;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Iterator;
+import java.util.List;
+
+import org.dom4j.DocumentException;
 
 import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 import eu.fox7.flt.automata.measures.MutualExclusionDistance;
 import eu.fox7.flt.schema.infer.ixsd.ContentEquivalenceRelation;
@@ -18,7 +23,6 @@ import eu.fox7.flt.schema.infer.ixsd.Merger;
 import eu.fox7.flt.treeautomata.factories.SupportContentAutomatonFactory;
 import eu.fox7.flt.treeautomata.factories.SupportContextAutomatonFactory;
 import eu.fox7.flt.treeautomata.impl.ContextAutomaton;
-import eu.fox7.learning.XSDLearner;
 import eu.fox7.treeautomata.converter.ContextAutomaton2XSDConverter;
 import eu.fox7.util.sampling.SampleException;
 import eu.fox7.util.xml.ConfigurationException;
@@ -28,7 +32,7 @@ import eu.fox7.util.xml.acstring.ExampleParsingException;
 import eu.fox7.util.xml.acstring.ParseResult;
 import eu.fox7.util.xml.acstring.XMLtoAncestorChildrenConverter;
 
-public class SchemaLearner implements XSDLearner {
+public class SchemaLearner implements eu.fox7.schematoolkit.SchemaLearner {
 	private StringWriter writer;
 	private XMLtoAncestorChildrenConverter converter;
 	private int contextSize = 1;
@@ -44,14 +48,27 @@ public class SchemaLearner implements XSDLearner {
 	}
 
 	@Override
-	public void addXML(File...files) throws IOException {
+	public void addXML(File...files) throws IOException, SchemaToolkitException {
 		for (File file: files) {
 			try {
 				this.converter.parse(file);
+				List<File> nonParsedFiles = this.converter.getNonParsedFiles();
+				if (! nonParsedFiles.isEmpty())
+					throw new SchemaToolkitException("File could not be parsed: " + file);
 			} catch (ConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new SchemaToolkitException(e);
 			}
+		}
+	}
+
+	@Override
+	public void addXML(Reader reader) throws IOException, SchemaToolkitException {
+		try {
+			this.converter.parse(reader);
+		} catch (ConfigurationException e) {
+			throw new SchemaToolkitException(e);
+		} catch (DocumentException e) {
+			throw new SchemaToolkitException(e);
 		}
 	}
 
@@ -62,7 +79,7 @@ public class SchemaLearner implements XSDLearner {
 	}
 
 	@Override
-	public XSDSchema learnXSD() {
+	public XSDSchema learnXSD() throws SchemaToolkitException {
 		try {
 			ContextMap contextMap = this.computeContextMap();
 			ContextAutomaton contextAutomaton = this.learnContextAutomaton(contextMap);
@@ -70,16 +87,12 @@ public class SchemaLearner implements XSDLearner {
 			XSDSchema xsdSchema = caConverter.convert(contextAutomaton);
 			return xsdSchema;
 		} catch (ExampleParsingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SchemaToolkitException(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SchemaToolkitException(e);
 		} catch (SampleException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SchemaToolkitException(e);
 		}
-		return null;
 	}
 	
 	private ContextAutomaton learnContextAutomaton(ContextMap contextMap) {
@@ -113,5 +126,11 @@ public class SchemaLearner implements XSDLearner {
 		}
 		return contextMap;
 	}
+
+	@Override
+	public Schema learnBonxai() throws SchemaToolkitException {
+		throw new SchemaToolkitException("BonXai learning not supported.");
+	}
+
 
 }
