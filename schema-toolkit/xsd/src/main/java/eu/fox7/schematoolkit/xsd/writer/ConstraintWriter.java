@@ -58,7 +58,7 @@ public abstract class ConstraintWriter {
             }
             if (nodeName.equals("keyref")) {
                 KeyRef keyRef = (KeyRef) simpleConstraint;
-                simpleConstraintNode.setAttribute("refer", keyRef.getKeyOrUnique().getName().getQualifiedName());
+                simpleConstraintNode.setAttribute("refer", schema.getQualifiedName(keyRef.getKeyOrUnique().getName()));
             }
             AnnotationWriter.writeAnnotation(simpleConstraintNode, simpleConstraint, schema);
             if (constraint.getId() != null) {

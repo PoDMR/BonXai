@@ -17,6 +17,6 @@ public class NonGlobalSubstitutionGroupException extends eu.fox7.schematoolkit.x
      * @param name
      */
     public NonGlobalSubstitutionGroupException(QualifiedName name) {
-        super("There is an empty substitutionGroup-property in the following element:" + name.getQualifiedName() + " which is not declared globally.");
+        super("There is an empty substitutionGroup-property in the following element:" + name.getFullyQualifiedName() + " which is not declared globally.");
     }
 }

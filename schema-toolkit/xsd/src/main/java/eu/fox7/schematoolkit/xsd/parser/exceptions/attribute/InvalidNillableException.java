@@ -17,6 +17,6 @@ public class InvalidNillableException extends eu.fox7.schematoolkit.xsd.parser.e
      * @param name
      */
     public InvalidNillableException(QualifiedName name) {
-        super("There is an invalid nillable-property in the following object:" + name.getQualifiedName());
+        super("There is an invalid nillable-property in the following object:" + name.getFullyQualifiedName());
     }
 }

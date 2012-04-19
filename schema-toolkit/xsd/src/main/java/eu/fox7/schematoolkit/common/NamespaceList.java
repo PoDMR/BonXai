@@ -97,4 +97,19 @@ public class NamespaceList {
 		}
 		return new QualifiedName(namespace, localName);
 	}
+
+	public String getQualifiedName(QualifiedName name) {
+		if (name==null)
+			//throw new RuntimeException("Name is null.");
+			return "NULL";
+		Namespace namespace = this.getNamespaceByUri(name.getNamespaceURI());
+		//TODO
+		if (namespace == null)
+			namespace = Namespace.EMPTY_NAMESPACE;
+		if (name.isAttribute())
+			return namespace.getPrefix()+'@'+name.getName();
+		else
+			return namespace.getPrefix()+name.getName();
+
+	}
 }

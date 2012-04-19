@@ -17,6 +17,6 @@ public class InvalidAbstractException extends eu.fox7.schematoolkit.xsd.parser.e
      * @param name
      */
     public InvalidAbstractException(QualifiedName name) {
-        super("There is an invalid abstract-property in the following object:" + name.getQualifiedName());
+        super("There is an invalid abstract-property in the following object:" + name.getFullyQualifiedName());
     }
 }

@@ -121,7 +121,7 @@ class SequenceProcessor extends Processor {
                     if (getDebug()) {
                         System.out.println("group");
                     }
-                    GroupProcessor groupProcessor = new GroupProcessor(schema);
+                    GroupReferenceProcessor groupProcessor = new GroupReferenceProcessor(schema);
                     Object object = groupProcessor.processNode(childNode);
                     if (object instanceof Particle) {
                         sequencePattern.addParticle((Particle) object);

@@ -56,7 +56,7 @@ public class ComplexType extends Type {
      * of the "mixed" property of the ComplexContent semantically overwrites
      * this local property.
      */
-    private boolean mixed = false;
+//    private boolean mixed = false;
 
     /**
      * Contstructor of ComplexType
@@ -198,19 +198,17 @@ public class ComplexType extends Type {
     }
 
     /**
-     * Returns the value of mixed
+     * Returns if this is a mixed type. 
+     * Mixed attribute is taken from ComplexContentType.
      * @return mixed
      */
     public Boolean getMixed() {
-        return this.mixed;
+        return ((this.content instanceof ComplexContentType) &&
+        		((ComplexContentType) this.content).getMixed());
     }
 
-    /**
-     * Sets the value of the variable mixed
-     * @param mixedContent
-     */
-    public void setMixed(boolean mixedContent) {
-        this.mixed = mixedContent;
-    }
-   
+	public void setMixed(boolean mixed) {
+		if (this.content instanceof ComplexContentType)
+			((ComplexContentType) this.content).setMixed(mixed);
+	}   
 }

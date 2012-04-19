@@ -14,6 +14,6 @@ public class InvalidFormValueLocationException extends eu.fox7.schematoolkit.xsd
 	private static final long serialVersionUID = 1L;
 
 	public InvalidFormValueLocationException(QualifiedName qualifiedName) {
-        super("The value of a form-property is invalid in:" + qualifiedName.getQualifiedName() + " because it is a global element");
+        super("The value of a form-property is invalid in:" + qualifiedName.getFullyQualifiedName() + " because it is a global element");
     }
 }

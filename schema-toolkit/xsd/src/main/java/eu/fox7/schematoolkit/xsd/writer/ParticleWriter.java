@@ -60,7 +60,7 @@ public abstract class ParticleWriter {
         org.w3c.dom.Element elementRefNode = root.getOwnerDocument().createElementNS("http://www.w3.org/2001/XMLSchema", "element");
         DOMHelper.setXSDPrefix(elementRefNode, schema);
         setOccurrence(elementRefNode, min, max);
-        elementRefNode.setAttribute("ref", elementRef.getElementName().getQualifiedName());
+        elementRefNode.setAttribute("ref", schema.getQualifiedName(elementRef.getElementName()));
         AnnotationWriter.writeAnnotation(elementRefNode, elementRef, schema);
         if (elementRef.getId() != null) {
             elementRefNode.setAttribute("id", elementRef.getId());
@@ -86,7 +86,7 @@ public abstract class ParticleWriter {
     protected static void writeElement(Node root, eu.fox7.schematoolkit.xsd.om.Element element, XSDSchema schema, Integer min, Integer max) {
         org.w3c.dom.Element elementNode = root.getOwnerDocument().createElementNS("http://www.w3.org/2001/XMLSchema", "element");
         DOMHelper.setXSDPrefix(elementNode, schema);
-        elementNode.setAttribute("name", element.getName().getQualifiedName());
+        elementNode.setAttribute("name", schema.getQualifiedName(element.getName()));
         setOccurrence(elementNode, min, max);
         if (element.getDefault() != null) {
             elementNode.setAttribute("default", element.getDefault());
@@ -183,13 +183,13 @@ public abstract class ParticleWriter {
         if (type != null && !type.getName().getName().equals("anyType") && type.isAnonymous())
         	TypeWriter.writeType(elementNode, type, schema, false);
         else
-        	elementNode.setAttribute("type", element.getTypeName().getQualifiedName());
+        	elementNode.setAttribute("type", schema.getQualifiedName(element.getTypeName()));
 
         for (Constraint constraint : element.getConstraints())
             ConstraintWriter.writeConstraint(elementNode, constraint, schema);
 
         if (element.getSubstitutionGroup() != null)
-            elementNode.setAttribute("substitutionGroup", element.getSubstitutionGroup().getQualifiedName());
+            elementNode.setAttribute("substitutionGroup", schema.getQualifiedName(element.getSubstitutionGroup()));
     }
 
     /**
@@ -203,7 +203,7 @@ public abstract class ParticleWriter {
     protected static void writeGroupRef(Node root, GroupReference groupRef, Integer min, Integer max, XSDSchema schema) {
         org.w3c.dom.Element groupNode = root.getOwnerDocument().createElementNS("http://www.w3.org/2001/XMLSchema", "group");
         DOMHelper.setXSDPrefix(groupNode, schema);
-        groupNode.setAttribute("ref", groupRef.getName().getQualifiedName());
+        groupNode.setAttribute("ref", schema.getQualifiedName(groupRef.getName()));
         setOccurrence(groupNode, min, max);
         AnnotationWriter.writeAnnotation(groupNode, groupRef, schema);
         if (groupRef.getId() != null) {

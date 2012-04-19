@@ -115,7 +115,7 @@ public class AttributeProcessor extends Processor {
                     throw new MissingNameException();
                 }
                 if (simpleTypeName != null) {
-                        throw new MultipleTypesException("attribute", attributeName.getQualifiedName());
+                        throw new MultipleTypesException("attribute", attributeName.getFullyQualifiedName());
                 }
                 if (!isQName(((Attr) attributes.getNamedItem("type")).getValue())) {
                     throw new InvalidQNameException(((Attr) attributes.getNamedItem("type")).getValue(), "type");
@@ -180,7 +180,7 @@ public class AttributeProcessor extends Processor {
                         throw new ExclusiveContentException("simpleType and ref", attributeName);
                     }
                     if (simpleTypeName != null) {
-                        throw new MultipleTypesException("attribute", attributeName.getQualifiedName());
+                        throw new MultipleTypesException("attribute", attributeName.getFullyQualifiedName());
                     } else {
                         SimpleTypeProcessor simpleTypeProcessor = new SimpleTypeProcessor(schema);
                         simpleTypeName = simpleTypeProcessor.processNode(childNode);

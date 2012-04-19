@@ -18,6 +18,6 @@ public class ExclusiveContentException extends eu.fox7.schematoolkit.xsd.parser.
      * @param qualifiedName                Name of calling object. 
      */
     public ExclusiveContentException(String exclusiveAttributes, QualifiedName qualifiedName) {
-        super("Following attributes and/or content objects  exclude each other: " + exclusiveAttributes + " in object " + qualifiedName.getQualifiedName());
+        super("Following attributes and/or content objects  exclude each other: " + exclusiveAttributes + " in object " + qualifiedName.getFullyQualifiedName());
     }
 }

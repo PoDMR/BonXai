@@ -632,5 +632,13 @@ public class XSDSchema implements Schema {
 		return SchemaLanguage.XMLSCHEMA;
 	}
 
+	public void setNamespaceList(NamespaceList namespaceList) {
+		this.namespaceList = namespaceList;
+	}
+
+	public String getQualifiedName(QualifiedName name) {
+		return namespaceList.getQualifiedName(name);
+	}
+
 }
 

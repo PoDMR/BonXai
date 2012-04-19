@@ -14,6 +14,6 @@ public class InvalidFinalLocationException extends eu.fox7.schematoolkit.xsd.par
 	private static final long serialVersionUID = 1L;
 
 	public InvalidFinalLocationException(QualifiedName qualifiedName) {
-        super(qualifiedName.getQualifiedName() + "has a final-attribute and is not global");
+        super(qualifiedName.getFullyQualifiedName() + "has a final-attribute and is not global");
     }
 }

@@ -33,11 +33,7 @@ public class XSDSchemaHandler extends SchemaHandler {
 	@Override
 	public void writeSchema(Writer writer) throws IOException, SchemaToolkitException {
 		XSDWriter xsdWriter = new XSDWriter((XSDSchema) schema);
-		try {
-			xsdWriter.writeXSD(writer);
-		} catch (Exception e) {
-			throw new SchemaToolkitException(e);
-		}
+		xsdWriter.writeXSD(writer);
 	}
 
 }

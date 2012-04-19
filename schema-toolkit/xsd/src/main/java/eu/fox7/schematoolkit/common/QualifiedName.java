@@ -42,7 +42,7 @@ public class QualifiedName {
 		return true;
 	}
 
-	private Namespace namespace;
+	private String namespace;
 	private String name;
 	private boolean isAttribute;
 
@@ -51,34 +51,39 @@ public class QualifiedName {
 	}
 
 	public QualifiedName(Namespace namespace, String name, boolean isAttribute) {
-		this.namespace = namespace;
-		this.name = name;
-		this.isAttribute = isAttribute;
 		if (namespace == null)
 			throw new RuntimeException("Namespace is NULL");
+		this.namespace = namespace.getUri();
+		this.name = name;
+		this.isAttribute = isAttribute;
 	}
 
-	public Namespace getNamespace() {
-		return namespace;
+//	public Namespace getNamespace() {
+//		return namespace;
+//	}
+
+	public QualifiedName(String namespaceURI, String name) {
+		this.namespace = namespaceURI;
+		this.name = name;
 	}
 
 	public String getName() {
 		return name;
 	}
 	
-	public String getQualifiedName() {
-		if (isAttribute)
-			return this.namespace.getPrefix()+"@"+this.name;
-		else	
-			return this.namespace.getPrefix()+this.name;
-	}
+//	public String getQualifiedName() {
+//		if (isAttribute)
+//			return this.namespace.getPrefix()+"@"+this.name;
+//		else	
+//			return this.namespace.getPrefix()+this.name;
+//	}
 
 	public boolean isAttribute() {
 		return isAttribute;
 	}
 
 	public String getFullyQualifiedName() {
-		return "{"+this.getNamespace().getUri()+"}"+this.name;
+		return "{"+this.namespace+"}"+this.name;
 	}
 	
 	public static String getLocalNameFromFQN(String fullyQualifiedName) {
@@ -91,12 +96,18 @@ public class QualifiedName {
 		return fullyQualifiedName.substring(1,pos);
 	}
 	
-	public static QualifiedName getQualifiedNameFromFQN(String fullyQualifiedName, NamespaceList namespaceList) {
-		Namespace namespace = namespaceList.getNamespaceByUri(getNamespaceFromFQN(fullyQualifiedName));
+	public static QualifiedName getQualifiedNameFromFQN(String fullyQualifiedName) {
+		String namespace = getNamespaceFromFQN(fullyQualifiedName);
 		String localName = getLocalNameFromFQN(fullyQualifiedName);
-		if (namespace!=null && localName!=null && !localName.equals(""))
-			return new QualifiedName(namespace, localName);
-		else
-			return null;
+		return new QualifiedName(namespace, localName);
+	}
+
+	public String getNamespaceURI() {
+		return namespace;
+	}
+	
+	@Override
+	public String toString() {
+		return getFullyQualifiedName();
 	}
 }

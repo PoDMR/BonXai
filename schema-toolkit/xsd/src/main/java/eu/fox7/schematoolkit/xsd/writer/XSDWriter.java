@@ -24,6 +24,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.*;
 
+import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.xsd.om.*;
 
@@ -69,7 +70,7 @@ public class XSDWriter {
      * @return
      * @throws Exception
      */
-    public void writeXSD(Writer writer) throws Exception {
+    public void writeXSD(Writer writer) throws SchemaToolkitException {
     	System.setProperty("javax.xml.transform.TransformerFactory","com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
     	TransformerFactory transformerFactory;
     	Transformer transformer;
@@ -84,14 +85,22 @@ public class XSDWriter {
     		System.err.println("Indentation failed to set. transformerFactory used: "+transformerFactory.getClass() + System.getProperty("javax.xml.transform.TransformerFactory"));
     	}
 
-    	transformer = transformerFactory.newTransformer();
-    	source = new DOMSource(xmldoc);
-    	StreamResult result = new StreamResult(writer);
-    	transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-    	transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-    	transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
-    	transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-    	transformer.transform(source, result);
+    	try {
+			transformer = transformerFactory.newTransformer();
+			source = new DOMSource(xmldoc);
+			StreamResult result = new StreamResult(writer);
+			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
+			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+			transformer.transform(source, result);
+		} catch (TransformerConfigurationException e) {
+            throw new SchemaToolkitException(e);
+		} catch (IllegalArgumentException e) {
+            throw new SchemaToolkitException(e);
+		} catch (TransformerException e) {
+            throw new SchemaToolkitException(e);
+		}
     }
 
 
@@ -101,7 +110,7 @@ public class XSDWriter {
      *
      * @throws Exception
      */
-    protected void createXSD() throws Exception {
+    protected void createXSD() throws SchemaToolkitException {
         DocumentBuilder db;
         DocumentBuilderFactory dbf;
         dbf = DocumentBuilderFactory.newInstance();
@@ -117,7 +126,7 @@ public class XSDWriter {
             writeGroups(root, schema.getGroups());
             writeElements(root, schema.getElements());
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            throw new SchemaToolkitException(e);
         }
     }
 
@@ -169,13 +178,9 @@ public class XSDWriter {
      * @param foundElements
      */
     protected void writeTypes(Node root, Collection<Type> types) {
-        for (Type t : types) {
-
-            // Fixed so that all global Types are written
-            //if (foundElements.containsType(t) == false) {
+        for (Type t : types)
+        	if (!t.isAnonymous())
                 TypeWriter.writeType(root, t, schema, true);
-            //}
-        }
     }
 
     /**

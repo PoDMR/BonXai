@@ -17,6 +17,6 @@ public class DuplicateAttributeException extends eu.fox7.schematoolkit.xsd.parse
      * @param name       Name of the calling element.
      */
     public DuplicateAttributeException(QualifiedName name) {
-        super("Following duplicate attribute name was found in the XSD: " + name.getQualifiedName());
+        super("Following duplicate attribute name was found in the XSD: " + name.getFullyQualifiedName());
     }
 }

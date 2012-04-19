@@ -209,7 +209,7 @@ public class ElementProcessor extends Processor {
                     throw new InvalidQNameException(((Attr) attributes.getNamedItem("type")).getValue(), "type");
                 }
                 if (element.getTypeName() != null) {
-                    throw new MultipleTypesException("element", element.getName().getQualifiedName());
+                    throw new MultipleTypesException("element", element.getName().getFullyQualifiedName());
                 }
                 QualifiedName typeName = getName(((Attr) attributes.getNamedItem("type")).getValue());
                 element.setTypeName(typeName);
@@ -283,7 +283,7 @@ public class ElementProcessor extends Processor {
                         System.out.println("complexType");
                     }
                     if (element.getTypeName() != null) {
-                        throw new MultipleTypesException("element", element.getName().getQualifiedName());
+                        throw new MultipleTypesException("element", element.getName().getFullyQualifiedName());
                     } else {
                         ComplexTypeProcessor complexTypeProcessor = new ComplexTypeProcessor(schema);
                         element.setTypeName(complexTypeProcessor.processNode(childNode));
@@ -294,7 +294,7 @@ public class ElementProcessor extends Processor {
                         System.out.println("simpleType");
                     }
                     if (element.getTypeName() != null) {
-                        throw new MultipleTypesException("element", element.getName().getQualifiedName());
+                        throw new MultipleTypesException("element", element.getName().getFullyQualifiedName());
                     } else {
                         SimpleTypeProcessor simpleTypeProcessor = new SimpleTypeProcessor(schema);
                         element.setTypeName(simpleTypeProcessor.processNode(childNode));

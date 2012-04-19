@@ -17,6 +17,6 @@ public class DuplicateElementException extends eu.fox7.schematoolkit.xsd.parser.
      * @param name       Name of the calling element.
      */
     public DuplicateElementException(QualifiedName name) {
-        super("Following duplicate element name was found in the XSD: " + name.getQualifiedName());
+        super("Following duplicate element name was found in the XSD: " + name.getFullyQualifiedName());
     }
 }

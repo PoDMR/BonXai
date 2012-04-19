@@ -56,7 +56,7 @@ public class AttributeGroupProcessor extends Processor {
         NamedNodeMap attributes = node.getAttributes();
 
         if (attributes != null && attributes.getNamedItem("ref") != null) {
-        	throw new XSDParseException("AttributeGroup has a reference: " + attributeGroupName.getQualifiedName());
+        	throw new XSDParseException("AttributeGroup has a reference: " + attributeGroupName.getFullyQualifiedName());
         }
 
         // The following part sets the ID of a group.
@@ -95,7 +95,7 @@ public class AttributeGroupProcessor extends Processor {
                     // An AnyAttribute is only allowed to be the last element in an attributeGroup.
                     // If an attribute is found after an anyAttribute, this is a failure.
                     if (!attributeGroup.getAttributeParticles().isEmpty() && attributeGroup.getAttributeParticles().getLast() instanceof AnyAttribute) {
-                        throw new AnyAttributeIsNotLastException(attributeGroup.getName().getQualifiedName());
+                        throw new AnyAttributeIsNotLastException(attributeGroup.getName().getFullyQualifiedName());
                     }
                     AttributeProcessor attributeProcessor = new AttributeProcessor(schema);
                     attributeGroup.addAttributeParticle(attributeProcessor.processNode(childNode));
@@ -107,7 +107,7 @@ public class AttributeGroupProcessor extends Processor {
                     // An AnyAttribute is only allowed to be the last element in an attributeGroup.
                     // If a second anyAttribute is found after an anyAttribute, this is a failure.
                     if (!attributeGroup.getAttributeParticles().isEmpty() && attributeGroup.getAttributeParticles().getLast() instanceof AnyAttribute) {
-                        throw new AnyAttributeIsNotLastException(attributeGroup.getName().getQualifiedName());
+                        throw new AnyAttributeIsNotLastException(attributeGroup.getName().getFullyQualifiedName());
                     }
                     AnyAttributeProcessor anyAttributeProcessor = new AnyAttributeProcessor(schema);
                     attributeGroup.addAttributeParticle(anyAttributeProcessor.processNode(childNode));
@@ -119,7 +119,7 @@ public class AttributeGroupProcessor extends Processor {
                     // An AnyAttribute is only allowed to be the last element in an attributeGroup.
                     // If an attributeGroup is found after an anyAttribute, this is a failure.
                     if (!attributeGroup.getAttributeParticles().isEmpty() && attributeGroup.getAttributeParticles().getLast() instanceof AnyAttribute) {
-                        throw new AnyAttributeIsNotLastException(attributeGroup.getName().getQualifiedName());
+                        throw new AnyAttributeIsNotLastException(attributeGroup.getName().getFullyQualifiedName());
                     }
                     AttributeGroupReferenceProcessor attributeGroupReferenceProcessor = new AttributeGroupReferenceProcessor(schema);
                     attributeGroup.addAttributeParticle(attributeGroupReferenceProcessor.processNode(childNode));

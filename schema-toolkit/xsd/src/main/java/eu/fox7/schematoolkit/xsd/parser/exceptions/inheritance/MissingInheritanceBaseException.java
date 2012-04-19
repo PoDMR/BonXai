@@ -13,6 +13,6 @@ public class MissingInheritanceBaseException extends eu.fox7.schematoolkit.xsd.p
 	private static final long serialVersionUID = 1L;
 
 	public MissingInheritanceBaseException(QualifiedName name) {
-        super("There is no base-property in the following inheritance:" + name.getQualifiedName());
+        super("There is no base-property in the following inheritance:" + name.getFullyQualifiedName());
     }
 }

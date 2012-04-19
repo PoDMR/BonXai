@@ -102,7 +102,7 @@ public abstract class AttributeWriter {
             }
 
             if (sType == null || !sType.isAnonymous() || (sType.getInheritance() == null && sType.getFinalModifiers() == null)) {
-                attrNode.setAttribute("type", typeName.getQualifiedName());
+                attrNode.setAttribute("type", schema.getQualifiedName(typeName));
             } else {
                 TypeWriter.writeSimpleType(attrNode, sType, schema, false);
             }
@@ -243,7 +243,7 @@ public abstract class AttributeWriter {
             }
         }
 
-        attrNode.setAttribute("ref", attr.getAttributeName().getQualifiedName());
+        attrNode.setAttribute("ref", schema.getQualifiedName(attr.getAttributeName()));
 
         root.appendChild(attrNode);
     }
@@ -263,7 +263,7 @@ public abstract class AttributeWriter {
                 "http://www.w3.org/2001/XMLSchema", "attributeGroup");
         DOMHelper.setXSDPrefix(attrNode, schema);
         AnnotationWriter.writeAnnotation(attrNode, attrGroup, schema);
-        attrNode.setAttribute("ref", attrGroup.getName().getQualifiedName());
+        attrNode.setAttribute("ref", schema.getQualifiedName(attrGroup.getName()));
 
 
         if (attrGroup.getId() != null) {

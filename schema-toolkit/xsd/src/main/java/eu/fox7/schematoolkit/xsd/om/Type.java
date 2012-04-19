@@ -36,10 +36,7 @@ public abstract class Type extends AnnotationElement {
     protected QualifiedName name;
 
     /**
-     * Constructor with namespace and name passed in one string .
-     *
-     * This constructor should ONLY be used with fully qualified names in the
-     * form "{namespace}name".
+     * Constructor with typename passed as QualifiedName.
      * @param name
      */
     public Type(QualifiedName name) {
@@ -94,6 +91,6 @@ public abstract class Type extends AnnotationElement {
     
     @Override
     public String toString() {
-        return this.name.toString();
+        return "" + this.name;
     }
 }

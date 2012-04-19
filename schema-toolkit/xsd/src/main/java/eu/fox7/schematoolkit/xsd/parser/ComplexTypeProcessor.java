@@ -24,6 +24,8 @@ public class ComplexTypeProcessor extends Processor {
     private Annotation annotation;
     // True if an anyAttribute was already in the content
     private boolean alreadyAnAttributeAdded = false;
+    
+    private boolean mixed = false;
 
     /**
      * This is the constructor of the class ComplexTypeProcessor.
@@ -72,7 +74,7 @@ public class ComplexTypeProcessor extends Processor {
 
         // Handle the "mixed"-property
         if (node.getAttributes().getNamedItem("mixed") != null && node.getAttributes().getNamedItem("mixed").getNodeValue().equals("true")) {
-            this.complexType.setMixed(true);
+            this.mixed = true;
         } else if (node.getAttributes().getNamedItem("mixed") != null && !node.getAttributes().getNamedItem("mixed").getNodeValue().equals("false")) {
             // There are only the boolean values "false" and "true" allowed for the mixed-property
             throw new InvalidMixedValueException(this.complexType);
@@ -212,13 +214,13 @@ public class ComplexTypeProcessor extends Processor {
                     }
                     // Attributes have to be the last elements in the content model
                     if (alreadyAnAttributeAdded) {
-                        throw new AttributeIsNotLastInContentModelException(this.complexType.getName().getQualifiedName());
+                        throw new AttributeIsNotLastInContentModelException(this.complexType.getName().getFullyQualifiedName());
                     }
                     GroupProcessor groupProcessor = new GroupProcessor(schema);
                     Object object = groupProcessor.processNode(childNode);
                     if (object instanceof Particle) {
                         particle = (Particle) object;
-                        complexTypeContent = new ComplexContentType(particle, this.complexType.getMixed());
+                        complexTypeContent = new ComplexContentType(particle, this.mixed);
                         // The content can only be set once for a complexType!
                         if (this.complexType.getContent() != null) {
                             throw new ComplexTypeMultipleContentException(this.complexType.getName());
@@ -235,7 +237,7 @@ public class ComplexTypeProcessor extends Processor {
                     }
                     // Attributes have to be the last elements in the content model
                     if (alreadyAnAttributeAdded) {
-                        throw new AttributeIsNotLastInContentModelException(this.complexType.getName().getQualifiedName());
+                        throw new AttributeIsNotLastInContentModelException(this.complexType.getName().getFullyQualifiedName());
                     }
                     // The content can only be set once for a complexType!
                     if (this.complexType.getContent() != null) {
@@ -243,7 +245,7 @@ public class ComplexTypeProcessor extends Processor {
                     }
                     AllProcessor allProcessor = new AllProcessor(schema);
                     particle = allProcessor.processNode(childNode);
-                    complexTypeContent = new ComplexContentType(particle, this.complexType.getMixed());
+                    complexTypeContent = new ComplexContentType(particle, this.mixed);
                     this.complexType.setContent(complexTypeContent);
                     break;
                 case CHOICE:
@@ -252,7 +254,7 @@ public class ComplexTypeProcessor extends Processor {
                     }
                     // Attributes have to be the last elements in the content model
                     if (alreadyAnAttributeAdded) {
-                        throw new AttributeIsNotLastInContentModelException(this.complexType.getName().getQualifiedName());
+                        throw new AttributeIsNotLastInContentModelException(this.complexType.getName().getFullyQualifiedName());
                     }
                     // The content can only be set once for a complexType!
                     if (this.complexType.getContent() != null) {
@@ -260,7 +262,7 @@ public class ComplexTypeProcessor extends Processor {
                     }
                     ChoiceProcessor choiceProcessor = new ChoiceProcessor(schema);
                     particle = choiceProcessor.processNode(childNode);
-                    complexTypeContent = new ComplexContentType(particle, this.complexType.getMixed());
+                    complexTypeContent = new ComplexContentType(particle, this.mixed);
                     this.complexType.setContent(complexTypeContent);
                     break;
                 case SEQUENCE:
@@ -269,7 +271,7 @@ public class ComplexTypeProcessor extends Processor {
                     }
                     // Attributes have to be the last elements in the content model
                     if (alreadyAnAttributeAdded) {
-                        throw new AttributeIsNotLastInContentModelException(this.complexType.getName().getQualifiedName());
+                        throw new AttributeIsNotLastInContentModelException(this.complexType.getName().getFullyQualifiedName());
                     }
                     // The content can only be set once for a complexType!
                     if (this.complexType.getContent() != null) {
@@ -277,7 +279,7 @@ public class ComplexTypeProcessor extends Processor {
                     }
                     SequenceProcessor sequenceProcessor = new SequenceProcessor(schema);
                     particle = sequenceProcessor.processNode(childNode);
-                    complexTypeContent = new ComplexContentType(particle, this.complexType.getMixed());
+                    complexTypeContent = new ComplexContentType(particle, this.mixed);
                     this.complexType.setContent(complexTypeContent);
                     break;
                 case ATTRIBUTE:
@@ -287,7 +289,7 @@ public class ComplexTypeProcessor extends Processor {
                     // An AnyAttribute is only allowed to be the last element in an attributeGroup.
                     // If a second anyAttribute is found after an anyAttribute, this is a failure.
                     if (!complexType.getAttributes().isEmpty() && complexType.getAttributes().getLast() instanceof AnyAttribute) {
-                        throw new AnyAttributeIsNotLastException(complexType.getName().getQualifiedName());
+                        throw new AnyAttributeIsNotLastException(complexType.getName().getFullyQualifiedName());
                     }
                     AttributeProcessor attributeProcessor = new AttributeProcessor(schema);
                     attributeParticle = attributeProcessor.processNode(childNode);
@@ -301,7 +303,7 @@ public class ComplexTypeProcessor extends Processor {
                     // An AnyAttribute is only allowed to be the last element in an attributeGroup.
                     // If a second anyAttribute is found after an anyAttribute, this is a failure.
                     if (!complexType.getAttributes().isEmpty() && complexType.getAttributes().getLast() instanceof AnyAttribute) {
-                        throw new AnyAttributeIsNotLastException(complexType.getName().getQualifiedName());
+                        throw new AnyAttributeIsNotLastException(complexType.getName().getFullyQualifiedName());
                     }
                     AttributeGroupReferenceProcessor attributeGroupReferenceProcessor = new AttributeGroupReferenceProcessor(schema);
                     attributeParticle = attributeGroupReferenceProcessor.processNode(childNode);
@@ -315,7 +317,7 @@ public class ComplexTypeProcessor extends Processor {
                     // An AnyAttribute is only allowed to be the last element in an attributeGroup.
                     // If a second anyAttribute is found after an anyAttribute, this is a failure.
                     if (!complexType.getAttributes().isEmpty() && complexType.getAttributes().getLast() instanceof AnyAttribute) {
-                        throw new AnyAttributeIsNotLastException(complexType.getName().getQualifiedName());
+                        throw new AnyAttributeIsNotLastException(complexType.getName().getFullyQualifiedName());
                     }
                     AnyAttributeProcessor anyAttributeProcessor = new AnyAttributeProcessor(schema);
                     AnyAttribute anyAttribute = anyAttributeProcessor.processNode(childNode);

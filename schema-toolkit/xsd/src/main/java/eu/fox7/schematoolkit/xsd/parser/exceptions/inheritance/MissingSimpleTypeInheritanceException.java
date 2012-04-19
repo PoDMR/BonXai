@@ -14,7 +14,7 @@ public class MissingSimpleTypeInheritanceException extends eu.fox7.schematoolkit
 	private static final long serialVersionUID = 1L;
 
 	public MissingSimpleTypeInheritanceException(QualifiedName name) {
-        super("Following SimpleType has no inheritance: " + name.getQualifiedName());
+        super("Following SimpleType has no inheritance: " + name.getFullyQualifiedName());
     }
 
 }

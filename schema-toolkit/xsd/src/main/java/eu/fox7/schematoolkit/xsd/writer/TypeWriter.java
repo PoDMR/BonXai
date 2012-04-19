@@ -43,7 +43,7 @@ public abstract class TypeWriter {
 //        if (foundElements.containsType(baseType) && root.getNodeName().contains("element")) {
         if (!type.isAnonymous() && root.getNodeName().contains("element")) {
             rootNode = (org.w3c.dom.Element) root;
-            rootNode.setAttribute("type", type.getName().getQualifiedName());
+            rootNode.setAttribute("type", schema.getQualifiedName(type.getName()));
         } else if (type instanceof SimpleType) {
             TypeWriter.writeSimpleType(root, (SimpleType) type, schema, writeName);
         } else if (type instanceof ComplexType) {
@@ -101,7 +101,7 @@ public abstract class TypeWriter {
         }
 
         if (writeName) {
-            sTypeNode.setAttribute("name", type.getName().getQualifiedName());
+            sTypeNode.setAttribute("name", schema.getQualifiedName(type.getName()));
         }
         if (type.getId() != null) {
             sTypeNode.setAttribute("id", type.getId());
@@ -136,7 +136,7 @@ public abstract class TypeWriter {
         cTypeNode = root.getOwnerDocument().createElementNS("http://www.w3.org/2001/XMLSchema", "complexType");
         DOMHelper.setXSDPrefix(cTypeNode, schema);
         if (writeName) {
-            cTypeNode.setAttribute("name", type.getName().getQualifiedName());
+            cTypeNode.setAttribute("name", schema.getQualifiedName(type.getName()));
         }
         AnnotationWriter.writeAnnotation(cTypeNode, type, schema);
         root.appendChild(cTypeNode);
@@ -236,7 +236,7 @@ public abstract class TypeWriter {
         if (simpleType.isAnonymous()) {
             writeSimpleType(listElement, simpleType, schema, false);
         } else {
-            listElement.setAttribute("itemType", simpleType.getName().getQualifiedName());
+            listElement.setAttribute("itemType", schema.getQualifiedName(simpleType.getName()));
         }
         if (contentlist.getId() != null) {
             listElement.setAttribute("id", contentlist.getId());
@@ -280,7 +280,7 @@ public abstract class TypeWriter {
         			memberTypesString.append(' ');
         		}
         		first = false;
-        		memberTypesString.append(typeName.getQualifiedName());
+        		memberTypesString.append(schema.getQualifiedName(typeName));
         	}
         }
 
@@ -321,7 +321,7 @@ public abstract class TypeWriter {
         if (baseType.isAnonymous()) {
             writeSimpleType(restrElement, (SimpleType) baseType, schema, false);
         } else {
-            restrElement.setAttribute("base", baseTypeName.getQualifiedName());
+            restrElement.setAttribute("base", schema.getQualifiedName(baseTypeName));
         }
 
         if (contentRestrict.getId() != null) {
@@ -575,7 +575,7 @@ public abstract class TypeWriter {
         AnnotationWriter.writeAnnotation(childNode, cCont, schema);
         QualifiedName baseType = cCont.getInheritance().getBaseType();
         if (baseType != null) {
-            childNode.setAttribute("base", baseType.getQualifiedName());
+            childNode.setAttribute("base", schema.getQualifiedName(baseType));
         }
         if (cCont.getInheritance().getId() != null) {
             childNode.setAttribute("id", cCont.getInheritance().getId());
@@ -643,7 +643,7 @@ public abstract class TypeWriter {
         org.w3c.dom.Element extNode;
         extNode = contNode.getOwnerDocument().createElementNS("http://www.w3.org/2001/XMLSchema", "extension");
         DOMHelper.setXSDPrefix(extNode, schema);
-        extNode.setAttribute("base", ext.getBaseType().getQualifiedName());
+        extNode.setAttribute("base", schema.getQualifiedName(ext.getBaseType()));
         if (ext.getId() != null) {
             extNode.setAttribute("id", ext.getId());
         }

@@ -13,6 +13,6 @@ public class ComplexTypeAnyAttributeException extends eu.fox7.schematoolkit.xsd.
 	private static final long serialVersionUID = 1L;
 
 	public ComplexTypeAnyAttributeException(QualifiedName name) {
-        super("There are additional Attributes to an AnyAttribute in a ComplexType:" + name.getQualifiedName());
+        super("There are additional Attributes to an AnyAttribute in a ComplexType:" + name.getFullyQualifiedName());
     }
 }
