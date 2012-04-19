@@ -134,7 +134,7 @@ class ParticleProcessor {
      * references.
      */
     public Particle convertElementRef(ElementRef elementRef) {
-    	if (elementRef.getElementName().getNamespace().equals(schema.getDefaultNamespace())) {
+    	if (elementRef.getElementName().getNamespaceURI().equals(schema.getDefaultNamespace().getUri())) {
     		eu.fox7.schematoolkit.xsd.om.Element element = schema.getElement(elementRef.getElementName());
         	return convertElement(element);
     	} else {

@@ -14,6 +14,7 @@ import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
 import eu.fox7.schematoolkit.common.CountingPattern;
+import eu.fox7.schematoolkit.common.EmptyPattern;
 import eu.fox7.schematoolkit.common.GroupReference;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.ParticleContainer;
@@ -116,8 +117,10 @@ public class XSDTypeAutomatonFactory {
 			GroupReference groupReference = (GroupReference) particle;
 			Group group = schema.getGroup(groupReference);
 			childs.addAll(getChilds(group.getParticle()));
+		} else if (particle instanceof EmptyPattern) {
+			// intentionally left blank
 		} else
-			throw new RuntimeException("Unkown Particle of class " + particle.getClass());
+			throw new RuntimeException("Unkown Particle of class " + particle.getClass().getCanonicalName());
 		return childs;
 	}
 

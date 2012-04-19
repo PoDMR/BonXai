@@ -67,7 +67,7 @@ class AttributeProcessor {
         BonxaiType bonxaiType;
         
         if(xsdAttribute.getSimpleTypeName() == null){
-            bonxaiType = new BonxaiType(new QualifiedName(xsdAttribute.getName().getNamespace(), "anyType"));
+            bonxaiType = new BonxaiType(new QualifiedName(xsdAttribute.getName().getNamespaceURI(), "anyType"));
         }else{
             bonxaiType = new BonxaiType(xsdAttribute.getSimpleTypeName());
             bonxaiType.setDefaultValue(xsdAttribute.getDefault());
@@ -89,7 +89,7 @@ class AttributeProcessor {
      */
     public AttributeParticle convertAttributeRef(eu.fox7.schematoolkit.xsd.om.AttributeRef xsdAttributeRef) {
         AttributeParticle particle;
-    	if (this.schema.getDefaultNamespace().equals(xsdAttributeRef.getAttributeName().getNamespace())) {
+    	if (this.schema.getDefaultNamespace().getUri().equals(xsdAttributeRef.getAttributeName().getNamespaceURI())) {
         	eu.fox7.schematoolkit.xsd.om.Attribute xsdAttribute = schema.getAttribute(xsdAttributeRef.getAttributeName());
     		BonxaiType type = new BonxaiType(xsdAttribute.getSimpleTypeName());
         	Attribute bonxaiAttribute = new Attribute(xsdAttribute.getName(), type);
