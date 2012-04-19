@@ -1,7 +1,6 @@
 package eu.fox7.upafixer.impl;
 
 import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
-import eu.fox7.schematoolkit.common.NamespaceList;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.typeautomaton.factories.XSDTypeAutomatonFactory;
 import eu.fox7.schematoolkit.xsd.om.Type;
@@ -11,19 +10,20 @@ import eu.fox7.flt.regex.Regex;
 import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
 import eu.fox7.treeautomata.converter.ContentAutomaton2TypeConverter;
 import eu.fox7.treeautomata.converter.Type2ContentAutomatonConverter;
+import eu.fox7.upafixer.UPAFixer;
 import eu.fox7.schematoolkit.Schema;
 import eu.fox7.schematoolkit.SchemaToolkitException;
-import eu.fox7.schematoolkit.UPAFixer;
 
 public abstract class AbstractUPAFixer implements UPAFixer {
 	protected TypeAutomaton typeAutomaton;
 	protected Type2ContentAutomatonConverter typeConverter;
 	protected ContentAutomaton2TypeConverter caConverter;
 	
-	public void fixUPA(TypeAutomaton typeAutomaton, NamespaceList namespaceList) {
+	@Override
+	public void fixUPA(TypeAutomaton typeAutomaton) {
 		this.typeAutomaton = typeAutomaton;
 		this.typeConverter = new Type2ContentAutomatonConverter();
-		this.caConverter = new ContentAutomaton2TypeConverter(typeAutomaton, namespaceList);
+		this.caConverter = new ContentAutomaton2TypeConverter(typeAutomaton);
 		
 		for (State state: typeAutomaton.getStates()) {
 			if (! typeAutomaton.isInitialState(state)) {
@@ -52,7 +52,7 @@ public abstract class AbstractUPAFixer implements UPAFixer {
 		}
 		XSDTypeAutomatonFactory taFactory = new XSDTypeAutomatonFactory(true);
 		TypeAutomaton typeAutomaton = taFactory.createTypeAutomaton(xsdSchema);
-		this.fixUPA(typeAutomaton, xsdSchema.getNamespaceList());
+		this.fixUPA(typeAutomaton);
 		for (State state: typeAutomaton.getStates()) {
 			if (! typeAutomaton.isInitialState(state)) {
 				Type type = typeAutomaton.getType(state);

@@ -6,8 +6,7 @@ import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 import eu.fox7.flt.regex.Regex;
 import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
 
-public interface UPAFixer {
-	public void fixUPA(XSDSchema xsdSchema);
+public interface UPAFixer extends eu.fox7.schematoolkit.UPAFixer {
 	public Regex fixUPA(ContentAutomaton contentAutomaton);
-	public void fixUPA(TypeAutomaton typeAutomaton, NamespaceList namespaceList);
+	public void fixUPA(TypeAutomaton typeAutomaton);
 }
