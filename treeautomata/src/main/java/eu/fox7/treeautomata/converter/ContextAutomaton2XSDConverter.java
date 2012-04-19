@@ -22,7 +22,7 @@ public class ContextAutomaton2XSDConverter {
 
 		Collection<QualifiedName> rootElements = typeAutomaton.getRootElements();
 
-		DefaultNamespace targetNamespace = new DefaultNamespace(rootElements.iterator().next().getNamespace().getUri());
+		DefaultNamespace targetNamespace = new DefaultNamespace(rootElements.iterator().next().getNamespaceURI());
 		
 		xsdSchema.setDefaultNamespace(targetNamespace);
 		xsdSchema.setTargetNamespace(targetNamespace);

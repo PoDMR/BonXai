@@ -14,16 +14,19 @@ import eu.fox7.schematoolkit.xsd.om.Type;
 
 public class ContextAutomatonTypeAutomatonFactory {
 	private ContentAutomaton2TypeConverter caConverter;
-	private NamespaceList namespaceList;
 	
+	@Deprecated
 	public ContextAutomatonTypeAutomatonFactory(NamespaceList namespaceList) {
-		this.namespaceList = namespaceList;
 	}
+	
+	public ContextAutomatonTypeAutomatonFactory() {
+	}
+	
 	
 	public TypeAutomaton convertContextAutomaton(ContextAutomaton contextAutomaton) {
 		Map<State,State> stateMap = StateRemapper.stateRemapping(contextAutomaton);
 		TypeAutomaton typeAutomaton = new AnnotatedNFATypeAutomaton(contextAutomaton,stateMap);
-		this.caConverter = new ContentAutomaton2TypeConverter(typeAutomaton, namespaceList);
+		this.caConverter = new ContentAutomaton2TypeConverter(typeAutomaton);
 		
 		for (Entry<State,State> entry: stateMap.entrySet()) {
 			State origState = entry.getKey();
@@ -32,7 +35,7 @@ public class ContextAutomatonTypeAutomatonFactory {
 			if (! contextAutomaton.isInitialState(origState)) {
 				ContentAutomaton contentAutomaton = contextAutomaton.getContentAutomaton(origState);
 				
-				QualifiedName typename = namespaceList.getQualifiedName(contextAutomaton.getStateValue(origState));
+				QualifiedName typename = QualifiedName.getQualifiedNameFromFQN(contextAutomaton.getStateValue(origState));
 
 				Type type = this.caConverter.convertContentAutomaton(contentAutomaton, typename, newState);
 				typeAutomaton.setType(newState, type);
