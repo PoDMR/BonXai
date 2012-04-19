@@ -20,13 +20,23 @@ import java.util.Stack;
  */
 public class ProductDFAFactory {
 
+	public static SparseNFA union(StateDFA...dfas) throws NotDFAException {
+		SparseNFA dfa = new SparseNFA();
+		product(dfa, true, dfas);
+		return dfa;
+	}
+
 	public static SparseNFA product(StateDFA...dfas) throws NotDFAException {
 		SparseNFA dfa = new SparseNFA();
-		product(dfa, dfas);
+		product(dfa, false, dfas);
 		return dfa;
 	}
 
 	public static void product(ModifiableStateDFA target, StateDFA...dfas) throws NotDFAException {
+		product(target, false, dfas);
+	}
+
+	public static void product(ModifiableStateDFA target, boolean computeUnion, StateDFA...dfas) throws NotDFAException {
 		ModifiableStateDFA productDFA = target;
 		List<String> initialStates = new ArrayList<String>();
 		for (StateDFA dfa: dfas) {
@@ -45,6 +55,18 @@ public class ProductDFAFactory {
 			String fromStateValues = fromStates.toString();
 //			System.err.println("Product: doing state "+fromStateValues);
 			done.add(fromStateValues);
+			if (computeUnion) {
+				boolean accepting = false;
+				for (int i = 0; i < dfas.length; i++) {
+					String stateValue = fromStates.get(i);
+					if (dfas[i].isFinalState(stateValue))
+						accepting = true;
+				}
+				
+				if (accepting)
+					productDFA.addFinalState(fromStateValues);
+			}
+			
 			for (Symbol symbol : symbols) {
 				List<State> toStateList = new ArrayList<State>();
 				List<String> toStateValues = new ArrayList<String>();

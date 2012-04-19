@@ -42,11 +42,13 @@ public class GNFAFactory {
 		GNFA gnfa = new GNFA();
 		gnfa.setRegex(gnfa.getInitialState(), gnfa.getFinalState(), factory.createEmpty());
 		Map<State,State> stateMap = new HashMap<State,State>();
-		stateMap.put(dfa.getInitialState(), gnfa.getInitialState());
-		if (!isGlushkov)
+		if (!isGlushkov) {
+			registerState(stateMap, dfa.getInitialState());
 			gnfa.setRegex(gnfa.getInitialState(),
 			              stateMap.get(dfa.getInitialState()),
 			              factory.createEpsilon());
+		} else
+			stateMap.put(dfa.getInitialState(), gnfa.getInitialState());
 		for (State finalState : dfa.getFinalStates()) {
 			registerState(stateMap, finalState);
 			gnfa.setRegex(stateMap.get(finalState), gnfa.getFinalState(),
