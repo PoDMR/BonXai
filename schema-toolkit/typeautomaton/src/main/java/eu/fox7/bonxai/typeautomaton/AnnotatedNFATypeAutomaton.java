@@ -2,15 +2,19 @@ package eu.fox7.bonxai.typeautomaton;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 
 import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
+import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.flt.automata.impl.sparse.Transition;
 import eu.fox7.schematoolkit.common.ElementProperties;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.Type;
+import eu.fox7.schematoolkit.xsd.om.TypeReference;
 
 public class AnnotatedNFATypeAutomaton extends
 		SparseNFA implements TypeAutomaton {
@@ -29,7 +33,11 @@ public class AnnotatedNFATypeAutomaton extends
 
 	@Override
 	public Type getType(State state) {
-		return types.get(typeNames.get(state));
+		QualifiedName typename = typeNames.get(state);
+		Type type = types.get(typename);
+		if ((type == null) && (typename != null))
+			type = new TypeReference(typename);
+		return type;
 	}
 
 	@Override
@@ -71,10 +79,17 @@ public class AnnotatedNFATypeAutomaton extends
 
 	@Override
 	public Collection<QualifiedName> getRootElements() {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<QualifiedName> elements = new HashSet<QualifiedName>();
+		for (Transition transition: this.getOutgoingTransitions(initialState))
+			elements.add(QualifiedName.getQualifiedNameFromFQN(transition.getSymbol().toString()));
+		return elements;
 	}
 	
-
-	
+	@Override
+	public Collection<Symbol> getRootSymbols() {
+		Collection<Symbol> symbols = new HashSet<Symbol>();
+		for (Transition transition: this.getOutgoingTransitions(initialState))
+			symbols.add(transition.getSymbol());
+		return symbols;
+	}
 }
