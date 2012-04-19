@@ -51,6 +51,7 @@ import eu.fox7.util.FormattedWriter;
 public class CompactSyntaxWriter {
 
 	private FormattedWriter writer;
+	private Bonxai schema;
 	
     /**
      * Write the schema
@@ -78,7 +79,8 @@ public class CompactSyntaxWriter {
      * @throws IOException 
      */
     protected void writeSchema(Bonxai schema) throws IOException {
-        writeDefaultNamespace(schema.getDefaultNamespace());
+    	this.schema = schema;
+    	writeDefaultNamespace(schema.getDefaultNamespace());
         writeIdentifiedNamespaces(schema.getNamespaces());
         writer.newLine();
 //TODO:        traverseImports(declaration.getImportList(), visitor);
@@ -534,7 +536,7 @@ public class CompactSyntaxWriter {
     }
 
     private void writeName(QualifiedName name) throws IOException {
-    	writer.append(name.getQualifiedName());
+    	writer.append(schema.getNAmespaceList().getQualifiedName(name));
 	}
 
 
