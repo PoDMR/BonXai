@@ -5,8 +5,8 @@ import eu.fox7.flt.regex.infer.rwr.RewriteEngine;
 import eu.fox7.flt.schema.infer.ixsd.ContextMap;
 import eu.fox7.flt.schema.infer.ixsd.XsdLearner;
 import eu.fox7.flt.treegrammar.XMLGrammar;
-import gjb.util.sampling.SampleException;
-import gjb.util.xml.acstring.ExampleParsingException;
+import eu.fox7.util.sampling.SampleException;
+import eu.fox7.util.xml.acstring.ExampleParsingException;
 
 import java.io.File;
 import java.io.IOException;

@@ -3,7 +3,7 @@ package uh.df.learning.evaluation;
 import eu.fox7.flt.grammar.SyntaxErrorException;
 import eu.fox7.flt.treegrammar.XMLElementNotDefinedException;
 import eu.fox7.flt.treegrammar.XMLGrammar;
-import gjb.util.Collections;
+import eu.fox7.util.Collections;
 
 import java.io.IOException;
 import java.util.HashSet;

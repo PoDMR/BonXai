@@ -3,8 +3,8 @@ package uh.df.tools;
 import eu.fox7.flt.grammar.SyntaxErrorException;
 import eu.fox7.flt.treegrammar.XMLElementNotDefinedException;
 import eu.fox7.flt.treegrammar.XMLGrammar;
-import gjb.util.xml.ConfigurationException;
-import gjb.util.xml.acstring.XMLtoAncestorChildrenConverter;
+import eu.fox7.util.xml.ConfigurationException;
+import eu.fox7.util.xml.acstring.XMLtoAncestorChildrenConverter;
 
 import java.io.IOException;
 import java.io.StringReader;

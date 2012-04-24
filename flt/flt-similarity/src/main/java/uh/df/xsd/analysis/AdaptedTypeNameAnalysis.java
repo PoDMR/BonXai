@@ -1,6 +1,6 @@
 package uh.df.xsd.analysis;
 
-import gjb.xml.xsdanalyser.TypeNameAnalysis;
+import eu.fox7.xml.xsdanalyser.TypeNameAnalysis;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.xsd.XSDSchema;

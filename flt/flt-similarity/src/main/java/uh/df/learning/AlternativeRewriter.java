@@ -20,8 +20,8 @@ import eu.fox7.flt.regex.infer.rwr.rewriters.OptionalFinder;
 import eu.fox7.flt.regex.infer.rwr.rewriters.OptionalRewriter;
 import eu.fox7.flt.regex.infer.rwr.rewriters.RepetitionFinder;
 import eu.fox7.flt.regex.infer.rwr.rewriters.RepetitionRewriter;
-import gjb.util.tree.SExpressionParseException;
-import gjb.util.tree.Tree;
+import eu.fox7.util.tree.SExpressionParseException;
+import eu.fox7.util.tree.Tree;
 
 /**
  * 

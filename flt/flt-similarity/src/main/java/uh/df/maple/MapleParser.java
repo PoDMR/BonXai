@@ -1,7 +1,7 @@
 package uh.df.maple;
 
-import gjb.util.tree.Node;
-import gjb.util.tree.Tree;
+import eu.fox7.util.tree.Node;
+import eu.fox7.util.tree.Tree;
 
 import java.util.ArrayList;
 import java.util.HashSet;

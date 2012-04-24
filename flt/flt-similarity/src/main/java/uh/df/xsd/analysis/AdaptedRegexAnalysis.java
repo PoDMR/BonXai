@@ -1,8 +1,8 @@
 package uh.df.xsd.analysis;
 
-import gjb.util.tree.Node;
-import gjb.util.tree.Tree;
-import gjb.xml.xsdanalyser.RegexAnalysis;
+import eu.fox7.util.tree.Node;
+import eu.fox7.util.tree.Tree;
+import eu.fox7.xml.xsdanalyser.RegexAnalysis;
 
 import java.util.HashSet;
 import java.util.Iterator;

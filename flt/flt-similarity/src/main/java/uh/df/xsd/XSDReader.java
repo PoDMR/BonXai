@@ -1,15 +1,15 @@
 package uh.df.xsd;
 
 import eu.fox7.flt.treegrammar.XMLGrammar;
-import gjb.util.tree.Node;
-import gjb.util.tree.NodeSerializer;
-import gjb.util.tree.SExpressionSerializer;
-import gjb.util.tree.Serializer;
-import gjb.util.tree.Tree;
-import gjb.xml.xsdanalyser.Analyser;
-import gjb.xml.xsdanalyser.RegexAnalysis;
-import gjb.xml.xsdanalyser.TypeAnalysis;
-import gjb.xml.xsdanalyser.TypeNameAnalysis;
+import eu.fox7.util.tree.Node;
+import eu.fox7.util.tree.NodeSerializer;
+import eu.fox7.util.tree.SExpressionSerializer;
+import eu.fox7.util.tree.Serializer;
+import eu.fox7.util.tree.Tree;
+import eu.fox7.xml.xsdanalyser.Analyser;
+import eu.fox7.xml.xsdanalyser.RegexAnalysis;
+import eu.fox7.xml.xsdanalyser.TypeAnalysis;
+import eu.fox7.xml.xsdanalyser.TypeNameAnalysis;
 
 import java.io.IOException;
 import java.io.StringReader;

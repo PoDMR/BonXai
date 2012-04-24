@@ -3,8 +3,8 @@ package uh.df.xsd;
 import eu.fox7.flt.treegrammar.XMLElementDefinition;
 import eu.fox7.flt.treegrammar.XMLElementNotDefinedException;
 import eu.fox7.flt.treegrammar.XMLGrammar;
-import gjb.util.tree.Node;
-import gjb.util.tree.Tree;
+import eu.fox7.util.tree.Node;
+import eu.fox7.util.tree.Tree;
 
 import java.io.IOException;
 import java.io.Writer;

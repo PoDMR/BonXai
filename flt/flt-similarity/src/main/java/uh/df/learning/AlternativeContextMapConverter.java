@@ -17,8 +17,8 @@ import eu.fox7.flt.treeautomata.impl.ContextAutomaton;
 import eu.fox7.flt.treegrammar.SyntaxException;
 import eu.fox7.flt.treegrammar.XMLAttributeDefinition;
 import eu.fox7.flt.treegrammar.XMLGrammar;
-import gjb.util.Pair;
-import gjb.util.Timer;
+import eu.fox7.util.Pair;
+import eu.fox7.util.Timer;
 
 import java.util.Iterator;
 import java.util.LinkedList;

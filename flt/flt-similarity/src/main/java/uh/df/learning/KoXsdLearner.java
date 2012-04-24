@@ -13,11 +13,11 @@ import eu.fox7.flt.treeautomata.factories.SupportContextAutomatonFactory;
 import eu.fox7.flt.treeautomata.impl.ContextAutomaton;
 import eu.fox7.flt.treegrammar.XMLGrammar;
 import eu.fox7.flt.treegrammar.io.GrammarWriter;
-import gjb.util.sampling.SampleException;
-import gjb.util.xml.acstring.AncestorChildrenDocumentIterator;
-import gjb.util.xml.acstring.AncestorChildrenExampleParser;
-import gjb.util.xml.acstring.ExampleParsingException;
-import gjb.util.xml.acstring.ParseResult;
+import eu.fox7.util.sampling.SampleException;
+import eu.fox7.util.xml.acstring.AncestorChildrenDocumentIterator;
+import eu.fox7.util.xml.acstring.AncestorChildrenExampleParser;
+import eu.fox7.util.xml.acstring.ExampleParsingException;
+import eu.fox7.util.xml.acstring.ParseResult;
 
 import java.io.BufferedReader;
 import java.io.File;

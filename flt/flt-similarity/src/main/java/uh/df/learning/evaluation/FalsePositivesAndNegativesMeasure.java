@@ -9,8 +9,8 @@ import eu.fox7.flt.regex.UnknownOperatorException;
 import eu.fox7.flt.treegrammar.XMLElementDefinition;
 import eu.fox7.flt.treegrammar.XMLElementNotDefinedException;
 import eu.fox7.flt.treegrammar.XMLGrammar;
-import gjb.util.tree.SExpressionParseException;
-import gjb.util.xml.acstring.AncestorChildrenExampleParser;
+import eu.fox7.util.tree.SExpressionParseException;
+import eu.fox7.util.xml.acstring.AncestorChildrenExampleParser;
 
 import java.io.BufferedReader;
 import java.io.File;
