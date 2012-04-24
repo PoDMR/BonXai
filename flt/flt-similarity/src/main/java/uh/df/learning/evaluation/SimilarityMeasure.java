@@ -1,8 +1,8 @@
 package uh.df.learning.evaluation;
 
-import gjb.flt.grammar.SyntaxErrorException;
-import gjb.flt.treegrammar.XMLElementNotDefinedException;
-import gjb.flt.treegrammar.XMLGrammar;
+import eu.fox7.flt.grammar.SyntaxErrorException;
+import eu.fox7.flt.treegrammar.XMLElementNotDefinedException;
+import eu.fox7.flt.treegrammar.XMLGrammar;
 import gjb.util.Collections;
 
 import java.io.IOException;

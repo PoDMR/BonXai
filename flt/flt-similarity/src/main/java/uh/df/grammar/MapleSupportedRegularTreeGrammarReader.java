@@ -1,12 +1,12 @@
 package uh.df.grammar;
 
-import gjb.flt.regex.generators.LanguageGenerator;
-import gjb.flt.treegrammar.SyntaxException;
-import gjb.flt.treegrammar.XMLAttributeDefinition;
-import gjb.flt.treegrammar.XMLElementDefinition;
-import gjb.flt.treegrammar.XMLGrammar;
-import gjb.flt.treegrammar.generators.XMLGenerator;
-import gjb.flt.treegrammar.io.RegularTreeGrammarReader;
+import eu.fox7.flt.regex.generators.LanguageGenerator;
+import eu.fox7.flt.treegrammar.SyntaxException;
+import eu.fox7.flt.treegrammar.XMLAttributeDefinition;
+import eu.fox7.flt.treegrammar.XMLElementDefinition;
+import eu.fox7.flt.treegrammar.XMLGrammar;
+import eu.fox7.flt.treegrammar.generators.XMLGenerator;
+import eu.fox7.flt.treegrammar.io.RegularTreeGrammarReader;
 
 import java.io.BufferedReader;
 import java.io.Reader;

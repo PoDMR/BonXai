@@ -1,6 +1,6 @@
 package uh.df.xsd;
 
-import gjb.flt.treegrammar.XMLGrammar;
+import eu.fox7.flt.treegrammar.XMLGrammar;
 import gjb.util.tree.Node;
 import gjb.util.tree.NodeSerializer;
 import gjb.util.tree.SExpressionSerializer;

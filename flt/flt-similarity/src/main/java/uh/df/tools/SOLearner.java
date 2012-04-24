@@ -1,10 +1,10 @@
 package uh.df.tools;
 
-import gjb.flt.regex.infer.rwr.NoOpportunityFoundException;
-import gjb.flt.regex.infer.rwr.RewriteEngine;
-import gjb.flt.schema.infer.ixsd.ContextMap;
-import gjb.flt.schema.infer.ixsd.XsdLearner;
-import gjb.flt.treegrammar.XMLGrammar;
+import eu.fox7.flt.regex.infer.rwr.NoOpportunityFoundException;
+import eu.fox7.flt.regex.infer.rwr.RewriteEngine;
+import eu.fox7.flt.schema.infer.ixsd.ContextMap;
+import eu.fox7.flt.schema.infer.ixsd.XsdLearner;
+import eu.fox7.flt.treegrammar.XMLGrammar;
 import gjb.util.sampling.SampleException;
 import gjb.util.xml.acstring.ExampleParsingException;
 

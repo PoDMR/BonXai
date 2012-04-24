@@ -1,10 +1,10 @@
 package uh.df.grammar;
 
-import gjb.flt.grammar.SyntaxErrorException;
-import gjb.flt.regex.Regex;
-import gjb.flt.treegrammar.XMLElementDefinition;
-import gjb.flt.treegrammar.XMLElementNotDefinedException;
-import gjb.flt.treegrammar.XMLGrammar;
+import eu.fox7.flt.grammar.SyntaxErrorException;
+import eu.fox7.flt.regex.Regex;
+import eu.fox7.flt.treegrammar.XMLElementDefinition;
+import eu.fox7.flt.treegrammar.XMLElementNotDefinedException;
+import eu.fox7.flt.treegrammar.XMLGrammar;
 import gjb.util.tree.Node;
 import gjb.util.tree.Tree;
 

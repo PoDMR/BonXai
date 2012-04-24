@@ -1,6 +1,6 @@
 package uh.df.grammar;
 
-import gjb.flt.treegrammar.XMLGrammar;
+import eu.fox7.flt.treegrammar.XMLGrammar;
 
 import java.util.HashSet;
 import java.util.Iterator;

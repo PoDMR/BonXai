@@ -1,8 +1,8 @@
 package uh.df.xsd;
 
-import gjb.flt.treegrammar.XMLElementDefinition;
-import gjb.flt.treegrammar.XMLElementNotDefinedException;
-import gjb.flt.treegrammar.XMLGrammar;
+import eu.fox7.flt.treegrammar.XMLElementDefinition;
+import eu.fox7.flt.treegrammar.XMLElementNotDefinedException;
+import eu.fox7.flt.treegrammar.XMLGrammar;
 import gjb.util.tree.Node;
 import gjb.util.tree.Tree;
 

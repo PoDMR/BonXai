@@ -1,14 +1,14 @@
 package uh.df.learning.evaluation;
 
-import gjb.flt.automata.factories.sparse.ProductNFAFactory;
-import gjb.flt.automata.factories.sparse.ThompsonBuilder;
-import gjb.flt.automata.factories.sparse.ThompsonFactory;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.measures.EmptynessTest;
-import gjb.flt.regex.UnknownOperatorException;
-import gjb.flt.treegrammar.XMLElementDefinition;
-import gjb.flt.treegrammar.XMLElementNotDefinedException;
-import gjb.flt.treegrammar.XMLGrammar;
+import eu.fox7.flt.automata.factories.sparse.ProductNFAFactory;
+import eu.fox7.flt.automata.factories.sparse.ThompsonBuilder;
+import eu.fox7.flt.automata.factories.sparse.ThompsonFactory;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.measures.EmptynessTest;
+import eu.fox7.flt.regex.UnknownOperatorException;
+import eu.fox7.flt.treegrammar.XMLElementDefinition;
+import eu.fox7.flt.treegrammar.XMLElementNotDefinedException;
+import eu.fox7.flt.treegrammar.XMLGrammar;
 import gjb.util.tree.SExpressionParseException;
 import gjb.util.xml.acstring.AncestorChildrenExampleParser;
 

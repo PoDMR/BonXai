@@ -1,8 +1,8 @@
 package uh.df.combspec;
 
-import gjb.flt.grammar.CFG;
-import gjb.flt.grammar.NonExistingNonTerminalException;
-import gjb.flt.grammar.SyntaxErrorException;
+import eu.fox7.flt.grammar.CFG;
+import eu.fox7.flt.grammar.NonExistingNonTerminalException;
+import eu.fox7.flt.grammar.SyntaxErrorException;
 
 import java.io.IOException;
 import java.io.Reader;

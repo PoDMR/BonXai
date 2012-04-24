@@ -1,14 +1,14 @@
 package uh.df.learning;
 
-import gjb.flt.automata.NoSuchTransitionException;
-import gjb.flt.automata.factories.sparse.AbstractIncrementalNFAFactory;
-import gjb.flt.automata.factories.sparse.Determinizer;
-import gjb.flt.automata.impl.sparse.SparseNFA;
-import gjb.flt.automata.impl.sparse.State;
-import gjb.flt.automata.impl.sparse.Symbol;
-import gjb.flt.automata.impl.sparse.Transition;
-import gjb.flt.treeautomata.factories.ContentAutomatonFactory;
-import gjb.flt.treeautomata.impl.ContentAutomaton;
+import eu.fox7.flt.automata.NoSuchTransitionException;
+import eu.fox7.flt.automata.factories.sparse.AbstractIncrementalNFAFactory;
+import eu.fox7.flt.automata.factories.sparse.Determinizer;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
+import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.flt.automata.impl.sparse.Transition;
+import eu.fox7.flt.treeautomata.factories.ContentAutomatonFactory;
+import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
 import gjb.util.hmm.Learner;
 import gjb.util.hmm.ObservationSequencesFactory;
 import gjb.util.hmm.Pomm;
