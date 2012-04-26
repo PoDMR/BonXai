@@ -18,7 +18,6 @@ package eu.fox7.schematoolkit.bonxai.om;
 
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.Vector;
 
 import eu.fox7.schematoolkit.common.AnyAttribute;
 import eu.fox7.schematoolkit.common.AttributeParticle;

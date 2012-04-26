@@ -18,7 +18,6 @@ package eu.fox7.schematoolkit.bonxai.om;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Class representing an expression/rule consisting of an annotation, ancestor-pattern and child-pattern
