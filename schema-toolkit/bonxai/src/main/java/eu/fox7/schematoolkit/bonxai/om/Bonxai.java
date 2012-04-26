@@ -183,7 +183,7 @@ public class Bonxai implements Schema {
 		this.namespaceList.addNamespace(namespace);
 	}
 	
-	public NamespaceList getNAmespaceList() {
+	public NamespaceList getNamespaceList() {
 		return this.namespaceList;
 	}
 

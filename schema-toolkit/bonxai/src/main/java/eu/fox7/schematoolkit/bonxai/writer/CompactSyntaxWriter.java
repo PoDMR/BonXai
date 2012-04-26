@@ -536,7 +536,7 @@ public class CompactSyntaxWriter {
     }
 
     private void writeName(QualifiedName name) throws IOException {
-    	writer.append(schema.getNAmespaceList().getQualifiedName(name));
+    	writer.append(schema.getNamespaceList().getQualifiedName(name));
 	}
 
 
