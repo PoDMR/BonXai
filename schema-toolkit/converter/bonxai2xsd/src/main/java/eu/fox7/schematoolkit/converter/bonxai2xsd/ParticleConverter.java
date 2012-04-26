@@ -67,7 +67,7 @@ public class ParticleConverter {
      */
     public Particle convertParticle(DefaultNamespace namespace, Particle particle, State sourceState) {
         if ((particle instanceof eu.fox7.schematoolkit.bonxai.om.Element)
-                && (((eu.fox7.schematoolkit.bonxai.om.Element) particle).getName().getNamespace().equals(namespace))) {
+                && (((eu.fox7.schematoolkit.bonxai.om.Element) particle).getName().getNamespaceURI().equals(namespace.getUri()))) {
             eu.fox7.schematoolkit.bonxai.om.Element source = (eu.fox7.schematoolkit.bonxai.om.Element) particle;
 
             eu.fox7.schematoolkit.xsd.om.Element element = new eu.fox7.schematoolkit.xsd.om.Element(source.getName());
@@ -164,10 +164,10 @@ public class ParticleConverter {
     			QualifiedName newGroupName = stateGroupMap.get(sourceState);
     			if (newGroupName == null) {
     				int number = 1;
-    				newGroupName = new QualifiedName(groupName.getNamespace(),groupName.getName()+number);
+    				newGroupName = new QualifiedName(groupName.getNamespaceURI(),groupName.getName()+number);
     				while (stateGroupMap.values().contains(newGroupName)) {
     					number++;
-    					newGroupName = new QualifiedName(groupName.getNamespace(),groupName.getName()+number);
+    					newGroupName = new QualifiedName(groupName.getNamespaceURI(),groupName.getName()+number);
     				}
     				stateGroupMap.put(sourceState, newGroupName);
     				groupTodo.add(new GroupTodo(groupName, sourceState, newGroupName));
