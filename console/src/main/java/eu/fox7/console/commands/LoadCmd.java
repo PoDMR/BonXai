@@ -9,6 +9,7 @@ import jline.Completor;
 import eu.fox7.console.Command;
 import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaLanguage;
+import eu.fox7.schematoolkit.SchemaToolkitException;
 
 public class LoadCmd extends Command {
 	private static final String command = "load";
@@ -65,6 +66,9 @@ public class LoadCmd extends Command {
 		
 		SchemaHandler schemaHandler = language.getSchemaHandler();
 
+		if (schemaHandler == null)
+			throw new SchemaToolkitException("SchemaHandler for " + language + " not found.");
+		
 		schemaHandler.loadSchema(getFile(parameters[1]));
 		
 		this.console.addSchema(schemaName, schemaHandler);

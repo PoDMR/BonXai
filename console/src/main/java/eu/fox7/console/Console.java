@@ -130,7 +130,12 @@ public class Console {
 	}
 	
 	public void addCommand(Command command) {
-		this.commands.put(command.getCommand(), command);
+		if (command instanceof CommandCollection)
+			for (String cmd: ((CommandCollection) command).getCommands())
+				this.commands.put(cmd, command);
+		else
+			this.commands.put(command.getCommand(), command);
+		
 		command.registerConsole(this);
 		this.completors.add(command.getCompletor());
 	}
@@ -208,6 +213,10 @@ public class Console {
 		console.addCommand(new ConvertCmd());
 		console.addCommand(new ExitCmd());
 		console.addCommand(console.new ListCmd());
+		console.addCommand(new FixUPACmd());
+		console.addCommand(new Learner());
+		console.addCommand(new UnionCmd());
+		console.addCommand(new IntersectionCmd());
 		console.work();
 //		if (args.length == 0) {
 //		} else {
