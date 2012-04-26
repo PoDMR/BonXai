@@ -106,7 +106,7 @@
     </dependency>
     <dependency>
     	<groupId>eu.fox7.schema-toolkit</groupId>
-    	<artifactId>ta-operations</artifactId>
+    	<artifactId>schema-operations</artifactId>
     	<version>1.0-SNAPSHOT</version>
     	<scope>runtime</scope>
     </dependency>
