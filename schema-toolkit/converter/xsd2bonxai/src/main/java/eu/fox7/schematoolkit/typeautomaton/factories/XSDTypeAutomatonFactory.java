@@ -14,6 +14,7 @@ import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
 import eu.fox7.schematoolkit.common.CountingPattern;
+import eu.fox7.schematoolkit.common.ElementRef;
 import eu.fox7.schematoolkit.common.EmptyPattern;
 import eu.fox7.schematoolkit.common.GroupReference;
 import eu.fox7.schematoolkit.common.Particle;
@@ -75,8 +76,8 @@ public class XSDTypeAutomatonFactory {
 		while (! workingQueue.isEmpty()) {
 			State state = workingQueue.remove();
 			Type type = typeAutomaton.getType(state);
-			Set<Element> childs = getChilds(type);
-			for (Element child: childs) {
+			Set<Particle> childs = getChilds(type);
+			for (Particle child: childs) {
 				addChild(state, child);
 			}
 		}
@@ -84,7 +85,7 @@ public class XSDTypeAutomatonFactory {
     }
 	
 
-    private Set<Element> getChilds(Type type) {
+    private Set<Particle> getChilds(Type type) {
 		if (type instanceof ComplexType) {
 			ComplexType complexType = (ComplexType) type;
 			Content content = complexType.getContent();
@@ -94,11 +95,11 @@ public class XSDTypeAutomatonFactory {
 				return getChilds(particle);
 			}
 		}
-		return new HashSet<Element>();
+		return new HashSet<Particle>();
 	}
 
-	private Set<Element> getChilds(Particle particle) {
-		Set<Element> childs = new HashSet<Element>();
+	private Set<Particle> getChilds(Particle particle) {
+		Set<Particle> childs = new HashSet<Particle>();
 		if (particle instanceof Element) {
 			Element element = (Element) particle;
 			Type type = schema.getType(element.getTypeName());
@@ -116,36 +117,54 @@ public class XSDTypeAutomatonFactory {
 		} else if (particle instanceof GroupReference) {
 			GroupReference groupReference = (GroupReference) particle;
 			Group group = schema.getGroup(groupReference);
-			childs.addAll(getChilds(group.getParticle()));
+			if (group!=null)
+				childs.addAll(getChilds(group.getParticle()));
 		} else if (particle instanceof EmptyPattern) {
 			// intentionally left blank
+		} else if (particle instanceof ElementRef) {
+			Element element = schema.getElement((ElementRef) particle);
+			if (element != null)
+				childs.add(element);
+			else
+			  childs.add(particle);
 		} else
 			throw new RuntimeException("Unkown Particle of class " + particle.getClass().getCanonicalName());
 		return childs;
 	}
 
-	private void addChild(State state, Element child) {
-    	String name = child.getName().getFullyQualifiedName();
+	private void addChild(State state, Particle child) {
+		String name;
+		QualifiedName typename = null;
+		if (child instanceof ElementRef) {
+			ElementRef elementRef = (ElementRef) child;
+			name = elementRef.getElementName().getFullyQualifiedName();
+    	} else if (child instanceof Element) {
+    		Element element = (Element) child;
+    		name = element.getName().getFullyQualifiedName();
+    		typename = element.getTypeName();
+    	} else
+    		throw new RuntimeException("child is neither Element nor ElementRef.");
 		Symbol symbol = Symbol.create(name);
     	typeAutomaton.addSymbol(symbol);
-    	QualifiedName typename = child.getTypeName();
     	Type type = schema.getType(typename);
     	State newState;
     	
-    	if (typeMap.containsKey(typename)) {
-    		newState = typeMap.get(typename);
-    	} else {
-    		newState = new State();
-    		typeAutomaton.addState(newState);
-    		if (type!= null) 
-    			typeAutomaton.setType(newState, type);
-    		else
-    			typeAutomaton.setTypeName(newState, typename);
-    		typeAutomaton.setElementProperties(newState, child.getProperties());
-    		typeMap.put(typename, newState);
-    		workingQueue.add(newState);
-    	}
+    	if (typename!=null) {
+    		if (typeMap.containsKey(typename)) {
+    			newState = typeMap.get(typename);
+    		} else {
+    			newState = new State();
+    			typeAutomaton.addState(newState);
+    			if (type!= null) 
+    				typeAutomaton.setType(newState, type);
+    			else
+    				typeAutomaton.setTypeName(newState, typename);
+    			typeAutomaton.setElementProperties(newState, ((Element) child).getProperties());
+    			typeMap.put(typename, newState);
+    			workingQueue.add(newState);
+    		}
     	
-    	typeAutomaton.addTransition(symbol, state, newState);
+    		typeAutomaton.addTransition(symbol, state, newState);
+    	}
     }
 }
