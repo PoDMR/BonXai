@@ -7,7 +7,9 @@ import org.gjt.sp.jedit.EditPlugin;
 import org.gjt.sp.jedit.View;
 import org.gjt.sp.jedit.io.VFSFile;
 
+import eu.fox7.jedit.action.ConvertSchema;
 import eu.fox7.jedit.action.FixUPA;
+import eu.fox7.jedit.action.Learner;
 
 public class FoxlibPlugin extends EditPlugin {
 	private Map<String, FoxlibAction> actions = new HashMap<String, FoxlibAction>();
@@ -25,10 +27,13 @@ public class FoxlibPlugin extends EditPlugin {
 	}
 	
 	public void addAction(FoxlibAction action) {
-		this.actions.put(action.getActionName(), action);
+		for (String actionName: action.getActions())
+			this.actions.put(actionName, action);
 	}
 	
 	public void start() {
 		this.addAction(new FixUPA());
+		this.addAction(new ConvertSchema());
+		this.addAction(new Learner());
 	}
 }

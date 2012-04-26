@@ -1,18 +1,11 @@
 package eu.fox7.jedit.action;
 
-import java.io.IOException;
-
-import javax.swing.JTextArea;
-
 import org.gjt.sp.jedit.View;
 import org.gjt.sp.jedit.buffer.JEditBuffer;
 import org.gjt.sp.jedit.io.VFSFile;
-import org.gjt.sp.jedit.textarea.JEditTextArea;
-
 import eu.fox7.jedit.FoxlibAction;
 import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaToolkitException;
-import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 import eu.fox7.schematoolkit.UPAFixer;
 import eu.fox7.upafixer.impl.BKWUPAFixer;
 
@@ -20,8 +13,8 @@ public class FixUPA extends FoxlibAction {
 	private static String ACTIONNAME = "fixupa";
 	
 	@Override
-	public String getActionName() {
-		return ACTIONNAME;
+	public String[] getActions() {
+		return new String[]{ACTIONNAME};
 	}
 
 	@Override
