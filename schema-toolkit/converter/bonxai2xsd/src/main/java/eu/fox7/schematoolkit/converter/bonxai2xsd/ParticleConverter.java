@@ -18,18 +18,16 @@ package eu.fox7.schematoolkit.converter.bonxai2xsd;
 
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.NotDFAException;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
 import eu.fox7.schematoolkit.bonxai.om.*;
 import eu.fox7.schematoolkit.common.*;
+import eu.fox7.schematoolkit.xsd.om.AttributeUse;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 /**
@@ -148,11 +146,11 @@ public class ParticleConverter {
 
     private Particle convertGroupReference(GroupReference groupReference,
 			State sourceState) {
+		QualifiedName groupName = groupReference.getName();
     	if (eliminateGroups) {
     		//TODO
     		return null;
     	} else {
-    		QualifiedName groupName = groupReference.getName();
     		Map<State,QualifiedName> stateGroupMap = groupMap.get(groupName);
     		if (stateGroupMap == null) {
     			stateGroupMap = new HashMap<State,QualifiedName>();
@@ -214,6 +212,13 @@ public class ParticleConverter {
                     ((eu.fox7.schematoolkit.bonxai.om.Attribute) attribute).getType().getTypename());
         } else if (attribute instanceof AttributeGroupReference) {
             return new AttributeGroupReference( ((AttributeGroupReference) attribute).getName() );
+        } else if (attribute instanceof AttributeRef) {
+        	AttributeRef attributeRef = (AttributeRef) attribute;
+        	eu.fox7.schematoolkit.xsd.om.AttributeRef newAttributeRef = new eu.fox7.schematoolkit.xsd.om.AttributeRef(attributeRef.getAttributeName());
+            newAttributeRef.setDefault(attributeRef.getDefaultValue());
+            newAttributeRef.setFixed(attributeRef.getFixedValue());
+            newAttributeRef.setUse(attributeRef.isRequired()?AttributeUse.Required:AttributeUse.Optional);
+        	return newAttributeRef;
         } else {
         	throw new RuntimeException("Attribute class not supported: " + attribute.getClass());
         }

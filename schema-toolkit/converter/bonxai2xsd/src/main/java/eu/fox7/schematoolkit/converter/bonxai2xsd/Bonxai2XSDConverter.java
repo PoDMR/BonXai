@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections15.BidiMap;
-
 import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.NotDFAException;
 import eu.fox7.flt.automata.impl.sparse.State;
@@ -15,9 +13,7 @@ import eu.fox7.flt.automata.impl.sparse.Symbol;
 import eu.fox7.schematoolkit.AbstractSchemaConverter;
 import eu.fox7.schematoolkit.Schema;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
-import eu.fox7.schematoolkit.bonxai.om.BonxaiAbstractGroup;
 import eu.fox7.schematoolkit.bonxai.om.Expression;
-import eu.fox7.schematoolkit.common.DefaultNamespace;
 import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
