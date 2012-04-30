@@ -11,6 +11,7 @@ import eu.fox7.schematoolkit.bonxai.om.AncestorPattern;
 import eu.fox7.schematoolkit.bonxai.om.AncestorPatternElement;
 import eu.fox7.schematoolkit.bonxai.om.Attribute;
 import eu.fox7.schematoolkit.bonxai.om.AttributePattern;
+import eu.fox7.schematoolkit.bonxai.om.AttributeRef;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
 import eu.fox7.schematoolkit.bonxai.om.BonxaiAbstractGroup;
 import eu.fox7.schematoolkit.bonxai.om.BonxaiAttributeGroup;
@@ -83,8 +84,6 @@ public class CompactSyntaxWriter {
     	writeDefaultNamespace(schema.getDefaultNamespace());
         writeIdentifiedNamespaces(schema.getNamespaces());
         writer.newLine();
-//TODO:        traverseImports(declaration.getImportList(), visitor);
-//TODO:        traverseDataTypes(declaration.getDataTypeList(), visitor);
         writeGroups(schema.getGroups());
         writer.appendLine("grammar {");
         writer.pushIndent();
@@ -224,14 +223,37 @@ public class CompactSyntaxWriter {
                 writeAttribute((Attribute) attributeElement);
             } else if (attributeElement instanceof AttributeGroupReference) {
                 writeAttributeGroupReference((AttributeGroupReference) attributeElement);
+            } else if (attributeElement instanceof AttributeRef) {
+            	writeAttributeRef((AttributeRef) attributeElement);
             }
         }
     }
 
-    private void writeAttributeGroupReference(
-			AttributeGroupReference attributeElement) {
-		// TODO Auto-generated method stub
+    private void writeAttributeRef(AttributeRef attributeRef) throws IOException {
+		writer.append("attributeref ");
+		writeName(attributeRef.getAttributeName());
+
+        if (attributeRef.getFixedValue() != null) {
+            writer.append("{ fixed \"");
+            writer.append(attributeRef.getFixedValue());
+            writer.append("\"}");
+        } else if (attributeRef.getDefaultValue() != null) {
+            writer.append("{ default \"");
+            writer.append(attributeRef.getDefaultValue());
+            writer.append("\"}");
+        }
+
 		
+		if (!attributeRef.isRequired()) {
+			writer.append('?');
+		}
+		
+	}
+
+	private void writeAttributeGroupReference(
+			AttributeGroupReference attributeElement) throws IOException {
+		writer.append("attribute-group ");
+		writeName(attributeElement.getName());
 	}
 
 	private void writeAttribute(Attribute attribute) throws IOException {

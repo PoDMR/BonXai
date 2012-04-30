@@ -103,6 +103,7 @@ TOKEN:
 |	< GROUPS: "groups" >
 |	< GROUP: "group" >: NAME
 |	< ATTRIBUTEGROUP: "attribute-group" >: NAME
+|	< ATTRIBUTEREF: "attributeref" >: NAME
 |	< ATTRIBUTE: "attribute" >: NAME
 |	< MIXED: "mixed" >
 |	< EMPTY: "empty" >
@@ -818,15 +819,23 @@ Particle NamedType(): {BonxaiType type; Particle p; QualifiedName name; boolean 
 AttributePattern AttributePattern(): {QualifiedName name; AttributeParticle a;  AttributePattern attributePattern = new AttributePattern();}
 {
 //	( foreign=Foreign() <ATTRIBUTE> <STAR> namespaceLst= NameSpaceList() [ LOOKAHEAD(2) <COMMA> attributeLst=AttributeList() ] | attributeLst=AttributeList() )
-	( a=AttributeGroupRef() | a=Attribute() ) { attributePattern.addAttribute(a); }
-	( LOOKAHEAD(<COMMA> (<ATTRIBUTE> | <ATTRIBUTEGROUP>)) <COMMA> ( a=AttributeGroupRef() | a=Attribute() ) { attributePattern.addAttribute(a); } )*
+	( a=AttributeGroupRef() | a=Attribute() | a=AttributeRef() ) { attributePattern.addAttribute(a); }
+	( LOOKAHEAD(<COMMA> (<ATTRIBUTE> | <ATTRIBUTEGROUP> | <ATTRIBUTEREF> )) <COMMA> ( a=AttributeGroupRef() | a=Attribute() | a=AttributeRef() ) { attributePattern.addAttribute(a); } )*
 	{ return attributePattern; }
 }
+
+AttributeRef AttributeRef(): { QualifiedName name; boolean required=true; String fixedValue=null; String defaultValue=null; }{  <ATTRIBUTEREF> name=Name() { setState(DEFAULT); }
+	[ <OPENING_CURLY_BRACKET>
+	  ( <FIXED> fixedValue=Quotation() | 
+	    <DEFAULTT> defaultValue=Quotation() )
+      <CLOSING_CURLY_BRACKET>
+	]
+   [ <QUESTION_MARK> { required=false; } ]  { return new AttributeRef(name, fixedValue, defaultValue, required); }}    
 
 AttributeGroupReference AttributeGroupRef(): { QualifiedName name; }
 {
 	<ATTRIBUTEGROUP> name=Name()
-	{ return new AttributeGroupReference(name); setState(DEFAULT); }
+	{ setState(DEFAULT); return new AttributeGroupReference(name); }
 }
 
 Attribute Attribute(): { QualifiedName name; BonxaiType type=null; boolean required=true; }

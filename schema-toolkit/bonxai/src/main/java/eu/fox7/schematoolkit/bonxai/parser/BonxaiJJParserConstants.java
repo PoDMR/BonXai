@@ -21,46 +21,47 @@ public interface BonxaiJJParserConstants {
   int GROUPS = 19;
   int GROUP = 20;
   int ATTRIBUTEGROUP = 21;
-  int ATTRIBUTE = 22;
-  int MIXED = 23;
-  int EMPTY = 24;
-  int MISSING = 25;
-  int ELEMENTREF = 26;
-  int ELEMENT = 27;
-  int STRICT = 28;
-  int LAX = 29;
-  int SKIPP = 30;
-  int FIXED = 31;
-  int CONSTANT = 32;
-  int OPENING_ROUND_BRACKET = 33;
-  int CLOSING_ROUND_BRACKET = 34;
-  int OPENING_SQUARED_BRACKET = 35;
-  int CLOSING_SQUARED_BRACKET = 36;
-  int OPENING_CURLY_BRACKET = 37;
-  int CLOSING_CURLY_BRACKET = 38;
-  int EQUALS = 39;
-  int COMMA = 40;
-  int AT = 41;
-  int OR = 42;
-  int ANDLITERAL = 43;
-  int DOUBLESLASH = 44;
-  int SLASH = 45;
-  int STAR = 46;
-  int PLUS = 47;
-  int QUESTION_MARK = 48;
-  int COLON = 49;
-  int POINT = 50;
-  int ANNOTATION_VALUE = 51;
-  int DIGIT = 52;
-  int BASECHAR = 53;
-  int IDEOGRAPHIC = 54;
-  int COMBINING_CHAR = 55;
-  int EXTENDER = 56;
-  int LABEL = 57;
-  int PROTOCOL = 58;
-  int URI = 59;
-  int QUOTATION = 60;
-  int QUOT_QUOTE = 61;
+  int ATTRIBUTEREF = 22;
+  int ATTRIBUTE = 23;
+  int MIXED = 24;
+  int EMPTY = 25;
+  int MISSING = 26;
+  int ELEMENTREF = 27;
+  int ELEMENT = 28;
+  int STRICT = 29;
+  int LAX = 30;
+  int SKIPP = 31;
+  int FIXED = 32;
+  int CONSTANT = 33;
+  int OPENING_ROUND_BRACKET = 34;
+  int CLOSING_ROUND_BRACKET = 35;
+  int OPENING_SQUARED_BRACKET = 36;
+  int CLOSING_SQUARED_BRACKET = 37;
+  int OPENING_CURLY_BRACKET = 38;
+  int CLOSING_CURLY_BRACKET = 39;
+  int EQUALS = 40;
+  int COMMA = 41;
+  int AT = 42;
+  int OR = 43;
+  int ANDLITERAL = 44;
+  int DOUBLESLASH = 45;
+  int SLASH = 46;
+  int STAR = 47;
+  int PLUS = 48;
+  int QUESTION_MARK = 49;
+  int COLON = 50;
+  int POINT = 51;
+  int ANNOTATION_VALUE = 52;
+  int DIGIT = 53;
+  int BASECHAR = 54;
+  int IDEOGRAPHIC = 55;
+  int COMBINING_CHAR = 56;
+  int EXTENDER = 57;
+  int LABEL = 58;
+  int PROTOCOL = 59;
+  int URI = 60;
+  int QUOTATION = 61;
+  int QUOT_QUOTE = 62;
 
   int DEFAULT = 0;
   int NAME = 1;
@@ -90,6 +91,7 @@ public interface BonxaiJJParserConstants {
     "\"groups\"",
     "\"group\"",
     "\"attribute-group\"",
+    "\"attributeref\"",
     "\"attribute\"",
     "\"mixed\"",
     "\"empty\"",
