@@ -52,7 +52,7 @@ public class GroupReferenceProcessor extends Processor {
      * @throws Exception
      */
     @Override
-    protected Particle processNode(Node node) throws Exception {
+    protected Particle processNode(Node node) throws XSDParseException {
         // Call the visitChildren method to handle children and find necessary details for the current group
         visitChildren(node);
         QualifiedName groupName = getName(node);
@@ -125,7 +125,7 @@ public class GroupReferenceProcessor extends Processor {
      * @throws Exception
      */
     @Override
-    protected void processChild(Node childNode) throws Exception {
+    protected void processChild(Node childNode) throws XSDParseException {
         String nodeName = childNode.getNodeName();
         if (nodeName.contains(":")) {
             nodeName = nodeName.split(":")[1];

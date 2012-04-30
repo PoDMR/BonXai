@@ -3,6 +3,7 @@ package eu.fox7.schematoolkit.xsd.parser;
 import eu.fox7.schematoolkit.common.*;
 import eu.fox7.schematoolkit.xsd.om.*;
 import eu.fox7.schematoolkit.xsd.om.Element;
+import eu.fox7.schematoolkit.xsd.parser.exceptions.XSDParseException;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.attribute.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.attribute.countingpattern.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.content.*;
@@ -43,7 +44,7 @@ public class ElementProcessor extends Processor {
      * @throws java.lang.Exception
      */
     @Override
-    protected Particle processNode(Node node) throws Exception {
+    protected Particle processNode(Node node) throws XSDParseException {
         element = new Element(getName(node));
 
         // Check all element attributes
@@ -269,7 +270,7 @@ public class ElementProcessor extends Processor {
      * @throws java.lang.Exception
      */
     @Override
-    protected void processChild(Node childNode) throws Exception {
+    protected void processChild(Node childNode) throws XSDParseException {
 
         // Tests if the node name is a local name and filters nodes with names #text, #comment and #document who are not in the enum
         String nodeName = childNode.getNodeName();

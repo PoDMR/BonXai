@@ -47,14 +47,14 @@ public abstract class Processor extends NameChecker {
      * @throws java.lang.Exception
      */
     // This method must not be used directly.
-    protected abstract Object processNode(Node node) throws Exception;
+    protected abstract Object processNode(Node node) throws XSDParseException;
 
     /**
      * Processes a single child node.
      * @param childNode     Child node which is processed for the parent node
      * @throws java.lang.Exception
      */
-    protected abstract void processChild(Node childNode) throws Exception;
+    protected abstract void processChild(Node childNode) throws XSDParseException;
 
     /**
      * Visits all children of the parent node and calls the processChild methode
@@ -62,7 +62,7 @@ public abstract class Processor extends NameChecker {
      * @param node  Parent node, which defines the type of the processor
      * @throws java.lang.Exception
      */
-    protected void visitChildren(Node node) throws Exception {
+    protected void visitChildren(Node node) throws XSDParseException {
         NodeList nl = node.getChildNodes();
         for (int i = 0, cnt = nl.getLength(); i < cnt; i++) {
             processChild(nl.item(i));

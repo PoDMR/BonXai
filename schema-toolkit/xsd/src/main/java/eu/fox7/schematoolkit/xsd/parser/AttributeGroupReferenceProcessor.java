@@ -48,7 +48,7 @@ public class AttributeGroupReferenceProcessor extends Processor {
      * @throws Exception
      */
     @Override
-    protected AttributeGroupReference processNode(Node node) throws Exception {
+    protected AttributeGroupReference processNode(Node node) throws XSDParseException {
         visitChildren(node);
         // List of Attributes
         NamedNodeMap attributes = node.getAttributes();
@@ -79,7 +79,7 @@ public class AttributeGroupReferenceProcessor extends Processor {
      * @throws Exception
      */
     @Override
-    protected void processChild(Node childNode) throws Exception {
+    protected void processChild(Node childNode) throws XSDParseException {
         String nodeName = childNode.getNodeName();
         if (nodeName.contains(":")) {
             nodeName = nodeName.split(":")[1];

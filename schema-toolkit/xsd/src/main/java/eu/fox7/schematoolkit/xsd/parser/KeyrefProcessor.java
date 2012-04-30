@@ -2,6 +2,7 @@ package eu.fox7.schematoolkit.xsd.parser;
 
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.*;
+import eu.fox7.schematoolkit.xsd.parser.exceptions.XSDParseException;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.attribute.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.constraint.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.content.*;
@@ -37,7 +38,7 @@ public class KeyrefProcessor extends Processor {
      * @throws java.lang.Exception
      */
     @Override
-    protected void processChild(Node childNode) throws Exception {
+    protected void processChild(Node childNode) throws XSDParseException {
 
         // Tests if the node name is a local name and filters nodes with names #text, #comment and #document who are not in the enum
         String nodeName = childNode.getNodeName();
@@ -99,7 +100,7 @@ public class KeyrefProcessor extends Processor {
      * @throws java.lang.Exception
      */
     @Override
-    protected KeyRef processNode(Node node) throws Exception {
+    protected KeyRef processNode(Node node) throws XSDParseException {
 
         // Creates the unique object and visits all children to set selector and fields
         keyRefName = getName(node);

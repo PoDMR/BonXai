@@ -2,6 +2,7 @@ package eu.fox7.schematoolkit.xsd.parser;
 
 import eu.fox7.schematoolkit.common.Annotation;
 import eu.fox7.schematoolkit.xsd.om.*;
+import eu.fox7.schematoolkit.xsd.parser.exceptions.XSDParseException;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.attribute.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.content.*;
 
@@ -39,7 +40,7 @@ class IncludeProcessor extends Processor {
      * @throws java.lang.Exception
      */
     @Override
-    protected IncludedSchema processNode(Node node) throws Exception {
+    protected IncludedSchema processNode(Node node) throws XSDParseException {
 
         // Makes sure that the schemaLocation is not empty or missing
         NamedNodeMap attributes = node.getAttributes();
@@ -70,7 +71,7 @@ class IncludeProcessor extends Processor {
      * @throws java.lang.Exception
      */
     @Override
-    protected void processChild(Node childNode) throws Exception {
+    protected void processChild(Node childNode) throws XSDParseException {
 
         // Tests if the node name is a local name and filters nodes with names #text, #comment and #document who are not in the enum
         String nodeName = childNode.getNodeName();

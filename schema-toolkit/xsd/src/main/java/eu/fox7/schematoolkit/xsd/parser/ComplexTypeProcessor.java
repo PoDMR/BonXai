@@ -2,6 +2,7 @@ package eu.fox7.schematoolkit.xsd.parser;
 
 import eu.fox7.schematoolkit.common.*;
 import eu.fox7.schematoolkit.xsd.om.*;
+import eu.fox7.schematoolkit.xsd.parser.exceptions.XSDParseException;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.attribute.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.content.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.type.*;
@@ -60,7 +61,7 @@ public class ComplexTypeProcessor extends Processor {
      * @throws Exception
      */
     @Override
-    protected QualifiedName processNode(Node node) throws Exception {
+    protected QualifiedName processNode(Node node) throws XSDParseException {
         this.complexTypeName = this.getName(node);
 
         // Generate XSD complexType object
@@ -173,7 +174,7 @@ public class ComplexTypeProcessor extends Processor {
      * @throws Exception
      */
     @Override
-    protected void processChild(Node childNode) throws Exception {
+    protected void processChild(Node childNode) throws XSDParseException {
         String nodeName = childNode.getNodeName();
         if (nodeName.contains(":")) {
             nodeName = nodeName.split(":")[1];

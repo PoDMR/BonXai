@@ -2,6 +2,7 @@ package eu.fox7.schematoolkit.xsd.parser;
 
 import eu.fox7.schematoolkit.common.*;
 import eu.fox7.schematoolkit.xsd.om.*;
+import eu.fox7.schematoolkit.xsd.parser.exceptions.XSDParseException;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.attribute.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.content.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.inheritance.*;
@@ -44,7 +45,7 @@ class ComplexContentProcessor extends Processor {
      * @throws Exception
      */
     @Override
-    protected void processChild(Node childNode) throws Exception {
+    protected void processChild(Node childNode) throws XSDParseException {
         String nodeName = childNode.getNodeName();
         if (nodeName.contains(":")) {
             nodeName = nodeName.split(":")[1];
@@ -112,7 +113,7 @@ class ComplexContentProcessor extends Processor {
      * @throws Exception
      */
     @Override
-    protected ComplexContentType processNode(Node node) throws Exception {
+    protected ComplexContentType processNode(Node node) throws XSDParseException {
 
         // Call the visitChildren method to handle children and find necessary details for the current complexType
         this.visitChildren(node);

@@ -48,7 +48,7 @@ public class AttributeGroupProcessor extends Processor {
      * @throws Exception
      */
     @Override
-    protected AttributeGroup processNode(Node node) throws Exception {
+    protected AttributeGroup processNode(Node node) throws XSDParseException {
         QualifiedName attributeGroupName = getName(node);
         attributeGroup = new AttributeGroup(attributeGroupName);
         visitChildren(node);
@@ -81,7 +81,7 @@ public class AttributeGroupProcessor extends Processor {
      * @throws Exception
      */
     @Override
-    protected void processChild(Node childNode) throws Exception {
+    protected void processChild(Node childNode) throws XSDParseException {
         String nodeName = childNode.getNodeName();
         if (nodeName.contains(":")) {
             nodeName = nodeName.split(":")[1];

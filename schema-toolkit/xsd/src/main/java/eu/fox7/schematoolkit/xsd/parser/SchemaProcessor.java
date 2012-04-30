@@ -4,6 +4,7 @@ import eu.fox7.schematoolkit.common.*;
 import eu.fox7.schematoolkit.xsd.om.*;
 import eu.fox7.schematoolkit.xsd.om.Element;
 import eu.fox7.schematoolkit.xsd.om.Group;
+import eu.fox7.schematoolkit.xsd.parser.exceptions.XSDParseException;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.attribute.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.content.*;
 
@@ -41,7 +42,7 @@ public class SchemaProcessor extends Processor {
      * @throws java.lang.Exception
      */
     @Override
-    protected XSDSchema processNode(Node node) throws Exception {
+    protected XSDSchema processNode(Node node) throws XSDParseException {
         NamedNodeMap attributes = node.getAttributes();
         if (attributes != null) {
             for (int i = 0; i < node.getAttributes().getLength(); i++) {
@@ -170,7 +171,7 @@ public class SchemaProcessor extends Processor {
      * @throws java.lang.Exception
      */
     @Override
-    protected void processChild(Node childNode) throws Exception {
+    protected void processChild(Node childNode) throws XSDParseException {
         String nodeName = childNode.getNodeName();
         if (nodeName.contains(":")) {
             nodeName = nodeName.split(":")[1];

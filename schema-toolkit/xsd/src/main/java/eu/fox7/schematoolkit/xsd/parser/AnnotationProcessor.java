@@ -4,6 +4,7 @@ import eu.fox7.schematoolkit.common.Annotation;
 import eu.fox7.schematoolkit.xsd.om.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.attribute.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.content.*;
+import eu.fox7.schematoolkit.xsd.parser.exceptions.XSDParseException;
 
 import org.w3c.dom.*;
 
@@ -34,7 +35,7 @@ public class AnnotationProcessor extends Processor {
      * @throws java.lang.Exception
      */
     @Override
-    protected Annotation processNode(Node node) throws Exception {
+    protected Annotation processNode(Node node) throws XSDParseException {
         visitChildren(node);
         if (node.getAttributes().getNamedItem("id") != null) {
             if (node.getAttributes().getNamedItem("id").getNodeValue().equals("")) {
@@ -51,7 +52,7 @@ public class AnnotationProcessor extends Processor {
      * @throws java.lang.Exception
      */
     @Override
-    protected void processChild(Node childNode) throws Exception {
+    protected void processChild(Node childNode) throws XSDParseException {
 
         // Tests if the node name is a local name and filters nodes with names #text, #comment and #document who are not in the enum
         String nodeName = childNode.getNodeName();

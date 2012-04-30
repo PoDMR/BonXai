@@ -1,10 +1,13 @@
 package eu.fox7.schematoolkit.xsd.parser;
 
 //import eu.fox7.bonxai.tools.StatusLogger;
+import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.xsd.om.*;
+import eu.fox7.schematoolkit.xsd.parser.exceptions.XSDParseException;
 
 import java.io.*;
 import javax.xml.parsers.*;
+
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
@@ -38,16 +41,22 @@ public class XSDParser {
         Processor.setDebug(debug);
     }
 
-    public XSDSchema parse(String uriString) throws FileNotFoundException, SAXException, IOException, Exception {
+    public XSDSchema parse(String uriString) throws FileNotFoundException, IOException, XSDParseException {
         // Begin processing the XSD
-        try {
+        // try {
             // Build the document tree from a file
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
 
             this.schema = new XSDSchema();
             this.schemaProcessor = new SchemaProcessor(schema);
-            doc = factory.newDocumentBuilder().parse(uriString);
+            try {
+				doc = factory.newDocumentBuilder().parse(uriString);
+			} catch (SAXException e) {
+				throw new XSDParseException(e);
+			} catch (ParserConfigurationException e) {
+				throw new XSDParseException(e);
+			}
 
             Node schemaNode = doc.getFirstChild();
             // We have to find the right starting node for the schemaProcessor
@@ -63,108 +72,78 @@ public class XSDParser {
             schemaProcessor.processNode(schemaNode);
 
             schema.setSchemaLocation(doc.getBaseURI());
-//TODO: Load foreign Schemas
-//            ForeignSchemaLoader foreignSchemaLoader = new ForeignSchemaLoader(schema, validateEDC);
-//            foreignSchemaLoader.findForeignSchemas();
 
-            //TODO: EDCCheck
-//            if (this.validateEDC) {
-//                StatusLogger.logLastInfoMessage("XSDParser", "Checking EDC-Constraint...");
-//                EDCChecker edcProcessor = new EDCChecker(this.schema);
-//                if (edcProcessor.isValid()) {
-//                    StatusLogger.logLastInfoMessage("XSDParser", "The parsed XML XSDSchema is valid with respect to the \"XSDSchema Component Constraint: Element Declarations Consistent\". :-)");
-//                    System.out.println("The parsed XML XSDSchema is valid with regards to the \"XSDSchema Component Constraint: Element Declarations Consistent\". :-)\n");
-//                } else {
-//                    StatusLogger.logLastInfoMessage("XSDParser", "The parsed XML XSDSchema is NOT valid with respect to the \"XSDSchema Component Constraint: Element Declarations Consistent\"! :-(");
-//                    System.out.println("The parsed XML XSDSchema is NOT valid with regards the \"XSDSchema Component Constraint: Element Declarations Consistent\"! :-(\n");
-//                }
-//            }
-
-        } catch (Exception error) {
-//            StatusLogger.logError("XSDParser", error.getClass().getName() + ": " + error.getMessage());
-//            error.printStackTrace();
-            throw error;
-        }
         return this.schema;
     }
 
-    public XSDSchema parse(InputStream inputStream) throws FileNotFoundException, SAXException, IOException, Exception {
+    public XSDSchema parse(InputStream inputStream) throws FileNotFoundException, IOException, SchemaToolkitException {
         // Begin processing the XSD
-        try {
-            // Build the document tree from a file
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
+    	// Build the document tree from a file
+    	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    	factory.setNamespaceAware(true);
 
-            this.schema = new XSDSchema();
-            this.schemaProcessor = new SchemaProcessor(schema);
-            doc = factory.newDocumentBuilder().parse(inputStream);
+    	this.schema = new XSDSchema();
+    	this.schemaProcessor = new SchemaProcessor(schema);
+    	try {
+			doc = factory.newDocumentBuilder().parse(inputStream);
+		} catch (SAXException e) {
+			throw new SchemaToolkitException(e);
+		} catch (ParserConfigurationException e) {
+			throw new SchemaToolkitException(e);
+		}
 
-            Node schemaNode = doc.getFirstChild();
-            // We have to find the right starting node for the schemaProcessor
-            // It is possible, that DTD information is written before the xsd
-            // schema node. In DTD the Doctype root node can also be named
-            // "schema" so we have to check the type of the found node.
-            // Type == 1 means that it is the correct XSD node type
-            while (schemaNode != null && !(schemaNode.getNodeType() == 1 && schemaNode.getNodeName().endsWith("schema"))) {
-                schemaNode = schemaNode.getNextSibling();
-            }
+    	Node schemaNode = doc.getFirstChild();
+    	// We have to find the right starting node for the schemaProcessor
+    	// It is possible, that DTD information is written before the xsd
+    	// schema node. In DTD the Doctype root node can also be named
+    	// "schema" so we have to check the type of the found node.
+    	// Type == 1 means that it is the correct XSD node type
+    	while (schemaNode != null && !(schemaNode.getNodeType() == 1 && schemaNode.getNodeName().endsWith("schema"))) {
+    		schemaNode = schemaNode.getNextSibling();
+    	}
 
 
-            schemaProcessor.processNode(schemaNode);
+    	schemaProcessor.processNode(schemaNode);
 
-            schema.setSchemaLocation(doc.getBaseURI());
+    	schema.setSchemaLocation(doc.getBaseURI());
 
-//            ForeignSchemaLoader foreignSchemaLoader = new ForeignSchemaLoader(schema, validateEDC);
-//            foreignSchemaLoader.findForeignSchemas();
+    	//            ForeignSchemaLoader foreignSchemaLoader = new ForeignSchemaLoader(schema, validateEDC);
+    	//            foreignSchemaLoader.findForeignSchemas();
 
-            if (this.validateEDC) {
-//                StatusLogger.logLastInfoMessage("XSDParser", "Checking EDC-Constraint...");
-//                EDCChecker edcProcessor = new EDCChecker(this.schema);
-//                if (edcProcessor.isValid()) {
-//                    StatusLogger.logLastInfoMessage("XSDParser", "The parsed XML XSDSchema is valid with respect to the \"XSDSchema Component Constraint: Element Declarations Consistent\". :-)");
-//                    System.out.println("The parsed XML XSDSchema is valid with regards to the \"XSDSchema Component Constraint: Element Declarations Consistent\". :-)\n");
-//                } else {
-//                    StatusLogger.logLastInfoMessage("XSDParser", "The parsed XML XSDSchema is NOT valid with respect to the \"XSDSchema Component Constraint: Element Declarations Consistent\"! :-(");
-//                    System.out.println("The parsed XML XSDSchema is NOT valid with regards the \"XSDSchema Component Constraint: Element Declarations Consistent\"! :-(\n");
-//                }
-            }
 
-        } catch (Exception error) {
-//            StatusLogger.logError("XSDParser", error.getClass().getName() + ": " + error.getMessage());
-//            error.printStackTrace();
-            throw error;
-        }
-        return this.schema;
+    	return this.schema;
     }
 
-    public XSDSchema parseForeignSchema(String uriString, String targetNamespace) throws FileNotFoundException, SAXException, IOException {
+    public XSDSchema parseForeignSchema(String uriString, String targetNamespace) throws FileNotFoundException, IOException, XSDParseException {
         // Begin processing the XSD
-        try {
-            // Build the document tree from a file
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
+    	// Build the document tree from a file
+    	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    	factory.setNamespaceAware(true);
 
-            this.schema = new XSDSchema();
-            this.schemaProcessor = new SchemaProcessor(schema);
-            doc = factory.newDocumentBuilder().parse(uriString);
+    	this.schema = new XSDSchema();
+    	this.schemaProcessor = new SchemaProcessor(schema);
+    	try {
+			doc = factory.newDocumentBuilder().parse(uriString);
+		} catch (SAXException e) {
+			throw new XSDParseException(e);
+		} catch (ParserConfigurationException e) {
+			throw new XSDParseException(e);
+		}
 
-            Node schemaNode = doc.getFirstChild();
-            // We have to find the right starting node for the schemaProcessor
-            // It is possible, that DTD information is written before the xsd
-            // schema node. In DTD the Doctype root node can also be named
-            // "schema" so we have to check the type of the found node.
-            // Type == 1 means that it is the correct XSD node type
-            while (schemaNode != null && !(schemaNode.getNodeType() == 1 && schemaNode.getNodeName().endsWith("schema"))) {
-                schemaNode = schemaNode.getNextSibling();
-            }
-            schemaProcessor.setIncludeTargetNamespace(targetNamespace);
-            schemaProcessor.processNode(schemaNode);
+    	Node schemaNode = doc.getFirstChild();
+    	// We have to find the right starting node for the schemaProcessor
+    	// It is possible, that DTD information is written before the xsd
+    	// schema node. In DTD the Doctype root node can also be named
+    	// "schema" so we have to check the type of the found node.
+    	// Type == 1 means that it is the correct XSD node type
+    	while (schemaNode != null && !(schemaNode.getNodeType() == 1 && schemaNode.getNodeName().endsWith("schema"))) {
+    		schemaNode = schemaNode.getNextSibling();
+    	}
+    	schemaProcessor.setIncludeTargetNamespace(targetNamespace);
+    	schemaProcessor.processNode(schemaNode);
 
-            schema.setSchemaLocation(doc.getBaseURI());
+    	schema.setSchemaLocation(doc.getBaseURI());
 
-        } catch (Exception error) {
-            error.printStackTrace();
-        }
         return this.schema;
     }
 }

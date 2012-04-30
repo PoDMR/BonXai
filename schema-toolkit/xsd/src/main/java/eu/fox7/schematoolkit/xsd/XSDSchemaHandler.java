@@ -21,13 +21,7 @@ public class XSDSchemaHandler extends SchemaHandler {
 	@Override
 	public void parseSchema(InputStream stream) throws IOException, SchemaToolkitException {
 		XSDParser parser = new XSDParser(false, false);
-		try {
-			schema = parser.parse(stream);
-		} catch (SAXException e) {
-			throw new SchemaToolkitException(e);
-		} catch (Exception e) {
-			throw new SchemaToolkitException(e);
-		}
+		schema = parser.parse(stream);
 	}
 
 	@Override

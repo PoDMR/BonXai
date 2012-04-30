@@ -2,6 +2,7 @@ package eu.fox7.schematoolkit.xsd.parser;
 
 import eu.fox7.schematoolkit.common.*;
 import eu.fox7.schematoolkit.xsd.om.*;
+import eu.fox7.schematoolkit.xsd.parser.exceptions.XSDParseException;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.attribute.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.content.*;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.inheritance.*;
@@ -57,7 +58,7 @@ class ExtensionProcessor extends Processor {
      * @throws Exception
      */
     @Override
-    protected void processChild(Node childNode) throws Exception {
+    protected void processChild(Node childNode) throws XSDParseException {
         String nodeName = childNode.getNodeName();
         if (nodeName.contains(":")) {
             nodeName = nodeName.split(":")[1];
@@ -261,7 +262,7 @@ class ExtensionProcessor extends Processor {
      * @throws Exception
      */
     @Override
-    protected Inheritance processNode(Node node) throws Exception {
+    protected Inheritance processNode(Node node) throws XSDParseException {
 
         // We have to check the parentnode to determine if it is an extension
         // for a simpleContent or a complexContent
