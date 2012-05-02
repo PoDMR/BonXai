@@ -148,10 +148,10 @@ public class XSDReader extends Analyser {
 
 	private String identifyRoot() {
 		// System.out.println("in root");
-		EList<XSDElementDeclaration> elements = xsd.getElementDeclarations();
+		EList elements = xsd.getElementDeclarations();
 		// er is maar 1 root element --> ideaal!
 		if (elements.size() == 1) {
-			XSDElementDeclaration element = elements.get(0);
+			XSDElementDeclaration element = (XSDElementDeclaration) elements.get(0);
 			String name = element.getTypeDefinition().getName();
 			if (name == null)
 				name = element.getName();

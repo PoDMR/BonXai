@@ -51,10 +51,11 @@ public class XSDWriter {
 		return ("<xs:simpleType name=\"" + getTypeName(element) + "\">\n\t<xs:restriction base=\"xs:string\" />\n</xs:simpleType>\n");
 	}
 
+	@SuppressWarnings("unchecked")
 	protected String outputComplexType(XMLElementDefinition element) {
 		StringBuilder str = new StringBuilder();
 		str.append("<xs:complexType name=\"" + getTypeName(element) + "\" mixed=\"true\">\n");		
-		Tree tree = element.getContentModel().getTree();
+		Tree<Object> tree = element.getContentModel().getTree();
 		str.append(parseNode(tree.getRoot(), 1, 1));
 		str.append("</xs:complexType>\n");
 		return str.toString();
@@ -72,26 +73,26 @@ public class XSDWriter {
 		return nodeKey.substring(0, nodeKey.indexOf(XMLGrammar.QNAME_TYPE_SEPARATOR));
 	}
 
-	protected String parseNode(Node node, int minoccur, int maxoccur) {
+	protected String parseNode(Node<Object> node, int minoccur, int maxoccur) {
 		StringBuilder str = new StringBuilder();
 
 		if (node.getKey().equals(".")) {
 			str.append("<xs:sequence>\n");
-			for (Node child : node.getChildren())
+			for (Node<Object> child : node.getChildren())
 				str.append(parseNode(child, 1, 1));
 			str.append("</xs:sequence>\n");
 		} else if (node.getKey().equals("+")) {
-			for (Node child : node.getChildren())
+			for (Node<Object> child : node.getChildren())
 				str.append(parseNode(child, 1, -999));
 		} else if (node.getKey().equals("*")) {
-			for (Node child : node.getChildren())
+			for (Node<Object> child : node.getChildren())
 				str.append(parseNode(child, 0, -999));
 		} else if (node.getKey().equals("?")) {
-			for (Node child : node.getChildren())
+			for (Node<Object> child : node.getChildren())
 				str.append(parseNode(child, 0, 1));
 		} else if (node.getKey().equals("|")) {
 			str.append("<xs:choice>\n");
-			for (Node child : node.getChildren())
+			for (Node<Object> child : node.getChildren())
 				str.append(parseNode(child, 1, 1));
 			str.append("</xs:choice>\n");
 		} else {
