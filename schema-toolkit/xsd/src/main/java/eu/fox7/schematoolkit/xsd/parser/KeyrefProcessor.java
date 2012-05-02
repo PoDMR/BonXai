@@ -120,13 +120,7 @@ public class KeyrefProcessor extends Processor {
             throw new MissingReferException("keyRef: " + getName(node));
         }
 
-        // Creates the keyref with a correct reference from the KeySymbolTable
-        Key key = schema.getKey(refer);
-        if (key == null) {
-            key = new Key(refer, "");
-            key.setDummy(true);
-        }
-        keyRef = new KeyRef(keyRefName, "", key);
+        keyRef = new KeyRef(keyRefName, "", refer);
         visitChildren(node);
 
         // For every keyref a selector has to be present. If not an exception is thrown.

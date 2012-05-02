@@ -103,7 +103,6 @@ public class NamespaceList {
 			//throw new RuntimeException("Name is null.");
 			return "NULL";
 		Namespace namespace = this.getNamespaceByUri(name.getNamespaceURI());
-		//TODO
 		if (namespace == null)
 			namespace = Namespace.EMPTY_NAMESPACE;
 		if (name.isAttribute())

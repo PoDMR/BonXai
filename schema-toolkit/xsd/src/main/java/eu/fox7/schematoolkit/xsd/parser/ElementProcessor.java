@@ -252,11 +252,10 @@ public class ElementProcessor extends Processor {
                 return elementRef;
             }
         }
-// TODO: How to handle empty types?
-//        if (element.getTypeName() == null) {
-//            String anyTypeName = "{http://www.w3.org/2001/XMLSchema}anyType";
-//            element.setTypeName(anyTypeName);
-//        }
+        if (element.getTypeName() == null) {
+            String anyTypeName = "{http://www.w3.org/2001/XMLSchema}anyType";
+            element.setTypeName(QualifiedName.getQualifiedNameFromFQN(anyTypeName));
+        }
         if (maxOccursValue == null || (minOccursValue != 1 || maxOccursValue != 1)) {
             CountingPattern countingPattern = new CountingPattern(element, minOccursValue, maxOccursValue);
             return countingPattern;

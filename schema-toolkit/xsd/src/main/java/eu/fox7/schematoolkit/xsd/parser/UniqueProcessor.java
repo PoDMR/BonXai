@@ -117,7 +117,6 @@ public class UniqueProcessor extends Processor {
             }
             unique.setId(node.getAttributes().getNamedItem("id").getNodeValue());
         }
-        unique.setDummy(false);
         return unique;
     }
 }

@@ -27,19 +27,17 @@ import eu.fox7.schematoolkit.common.QualifiedName;
  * @TODO Missing docs.
  */
 public class KeyRef extends SimpleConstraint {
+    private QualifiedName refer;
 
-    protected SimpleConstraint keyRef;
-
-    public KeyRef (QualifiedName name, String selector, SimpleConstraint keyRef) {
+	public KeyRef (QualifiedName name, String selector, QualifiedName refer) {
          super(name, selector);
-         this.keyRef = keyRef;
+         this.refer = refer;
     }
 
-    /*
-     * Method getKeyOrUnique returns a copy of the key, dereferenced by
-     * Method getReference from class SymbleTableRef.
-     */
-    public SimpleConstraint getKeyOrUnique () {
-        return keyRef;
-    }
+	/**
+	 * @return the refer
+	 */
+	public QualifiedName getRefer() {
+		return refer;
+	}
 }

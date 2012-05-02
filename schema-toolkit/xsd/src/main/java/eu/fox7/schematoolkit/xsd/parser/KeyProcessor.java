@@ -120,7 +120,6 @@ public class KeyProcessor extends Processor {
             }
             key.setId(node.getAttributes().getNamedItem("id").getNodeValue());
         }
-        key.setDummy(false);
         return key;
     }
 }

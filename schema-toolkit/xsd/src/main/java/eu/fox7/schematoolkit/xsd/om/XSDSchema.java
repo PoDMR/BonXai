@@ -571,7 +571,7 @@ public class XSDSchema implements Schema {
 	}
 
 	public Key getKey(QualifiedName refer) {
-		// TODO Auto-generated method stub
+		//TODO key constraints
 		return null;
 	}
 

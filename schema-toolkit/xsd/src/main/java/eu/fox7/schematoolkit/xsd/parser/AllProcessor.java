@@ -161,7 +161,6 @@ public class AllProcessor extends Processor {
                     QualifiedName particleElementName = null;
                     // There must not be two elements with the same name under
                     // the "all"-tag
-                    // TODO:
 //                    for (Particle currentParticle : allPattern.getParticles()) {
 //                    	particleElementName = checkParticlesForSameElement(currentParticle, particle);
 //                    	if (!(particleElementName==null)) {

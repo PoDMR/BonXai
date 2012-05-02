@@ -57,14 +57,6 @@ public abstract class SimpleConstraint extends Constraint implements Annotationa
         this.selector = other.selector;
     }
     
-    public boolean isDummy() {
-        return dummy;
-    }
-
-    public void setDummy(boolean dummy) {
-        this.dummy = dummy;
-    }
-
     public Annotation getAnnotation() {
         return annotation;
     }
