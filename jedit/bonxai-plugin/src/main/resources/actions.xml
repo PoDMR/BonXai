@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE ACTIONS SYSTEM "actions.dtd">
+<ACTIONS>
+  <ACTION NAME="bonxai.convertXSD">
+    <CODE>
+      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "convertXSD");
+    </CODE>
+  </ACTION>
+<ACTIONS/>
+

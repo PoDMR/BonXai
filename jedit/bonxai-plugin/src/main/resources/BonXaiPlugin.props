@@ -1,0 +1,21 @@
+plugin.eu.fox7.jedit.BonXaiPlugin.name=BonXaiPlugin
+plugin.eu.fox7.jedit.BonXaiPlugin.author=TUDO
+plugin.eu.fox7.jedit.BonXaiPlugin.version=1.0.0
+plugin.eu.fox7.jedit.BonXaiPlugin.activate=startup #defer
+plugin.eu.fox7.jedit.BonXaiPlugin.description=Foxlib plugin
+plugin.eu.fox7.jedit.BonXaiPlugin.longdescription=description.html
+
+# Dependencies
+plugin.eu.fox7.jedit.BonXaiPlugin.depend.0=jdk 1.6
+plugin.eu.fox7.jedit.BonXaiPlugin.depend.1=jedit 04.03.09.00
+#plugin.eu.fox7.jedit.BonXaiPlugin.depend.2=plugin jakartacommons.JakartaCommonsPlugin 0.2
+#plugin.eu.fox7.jedit.BonXaiPlugin.depend.2=optional plugin archive.ArchivePlugin 0.2
+plugin.eu.fox7.jedit.BonXaiPlugin.jars=xsd.jar bonxai.jar schemahandler.jar
+
+# Option pane
+#plugin.eu.fox7.jedit.BonXaiPlugin.option-pane=eu.fox7
+#options.eu.fox7.bonxai.bonxaiplugin.code = new eu.fox7.BonxaiOptionPane();
+#options.eu.fox7.bonxai.bonxaiplugin.title=Bonxai
+#options.eu.fox7.bonxai.bonxaiplugin.label=Bonxai
+
+# Action labels
