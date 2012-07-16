@@ -1,13 +1,14 @@
 package eu.fox7.treeautomata.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.flt.automata.misc.StateRemapper;
-import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
-import eu.fox7.flt.treeautomata.impl.ContextAutomaton;
+import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.typeautomaton.factories.XSDTypeAutomatonFactory;
 import eu.fox7.schematoolkit.xsd.om.Type;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
@@ -15,7 +16,12 @@ import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 public class XSD2ContextAutomatonConverter {
 	private boolean addSimpleTypes; 
 	private Type2ContentAutomatonConverter typeConverter;
-	
+
+    /** 
+     * Maps types to states of the context automaton
+     */
+    private Map<QualifiedName, State> typeMap;
+
 	public XSD2ContextAutomatonConverter() {
 		this(false);
 	}
@@ -28,27 +34,32 @@ public class XSD2ContextAutomatonConverter {
 		this.addSimpleTypes = addSimpleTypes;
 	}
 
-	public ContextAutomaton convertXSD(XSDSchema xsd) {
+	public ExtendedContextAutomaton convertXSD(XSDSchema xsd) {
 		this.typeConverter = new Type2ContentAutomatonConverter();
 		XSDTypeAutomatonFactory factory = new XSDTypeAutomatonFactory(this.addSimpleTypes);
 		TypeAutomaton typeAutomaton = factory.createTypeAutomaton(xsd);
-		return this.convertTypeAutomaton(typeAutomaton);
-	}
 
-	public ContextAutomaton convertTypeAutomaton(TypeAutomaton typeAutomaton) {
 		Map<State,State> stateMap = StateRemapper.stateRemapping(typeAutomaton);
-		ContextAutomaton contextAutomaton = new ContextAutomaton(typeAutomaton,stateMap);
+		this.typeMap = new HashMap<QualifiedName,State>();
+		for (Entry<QualifiedName,State> entry: factory.getTypeMap().entrySet())
+			typeMap.put(entry.getKey(), stateMap.get(entry.getValue()));
+		
+		ExtendedContextAutomaton contextAutomaton = new ExtendedContextAutomaton(typeAutomaton,stateMap);
 		
 		for (Entry<State,State> entry: stateMap.entrySet()) {
 			State origState = entry.getKey();
 			State newState = entry.getValue();
 			if (! typeAutomaton.isInitialState(origState)) {
 				Type type = typeAutomaton.getType(origState);
-				ContentAutomaton contentAutomaton = this.typeConverter.convertType(type);
+				StateNFA contentAutomaton = this.typeConverter.convertType(type);
 				contextAutomaton.annotate(newState, contentAutomaton);
 			}			
 		}
 		return contextAutomaton;
+	}
+	
+	public Map<QualifiedName, State> getTypeMap() {
+		return typeMap;
 	}
 	
 

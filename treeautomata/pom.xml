@@ -39,12 +39,22 @@
     </dependency>
     <dependency>
     	<groupId>eu.fox7.schema-toolkit</groupId>
-    	<artifactId>xsd2bonxai</artifactId>
+    	<artifactId>typeautomaton</artifactId>
     	<version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
     	<groupId>eu.fox7.schema-toolkit</groupId>
-    	<artifactId>typeautomaton</artifactId>
+    	<artifactId>xsd2typeautomaton</artifactId>
+    	<version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+    	<groupId>eu.fox7.schema-toolkit</groupId>
+    	<artifactId>bonxai</artifactId>
+    	<version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+    	<groupId>eu.fox7.schema-toolkit</groupId>
+    	<artifactId>bonxai2xsd</artifactId>
     	<version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

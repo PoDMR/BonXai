@@ -3,10 +3,8 @@ package eu.fox7.treeautomata.converter;
 
 import java.util.Vector;
 
-import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.NotDFAException;
 import eu.fox7.flt.automata.impl.sparse.State;
-import eu.fox7.flt.automata.impl.sparse.StateDFA;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
 import eu.fox7.flt.regex.Regex;
@@ -17,6 +15,7 @@ import eu.fox7.schematoolkit.common.EmptyPattern;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.common.SequencePattern;
+import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.Element;
@@ -37,10 +36,10 @@ public class ContentAutomaton2TypeConverter {
 	 * @param contentAutomaton
 	 * @return
 	 */
-	public Type convertContentAutomaton(StateDFA contentAutomaton, QualifiedName typename, State typeAutomatonState) {
+	public Type convertContentAutomaton(StateNFA contentAutomaton, QualifiedName typename, State typeAutomatonState) {
         StateEliminationFactory factory = new StateEliminationFactory();
         System.err.println("Automaton: \n" + contentAutomaton.toString());
-
+        
 		Regex regex = factory.create(contentAutomaton, false);
 
 		System.err.println("Regex-Tree: \n"+ regex.getTree());
