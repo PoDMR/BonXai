@@ -57,7 +57,7 @@ public class ConvertSchema extends FoxlibAction {
 	 */
 	@Override
 	public void handleBufferAction(View view, String actionName) {
-		SchemaHandler schemaHandler = this.getSchemaHandler(view);
+		SchemaHandler schemaHandler = this.getSchemaHandler(view.getBuffer());
 		SchemaLanguage sourceLanguage = schemaHandler.getSchemaLanguage();
 		SchemaLanguage targetLanguage = this.getTargetLanguage(actionName);
 		schemaHandler.getSchemaLanguage().getConverter(targetLanguage);

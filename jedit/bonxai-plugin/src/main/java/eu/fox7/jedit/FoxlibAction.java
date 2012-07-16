@@ -12,6 +12,7 @@ import org.gjt.sp.jedit.io.VFSFile;
 import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.schematoolkit.SchemaToolkitException;
+import eu.fox7.schematoolkit.bonxai.BonxaiManager;
 
 public abstract class FoxlibAction {
 	public void handleBrowserAction(View view, VFSFile[] files, String actionName) {}
@@ -40,13 +41,18 @@ public abstract class FoxlibAction {
 		if (extension.equals("xml") || extension.equals("dtd")) schemaLanguage = SchemaLanguage.DTD;
 		return schemaLanguage;
 	}
-	protected SchemaHandler getSchemaHandler(View view) {
-		Buffer buffer = view.getBuffer();
-		SchemaHandler handler = getSchemaLanguage(buffer).getSchemaHandler();
-		try {
-			handler.parseSchema(view.getTextArea().getText());
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+	protected SchemaHandler getSchemaHandler(Buffer buffer) {
+		SchemaLanguage language = getSchemaLanguage(buffer);
+		SchemaHandler handler = null;
+		if (language != null) {
+			handler = language.getSchemaHandler();
+			if (handler != null ) {
+				try {
+					handler.parseSchema(buffer.getText());
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
 		}
 		return handler;
 	}

@@ -4,8 +4,42 @@
 <ACTIONS>
   <ACTION NAME="bonxai.convertXSD">
     <CODE>
-      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "convertXSD");
+      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "convert2XMLSCHEMA");
     </CODE>
   </ACTION>
-<ACTIONS/>
-
+  <ACTION NAME="bonxai.convertBonxai">
+    <CODE>
+      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "convert2BONXAI");
+    </CODE>
+  </ACTION>
+  <ACTION NAME="bonxai.registerSchema">
+    <CODE>
+      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "registerSchema");
+    </CODE>
+  </ACTION>
+  <ACTION NAME="bonxai.validate">
+    <CODE>
+      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "validate");
+    </CODE>
+  </ACTION>
+  <ACTION NAME="bonxai.printSchemaMap">
+    <CODE>
+      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "printSchemaMap");
+    </CODE>
+  </ACTION>
+  <ACTION NAME="bonxai.printLinks">
+    <CODE>
+      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "printLinks");
+    </CODE>
+  </ACTION>
+  <ACTION NAME="bonxai.printHighlights">
+    <CODE>
+      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "printHighlights");
+    </CODE>
+  </ACTION>
+  <ACTION NAME="bonxai.printTextElements">
+    <CODE>
+      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "printTextElements");
+    </CODE>
+  </ACTION>
+</ACTIONS>

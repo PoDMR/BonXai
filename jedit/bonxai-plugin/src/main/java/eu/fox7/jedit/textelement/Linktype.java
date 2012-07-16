@@ -1,0 +1,5 @@
+package eu.fox7.jedit.textelement;
+
+public enum Linktype {
+  EXPRESSION2TYPE, EXPRESSION2ELEMENT, ELEMENT2EXPRESSION, ELEMENT2TYPE, TYPE2ELEMENT
+}
