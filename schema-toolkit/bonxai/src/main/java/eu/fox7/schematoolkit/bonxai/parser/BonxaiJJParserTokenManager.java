@@ -3,12 +3,13 @@ package eu.fox7.schematoolkit.bonxai.parser;
 import java.util.*;
 import eu.fox7.schematoolkit.bonxai.om.*;
 import eu.fox7.schematoolkit.bonxai.om.Element;
+import eu.fox7.schematoolkit.bonxai.om.ElementRef;
 import eu.fox7.schematoolkit.bonxai.om.Annotation;
 import eu.fox7.schematoolkit.common.*;
 
 public class BonxaiJJParserTokenManager implements BonxaiJJParserConstants
 {
-    // Required by SetState
+    // required by SetState
     void backup(int n) { input_stream.backup(n); }
   public  java.io.PrintStream debugStream = System.out;
   public  void setDebugStream(java.io.PrintStream ds) { debugStream = ds; }

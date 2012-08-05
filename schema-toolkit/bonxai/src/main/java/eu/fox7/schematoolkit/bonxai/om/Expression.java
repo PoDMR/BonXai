@@ -23,8 +23,23 @@ import java.util.List;
  * Class representing an expression/rule consisting of an annotation, ancestor-pattern and child-pattern
  */
 public class Expression {
-
+	private BonxaiLocation ancestorPatternLocation;
+	
     /**
+	 * @return the ancestorPatternLocation
+	 */
+	public BonxaiLocation getAncestorPatternLocation() {
+		return ancestorPatternLocation;
+	}
+
+	/**
+	 * @param ancestorPatternLocation the ancestorPatternLocation to set
+	 */
+	public void setAncestorPatternLocation(BonxaiLocation ancestorPatternLocation) {
+		this.ancestorPatternLocation = ancestorPatternLocation;
+	}
+
+	/**
      * Annotation of the rule
      */
     private List<Annotation> annotations = new LinkedList<Annotation>();
@@ -42,6 +57,13 @@ public class Expression {
 
     public Expression(List<Annotation> annotations, AncestorPattern aPattern, ChildPattern cPattern) {
 		this.annotations = annotations;
+		this.ancestorPattern = aPattern;
+		this.childPattern = cPattern;
+	}
+
+    public Expression(List<Annotation> annotations, AncestorPattern aPattern, ChildPattern cPattern, BonxaiLocation ancestorPatternLocation) {
+		this.ancestorPatternLocation = ancestorPatternLocation;
+    	this.annotations = annotations;
 		this.ancestorPattern = aPattern;
 		this.childPattern = cPattern;
 	}

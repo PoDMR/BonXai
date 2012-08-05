@@ -16,6 +16,14 @@
  */
 package eu.fox7.schematoolkit.bonxai.om;
 
+import java.util.Collection;
+import java.util.LinkedList;
+
+import eu.fox7.schematoolkit.common.CountingPattern;
+import eu.fox7.schematoolkit.common.ElementRef;
+import eu.fox7.schematoolkit.common.Particle;
+import eu.fox7.schematoolkit.common.ParticleContainer;
+
 /**
  * Class representing the child-string in Bonxai
  */
@@ -74,5 +82,6 @@ public class ChildPattern {
 	public void setMixed(boolean mixed) {
 		this.mixed = mixed;
 	}
+
 }
 

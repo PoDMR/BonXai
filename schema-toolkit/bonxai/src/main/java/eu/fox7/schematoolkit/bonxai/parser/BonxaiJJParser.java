@@ -4,51 +4,59 @@ package eu.fox7.schematoolkit.bonxai.parser;
 import java.util.*;
 import eu.fox7.schematoolkit.bonxai.om.*;
 import eu.fox7.schematoolkit.bonxai.om.Element;
+import eu.fox7.schematoolkit.bonxai.om.ElementRef;
 import eu.fox7.schematoolkit.bonxai.om.Annotation;
 import eu.fox7.schematoolkit.common.*;
 
 public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParserConstants {
+  private int identifierEndLine=0;
+  private int identifierEndColumn=0;
+  private int aPatternBeginLine=0;
+  private int aPatternBeginColumn=0;
+  private int aPatternEndLine=0;
+  private int aPatternEndColumn=0;
 
-private void setState(int state) {
-  if (state != token_source.curLexState) {
-    Token root = new Token(), last=root;
-    root.next = null;
 
-    // First, we build a list of tokens to push back, in backwards order
-    while (token.next != null) {
-      Token t = token;
-      // Find the token whose token.next is the last in the chain
-      while (t.next != null && t.next.next != null)
-        t = t.next;
+  private void setState(int state) {
+    if (state != token_source.curLexState) {
+      Token root = new Token(), last=root;
+      root.next = null;
 
-      // put it at the end of the new chain
-      last.next = t.next;
-      last = t.next;
+      // First, we build a list of tokens to push back, in backwards order
+      while (token.next != null) {
+        Token t = token;
+        // Find the token whose token.next is the last in the chain
+        while (t.next != null && t.next.next != null)
+          t = t.next;
 
-      // If there are special tokens, these go before the regular tokens,
-      // so we want to push them back onto the input stream in the order
-      // we find them along the specialToken chain.
+        // put it at the end of the new chain
+        last.next = t.next;
+        last = t.next;
 
-      if (t.next.specialToken != null) {
-        Token tt=t.next.specialToken;
-        while (tt != null) {
-          last.next = tt;
-          last = tt;
-          tt.next = null;
-          tt = tt.specialToken;
+        // If there are special tokens, these go before the regular tokens,
+        // so we want to push them back onto the input stream in the order
+        // we find them along the specialToken chain.
+
+        if (t.next.specialToken != null) {
+          Token tt=t.next.specialToken;
+          while (tt != null) {
+            last.next = tt;
+            last = tt;
+            tt.next = null;
+            tt = tt.specialToken;
+          }
         }
+        t.next = null;
       }
-      t.next = null;
-    };
 
-    while (root.next != null) {
-      token_source.backup(root.next.image.length());
-      root.next = root.next.next;
+      while (root.next != null) {
+        token_source.backup(root.next.image.length());
+        root.next = root.next.next;
+      }
+      jj_ntk = -1;
+      token_source.SwitchTo(state);
     }
-    jj_ntk = -1;
-    token_source.SwitchTo(state);
   }
-}
 
 // Start symbol bonXai(); called by parser function
 // Main entry point of the Bonxai grammar
@@ -422,7 +430,7 @@ private void setState(int state) {
   final public void Expr() throws ParseException {
     trace_call("Expr");
     try {
-              AncestorPattern aPattern; ChildPattern cPattern; List<Annotation> annotations=new LinkedList<Annotation>();
+              aPatternBeginLine=0; AncestorPattern aPattern; ChildPattern cPattern; List<Annotation> annotations=new LinkedList<Annotation>();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case AT:
         annotations = Annotations();
@@ -435,7 +443,7 @@ private void setState(int state) {
       jj_consume_token(EQUALS);
                                                                    setState(DEFAULT);
       cPattern = CPattern();
-          this.bonxai.addExpression(new Expression(annotations, aPattern, cPattern)); setState(NAME);
+          this.bonxai.addExpression(new Expression(annotations, aPattern, cPattern, new BonxaiLocation(aPatternBeginLine,aPatternBeginColumn,aPatternEndLine,aPatternEndColumn))); setState(NAME);
     } finally {
       trace_return("Expr");
     }
@@ -630,26 +638,29 @@ private void setState(int state) {
   boolean sequence=false;
   boolean or=false;
   AncestorPattern aPattern, aPattern1;
+  Token t = null;
+  Token s = null;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SLASH:
-        jj_consume_token(SLASH);
+        t = jj_consume_token(SLASH);
         aPattern = SimpleAPattern();
         break;
       case DOUBLESLASH:
-        jj_consume_token(DOUBLESLASH);
+        t = jj_consume_token(DOUBLESLASH);
         aPattern1 = SimpleAPattern();
-                                                       aPattern=new DoubleSlashPrefixedContainer(aPattern1);
+                                                         aPattern=new DoubleSlashPrefixedContainer(aPattern1);
         break;
       case OPENING_ROUND_BRACKET:
-        jj_consume_token(OPENING_ROUND_BRACKET);
+        t = jj_consume_token(OPENING_ROUND_BRACKET);
         aPattern1 = FullAPatternOr();
-                                                                aPattern=aPattern1;
-        jj_consume_token(CLOSING_ROUND_BRACKET);
+                                                                  aPattern=aPattern1;
+        s = jj_consume_token(CLOSING_ROUND_BRACKET);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case STAR:
         case PLUS:
         case QUESTION_MARK:
           aPattern = Operator(aPattern1);
+                                                                                                                                                s=null;
           break;
         default:
           jj_la1[19] = jj_gen;
@@ -661,6 +672,18 @@ private void setState(int state) {
         jj_consume_token(-1);
         throw new ParseException();
       }
+      if (aPatternBeginLine == 0) {
+            aPatternBeginLine = t.beginLine;
+            aPatternBeginColumn = t.beginColumn;
+      }
+      if (s == null) {
+            aPatternEndLine = identifierEndLine;
+            aPatternEndColumn = identifierEndColumn;
+          } else {
+            aPatternEndLine = s.endLine;
+            aPatternEndColumn = s.endColumn;
+          }
+
       {if (true) return aPattern;}
     throw new Error("Missing return statement in function");
     } finally {
@@ -700,24 +723,27 @@ private void setState(int state) {
   final public AncestorPattern Operator(AncestorPattern aPattern) throws ParseException {
     trace_call("Operator");
     try {
+                                                     int min=0; Integer max = null; Token t;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case STAR:
-        jj_consume_token(STAR);
-                  {if (true) return new CardinalityParticle(aPattern,0);}
+        t = jj_consume_token(STAR);
         break;
       case PLUS:
-        jj_consume_token(PLUS);
-                  {if (true) return new CardinalityParticle(aPattern,1);}
+        t = jj_consume_token(PLUS);
+                               min=1;
         break;
       case QUESTION_MARK:
-        jj_consume_token(QUESTION_MARK);
-                           {if (true) return new CardinalityParticle(aPattern,0,1);}
+        t = jj_consume_token(QUESTION_MARK);
+                                                           max=1;
         break;
       default:
         jj_la1[22] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
+          identifierEndLine = t.endLine;
+          identifierEndColumn = t.endColumn;
+          {if (true) return new CardinalityParticle(aPattern,min,max);}
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("Operator");
@@ -887,8 +913,8 @@ private void setState(int state) {
           break label_13;
         }
         jj_consume_token(OR);
-        RegexC();
-                                                rs.add(r);
+        r = RegexC();
+                                                  rs.add(r);
       }
                 if (rs.size()==1)
                         {if (true) return r;}
@@ -1031,12 +1057,12 @@ private void setState(int state) {
   final public Particle NamedType() throws ParseException {
     trace_call("NamedType");
     try {
-                       BonxaiType type; Particle p; QualifiedName name; boolean missing=false;
+                       Token t; BonxaiType type; Particle p; QualifiedName name; boolean missing=false;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ELEMENT:
-        jj_consume_token(ELEMENT);
+        t = jj_consume_token(ELEMENT);
         name = Name();
-                                        p = new Element(name);
+                                          p = new Element(name, new BonxaiLocation(t.beginLine, t.beginColumn, identifierEndLine, identifierEndColumn));
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case OPENING_CURLY_BRACKET:
           jj_consume_token(OPENING_CURLY_BRACKET);
@@ -1066,9 +1092,9 @@ private void setState(int state) {
                                          p = new GroupReference(name); setState(DEFAULT);
         break;
       case ELEMENTREF:
-        jj_consume_token(ELEMENTREF);
+        t = jj_consume_token(ELEMENTREF);
         name = Name();
-                                             p = new ElementRef(name);
+                                               p = new ElementRef(name, new BonxaiLocation(t.beginLine, t.beginColumn, identifierEndLine, identifierEndColumn));
         break;
       default:
         jj_la1[39] = jj_gen;
@@ -1302,6 +1328,8 @@ private void setState(int state) {
     try {
                       Token t;
       t = jj_consume_token(LABEL);
+          identifierEndLine = t.endLine;
+          identifierEndColumn = t.endColumn;
           {if (true) return t.image;}
     throw new Error("Missing return statement in function");
     } finally {
@@ -1326,7 +1354,7 @@ private void setState(int state) {
   final public QualifiedName Name() throws ParseException {
     trace_call("Name");
     try {
-                       String s="" ; String t="";
+                       String s=null ; String t=null;
       s = Identifier();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case COLON:
@@ -1337,7 +1365,7 @@ private void setState(int state) {
         jj_la1[50] = jj_gen;
         ;
       }
-                if (t.equals("")) {
+                if (t == null) {
                 {if (true) return new QualifiedName(this.bonxai.getDefaultNamespace(),s);}
                 } else {
                 {if (true) return new QualifiedName(this.bonxai.getNamespaceByIdentifier(s),t);}
@@ -1382,6 +1410,58 @@ private void setState(int state) {
     finally { jj_save(2, xla); }
   }
 
+  final private boolean jj_3R_17() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_21()) {
+    jj_scanpos = xsp;
+    if (jj_3R_22()) {
+    jj_scanpos = xsp;
+    if (jj_3R_23()) return true;
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_19() {
+    if (jj_3R_25()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_25() {
+    if (jj_scan_token(ATTRIBUTE)) return true;
+    if (jj_3R_27()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_27() {
+    if (jj_3R_29()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_30()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_24() {
+    if (jj_scan_token(ATTRIBUTEGROUP)) return true;
+    if (jj_3R_27()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_36() {
+    if (jj_scan_token(QUOTATION)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_2() {
+    if (jj_3R_17()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(49)) jj_scanpos = xsp;
+    if (jj_scan_token(ANDLITERAL)) return true;
+    return false;
+  }
+
   final private boolean jj_3_3() {
     if (jj_scan_token(COMMA)) return true;
     Token xsp;
@@ -1393,11 +1473,6 @@ private void setState(int state) {
     if (jj_scan_token(22)) return true;
     }
     }
-    return false;
-  }
-
-  final private boolean jj_3R_36() {
-    if (jj_scan_token(QUOTATION)) return true;
     return false;
   }
 
@@ -1499,65 +1574,18 @@ private void setState(int state) {
     return false;
   }
 
-  final private boolean jj_3R_21() {
-    if (jj_scan_token(ELEMENT)) return true;
-    if (jj_3R_27()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_28()) jj_scanpos = xsp;
-    return false;
-  }
-
   final private boolean jj_3R_30() {
     if (jj_scan_token(COLON)) return true;
     if (jj_3R_29()) return true;
     return false;
   }
 
-  final private boolean jj_3R_17() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_21()) {
-    jj_scanpos = xsp;
-    if (jj_3R_22()) {
-    jj_scanpos = xsp;
-    if (jj_3R_23()) return true;
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_19() {
-    if (jj_3R_25()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_25() {
-    if (jj_scan_token(ATTRIBUTE)) return true;
+  final private boolean jj_3R_21() {
+    if (jj_scan_token(ELEMENT)) return true;
     if (jj_3R_27()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_24() {
-    if (jj_scan_token(ATTRIBUTEGROUP)) return true;
-    if (jj_3R_27()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_27() {
-    if (jj_3R_29()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_30()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3_2() {
-    if (jj_3R_17()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(49)) jj_scanpos = xsp;
-    if (jj_scan_token(ANDLITERAL)) return true;
+    if (jj_3R_28()) jj_scanpos = xsp;
     return false;
   }
 

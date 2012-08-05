@@ -15,51 +15,59 @@ package eu.fox7.schematoolkit.bonxai.parser;
 import java.util.*;
 import eu.fox7.schematoolkit.bonxai.om.*;
 import eu.fox7.schematoolkit.bonxai.om.Element;
+import eu.fox7.schematoolkit.bonxai.om.ElementRef;
 import eu.fox7.schematoolkit.bonxai.om.Annotation;
 import eu.fox7.schematoolkit.common.*;
 
 public class BonxaiJJParser extends BonxaiJJParserBase {
+  private int identifierEndLine=0;
+  private int identifierEndColumn=0;
+  private int aPatternBeginLine=0;
+  private int aPatternBeginColumn=0;
+  private int aPatternEndLine=0;
+  private int aPatternEndColumn=0;
+  
+  
+  private void setState(int state) {
+    if (state != token_source.curLexState) {
+      Token root = new Token(), last=root;
+      root.next = null;
 
-private void setState(int state) {
-  if (state != token_source.curLexState) {
-    Token root = new Token(), last=root;
-    root.next = null;
+      // First, we build a list of tokens to push back, in backwards order
+      while (token.next != null) {
+        Token t = token;
+        // Find the token whose token.next is the last in the chain
+        while (t.next != null && t.next.next != null)
+          t = t.next;
 
-    // First, we build a list of tokens to push back, in backwards order
-    while (token.next != null) {
-      Token t = token;
-      // Find the token whose token.next is the last in the chain
-      while (t.next != null && t.next.next != null)
-        t = t.next;
+        // put it at the end of the new chain
+        last.next = t.next;
+        last = t.next;
 
-      // put it at the end of the new chain
-      last.next = t.next;
-      last = t.next;
+        // If there are special tokens, these go before the regular tokens,
+        // so we want to push them back onto the input stream in the order
+        // we find them along the specialToken chain.
 
-      // If there are special tokens, these go before the regular tokens,
-      // so we want to push them back onto the input stream in the order
-      // we find them along the specialToken chain.
-
-      if (t.next.specialToken != null) {
-        Token tt=t.next.specialToken;
-        while (tt != null) {
-          last.next = tt;
-          last = tt;
-          tt.next = null;
-          tt = tt.specialToken;
+        if (t.next.specialToken != null) {
+          Token tt=t.next.specialToken;
+          while (tt != null) {
+            last.next = tt;
+            last = tt;
+            tt.next = null;
+            tt = tt.specialToken;
+          }
         }
+        t.next = null;
       }
-      t.next = null;
-    };
 
-    while (root.next != null) {
-      token_source.backup(root.next.image.length());
-      root.next = root.next.next;
+      while (root.next != null) {
+        token_source.backup(root.next.image.length());
+        root.next = root.next.next;
+      }
+      jj_ntk = -1;
+      token_source.SwitchTo(state);
     }
-    jj_ntk = -1;
-    token_source.SwitchTo(state);
   }
-}
 }
 
 PARSER_END(BonxaiJJParser)
@@ -599,10 +607,10 @@ void RootElements(): {QualifiedName name; }
 
 
 // Expr                ::= Annotations? APattern "=" CPattern
-void Expr(): {AncestorPattern aPattern; ChildPattern cPattern; List<Annotation> annotations=new LinkedList<Annotation>();}
+void Expr(): {aPatternBeginLine=0; AncestorPattern aPattern; ChildPattern cPattern; List<Annotation> annotations=new LinkedList<Annotation>();}
 {
 	[annotations=Annotations()] aPattern=APattern() <EQUALS> { setState(DEFAULT); } cPattern=CPattern()
-	{ this.bonxai.addExpression(new Expression(annotations, aPattern, cPattern)); setState(NAME); }
+	{ this.bonxai.addExpression(new Expression(annotations, aPattern, cPattern, new BonxaiLocation(aPatternBeginLine,aPatternBeginColumn,aPatternEndLine,aPatternEndColumn))); setState(NAME); }
 }
 
 
@@ -684,12 +692,25 @@ AncestorPattern FullAPatternX(): {
   boolean separator=false; 
   boolean sequence=false; 
   boolean or=false; 
-  AncestorPattern aPattern, aPattern1; }
+  AncestorPattern aPattern, aPattern1;
+  Token t = null;
+  Token s = null; }
 {
-	(	<SLASH> aPattern=SimpleAPattern() 
-	|   <DOUBLESLASH> aPattern1=SimpleAPattern() { aPattern=new DoubleSlashPrefixedContainer(aPattern1); }  
-	| (<OPENING_ROUND_BRACKET>  aPattern1=FullAPatternOr() {aPattern=aPattern1;} <CLOSING_ROUND_BRACKET> [aPattern=Operator(aPattern1)] ))   
-    { return aPattern; }
+	(	t=<SLASH> aPattern=SimpleAPattern() 
+	|   t=<DOUBLESLASH> aPattern1=SimpleAPattern() { aPattern=new DoubleSlashPrefixedContainer(aPattern1); }  
+	| (t=<OPENING_ROUND_BRACKET>  aPattern1=FullAPatternOr() {aPattern=aPattern1;} s=<CLOSING_ROUND_BRACKET> [aPattern=Operator(aPattern1) {s=null;}] ))   
+    {
+      if (aPatternBeginLine == 0) {  	    aPatternBeginLine = t.beginLine;
+	    aPatternBeginColumn = t.beginColumn;
+      }
+      if (s == null) {	    aPatternEndLine = identifierEndLine;
+	    aPatternEndColumn = identifierEndColumn;
+	  } else {
+	    aPatternEndLine = s.endLine;
+	    aPatternEndColumn = s.endColumn;	  }
+	  
+      return aPattern;
+    }
 }
 
 // FullAPatternOr     ::= FullAPattern ("|" FullAPattern)*
@@ -700,11 +721,12 @@ AncestorPattern FullAPatternOr(): { AncestorPattern aPattern; OrExpression or=ne
 }
 
 // Operator           ::= "*" | "+" | "?"
-AncestorPattern Operator(AncestorPattern aPattern): {}
+AncestorPattern Operator(AncestorPattern aPattern): {int min=0; Integer max = null; Token t;}
 {
-	( <STAR> {return new CardinalityParticle(aPattern,0);} 
-	| <PLUS> {return new CardinalityParticle(aPattern,1);} 
-	| <QUESTION_MARK> {return new CardinalityParticle(aPattern,0,1);} )
+	( t=<STAR> | t=<PLUS> {min=1;}| t=<QUESTION_MARK> {max=1;} )	{
+	  identifierEndLine = t.endLine;
+	  identifierEndColumn = t.endColumn;
+	  return new CardinalityParticle(aPattern,min,max);	}
 }
 
 
@@ -757,7 +779,7 @@ AllPattern All(): {Particle particle; List<Particle> particles=new LinkedList<Pa
 //RX::=("(" R ")" | NT) OP?
 Particle Regex(): { Particle r; List<Particle> rs = new LinkedList<Particle>(); }
 {
-	r=RegexC() {rs.add(r);} (<OR> RegexC() {rs.add(r);})*
+	r=RegexC() {rs.add(r);} (<OR> r=RegexC() {rs.add(r);})*
 	{   
 		if (rs.size()==1)
 			return r;
@@ -801,14 +823,14 @@ Particle RegexOp(Particle r): { int min=0; Integer max=null; }
 //                      | "group" Name
 //                      | Foreign "element" "*" ( "[" Number ( "," Number )? "]" )? NameSpaceList
 //TODO: foreign
-Particle NamedType(): {BonxaiType type; Particle p; QualifiedName name; boolean missing=false; }
+Particle NamedType(): {Token t; BonxaiType type; Particle p; QualifiedName name; boolean missing=false; }
 {
 	( 
-		<ELEMENT> name=Name() { p = new Element(name); } 
+		t=<ELEMENT> name=Name() { p = new Element(name, new BonxaiLocation(t.beginLine, t.beginColumn, identifierEndLine, identifierEndColumn)); } 
 			[ <OPENING_CURLY_BRACKET> { setState(DEFAULT); } [ <MISSING> <OR> { missing=true; } ] type=BonxaiType() <CLOSING_CURLY_BRACKET> 
 			{ ((Element) p).setType(type,missing); setState(DEFAULT); } ]  
 		| <GROUP> name=Name()  { p = new GroupReference(name); setState(DEFAULT); }
-		| <ELEMENTREF> name=Name() { p = new ElementRef(name); }//| foreign=Foreign() <ELEMENT_STAR> [ <OPENING_SQUARED_BRACKET> numberBefore=Number() [ <COMMA> numberAfter=Number() ]  <CLOSING_SQUARED_BRACKET> ] lst=NameSpaceList()  { jjtThis.setNodeChoice("foreign"); }
+		| t=<ELEMENTREF> name=Name() { p = new ElementRef(name, new BonxaiLocation(t.beginLine, t.beginColumn, identifierEndLine, identifierEndColumn)); }//| foreign=Foreign() <ELEMENT_STAR> [ <OPENING_SQUARED_BRACKET> numberBefore=Number() [ <COMMA> numberAfter=Number() ]  <CLOSING_SQUARED_BRACKET> ] lst=NameSpaceList()  { jjtThis.setNodeChoice("foreign"); }
 	)
 	{ return p; }
 }
@@ -868,7 +890,11 @@ BonxaiType BonxaiType(): { QualifiedName typename; String value; BonxaiType type
 String Identifier(): {Token t;}
 {
 	t=<LABEL>   
-	{ return t.image; } 
+	{
+	  identifierEndLine = t.endLine;
+	  identifierEndColumn = t.endColumn;
+	  return t.image;
+	} 
 }
 
 String Quotation(): {Token t;}
@@ -879,11 +905,11 @@ String Quotation(): {Token t;}
 
 // Name                ::= ( (Letter | "_" | ":") (NameChar)* ) \ keywords  | QuotedName
 // added: productions like Name:Name; first Name: Namespace (group.bonxai example!)
-QualifiedName Name(): {String s="" ; String t="";}
+QualifiedName Name(): {String s=null ; String t=null;}
 {
 	s=Identifier() [<COLON> t=Identifier() ]
 	{ 
-  		if (t.equals("")) {
+  		if (t == null) {
     		return new QualifiedName(this.bonxai.getDefaultNamespace(),s);
   		} else {
     		return new QualifiedName(this.bonxai.getNamespaceByIdentifier(s),t);

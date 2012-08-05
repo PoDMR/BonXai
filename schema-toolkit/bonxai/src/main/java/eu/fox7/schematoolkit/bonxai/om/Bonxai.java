@@ -16,12 +16,13 @@
  */
 package eu.fox7.schematoolkit.bonxai.om;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.NamespaceAwareSchema;
 import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.schematoolkit.bonxai.BonxaiSchemaHandler;
@@ -30,7 +31,7 @@ import eu.fox7.schematoolkit.common.*;
 /**
  * Class representing an Bonxai XSDSchema
  */
-public class Bonxai implements Schema {
+public class Bonxai implements NamespaceAwareSchema {
 
     private static Set<String> keywords = null;
     
@@ -167,14 +168,27 @@ public class Bonxai implements Schema {
     	this.groups.add(group);
     }
     
+    @Deprecated
 	public void setDefaultNamespace(DefaultNamespace defaultNamespace) {
+		this.namespaceList.setTargetNamespace(defaultNamespace);
 		this.namespaceList.setDefaultNamespace(defaultNamespace);
 	}
 
-	public DefaultNamespace getDefaultNamespace() {
-		return this.namespaceList.getDefaultNamespace();
+    @Deprecated
+	public Namespace getDefaultNamespace() {
+		return this.namespaceList.getTargetNamespace();
 	}
 
+	public void setTargetNamespace(DefaultNamespace defaultNamespace) {
+		this.namespaceList.setTargetNamespace(defaultNamespace);
+		this.namespaceList.setDefaultNamespace(defaultNamespace);
+	}
+
+	public DefaultNamespace getTargetNamespace() {
+		return (DefaultNamespace) this.namespaceList.getTargetNamespace();
+	}
+
+	
 	public List<IdentifiedNamespace> getNamespaces() {
 		return this.namespaceList.getNamespaces();
 	}
@@ -246,6 +260,32 @@ public class Bonxai implements Schema {
 	@Override
 	public SchemaLanguage getSchemaLanguage() {
 		return SchemaLanguage.BONXAI;
+	}
+	
+	public Collection<Particle> getAllElementlikeParticles() {
+		Collection<Particle> particles = new LinkedList<Particle>();
+		for (Expression expression: expressions)
+			particles.addAll(Particle.getAllElementlikeParticles(expression.getChildPattern().getElementPattern().getRegexp()));
+		for (BonxaiAbstractGroup group: groups)
+			if (group instanceof BonxaiGroup)
+				particles.addAll(Particle.getAllElementlikeParticles(((BonxaiGroup) group).getParticle()));
+		
+		return particles;
+	}
+	
+	public Collection<AttributeParticle> getAllAttributelikeParticles() {
+		Collection<AttributeParticle> particles = new LinkedList<AttributeParticle>();
+		for (Expression expression: expressions) {
+			AttributePattern aPattern = expression.getChildPattern().getAttributePattern();
+			if (aPattern != null)
+				particles.addAll(aPattern.getAttributeList());
+		}
+		for (BonxaiAbstractGroup group: groups)
+			if (group instanceof BonxaiAttributeGroup) {
+				particles.addAll(((BonxaiAttributeGroup) group).getAttributePattern().getAttributeList());
+			}
+		
+		return particles;
 	}
 
 }

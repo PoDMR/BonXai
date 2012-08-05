@@ -19,7 +19,9 @@ package eu.fox7.schematoolkit.bonxai.om;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import eu.fox7.schematoolkit.common.AbstractAttribute;
 import eu.fox7.schematoolkit.common.AnyAttribute;
+import eu.fox7.schematoolkit.common.AttributeGroupReference;
 import eu.fox7.schematoolkit.common.AttributeParticle;
 
 /**
@@ -109,6 +111,27 @@ public class AttributePattern {
      */
     public void addAttribute(AttributeParticle attribute) {
         this.attributeList.add(attribute);
+    }
+    
+    /**
+     * Returns all attributes, dereferences groups
+     *  
+     * @param bonxai	the schema used to dereference groups 
+     * @return attributes
+     */
+    
+    public Collection<AbstractAttribute> getAttributes(Bonxai bonxai) {
+    	Collection<AbstractAttribute> attributes = new LinkedList<AbstractAttribute>();
+    	for (AttributeParticle aParticle: attributeList)
+        	if (aParticle instanceof AbstractAttribute)
+        		attributes.add((AbstractAttribute) aParticle);
+        	else if (aParticle instanceof AttributeGroupReference) {
+        		BonxaiAttributeGroup aGroup = bonxai.getAttributeGroup(((AttributeGroupReference) aParticle).getName());
+        		if (aGroup != null)
+        			attributes.addAll(aGroup.getAttributePattern().getAttributes(bonxai));
+        	}
+    	
+    	return attributes;
     }
 }
 

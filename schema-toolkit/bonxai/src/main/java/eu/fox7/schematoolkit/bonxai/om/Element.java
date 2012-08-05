@@ -16,17 +16,21 @@
  */
 package eu.fox7.schematoolkit.bonxai.om;
 
-import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.QualifiedName;
 
 /**
  * Bonxai Element realization.
  */
-public class Element extends Particle{
+public class Element extends eu.fox7.schematoolkit.common.Element implements Locatable {
     /**
      * The Type of this element.
      */
     protected BonxaiType type;
+    
+    /**
+     * Location in the schema
+     */
+    private BonxaiLocation location;
 
     /**
      * The Name of this element
@@ -43,6 +47,14 @@ public class Element extends Particle{
      */
     public Element (QualifiedName name) {
         this.name      = name;
+    }
+
+    /**
+     * Creates an element with namespace and name.
+     */
+    public Element (QualifiedName name, BonxaiLocation location) {
+        this.name      = name;
+        this.location = location;
     }
 
     /**
@@ -90,5 +102,10 @@ public class Element extends Particle{
 	
 	public QualifiedName getName() {
 		return name;
+	}
+
+	@Override
+	public BonxaiLocation getLocation() {
+		return location;
 	}
 }

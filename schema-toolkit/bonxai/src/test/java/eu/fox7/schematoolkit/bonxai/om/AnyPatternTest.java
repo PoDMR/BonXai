@@ -49,8 +49,8 @@ public class AnyPatternTest extends junit.framework.TestCase {
      */
     @Test
     public void testGetProcessContentsInstruction() {
-        AnyPattern anypattern = new AnyPattern(ProcessContentsInstruction.Lax, "someNamespace");
-        ProcessContentsInstruction expResult = ProcessContentsInstruction.Lax;
+        AnyPattern anypattern = new AnyPattern(ProcessContentsInstruction.LAX, "someNamespace");
+        ProcessContentsInstruction expResult = ProcessContentsInstruction.LAX;
         ProcessContentsInstruction result = anypattern.getProcessContentsInstruction();
         assertEquals(expResult, result);
     }

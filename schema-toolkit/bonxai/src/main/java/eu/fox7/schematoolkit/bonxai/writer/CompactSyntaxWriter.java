@@ -11,7 +11,6 @@ import eu.fox7.schematoolkit.bonxai.om.AncestorPattern;
 import eu.fox7.schematoolkit.bonxai.om.AncestorPatternElement;
 import eu.fox7.schematoolkit.bonxai.om.Attribute;
 import eu.fox7.schematoolkit.bonxai.om.AttributePattern;
-import eu.fox7.schematoolkit.bonxai.om.AttributeRef;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
 import eu.fox7.schematoolkit.bonxai.om.BonxaiAbstractGroup;
 import eu.fox7.schematoolkit.bonxai.om.BonxaiAttributeGroup;
@@ -34,9 +33,10 @@ import eu.fox7.schematoolkit.common.AnyAttribute;
 import eu.fox7.schematoolkit.common.AnyPattern;
 import eu.fox7.schematoolkit.common.AttributeGroupReference;
 import eu.fox7.schematoolkit.common.AttributeParticle;
+import eu.fox7.schematoolkit.common.AttributeRef;
+import eu.fox7.schematoolkit.common.AttributeUse;
 import eu.fox7.schematoolkit.common.ChoicePattern;
 import eu.fox7.schematoolkit.common.CountingPattern;
-import eu.fox7.schematoolkit.common.DefaultNamespace;
 import eu.fox7.schematoolkit.common.ElementRef;
 import eu.fox7.schematoolkit.common.EmptyPattern;
 import eu.fox7.schematoolkit.common.GroupReference;
@@ -81,7 +81,7 @@ public class CompactSyntaxWriter {
      */
     protected void writeSchema(Bonxai schema) throws IOException {
     	this.schema = schema;
-    	writeDefaultNamespace(schema.getDefaultNamespace());
+    	writeTargetNamespace(schema.getTargetNamespace());
         writeIdentifiedNamespaces(schema.getNamespaces());
         writer.newLine();
         writeGroups(schema.getGroups());
@@ -94,7 +94,7 @@ public class CompactSyntaxWriter {
         writer.appendLine("}");
     }
     
-    protected void writeDefaultNamespace(DefaultNamespace namespace) throws IOException {
+    protected void writeTargetNamespace(Namespace namespace) throws IOException {
         writer.appendLine("default namespace " +  namespace.getUri());
     }
 
@@ -206,9 +206,9 @@ public class CompactSyntaxWriter {
     private void writeForeignModifier(
 			ProcessContentsInstruction processContentsInstruction) throws IOException {
     	switch (processContentsInstruction) {
-    	case Lax: writer.append("lax ");
-    	case Skip: writer.append("skip ");
-    	case Strict: writer.append("strict ");    	
+    	case LAX: writer.append("lax ");
+    	case SKIP: writer.append("skip ");
+    	case STRICT: writer.append("strict ");    	
     	}
 		
 	}
@@ -231,20 +231,20 @@ public class CompactSyntaxWriter {
 
     private void writeAttributeRef(AttributeRef attributeRef) throws IOException {
 		writer.append("attributeref ");
-		writeName(attributeRef.getAttributeName());
+		writeName(attributeRef.getName());
 
-        if (attributeRef.getFixedValue() != null) {
+        if (attributeRef.getFixed() != null) {
             writer.append("{ fixed \"");
-            writer.append(attributeRef.getFixedValue());
+            writer.append(attributeRef.getFixed());
             writer.append("\"}");
-        } else if (attributeRef.getDefaultValue() != null) {
+        } else if (attributeRef.getDefault() != null) {
             writer.append("{ default \"");
-            writer.append(attributeRef.getDefaultValue());
+            writer.append(attributeRef.getDefault());
             writer.append("\"}");
         }
 
 		
-		if (!attributeRef.isRequired()) {
+		if (attributeRef.getUse()==AttributeUse.optional) {
 			writer.append('?');
 		}
 		

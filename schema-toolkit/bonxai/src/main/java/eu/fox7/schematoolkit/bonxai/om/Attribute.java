@@ -16,48 +16,42 @@
  */
 package eu.fox7.schematoolkit.bonxai.om;
 
-import eu.fox7.schematoolkit.common.AttributeParticle;
+import eu.fox7.schematoolkit.common.AbstractAttribute;
+import eu.fox7.schematoolkit.common.AttributeUse;
 import eu.fox7.schematoolkit.common.QualifiedName;
 
 /**
  * Attribute-Element of an AttributeList
  */
-public class Attribute extends AttributeParticle {
-
+public class Attribute extends AbstractAttribute {
     /**
      * The attribute type of Attribute contains the Bonxaitype of this attribute
      */
     private BonxaiType type;
 
     /**
-     * If the attribute is required.
-     */
-    private boolean required = false;
-
-    private QualifiedName name;
-    /**
      * Constructor for the class Attribute
      *
-     * @param namespace
      * @param name
      * @param type
      */
     public Attribute(QualifiedName name, BonxaiType type) {
-        this.name = name;
-        this.type      = type;
+    	super(name);
+    	this.type = type;
+        this.setDefault(type.getDefaultValue());
+        this.setFixed(type.getFixedValue());
     }
 
     /**
      * Constructor for the class Attribute
      *
-     * @param namespace
      * @param name
      * @param type
      * @param required
      */
     public Attribute(QualifiedName name, BonxaiType type, boolean required) {
         this(name, type);
-        this.required = required;
+        this.setUse(required?AttributeUse.required:AttributeUse.optional);
     }
 
 
@@ -73,21 +67,21 @@ public class Attribute extends AttributeParticle {
      * Returns if the attribute is required.
      */
     public boolean isRequired() {
-        return required;
+		return this.getUse()==AttributeUse.required;
     }
 
     /**
      * Makes the attribute required.
      */
     public void setRequired() {
-        required = true;
+        this.setUse(AttributeUse.required);
     }
 
     /**
      * Makes the attribute optional (not required).
      */
     public void setOptional() {
-        required = false;
+        this.setUse(AttributeUse.optional);
     }
 
     /**
@@ -97,14 +91,10 @@ public class Attribute extends AttributeParticle {
     public String toString() {
         String retVal = "{ "
             + super.toString()
-            + ", required: " + required
+            + ", required: " + this.isRequired()
             + ", Type: " + type
             + "}";
         return retVal;
     }
-
-	public QualifiedName getName() {
-		return name;
-	}
 }
 
