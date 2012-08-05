@@ -1,11 +1,12 @@
 package eu.fox7.upafixer.impl;
 
-import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.typeautomaton.factories.XSDTypeAutomatonFactory;
 import eu.fox7.schematoolkit.xsd.om.Type;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.flt.regex.Regex;
 import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
 import eu.fox7.treeautomata.converter.ContentAutomaton2TypeConverter;
@@ -20,7 +21,7 @@ public abstract class AbstractUPAFixer implements UPAFixer {
 	protected ContentAutomaton2TypeConverter caConverter;
 	
 	@Override
-	public void fixUPA(TypeAutomaton typeAutomaton) {
+	public void fixUPA(TypeAutomaton typeAutomaton) throws SchemaToolkitException {
 		this.typeAutomaton = typeAutomaton;
 		this.typeConverter = new Type2ContentAutomatonConverter();
 		this.caConverter = new ContentAutomaton2TypeConverter(typeAutomaton);
@@ -30,7 +31,7 @@ public abstract class AbstractUPAFixer implements UPAFixer {
 				Type type = typeAutomaton.getType(state);
 				if (type !=null) {
 					QualifiedName typename = type.getName();
-					ContentAutomaton contentAutomaton = typeConverter.convertType(type);
+					StateNFA contentAutomaton = typeConverter.convertType(type);
 					Regex regex = this.fixUPA(contentAutomaton);
 					Type newType = this.caConverter.convertRegex(regex, typename, state);
 					this.typeAutomaton.setType(typename, newType);
@@ -39,7 +40,7 @@ public abstract class AbstractUPAFixer implements UPAFixer {
 		}
 	}
 
-	public abstract Regex fixUPA(ContentAutomaton contentAutomaton);
+	public abstract Regex fixUPA(StateNFA contentAutomaton) throws SchemaToolkitException;
 
 	@SuppressWarnings("deprecation")
 	@Override
