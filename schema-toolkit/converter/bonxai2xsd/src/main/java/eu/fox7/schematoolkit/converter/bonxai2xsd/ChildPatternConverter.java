@@ -1,14 +1,15 @@
 package eu.fox7.schematoolkit.converter.bonxai2xsd;
 
 
-import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
 import eu.fox7.schematoolkit.bonxai.om.ChildPattern;
 import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.DefaultNamespace;
 import eu.fox7.schematoolkit.common.EmptyPattern;
+import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.SimpleContentExtension;
@@ -21,8 +22,8 @@ public class ChildPatternConverter {
 	
 	ParticleConverter converter;
     private DefaultNamespace targetNamespace;
-    public ChildPatternConverter(TypeAutomaton typeAutomaton, DefaultNamespace targetNamespace, boolean eliminateGroups) {
-    	this.targetNamespace = targetNamespace;
+    public ChildPatternConverter(TypeAutomaton typeAutomaton, DefaultNamespace namespace, boolean eliminateGroups) {
+    	this.targetNamespace = namespace;
     	this.converter = new ParticleConverter(typeAutomaton, eliminateGroups);
     }
     

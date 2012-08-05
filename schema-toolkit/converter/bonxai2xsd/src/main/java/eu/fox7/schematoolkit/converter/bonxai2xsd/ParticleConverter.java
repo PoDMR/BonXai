@@ -21,13 +21,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.NotDFAException;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
 import eu.fox7.schematoolkit.bonxai.om.*;
+import eu.fox7.schematoolkit.bonxai.om.ElementRef;
 import eu.fox7.schematoolkit.common.*;
-import eu.fox7.schematoolkit.xsd.om.AttributeUse;
+import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 /**
@@ -63,7 +63,7 @@ public class ParticleConverter {
      *
      * @return particle
      */
-    public Particle convertParticle(DefaultNamespace namespace, Particle particle, State sourceState) {
+    public Particle convertParticle(Namespace namespace, Particle particle, State sourceState) {
         if ((particle instanceof eu.fox7.schematoolkit.bonxai.om.Element)
                 && (((eu.fox7.schematoolkit.bonxai.om.Element) particle).getName().getNamespaceURI().equals(namespace.getUri()))) {
             eu.fox7.schematoolkit.bonxai.om.Element source = (eu.fox7.schematoolkit.bonxai.om.Element) particle;
@@ -102,17 +102,17 @@ public class ParticleConverter {
             return element;
         } else if (particle instanceof ElementRef) {
         	ElementRef elementRef = (ElementRef) particle;
-        	particle = new ElementRef(elementRef.getElementName());
+        	particle = new eu.fox7.schematoolkit.common.ElementRef(elementRef.getElementName());
         	return particle;
         } else if (particle instanceof eu.fox7.schematoolkit.common.AnyPattern) {
-            // Replace all occurrences of "," in the namespace attribute with " " spaces.
+            // replace all occurrences of "," in the namespace attribute with " " spaces.
             AnyPattern anyPattern = (eu.fox7.schematoolkit.common.AnyPattern) particle;
             particle = new AnyPattern(anyPattern.getProcessContentsInstruction(), anyPattern.getNamespaces());
             return particle;
         } else if (particle instanceof eu.fox7.schematoolkit.bonxai.om.Element) {
             // For elements in foreign namespaces we just create an element
             // reference
-            return new ElementRef(((eu.fox7.schematoolkit.bonxai.om.Element) particle).getName());
+            return new eu.fox7.schematoolkit.common.ElementRef(((eu.fox7.schematoolkit.bonxai.om.Element) particle).getName());
         } else if (particle instanceof GroupReference) {
             return convertGroupReference(((GroupReference) particle), sourceState);
         } else if (particle instanceof ParticleContainer) {
@@ -214,10 +214,7 @@ public class ParticleConverter {
             return new AttributeGroupReference( ((AttributeGroupReference) attribute).getName() );
         } else if (attribute instanceof AttributeRef) {
         	AttributeRef attributeRef = (AttributeRef) attribute;
-        	eu.fox7.schematoolkit.xsd.om.AttributeRef newAttributeRef = new eu.fox7.schematoolkit.xsd.om.AttributeRef(attributeRef.getAttributeName());
-            newAttributeRef.setDefault(attributeRef.getDefaultValue());
-            newAttributeRef.setFixed(attributeRef.getFixedValue());
-            newAttributeRef.setUse(attributeRef.isRequired()?AttributeUse.Required:AttributeUse.Optional);
+        	AttributeRef newAttributeRef = new AttributeRef(attributeRef.getName(), attributeRef.getDefault(), attributeRef.getFixed(), attributeRef.getUse(), null);
         	return newAttributeRef;
         } else {
         	throw new RuntimeException("Attribute class not supported: " + attribute.getClass());

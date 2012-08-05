@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.NotDFAException;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
@@ -17,6 +16,7 @@ import eu.fox7.schematoolkit.bonxai.om.Expression;
 import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
+import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.typeautomaton.factories.BonxaiTypeAutomatonConstruction;
 import eu.fox7.schematoolkit.typeautomaton.factories.TrivialTypeNameGenerator;
 import eu.fox7.schematoolkit.typeautomaton.factories.TypeNameGenerator;
@@ -44,11 +44,11 @@ public class Bonxai2XSDConverter extends AbstractSchemaConverter {
 			xsdSchema.addIdentifiedNamespace(ns);
 		
 		xsdSchema.setElementFormDefault(Qualification.qualified);
-		xsdSchema.setTargetNamespace(bonxai.getDefaultNamespace());
-		xsdSchema.setDefaultNamespace(bonxai.getDefaultNamespace());
+		xsdSchema.setTargetNamespace(bonxai.getTargetNamespace());
+		xsdSchema.setDefaultNamespace(bonxai.getTargetNamespace());
 		
 		BonxaiTypeAutomatonConstruction btac = new BonxaiTypeAutomatonConstruction();
-		TypeNameGenerator tng = new TrivialTypeNameGenerator(bonxai.getDefaultNamespace());
+		TypeNameGenerator tng = new TrivialTypeNameGenerator(bonxai.getTargetNamespace());
 		typeAutomaton = btac.constructTypeAutomaton(bonxai, tng, false);
 		btac.convertGroups(xsdSchema);
 		expressionStateMap = btac.getExpressionStateMap();
