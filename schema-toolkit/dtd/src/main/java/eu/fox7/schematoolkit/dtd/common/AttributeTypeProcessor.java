@@ -63,7 +63,7 @@ public class AttributeTypeProcessor {
 //                    }
 
                     if (!nameChecker.checkForXMLNmtoken(currentString)) {
-                        throw new IllegalNMTOKENStringException(attribute.getName(), currentString);
+                        throw new IllegalNMTOKENStringException(attribute.getName().getFullyQualifiedName(), currentString);
                     }
 
                     enumerationOrNotationTokens.add(currentString.trim());
@@ -85,7 +85,7 @@ public class AttributeTypeProcessor {
 
                 for (String currentString : notationValues) {
                     if (!nameChecker.checkForXMLNmtoken(currentString)) {
-                        throw new IllegalNMTOKENStringException(attribute.getName(), currentString);
+                        throw new IllegalNMTOKENStringException(attribute.getName().getFullyQualifiedName(), currentString);
                     }
                     enumerationOrNotationTokens.add(currentString.trim());
                 }
@@ -97,11 +97,11 @@ public class AttributeTypeProcessor {
                 AttributeType attributeType = AttributeType.valueOf(typeString);
 
                 if (attributeType.equals(AttributeType.ENUMERATION)) {
-                    throw new AttributeTypeIllegalValueException(attribute.getName(), typeString);
+                    throw new AttributeTypeIllegalValueException(attribute.getName().getFullyQualifiedName(), typeString);
                 }
                 this.attribute.setType(attributeType);
             } catch (IllegalArgumentException ex) {
-                throw new AttributeTypeIllegalValueException(attribute.getName(), typeString);
+                throw new AttributeTypeIllegalValueException(attribute.getName().getFullyQualifiedName(), typeString);
             }
         }
     }

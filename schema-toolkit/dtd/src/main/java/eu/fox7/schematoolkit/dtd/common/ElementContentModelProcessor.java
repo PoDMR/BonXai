@@ -134,7 +134,7 @@ public class ElementContentModelProcessor {
 
             // The second parameter is for the corresponding namespace. In DTD
             // there are no namespaces.
-            return new AnyPattern(ProcessContentsInstruction.Strict, "");
+            return new AnyPattern(ProcessContentsInstruction.STRICT, "");
         } else if (contentModelRegExp.equals("(#PCDATA)") || contentModelRegExp.equals("(#PCDATA)*")) {
             // Case: (#PCDATA) or (#PCDATA)*
 

@@ -39,7 +39,7 @@ public class DTDSchemaHandler extends SchemaHandler {
 			SchemaToolkitException {
 		DTDWriter dtdWriter = new DTDWriter((DocumentTypeDefinition) schema);
 		String dtd = dtdWriter.getExternalSubsetString();
-		writer.append(dtd);
+		writer.append(dtd); 
 	}
 
 }

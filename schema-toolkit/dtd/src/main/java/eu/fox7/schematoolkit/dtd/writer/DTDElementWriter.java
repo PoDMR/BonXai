@@ -84,7 +84,7 @@ public class DTDElementWriter {
                     if (attribute1.getName() == null || attribute1.getName().equals("") || attribute2.getName() == null || attribute2.getName().equals("")) {
                         return 1;
                     }
-                    return attribute1.getName().compareTo(attribute2.getName());
+                    return attribute1.getName().getFullyQualifiedName().compareTo(attribute2.getName().getFullyQualifiedName());
                 }
             });
             for (Iterator<Attribute> it = attributes.iterator(); it.hasNext();) {

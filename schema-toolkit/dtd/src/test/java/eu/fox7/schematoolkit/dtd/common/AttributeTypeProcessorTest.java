@@ -118,16 +118,4 @@ public class AttributeTypeProcessorTest extends junit.framework.TestCase {
         }
         fail("String value for setting an attribute type is illegal, but this wasn't detected.");
     }
-
-    @Test
-    public void testNotationNotDeclaredException() throws Exception {
-        try {
-            Attribute attribute = new Attribute("name", "mode", "value");
-            AttributeTypeProcessor instance = new AttributeTypeProcessor(dtd, attribute);
-            instance.setTypeToAttribute("NOTATION (gobbler|chicken|turkey)");
-        } catch (NotationNotDeclaredException error) {
-            return;
-        }
-        fail("A value of type NOTATION has not been declared in the current DTD Schema, but this wasn't detected.");
-    }
 }

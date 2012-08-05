@@ -147,6 +147,8 @@ public class DTDEventHandler implements LexicalHandler, DeclHandler, DTDHandler 
 //            System.out.println("DTD attributeDeclaration: " + elementName + " " + attributeName + " " + type + " " + mode + " " + value + "\n");
 //        }
 
+    	QualifiedName attributeQualifiedName = new QualifiedName(Namespace.EMPTY_NAMESPACE,attributeName);
+    	
         if (this.attributeDeclarations.contains(elementName + "-" + attributeName)) {
             try {
                 throw new DuplicateAttributeNameException(attributeName, elementName);
@@ -163,7 +165,7 @@ public class DTDEventHandler implements LexicalHandler, DeclHandler, DTDHandler 
         // Now we have the correct element.
         Attribute attribute = null;
 
-        attribute = new Attribute(attributeName, mode, value);
+        attribute = new Attribute(attributeQualifiedName, mode, value);
         AttributeTypeProcessor attributeTypeProcessor = new AttributeTypeProcessor(this.dtd, attribute);
         try {
             attributeTypeProcessor.setTypeToAttribute(type);

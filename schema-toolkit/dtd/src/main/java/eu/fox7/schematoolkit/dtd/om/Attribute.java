@@ -2,13 +2,15 @@ package eu.fox7.schematoolkit.dtd.om;
 
 import java.util.LinkedHashSet;
 
+import eu.fox7.schematoolkit.common.QualifiedName;
+
 /**
  * Class for a DTD attribute (ATTLIST entry)
  * @author Lars Schmidt
  */
 public class Attribute {
 
-    private String name;
+    private QualifiedName name;
     private AttributeType type;
     private AttributeDefaultPresence attributeDefaultPresence;
     private String value;
@@ -35,7 +37,7 @@ public class Attribute {
      * @param name
      * @param value
      */
-    public Attribute(String name, String value) {
+    public Attribute(QualifiedName name, String value) {
         this.name = name;
         this.value = value;
         // In this case the value stands for the default value of this attribute
@@ -52,7 +54,7 @@ public class Attribute {
      * @param defaultPresenceMode
      * @param value
      */
-    public Attribute(String name, String defaultPresenceMode, String value) {
+    public Attribute(QualifiedName name, String defaultPresenceMode, String value) {
         this.name = name;
 
         if (defaultPresenceMode != null) {
@@ -105,7 +107,7 @@ public class Attribute {
      * Getter for the name of the attribute.
      * @return name - String
      */
-    public String getName() {
+    public QualifiedName getName() {
         return name;
     }
 

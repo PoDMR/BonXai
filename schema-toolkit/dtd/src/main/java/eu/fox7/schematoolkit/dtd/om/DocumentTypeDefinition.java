@@ -120,6 +120,15 @@ public class DocumentTypeDefinition implements Schema {
 		return this.elements.values();
 	}
 
+	public Collection<Element> getRootElements() {
+		return this.elements.values();
+	}
+	
+	public Collection<QualifiedName> getRootElementNames() {
+		//TODO root elements
+		return null;
+	}
+	
 	public Collection<InternalEntity> getInternalEntitys() {
 		return this.internalEntities.values();
 	}

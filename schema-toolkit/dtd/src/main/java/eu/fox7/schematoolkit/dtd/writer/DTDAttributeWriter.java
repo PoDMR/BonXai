@@ -54,7 +54,7 @@ public class DTDAttributeWriter {
                 throw new DTDAttributeNameEmptyException(qualifiedName.getName());
             }
             if (!nameChecker.checkForXMLName(this.attribute.getName())) {
-                throw new IllegalNAMEStringException("ATTLIST: " + qualifiedName + " " + this.attribute.getName(), this.attribute.getName());
+                throw new IllegalNAMEStringException("ATTLIST: " + qualifiedName + " " + this.attribute.getName(), this.attribute.getName().getFullyQualifiedName());
             }
             if (qualifiedName == null || qualifiedName.equals("")) {
                 throw new DTDElementNameEmptyException("for an attribute declaration: " + this.attribute.getName());
@@ -72,7 +72,7 @@ public class DTDAttributeWriter {
     private String getAttributeTypeString(QualifiedName qualifiedName) throws DTDException {
         String typeString = "";
         if (this.attribute.getType() == null) {
-            throw new DTDAttributeTypeNullException(this.attribute.getName());
+            throw new DTDAttributeTypeNullException(this.attribute.getName().getFullyQualifiedName());
         }
         if (this.attribute.getType().equals(AttributeType.CDATA)) {
             // StringType
@@ -95,7 +95,7 @@ public class DTDAttributeWriter {
                 typeString += "NOTATION" + " ";
             }
             if (this.attribute.getEnumerationOrNotationTokens().isEmpty()) {
-                throw new DTDAttributeTypeEnumOrNotationWithEmptyTokensException(this.attribute.getName(), this.attribute.getType().toString());
+                throw new DTDAttributeTypeEnumOrNotationWithEmptyTokensException(this.attribute.getName().getFullyQualifiedName(), this.attribute.getType().toString());
             } else {
                 String enumerationString = "(";
                 for (Iterator<String> it = attribute.getEnumerationOrNotationTokens().iterator(); it.hasNext();) {
@@ -106,7 +106,7 @@ public class DTDAttributeWriter {
                 enumerationString += ")";
 
                 if (attribute.getValue() != null && !attribute.getValue().equals("") && !enumerationString.contains(attribute.getValue())) {
-                    throw new AttributeEnumerationTypeIllegalDefaultValueException(attribute.getName(), enumerationString, attribute.getValue());
+                    throw new AttributeEnumerationTypeIllegalDefaultValueException(attribute.getName().getFullyQualifiedName(), enumerationString, attribute.getValue());
                 }
 
                 typeString += enumerationString + " " + getAttributePresenceAndValueString(qualifiedName);
@@ -121,7 +121,7 @@ public class DTDAttributeWriter {
             // Case: AttributeDefaultPresence = FIXED
             if (this.attribute.getAttributeDefaultPresence().equals(Attribute.AttributeDefaultPresence.FIXED)) {
                 if (attribute.getValue() == null || attribute.getValue().equals("")) {
-                    throw new DTDAttributeValueEmptyException(this.attribute.getName());
+                    throw new DTDAttributeValueEmptyException(this.attribute.getName().getFullyQualifiedName());
                 }
                 attributeValueString += "#FIXED" + " \"" + attribute.getValue() + "\"";
             } else {
@@ -133,7 +133,7 @@ public class DTDAttributeWriter {
                     if (this.attribute.getAttributeDefaultPresence().equals(Attribute.AttributeDefaultPresence.REQUIRED)) {
                         attributeValueString += "#REQUIRED";
                     } else {
-                        throw new DTDAttributeUnkownAttributeDefaultPresenceException(this.attribute.getName());
+                        throw new DTDAttributeUnkownAttributeDefaultPresenceException(this.attribute.getName().getFullyQualifiedName());
                     }
                 }
             }

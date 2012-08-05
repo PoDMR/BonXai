@@ -67,7 +67,7 @@ public class ElementTest extends junit.framework.TestCase {
         Element element = new Element(elementName);
         assertFalse(element.hasAnyType());
 
-        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.Strict, Namespace.EMPTY_NAMESPACE);
+        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.STRICT, Namespace.EMPTY_NAMESPACE);
         element.setParticle(anyPattern);
         assertTrue(element.hasAnyType());
 
@@ -145,7 +145,7 @@ public class ElementTest extends junit.framework.TestCase {
     public void testSetParticle() {
         Element element = new Element(elementName);
         assertEquals(null, element.getParticle());
-        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.Strict, Namespace.EMPTY_NAMESPACE);
+        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.STRICT, Namespace.EMPTY_NAMESPACE);
         element.setParticle(anyPattern);
         assertEquals(anyPattern, element.getParticle());
 
@@ -165,7 +165,7 @@ public class ElementTest extends junit.framework.TestCase {
     public void testGetParticle() {
         Element element = new Element(elementName);
         assertEquals(null, element.getParticle());
-        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.Strict, Namespace.EMPTY_NAMESPACE);
+        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.STRICT, Namespace.EMPTY_NAMESPACE);
         element.setParticle(anyPattern);
         assertEquals(anyPattern, element.getParticle());
 
