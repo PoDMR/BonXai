@@ -7,7 +7,8 @@ public enum SchemaLanguage {
 	XMLSCHEMA("XML Schema", "eu.fox7.schematoolkit.xsd.XSDSchemaHandler"), 
 	RELAXNG("RelaxNG", "eu.fox7.schematoolkit.relaxng.RelaxNGSchemaHandler"), 
 	BONXAI("BonXai", "eu.fox7.schematoolkit.bonxai.BonxaiSchemaHandler"), 
-	DTD("DTD", "eu.fox7.schematoolkit.dtd.DTDSchemaHandler");
+	DTD("DTD", "eu.fox7.schematoolkit.dtd.DTDSchemaHandler"), 
+	TYPEAUTOMATON("TYPEAUTOMATON", "eu.fox7.schematoolkit.typeautomaton.TypeAutomatonSchemaHandler");
 	
 	private String name;
 	private Class<SchemaHandler> handlerClass;
@@ -17,6 +18,7 @@ public enum SchemaLanguage {
 		XMLSCHEMA.trySetConverter(BONXAI, "eu.fox7.schematoolkit.converter.xsd2bonxai.XSD2BonxaiConverter");
 		XMLSCHEMA.trySetConverter(RELAXNG, "eu.fox7.schematoolkit.converter.xsd2relaxng.XSD2RelaxNGConverter");
 		XMLSCHEMA.trySetConverter(DTD, "eu.fox7.schematoolkit.converter.xsd2dtd.XSD2DTDConverter");
+		XMLSCHEMA.trySetConverter(TYPEAUTOMATON, "eu.fox7.schematoolkit.typeautomaton.factories.XSDTypeAutomatonFactory");
 		BONXAI.trySetConverter(XMLSCHEMA, "eu.fox7.schematoolkit.converter.bonxai2xsd.Bonxai2XSDConverter");
 		RELAXNG.trySetConverter(XMLSCHEMA, "eu.fox7.schematoolkit.converter.relaxng2xsd.RelaxNG2XSDConverter");
 		DTD.trySetConverter(XMLSCHEMA, "eu.fox7.schematoolkit.converter.dtd2xsd.DTD2XSDConverter");
@@ -87,6 +89,4 @@ public enum SchemaLanguage {
 				throw new RuntimeException(e);
 			}
 	}
-
-
 }

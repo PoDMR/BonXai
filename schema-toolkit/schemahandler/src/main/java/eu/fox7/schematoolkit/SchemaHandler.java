@@ -31,6 +31,10 @@ public abstract class SchemaHandler {
 	public abstract void parseSchema(InputStream stream) throws IOException, SchemaToolkitException;
 	public abstract void writeSchema(Writer writer) throws IOException, SchemaToolkitException;
 	
+	public XMLValidator getValidator() throws SchemaToolkitException {
+		throw new SchemaToolkitException("No validator for " + this.getSchemaLanguage() + " available.");
+	}
+	
 	public void loadSchema(File file) throws IOException, SchemaToolkitException {
 		InputStream stream = new BufferedInputStream(new FileInputStream(file));
 		parseSchema(stream);
