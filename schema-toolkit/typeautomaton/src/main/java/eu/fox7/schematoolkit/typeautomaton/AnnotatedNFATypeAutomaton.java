@@ -1,4 +1,4 @@
-package eu.fox7.bonxai.typeautomaton;
+package eu.fox7.schematoolkit.typeautomaton;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,6 +11,7 @@ import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
 import eu.fox7.flt.automata.impl.sparse.Transition;
+import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.schematoolkit.common.ElementProperties;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.Type;
@@ -91,5 +92,15 @@ public class AnnotatedNFATypeAutomaton extends
 		for (Transition transition: this.getOutgoingTransitions(initialState))
 			symbols.add(transition.getSymbol());
 		return symbols;
+	}
+	
+	@Override
+	public TypeAutomatonSchemaHandler getSchemaHandler() {
+		return new TypeAutomatonSchemaHandler(this);
+	}
+	
+	@Override
+	public SchemaLanguage getSchemaLanguage() {
+		return SchemaLanguage.TYPEAUTOMATON;
 	}
 }

@@ -1,4 +1,4 @@
-package eu.fox7.bonxai.typeautomaton;
+package eu.fox7.schematoolkit.typeautomaton;
 
 import java.util.Collection;
 
@@ -6,12 +6,13 @@ import eu.fox7.flt.automata.impl.sparse.ModifiableStateNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateDFA;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.schematoolkit.Schema;
 import eu.fox7.schematoolkit.common.ElementProperties;
 import eu.fox7.schematoolkit.common.NamespaceList;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.Type;
 
-public interface TypeAutomaton extends ModifiableStateNFA, StateDFA {
+public interface TypeAutomaton extends ModifiableStateNFA, StateDFA, Schema {
 	public QualifiedName getTypeName(State state);
 	public Type getType(State state);
 	

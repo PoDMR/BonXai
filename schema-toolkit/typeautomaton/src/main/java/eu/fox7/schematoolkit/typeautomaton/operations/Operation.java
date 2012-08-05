@@ -1,9 +1,8 @@
-package eu.fox7.bonxai.typeautomaton.operations;
+package eu.fox7.schematoolkit.typeautomaton.operations;
 
 import java.util.Collection;
 import java.util.LinkedList;
 
-import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
 import eu.fox7.schematoolkit.common.CountingPattern;
 import eu.fox7.schematoolkit.common.ElementRef;
@@ -11,6 +10,7 @@ import eu.fox7.schematoolkit.common.GroupReference;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.ParticleContainer;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.xsd.om.Element;
 
 public abstract class Operation implements UnaryOperation, BinaryOperation {
