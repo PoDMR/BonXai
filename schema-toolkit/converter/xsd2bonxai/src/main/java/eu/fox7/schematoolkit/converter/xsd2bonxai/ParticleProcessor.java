@@ -18,6 +18,7 @@ package eu.fox7.schematoolkit.converter.xsd2bonxai;
 
 import eu.fox7.schematoolkit.bonxai.om.*;
 import eu.fox7.schematoolkit.common.*;
+import eu.fox7.schematoolkit.common.ElementRef;
 import eu.fox7.schematoolkit.xsd.om.*;
 
 class ParticleProcessor {
@@ -138,7 +139,7 @@ class ParticleProcessor {
     		eu.fox7.schematoolkit.xsd.om.Element element = schema.getElement(elementRef.getElementName());
         	return convertElement(element);
     	} else {
-    		return new ElementRef(elementRef.getElementName());
+    		return new eu.fox7.schematoolkit.bonxai.om.ElementRef(elementRef.getElementName());
     	}
 
     	

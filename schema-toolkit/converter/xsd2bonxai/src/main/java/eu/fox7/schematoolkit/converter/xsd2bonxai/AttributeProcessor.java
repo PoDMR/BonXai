@@ -20,15 +20,14 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import eu.fox7.schematoolkit.bonxai.om.Attribute;
 import eu.fox7.schematoolkit.bonxai.om.AttributePattern;
 import eu.fox7.schematoolkit.bonxai.om.BonxaiType;
 import eu.fox7.schematoolkit.common.AnyAttribute;
 import eu.fox7.schematoolkit.common.AttributeGroupReference;
 import eu.fox7.schematoolkit.common.AttributeParticle;
+import eu.fox7.schematoolkit.common.AttributeRef;
+import eu.fox7.schematoolkit.common.AttributeUse;
 import eu.fox7.schematoolkit.common.QualifiedName;
-import eu.fox7.schematoolkit.xsd.om.AttributeRef;
-import eu.fox7.schematoolkit.xsd.om.AttributeUse;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 /**
@@ -76,7 +75,7 @@ class AttributeProcessor {
         return new eu.fox7.schematoolkit.bonxai.om.Attribute(
             xsdAttribute.getName(),
             bonxaiType,
-            (xsdAttribute.getUse() == AttributeUse.Required)
+            (xsdAttribute.getUse() == AttributeUse.required)
         );
     }
 
@@ -87,23 +86,11 @@ class AttributeProcessor {
      * inlined. Note, that the "required" flag defined in the ref overwrites
      * the one potentially provided in the target.
      */
-    public AttributeParticle convertAttributeRef(eu.fox7.schematoolkit.xsd.om.AttributeRef xsdAttributeRef) {
-        AttributeParticle particle;
-    	if (this.schema.getDefaultNamespace().getUri().equals(xsdAttributeRef.getAttributeName().getNamespaceURI())) {
-        	eu.fox7.schematoolkit.xsd.om.Attribute xsdAttribute = schema.getAttribute(xsdAttributeRef.getAttributeName());
-    		BonxaiType type = new BonxaiType(xsdAttribute.getSimpleTypeName());
-        	Attribute bonxaiAttribute = new Attribute(xsdAttribute.getName(), type);
-            if (xsdAttributeRef.getUse() == AttributeUse.Required) {
-                bonxaiAttribute.setRequired();
-            } else {
-                bonxaiAttribute.setOptional();
-            }
-            particle = bonxaiAttribute;
-        } else {
-        	//TODO: AttributeReference
-        	particle=null;
-        }
-        return particle;
+    public AttributeParticle convertAttributeRef(eu.fox7.schematoolkit.common.AttributeRef xsdAttributeRef) {
+//        eu.fox7.schematoolkit.bonxai.om.Attribute bonxaiAttributeRef = new eu.fox7.schematoolkit.bonxai.om.Attribute(xsdAttributeRef.getName(), xsdAttributeRef.getFixed(), xsdAttributeRef.getDefault(), xsdAttributeRef.getUse().equals(AttributeUse.required));
+//        return bonxaiAttributeRef;
+//TODO
+    	return null;
     }
 
     /**
@@ -155,7 +142,7 @@ class AttributeProcessor {
                 );
             } else if (xsdAttrParticle instanceof AnyAttribute) {
                 AnyAttribute anyAttribute = (AnyAttribute) xsdAttrParticle;
-                // Replace all occurrences of " " in the namespace attribute with ",".
+                // replace all occurrences of " " in the namespace attribute with ",".
                 AnyAttribute resultAnyAttribute = new AnyAttribute(anyAttribute.getProcessContentsInstruction(), anyAttribute.getNamespaces());
                 bonxaiAttrPattern.setAnyAttribute(resultAnyAttribute);
             } else {

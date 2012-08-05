@@ -9,7 +9,6 @@ import java.util.Vector;
 
 import org.apache.commons.collections15.BidiMap;
 
-import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.impl.sparse.ModifiableStateDFA;
 import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
@@ -39,6 +38,7 @@ import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
+import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.typeautomaton.factories.XSDTypeAutomatonFactory;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
@@ -146,10 +146,7 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
     	createGroups();
     	createDeclaration();
     	createExpressions();
-    	
-//TODO:    	bonxai.setConstraintList(getConstraintList());
-//TODO:    	bonxai.setGroupList(getGroupList());
-    	
+
     	return bonxai;
     }
     
@@ -191,12 +188,10 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
 			defaultNamespace = new DefaultNamespace("");
 		}
 		
-		bonxai.setDefaultNamespace(defaultNamespace);
+		bonxai.setTargetNamespace(defaultNamespace);
 		for (IdentifiedNamespace namespace: schema.getNamespaces()) {
 			bonxai.addNamespace(namespace);
 		}
-		
-    	// TODO add imports and dataTypes
 	}
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -302,7 +297,7 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
 			throw new RuntimeException("Epsilon no supported");
 		} else if (key.equals(Regex.EMPTY_SYMBOL)) {
 			throw new RuntimeException("Empty no supported");
-		} else { // label //TODO other operators
+		} else { // label
 			String localName = key.substring(key.lastIndexOf("}") + 1);
 			String namespaceURI = key.substring(1, key.lastIndexOf("}"));
 			Namespace namespace = bonxai.getNamespaceByUri(namespaceURI);
