@@ -1,9 +1,9 @@
 package eu.fox7.schematoolkit.typeautomaton.operations;
 
-import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.NotDFAException;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.xsd.om.Type;
 
 public class StateWrapper {

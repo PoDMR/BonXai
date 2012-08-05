@@ -6,9 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 
-import eu.fox7.bonxai.typeautomaton.AnnotatedNFATypeAutomaton;
-import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
-import eu.fox7.bonxai.typeautomaton.operations.Operation;
 import eu.fox7.flt.automata.NotDFAException;
 import eu.fox7.flt.automata.converters.Minimizer;
 import eu.fox7.flt.automata.converters.NFAMinimizer;
@@ -16,10 +13,14 @@ import eu.fox7.flt.automata.factories.sparse.ProductDFAFactory;
 import eu.fox7.flt.automata.factories.sparse.ProductNFAFactory;
 import eu.fox7.flt.automata.impl.sparse.ModifiableStateDFA;
 import eu.fox7.flt.automata.impl.sparse.State;
+import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
 import eu.fox7.flt.treeautomata.impl.ContentAutomaton;
 import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.typeautomaton.AnnotatedNFATypeAutomaton;
+import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
+import eu.fox7.schematoolkit.typeautomaton.operations.Operation;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.SimpleType;
@@ -149,9 +150,9 @@ public class TypeAutomatonIntersection extends Operation {
 	private Type intersectComplexTypes(Set<Type> complexTypes, State resultState) {
 		System.err.println("Unite complex types: " + complexTypes);
 		Type2ContentAutomatonConverter converter = new Type2ContentAutomatonConverter();
-		Vector<ContentAutomaton> automata = new Vector<ContentAutomaton>(complexTypes.size());
+		Vector<StateNFA> automata = new Vector<StateNFA>(complexTypes.size());
 		for (Type type: complexTypes) {
-			ContentAutomaton automaton = converter.convertType(type);
+			StateNFA automaton = converter.convertType(type);
 			automata.add(automaton);
 		}
 		

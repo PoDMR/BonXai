@@ -3,7 +3,6 @@ package eu.fox7.schematoolkit.xsd.operations;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import eu.fox7.bonxai.typeautomaton.TypeAutomaton;
 import eu.fox7.flt.automata.NotDFAException;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
@@ -16,6 +15,7 @@ import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.NamespaceList;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.typeautomaton.factories.XSDTypeAutomatonFactory;
 import eu.fox7.schematoolkit.typeautomaton.operations.TypeAutomatonIntersection;
 import eu.fox7.schematoolkit.typeautomaton.operations.TypeAutomatonUnion;
@@ -45,11 +45,9 @@ public class XSDIntersection implements SchemaOperation {
 			if (! defaultNamespace.equals(schema.getDefaultNamespace()))
 				throw new SchemaToolkitException("Schemas must have the same defaultnamespace.");
 			for (IdentifiedNamespace namespace: schema.getNamespaces()) {
-				Namespace resultNamespace = namespaceList.getNamespaceByIdentifier(namespace.getIdentifier());
+				Namespace resultNamespace = namespaceList.getNamespaceByUri(namespace.getUri());
 				if (resultNamespace == null)
 					namespaceList.addNamespace(namespace);
-				else if (! resultNamespace.getUri().equals(namespace.getUri()))
-					throw new SchemaToolkitException("Renaming of Namespaces not implemented yet.");
 			}
 		}
 
