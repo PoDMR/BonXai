@@ -33,16 +33,16 @@ import eu.fox7.schematoolkit.common.SequencePattern;
 
 public class Particle2ContentAutomatonConverter {
 	private int count;
-	private Map<String,Element> stringElementMap;
-	private BidiMap<Element,State> elementStateMap;
+	private Map<String,Particle> stringElementMap;
+	private BidiMap<Particle,State> elementStateMap;
 	
 	public StateNFA convertParticle(Particle particle) {
 		count = 0;
-		this.stringElementMap = new HashMap<String,Element>();
-		this.elementStateMap = new DualHashBidiMap<Element,State>();
+		this.stringElementMap = new HashMap<String,Particle>();
+		this.elementStateMap = new DualHashBidiMap<Particle,State>();
 		Regex regex = convertParticleRecursive(particle);
 		ContentAutomaton contentAutomaton = convertRegex(regex);
-		for(Entry<String,Element> entry: stringElementMap.entrySet())
+		for(Entry<String,Particle> entry: stringElementMap.entrySet())
 			this.elementStateMap.put(entry.getValue(), contentAutomaton.getState(entry.getKey()));
 		return contentAutomaton;
 	}
@@ -50,8 +50,8 @@ public class Particle2ContentAutomatonConverter {
 	public boolean verifyParticle(Particle particle, StateNFA oldContentAutomaton) {
 		boolean correct = true;
 		count = 0;
-		this.stringElementMap = new HashMap<String,Element>();
-		this.elementStateMap = new DualHashBidiMap<Element,State>();
+		this.stringElementMap = new HashMap<String,Particle>();
+		this.elementStateMap = new DualHashBidiMap<Particle,State>();
 		Regex regex = convertParticleRecursive(particle);
 		ContentAutomaton newContentAutomaton = convertRegex(regex);
 		
@@ -61,8 +61,8 @@ public class Particle2ContentAutomatonConverter {
 			if (newState == null)
 				correct = false;
 			else {
-				Element element = this.stringElementMap.get(stateName);
-				this.elementStateMap.put(element, newState);
+				Particle element = this.stringElementMap.get(stateName);
+				this.elementStateMap.put(element, oldState);
 				for (Transition transition: oldContentAutomaton.getOutgoingTransitions(oldState)) {
 					String targetState = oldContentAutomaton.getStateValue(transition.getToState());
 					Set<String> targetStates = newContentAutomaton.getNextStateValues(transition.getSymbol().toString(), stateName);
@@ -92,7 +92,7 @@ public class Particle2ContentAutomatonConverter {
 	/**
 	 * @return the elementStateMap
 	 */
-	public BidiMap<Element, State> getElementStateMap() {
+	public BidiMap<Particle, State> getElementStateMap() {
 		return elementStateMap;
 	}
 
@@ -126,7 +126,7 @@ public class Particle2ContentAutomatonConverter {
 		} else if (particle instanceof ElementRef) {
 			ElementRef elementRef = (ElementRef) particle;
 			String name = elementRef.getElementName().getFullyQualifiedName() + Glushkov.MARK_SEP + (count++);
-//			stringElementMap.put(name, elementRef);
+			stringElementMap.put(name, elementRef);
 			return factory.createSymbol(name);
 		} else if (particle instanceof EmptyPattern) {
 			return factory.createEpsilon();

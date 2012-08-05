@@ -24,7 +24,17 @@ public class ChildPattern2ContentAutomatonConverter {
 		return contentAutomaton;
 	}
 	
-	public BidiMap<Element,State> getElementStateMap() {
+	public BidiMap<Particle,State> getElementStateMap() {
 		return particleConverter.getElementStateMap();
+	}
+
+	public boolean verifyChildPattern(ChildPattern childPattern, StateNFA contentAutomaton) {
+		Particle particle = null;
+		ElementPattern elementPattern = childPattern.getElementPattern();
+		if (elementPattern!=null)
+			particle = elementPattern.getRegexp();
+		if (particle == null)
+			particle = new EmptyPattern();
+		return particleConverter.verifyParticle(particle, contentAutomaton);
 	}
 }
