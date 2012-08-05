@@ -62,6 +62,8 @@ public class ConvertSchema extends FoxlibAction {
 		SchemaLanguage targetLanguage = this.getTargetLanguage(actionName);
 		schemaHandler.getSchemaLanguage().getConverter(targetLanguage);
 		SchemaConverter converter = sourceLanguage.getConverter(targetLanguage);
+		if (converter==null)
+			throw new RuntimeException("Schemaconverter from " + sourceLanguage + " to " + targetLanguage + " not found.");
 		try {
 			SchemaHandler target = converter.convert(schemaHandler);
 			this.openSchemaInNewBuffer(target, view);

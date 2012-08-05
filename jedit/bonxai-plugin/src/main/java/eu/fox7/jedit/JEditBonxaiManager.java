@@ -1,6 +1,7 @@
 package eu.fox7.jedit;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -11,7 +12,10 @@ import eu.fox7.flt.automata.impl.sparse.AnnotatedStateNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.jedit.action.ValidateXML;
+import eu.fox7.jedit.textelement.BonxaiElement;
 import eu.fox7.jedit.textelement.BonxaiExpression;
+import eu.fox7.jedit.textelement.Linktype;
+import eu.fox7.jedit.textelement.XSDElement;
 import eu.fox7.jedit.textelement.XSDType;
 import eu.fox7.schematoolkit.NamespaceAwareSchema;
 import eu.fox7.schematoolkit.Schema;
@@ -19,12 +23,15 @@ import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
 import eu.fox7.schematoolkit.bonxai.om.Expression;
+import eu.fox7.schematoolkit.bonxai.om.Locatable;
+import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xmlvalidator.AbstractXMLValidator;
+import eu.fox7.schematoolkit.xsd.om.Element;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 import eu.fox7.treeautomata.converter.Bonxai2ContextAutomatonConverter;
-import eu.fox7.treeautomata.converter.ExtendedContextAutomaton;
 import eu.fox7.treeautomata.converter.XSD2ContextAutomatonConverter;
+import eu.fox7.treeautomata.om.ExtendedContextAutomaton;
 
 public class JEditBonxaiManager  {
 	private class SchemaWrapper {
@@ -67,11 +74,31 @@ public class JEditBonxaiManager  {
 				reValidateXML();
 			}
 			if (schemas[1]!=null)
-				correct = verifySchema();
+				verifySchema();
 		}
 		
-		private boolean verifySchema() {
-			return false; //verifyContextAutomaton(schemas[1], contextAutomaton, buffers[1]);
+		private void verifySchema() {
+			correct = verifyContextAutomaton(schemas[1], contextAutomaton, buffers[1]);
+			
+			Collection<State> states = contextAutomaton.getStates();
+			for (State state: states) {
+				BonxaiExpression expression = stateExpressionMap.get(state);
+				XSDType type = stateTypeMap.get(state);
+				if ((expression != null) && (type != null)) {
+					BonXaiPlugin.getHighlightManager().addLink(expression, type, Linktype.EXPRESSION2TYPE);
+					BonXaiPlugin.getHighlightManager().addLink(type, expression, Linktype.TYPE2EXPRESSION);
+				}
+			}
+			
+			for (Entry<State, BonxaiElement> entry: stateElementMap.entrySet()) {
+				State state = entry.getKey();
+				BonxaiElement bonxaiElement = entry.getValue();
+				XSDElement xsdElement = stateXSDElementMap.get(state);
+				if (xsdElement!=null) {
+					BonXaiPlugin.getHighlightManager().addLink(bonxaiElement, xsdElement, Linktype.BONXAIELEMENT2XSDELEMENT);
+					BonXaiPlugin.getHighlightManager().addLink(xsdElement, bonxaiElement, Linktype.XSDELEMENT2BONXAIELEMENT);
+				}
+			}
 		}
 
 
@@ -136,10 +163,12 @@ public class JEditBonxaiManager  {
 					wrapper = candidate;
 					break;
 				}
-			boolean empty = wrapper.removeBuffer(buffer);
-			if (empty) {
-				this.remove(wrapper.namespace);
-				reValidateXML();
+			if (wrapper!=null) {
+				boolean empty = wrapper.removeBuffer(buffer);
+				if (empty) {
+					this.remove(wrapper.namespace);
+					reValidateXML();
+				}
 			}
 		}
 	}
@@ -149,6 +178,8 @@ public class JEditBonxaiManager  {
 	
 	private Map<State,BonxaiExpression> stateExpressionMap = new HashMap<State,BonxaiExpression>();
 	private Map<State,XSDType> stateTypeMap = new HashMap<State,XSDType>();
+	private Map<State,BonxaiElement> stateElementMap = new HashMap<State,BonxaiElement>();
+	private Map<State,XSDElement> stateXSDElementMap = new HashMap<State,XSDElement>();
 	
 	
 	private SchemaMap schemaMap = new SchemaMap();
@@ -170,7 +201,15 @@ public class JEditBonxaiManager  {
 		
 	}
 
-	
+	private boolean verifyContextAutomaton(NamespaceAwareSchema schema, ExtendedContextAutomaton contextAutomaton, JEditBuffer buffer) {
+		BonXaiPlugin.getHighlightManager().removeBuffer(buffer);
+		Boolean correct = new Boolean(false);
+		if (schema.getSchemaLanguage()==SchemaLanguage.BONXAI)
+			computeVerifyContextAutomaton((Bonxai) schema, buffer, contextAutomaton, correct);
+		else
+			correct = verifyContextAutomaton((XSDSchema) schema, contextAutomaton, buffer);
+		return correct;
+	}
 
 	private boolean verifyContextAutomaton(XSDSchema xmlSchema,
 			ExtendedContextAutomaton contextAutomaton, JEditBuffer buffer) {
@@ -178,10 +217,11 @@ public class JEditBonxaiManager  {
 		return false;
 	}
 
+
 	private ExtendedContextAutomaton computeContextAutomaton(NamespaceAwareSchema schema, JEditBuffer buffer) {
 		BonXaiPlugin.getHighlightManager().removeBuffer(buffer);
 		if (schema.getSchemaLanguage()==SchemaLanguage.BONXAI)
-			return computeContextAutomaton((Bonxai) schema, buffer);
+			return computeVerifyContextAutomaton((Bonxai) schema, buffer, null, null);
 		else
 			return computeContextAutomaton((XSDSchema) schema, buffer);
 	}
@@ -197,29 +237,58 @@ public class JEditBonxaiManager  {
 				BonXaiPlugin.getHighlightManager().addTextElement(xsdType);
 				this.stateTypeMap.put(entry.getValue(), xsdType);
 			}
-				
+
+		Map<Element, State> elementStateMap = converter.getElementStateMap();
+		
+		for (Element element: xmlSchema.getAllElements()) {
+			XSDElement xsdElement = new XSDElement(buffer, element);
+			BonXaiPlugin.getHighlightManager().addTextElement(xsdElement);
+			
+			State state = elementStateMap.get(element);
+			if (state!=null)
+				stateXSDElementMap.put(state, xsdElement);
+		}
+		
 		return eca;
 	}
 	
-	private ExtendedContextAutomaton computeContextAutomaton(Bonxai bonxai, JEditBuffer buffer) {
+	private ExtendedContextAutomaton computeVerifyContextAutomaton(Bonxai bonxai, JEditBuffer buffer, ExtendedContextAutomaton eca, Boolean correct) {
 		Bonxai2ContextAutomatonConverter converter = new Bonxai2ContextAutomatonConverter();
-		ExtendedContextAutomaton eca = converter.convert(bonxai);
+		if (eca == null)
+			eca = converter.convert(bonxai);
+		else
+			correct = converter.verify(bonxai, eca);
+
+
 		Map<Expression,Set<State>> expressionStateMap = converter.getExpressionStateMap();
 		for (Expression expression: bonxai.getExpressions()) {
 			BonxaiExpression bonxaiExpression = new BonxaiExpression(buffer, expression); 
 			BonXaiPlugin.getHighlightManager().addTextElement(bonxaiExpression);
-			for (State state: expressionStateMap.get(expression))
-				this.stateExpressionMap.put(state, bonxaiExpression);
+
+			Collection<State> states = expressionStateMap.get(expression);
+			if (states==null)
+				System.err.println("No state found for expression");
+			else 
+				for (State state: states)
+					this.stateExpressionMap.put(state, bonxaiExpression);
+		}
+		
+		Map<Locatable, Set<State>> elementStateMap = converter.getElementStateMap();
+		
+		for (Particle particle: bonxai.getAllElementlikeParticles()) {
+			if (particle instanceof Locatable) {
+				BonxaiElement bonxaiElement = new BonxaiElement(buffer, (Locatable) particle);
+				BonXaiPlugin.getHighlightManager().addTextElement(bonxaiElement);
+				Collection<State> states = elementStateMap.get(particle);
+				if (states!=null)
+					for (State state: states)
+						this.stateElementMap.put(state, bonxaiElement);
+			}
 		}
 
 		return eca;
 	}
 
-	private boolean verifyContextAutomaton(Bonxai bonxai,
-			ExtendedContextAutomaton contextAutomaton, JEditBuffer buffer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	public void removeBuffer(JEditBuffer buffer) {
 		this.xmlBuffers.remove(buffer);
@@ -249,5 +318,13 @@ public class JEditBonxaiManager  {
 
 	public XSDType getType(State vertical) {
 		return this.stateTypeMap.get(vertical);
+	}
+	
+	public BonxaiElement getBonxaiElement(State horizontal) {
+		return this.stateElementMap.get(horizontal);
+	}
+
+	public XSDElement getXSDElement(State horizontal) {
+		return this.stateXSDElementMap.get(horizontal);
 	}
 }

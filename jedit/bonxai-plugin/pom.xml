@@ -10,6 +10,11 @@
   <dependencies>
   	<dependency>
   		<groupId>eu.fox7.schema-toolkit</groupId>
+  		<artifactId>xsd2bonxai</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>eu.fox7.schema-toolkit</groupId>
   		<artifactId>schemahandler</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</dependency>

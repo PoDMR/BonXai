@@ -1,10 +1,12 @@
 package eu.fox7.jedit.textelement;
 
+import java.awt.Color;
 import java.util.Collection;
 
 import org.gjt.sp.jedit.buffer.JEditBuffer;
 
 import eu.fox7.jedit.BonXaiPlugin;
+import eu.fox7.jedit.Highlight;
 import eu.fox7.jedit.HighlightManager;
 import eu.fox7.jedit.JEditBonxaiManager;
 import eu.fox7.jedit.Location;
@@ -45,7 +47,11 @@ public abstract class AbstractTextElement implements TextElement {
 		fireAction(BonXaiPlugin.getBonxaiManager(), BonXaiPlugin.getHighlightManager());
 	}
 
-	protected abstract void fireAction(JEditBonxaiManager bonxaiManager, HighlightManager highlightManager);
+	protected void fireAction(JEditBonxaiManager bonxaiManager, HighlightManager highlightManager) {
+		highlightManager.removeHighlight(Highlight.LINK);
+		highlightManager.addHighlight(this, Color.CYAN, Highlight.LINK);
+		highlightManager.highlightAllLinks(this, Color.GREEN, Highlight.LINK);
+	}
 
 	@Override
 	public Collection<Location> getHighlightLocations() {

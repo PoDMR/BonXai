@@ -1,13 +1,10 @@
 package eu.fox7.jedit.textelement;
 
-import java.awt.Color;
 import java.util.Collection;
 import java.util.LinkedList;
 
 import org.gjt.sp.jedit.buffer.JEditBuffer;
 
-import eu.fox7.jedit.HighlightManager;
-import eu.fox7.jedit.JEditBonxaiManager;
 import eu.fox7.jedit.Location;
 import eu.fox7.schematoolkit.common.Locatable;
 import eu.fox7.schematoolkit.common.Position;
@@ -66,11 +63,4 @@ public abstract class AbstractXMLElement extends AbstractTextElement {
 		}
 		return  line_offset + column_offset;
 	}
-
-	@Override
-	public void fireAction(JEditBonxaiManager bonxaiManager, HighlightManager highlightManager) {
-		highlightManager.removeHighlight(1);
-		highlightManager.addHighlight(this, Color.cyan, 1);
-	}
-
 }

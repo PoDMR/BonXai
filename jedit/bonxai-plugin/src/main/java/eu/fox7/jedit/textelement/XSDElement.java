@@ -9,5 +9,4 @@ public class XSDElement extends AbstractXMLElement {
 	public XSDElement(JEditBuffer buffer, Element xsdElement) {
 		super(buffer, xsdElement);
 	}
-
 }

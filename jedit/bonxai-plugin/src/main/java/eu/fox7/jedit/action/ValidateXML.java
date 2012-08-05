@@ -12,9 +12,11 @@ import eu.fox7.jedit.FoxlibAction;
 import eu.fox7.jedit.Highlight;
 import eu.fox7.jedit.HighlightManager;
 import eu.fox7.jedit.JEditBonxaiManager;
+import eu.fox7.jedit.textelement.BonxaiElement;
 import eu.fox7.jedit.textelement.BonxaiExpression;
 import eu.fox7.jedit.textelement.Linktype;
 import eu.fox7.jedit.textelement.XMLElement;
+import eu.fox7.jedit.textelement.XSDElement;
 import eu.fox7.jedit.textelement.XSDType;
 import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.xmlvalidator.AbstractXMLValidator;
@@ -61,6 +63,7 @@ public class ValidateXML extends FoxlibAction {
 					highlightManager.addHighlight(xmlElement, color, key);
 				
 				State vertical = element.getVertical();
+				State horizontal = element.getHorizontal();
 				BonxaiExpression expression = bonxaiManager.getExpression(vertical);
 				if (expression!=null) {
 					highlightManager.addLink(expression, xmlElement, Linktype.EXPRESSION2ELEMENT);
@@ -71,6 +74,17 @@ public class ValidateXML extends FoxlibAction {
 					highlightManager.addLink(type, xmlElement, Linktype.TYPE2ELEMENT);
 					highlightManager.addLink(xmlElement, type, Linktype.ELEMENT2TYPE);
 				}
+				BonxaiElement bonxaiElement = bonxaiManager.getBonxaiElement(horizontal);
+				if (bonxaiElement != null) {
+					highlightManager.addLink(bonxaiElement, xmlElement, Linktype.BONXAIELEMENT2ELEMENT);
+					highlightManager.addLink(xmlElement, bonxaiElement, Linktype.ELEMENT2BONXAIELEMENT);
+				}
+				XSDElement xsdElement = bonxaiManager.getXSDElement(horizontal);
+				if (xsdElement != null) {
+					highlightManager.addLink(xsdElement, xmlElement, Linktype.XSDELEMENT2ELEMENT);
+					highlightManager.addLink(xmlElement, xsdElement, Linktype.ELEMENT2XSDELEMENT);
+				}
+				
 			}
 		} catch (SchemaToolkitException e) {
 			throw new RuntimeException(e);

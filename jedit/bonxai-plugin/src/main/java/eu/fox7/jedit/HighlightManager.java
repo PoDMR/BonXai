@@ -25,14 +25,16 @@ public class HighlightManager {
 
 	public TextElement getClickTarget(JEditBuffer buffer, int offset) {
 		TextElement element = null;
-		for (TextElement candidate: clickPositions.get(buffer)) {
-			Location location = candidate.getClickLocation();
-			if (location.getStartOffset()<=offset && location.getEndOffset()>=offset)
-				if ((element == null) ||
-						((element.getClickLocation().getEndOffset() - element.getClickLocation().getStartOffset()) > (location.getEndOffset() - location.getStartOffset()))) {
-					element = candidate;
-				}
-		}
+		Collection<TextElement> candidates = clickPositions.get(buffer);
+		if (candidates!=null)
+			for (TextElement candidate: candidates) {
+				Location location = candidate.getClickLocation();
+				if (location.getStartOffset()<=offset && location.getEndOffset()>=offset)
+					if ((element == null) ||
+							((element.getClickLocation().getEndOffset() - element.getClickLocation().getStartOffset()) > (location.getEndOffset() - location.getStartOffset()))) {
+						element = candidate;
+					}
+			}
 		return element;
 	}
 	
@@ -117,7 +119,7 @@ public class HighlightManager {
 					for (TextArea textArea: textAreas ) {
 						JEditBuffer textAreaBuffer = textArea.getBuffer();
 						if (buffer == textAreaBuffer)
-							textArea.invalidateLineRange(textArea.getLineOfOffset(highlight.getStart()),textArea.getLineOfOffset(highlight.getEnd()));
+							textArea.invalidateScreenLineRange(0, textArea.getLastScreenLine());
 					}
 					it.remove();
 				}
@@ -145,6 +147,18 @@ public class HighlightManager {
 			for (TextElement te: textElements)
 				this.addHighlight(te, color, key);
 	}
+	
+	public void highlightAllLinks(TextElement textElement, Color color, int key) {
+		Collection<TextElement> textElements = new LinkedList<TextElement>();
+		for (Map<TextElement, Collection<TextElement>> links2: links.values()) {
+			Collection<TextElement> tes = links2.get(textElement);
+			if (tes!=null)
+				textElements.addAll(tes);
+		}
+		
+		for (TextElement te: textElements)
+			this.addHighlight(te, color, key);
+	}
 
 	public void addLink(TextElement source, TextElement target, Linktype type) {
 		Map<TextElement, Collection<TextElement>> links = this.links.get(type);
@@ -170,8 +184,7 @@ public class HighlightManager {
 		for (TextArea textArea: textAreas ) {
 			JEditBuffer textAreaBuffer = textArea.getBuffer();
 			if (buffer == textAreaBuffer)
-				for (Location location: textElement.getHighlightLocations())
-					textArea.invalidateScreenLineRange(textArea.getLineOfOffset(location.getStartOffset()), textArea.getLineOfOffset(location.getEndOffset()));
+				textArea.invalidateScreenLineRange(0, textArea.getLastScreenLine());
 		}
 		
 	}
