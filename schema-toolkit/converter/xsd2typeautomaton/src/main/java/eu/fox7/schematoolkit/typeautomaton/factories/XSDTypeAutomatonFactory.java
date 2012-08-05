@@ -9,8 +9,14 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+import org.apache.commons.collections15.BidiMap;
+
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
+import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.SchemaConverter;
+import eu.fox7.schematoolkit.SchemaHandler;
+import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.schematoolkit.common.CountingPattern;
 import eu.fox7.schematoolkit.common.ElementRef;
 import eu.fox7.schematoolkit.common.EmptyPattern;
@@ -18,6 +24,7 @@ import eu.fox7.schematoolkit.common.GroupReference;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.ParticleContainer;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 import eu.fox7.schematoolkit.typeautomaton.AnnotatedNFATypeAutomaton;
 import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
@@ -28,7 +35,7 @@ import eu.fox7.schematoolkit.xsd.om.Group;
 import eu.fox7.schematoolkit.xsd.om.Type;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
-public class XSDTypeAutomatonFactory {
+public class XSDTypeAutomatonFactory implements SchemaConverter {
     /**
      * Should states for simple types be added?
      */
@@ -83,6 +90,10 @@ public class XSDTypeAutomatonFactory {
 		}
 		return typeAutomaton;
     }
+	
+	public Map<QualifiedName,State> getTypeMap() {
+		return typeMap;
+	}
 	
 
     private Set<Particle> getChilds(Type type) {
@@ -167,4 +178,23 @@ public class XSDTypeAutomatonFactory {
     		typeAutomaton.addTransition(symbol, state, newState);
     	}
     }
+
+
+	@Override
+	public TypeAutomaton convert(Schema schema) throws ConversionFailedException {
+		if (schema.getSchemaLanguage().equals(SchemaLanguage.XMLSCHEMA))
+			return this.createTypeAutomaton((XSDSchema) schema);
+		else
+			throw new ConversionFailedException("Cannot create TypeAutomaton from "+schema.getSchemaLanguage());
+	}
+
+
+	@Override
+	public SchemaHandler convert(SchemaHandler schemaHandler)
+			throws ConversionFailedException {
+		if (schemaHandler.getSchemaLanguage().equals(SchemaLanguage.XMLSCHEMA))
+			return this.createTypeAutomaton((XSDSchema) schemaHandler.getSchema()).getSchemaHandler();
+		else
+			throw new ConversionFailedException("Cannot create TypeAutomaton from "+schema.getSchemaLanguage());
+	}
 }
