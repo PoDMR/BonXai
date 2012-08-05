@@ -28,6 +28,8 @@ public abstract class ForeignSchema extends AnnotationElement {
     XSDSchema parentSchema;
     protected String schemaLocation;
 
+    public ForeignSchema() {}
+    
     /**
      * A Foreignschema cannot exist on its own! Use IncludedSchema, ImportedSchema
      * or RedefinedSchema.

@@ -25,7 +25,9 @@ import eu.fox7.schematoolkit.common.QualifiedName;
  */
 
 public class ComplexContentExtension extends ComplexContentInheritance {
-    /**
+    public ComplexContentExtension () {}
+	
+	/**
      * Creates an instance of Complex Contentent Extension
      * with the passed SymbolTable reference base.
      * @param base common.SymbolTableRef<Type>

@@ -19,6 +19,7 @@ package eu.fox7.schematoolkit.xsd.om;
 import java.util.LinkedList;
 
 import eu.fox7.schematoolkit.common.AttributeParticle;
+import eu.fox7.schematoolkit.common.PContainer;
 import eu.fox7.schematoolkit.common.QualifiedName;
 
 /**
@@ -26,7 +27,7 @@ import eu.fox7.schematoolkit.common.QualifiedName;
  * Restriction or Extension.
  */
 
-public abstract class ComplexContentInheritance extends Inheritance {
+public abstract class ComplexContentInheritance extends Inheritance implements AContainer {
 
     /**
      * LinkedList holding the AttributeParticle of the ComplexContentInheritance
@@ -35,6 +36,8 @@ public abstract class ComplexContentInheritance extends Inheritance {
      * it, since it will be removed again! Use {@link ComplexType.attributes}.
      */
     private LinkedList<AttributeParticle> attributes = new LinkedList<AttributeParticle>();
+
+    public ComplexContentInheritance () {}
 
     /**
      * Creates an instance of Complex Content Inheritance
@@ -58,7 +61,11 @@ public abstract class ComplexContentInheritance extends Inheritance {
      * @param attributeParticle
      */
     public void addAttribute(AttributeParticle attributeParticle) {
-        this.attributes.add(attributeParticle);
+        this.addAttributeParticle(attributeParticle);
+    }
+    
+    public void addAttributeParticle(AttributeParticle attributeParticle) {
+    	this.attributes.add(attributeParticle);
     }
 
     /**
@@ -68,5 +75,7 @@ public abstract class ComplexContentInheritance extends Inheritance {
     public void setAttributes(LinkedList<AttributeParticle> attributeParticles) {
         this.attributes = attributeParticles;
     }
+    
+    
 }
 

@@ -25,7 +25,7 @@ import java.util.List;
  * The AnyAttribute class represents the XSD attribute definition with the
  * same name.
  * It stores a value from the process contents instruction enumeration
- * (Strict, Skip or Lax) and a defined namespace which specifies the allowed
+ * (STRICT, SKIP or LAX) and a defined namespace which specifies the allowed
  * attributes.
  */
 public class AnyAttribute extends AttributeParticle {
@@ -33,6 +33,8 @@ public class AnyAttribute extends AttributeParticle {
     protected ProcessContentsInstruction processContentsInstruction;
     protected List<Namespace> namespaces = new LinkedList<Namespace>();
 
+    public AnyAttribute() {}
+    
     public AnyAttribute(ProcessContentsInstruction processContentsInstruction, String namespace) {
         this.processContentsInstruction = processContentsInstruction;
         this.setNamespace(namespace);
@@ -112,5 +114,10 @@ public class AnyAttribute extends AttributeParticle {
     public void addNamespace(Namespace namespace) {
     	this.namespaces.add(namespace);
     }
+
+	public void setProcessContentsInstruction(ProcessContentsInstruction processContentsInstruction) {
+		this.processContentsInstruction = processContentsInstruction;
+		
+	}
 }
 

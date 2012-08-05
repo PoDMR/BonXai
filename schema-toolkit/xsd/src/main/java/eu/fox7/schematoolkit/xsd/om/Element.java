@@ -19,13 +19,14 @@ package eu.fox7.schematoolkit.xsd.om;
 import java.util.LinkedList;
 
 import eu.fox7.schematoolkit.common.*;
+import eu.fox7.schematoolkit.xsd.saxparser.NamedXSDElement;
 
 import java.util.HashSet;
 
 /**
  * XSD Element.
  */
-public class Element extends eu.fox7.schematoolkit.common.Element {
+public class Element extends eu.fox7.schematoolkit.common.Element implements TypedXSDElement, NamedXSDElement {
 
 	
     public boolean getNillable() {
@@ -83,6 +84,53 @@ public class Element extends eu.fox7.schematoolkit.common.Element {
     protected QualifiedName substitutionGroup;
     private XSDSchema.Qualification form = null;
 
+	protected ElementProperties elementProperties = new ElementProperties();
+
+    /**
+     * Set default value.
+     *
+     * Can be null for no default.
+     */
+    public void setDefault(String defaultValue) {
+        this.elementProperties.setDefaultValue(defaultValue);
+    }
+
+    /**
+     * Get default value.
+     *
+     * Can be null for no default.
+     */
+    public String getDefault() {
+        return this.elementProperties.getDefaultValue();
+    }
+
+    /**
+     * Set fixed value.
+     *
+     * Can be null for no fixed value.
+     */
+    public void setFixed(String fixedValue) {
+        this.elementProperties.setFixedValue(fixedValue);
+    }
+
+    /**
+     * Get fixed value.
+     *
+     * Can be null for no fixed value.
+     */
+    public String getFixed() {
+        return this.elementProperties.getFixedValue();
+    }
+
+    public void setProperties(ElementProperties elementProperties) {
+    	this.elementProperties = elementProperties;
+    }
+    
+    public ElementProperties getProperties() {
+    	return this.elementProperties;
+    }
+
+    
     public QualifiedName getSubstitutionGroup() {
         return substitutionGroup;
     }
@@ -168,15 +216,12 @@ public class Element extends eu.fox7.schematoolkit.common.Element {
     public void setForm(XSDSchema.Qualification elementForm) {
         this.form = elementForm;
     }
+    
+    public Element() {
+    }
 
     /**
      * Creates an element with only a name.
-     *
-     * The use of this ctor is highly discouraged, since a namespace is
-     * mandatory anyway.
-     *
-     * This constructor should ONLY be used with fully qualified names in the
-     * form "{namespace}name".
      */
     public Element(QualifiedName name) {
         this.name = name;
@@ -184,11 +229,6 @@ public class Element extends eu.fox7.schematoolkit.common.Element {
 
     /**
      * Constructor with name and type.
-     *
-     * Usage of this ctor is discouraged, since it does not ship a namespace.
-     *
-     * This constructor should ONLY be used with fully qualified names in the
-     * form "{namespace}name".
      */
     public Element(QualifiedName name, QualifiedName typeName) {
         this(name);
@@ -256,4 +296,10 @@ public class Element extends eu.fox7.schematoolkit.common.Element {
     public Boolean getAbstract() {
         return Abstract;
     }
+
+	@Override
+	public void setName(QualifiedName name) {
+		this.name = name;
+	}
+
 }

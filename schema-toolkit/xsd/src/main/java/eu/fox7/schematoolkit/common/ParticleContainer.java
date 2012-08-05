@@ -23,8 +23,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 
-public abstract class ParticleContainer extends Particle {
-
+public abstract class ParticleContainer extends Particle implements PContainer {
     protected LinkedList<Particle> particles;
 
     public ParticleContainer () {
@@ -106,8 +105,5 @@ public abstract class ParticleContainer extends Particle {
     public void setParticles(LinkedList<Particle> particles) {
         this.particles = particles;
     }
-
-    
-
 }
 

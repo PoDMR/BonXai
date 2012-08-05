@@ -39,7 +39,7 @@ public class SimpleContentType extends Content {
      * Sets the inheritance of SimpleContentType
      * @param inheritance
      */
-    public void setInheritance(SimpleContentInheritance inheritance) {
-        this.inheritance = inheritance;
+    public void setInheritance(Inheritance inheritance) {
+        this.inheritance = (SimpleContentInheritance) inheritance;
     }
 }

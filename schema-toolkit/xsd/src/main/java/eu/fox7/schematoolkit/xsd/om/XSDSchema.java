@@ -18,9 +18,10 @@ package eu.fox7.schematoolkit.xsd.om;
 
 import java.util.LinkedList;
 
-import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.NamespaceAwareSchema;
 import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaLanguage;
+import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.common.*;
 import eu.fox7.schematoolkit.xsd.XSDSchemaHandler;
 
@@ -28,6 +29,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Class representing a full XML-XSDSchema.
@@ -42,7 +44,7 @@ import java.util.List;
  * The {@link LinkedList}s in contrast represent the objects directly defined
  * below the <schema /> tag.
  */
-public class XSDSchema implements Schema {
+public class XSDSchema implements NamespaceAwareSchema, PContainer {
     public static final String XMLSCHEMA_NAMESPACE = "http://www.w3.org/2001/XMLSchema";
 
     /**
@@ -588,7 +590,7 @@ public class XSDSchema implements Schema {
 
 	public Attribute getAttribute(QualifiedName attributeName) {
 		for (Attribute attribute: this.attributes)
-			if (attribute.name.equals(attributeName))
+			if (attribute.getName().equals(attributeName))
 				return attribute;
 		return null;
 	}
@@ -603,7 +605,7 @@ public class XSDSchema implements Schema {
 	}
 
 	public eu.fox7.schematoolkit.xsd.om.Attribute getAttribute(AttributeRef attributeRef) {
-		return this.getAttribute(attributeRef.getAttributeName());
+		return this.getAttribute(attributeRef.getName());
 	}
 
 	public void setTargetNamespace(String targetNamespaceURI) {
@@ -638,6 +640,43 @@ public class XSDSchema implements Schema {
 
 	public String getQualifiedName(QualifiedName name) {
 		return namespaceList.getQualifiedName(name);
+	}
+
+	@Override
+	public void addParticle(Particle particle) throws SchemaToolkitException {
+		if (! (particle instanceof Element))
+			throw new SchemaToolkitException("Trying to add particle of class " + particle.getClass().toString() + " to xsd schema.");
+		this.addElement((Element) particle);
+	}
+
+	public Collection<Element> getAllElements() {
+		Collection<Element> elements = new Vector<Element>(this.elements);
+		for (Type type: this.types.values()) {
+			if (type instanceof ComplexType) {
+				Content content = ((ComplexType) type).getContent();
+				if (content instanceof ComplexContentType) {
+					Particle particle = ((ComplexContentType) content).getParticle();
+					elements.addAll(getElementsRecursive(particle));
+				}
+			}
+		}
+		
+		for (Group group: this.groups.values())
+			elements.addAll(this.getElementsRecursive(group.getParticle()));
+		
+		return elements;
+	}
+
+	private Collection<Element> getElementsRecursive(Particle particle) {
+		Collection<Element> elements = new Vector<Element>();
+		if (particle instanceof Element)
+			elements.add((Element) particle);
+		else if (particle instanceof ParticleContainer)
+			for (Particle child: ((ParticleContainer) particle).getParticles())
+				elements.addAll(this.getElementsRecursive(child));
+		else if (particle instanceof CountingPattern)
+			elements.addAll(this.getElementsRecursive(((CountingPattern) particle).getParticle()));
+		return elements;
 	}
 
 }

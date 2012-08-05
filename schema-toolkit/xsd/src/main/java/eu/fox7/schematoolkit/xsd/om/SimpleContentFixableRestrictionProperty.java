@@ -34,6 +34,8 @@ SimpleContentRestrictionProperty<T> {
 
     protected boolean fixed;
 
+    public SimpleContentFixableRestrictionProperty () {}
+    
     /**
      * Creates an instance of Simple Content Restriction
      * Property with the passed value and boolean fixed.

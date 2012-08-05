@@ -84,18 +84,25 @@ public class NamespaceList {
 		this.targetNamespace = this.getNamespaceByUri(targetNamespaceURI);
 	}
 	
-	public QualifiedName getQualifiedName(String fullyQualifiedName) {
-		int pos = fullyQualifiedName.lastIndexOf('}');
-		String namespaceUri = fullyQualifiedName.substring(1, pos);
-		String localName = fullyQualifiedName.substring(pos+1, fullyQualifiedName.length());
-		Namespace namespace = this.getNamespaceByUri(namespaceUri);
-		if (namespace == null) {
-			String id = "ns" + namespaces.size();
-			IdentifiedNamespace in = new IdentifiedNamespace(id,namespaceUri);
-			namespace = in;
-			namespaces.add(in);
+	public QualifiedName getQualifiedName(String qName) {
+		Namespace namespace = null;
+		String localName;
+		int pos = qName.lastIndexOf(':');
+		if (pos == -1 ) {
+			namespace = this.defaultNamespace;
+			localName = qName;
+		} else {
+			String prefix = qName.substring(0, pos);
+			localName = qName.substring(pos+1, qName.length());
+			namespace = this.getNamespaceByIdentifier(prefix);
 		}
-		return new QualifiedName(namespace, localName);
+		
+		if (namespace==null) {
+			System.err.println("No namespace found for qName " + qName);
+			namespace = Namespace.EMPTY_NAMESPACE;
+		}
+		
+		return new QualifiedName(namespace.getUri(), localName);
 	}
 
 	public String getQualifiedName(QualifiedName name) {

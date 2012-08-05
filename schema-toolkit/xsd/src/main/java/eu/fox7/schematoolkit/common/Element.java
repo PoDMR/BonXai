@@ -19,9 +19,8 @@ package eu.fox7.schematoolkit.common;
 /**
  * Abstract base class for XSD and Bonxai Element realizations.
  */
-abstract public class Element extends Particle {
+abstract public class Element extends Particle   {
 
-	protected ElementProperties elementProperties = new ElementProperties();
 	
     /**
      * Name of the element.
@@ -38,42 +37,7 @@ abstract public class Element extends Particle {
         return name;
     }
 
-    /**
-     * Set default value.
-     *
-     * Can be null for no default.
-     */
-    public void setDefault(String defaultValue) {
-        this.elementProperties.setDefaultValue(defaultValue);
-    }
-
-    /**
-     * Get default value.
-     *
-     * Can be null for no default.
-     */
-    public String getDefault() {
-        return this.elementProperties.getDefaultValue();
-    }
-
-    /**
-     * Set fixed value.
-     *
-     * Can be null for no fixed value.
-     */
-    public void setFixed(String fixedValue) {
-        this.elementProperties.setFixedValue(fixedValue);
-    }
-
-    /**
-     * Get fixed value.
-     *
-     * Can be null for no fixed value.
-     */
-    public String getFixed() {
-        return this.elementProperties.getFixedValue();
-    }
-
+    
     /**
      * Return element string representation for debugging
      */
@@ -81,11 +45,5 @@ abstract public class Element extends Particle {
         return this.getClass().getName() + ": " + this.name;
     }
     
-    public void setProperties(ElementProperties elementProperties) {
-    	this.elementProperties = elementProperties;
-    }
-    
-    public ElementProperties getProperties() {
-    	return this.elementProperties;
-    }
+
 }

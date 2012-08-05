@@ -25,11 +25,13 @@ import eu.fox7.schematoolkit.common.QualifiedName;
 public class ComplexContentRestriction extends ComplexContentInheritance {
     /**
      * Creates an instance of Complex Content Restriction
-     * with the passed SymbolTable reference base.
-     * @param base common.SymbolTableRef<Type>
+     * with the passed reference base.
+     * @param base 
      */
     public ComplexContentRestriction (QualifiedName baseType) {
         super(baseType);
     }
+    
+    public ComplexContentRestriction() {}
 }
 

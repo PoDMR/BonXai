@@ -50,7 +50,7 @@ public class AnyAttributeProcessorTest extends junit.framework.TestCase{
         AnyAttribute anyAttribute = (AnyAttribute) object;
         assertTrue(anyAttribute.getId().equals("first"));
         assertTrue(anyAttribute.getNamespace().equals("http://www.w3.org/1999/xhtml ##targetNamespace ##local"));
-        assertTrue(anyAttribute.getProcessContentsInstruction() == ProcessContentsInstruction.Lax);
+        assertTrue(anyAttribute.getProcessContentsInstruction() == ProcessContentsInstruction.LAX);
 
 
         complexType = (ComplexType) schema.getTypeSymbolTable().getReference("{http://www.w3.org/2001/XMLSchema}second").getReference();
@@ -59,7 +59,7 @@ public class AnyAttributeProcessorTest extends junit.framework.TestCase{
         anyAttribute = (AnyAttribute) object;
         assertTrue(anyAttribute.getId().equals("second"));
         assertTrue(anyAttribute.getNamespace().equals("##any"));
-        assertTrue(anyAttribute.getProcessContentsInstruction() == ProcessContentsInstruction.Skip);
+        assertTrue(anyAttribute.getProcessContentsInstruction() == ProcessContentsInstruction.SKIP);
 
         complexType = (ComplexType) schema.getTypeSymbolTable().getReference("{http://www.w3.org/2001/XMLSchema}third").getReference();
         object = complexType.getAttributes().getFirst();
@@ -67,7 +67,7 @@ public class AnyAttributeProcessorTest extends junit.framework.TestCase{
         anyAttribute = (AnyAttribute) object;
         assertTrue(anyAttribute.getId().equals("third"));
         assertTrue(anyAttribute.getNamespace().equals("##other"));
-        assertTrue(anyAttribute.getProcessContentsInstruction() == ProcessContentsInstruction.Strict);
+        assertTrue(anyAttribute.getProcessContentsInstruction() == ProcessContentsInstruction.STRICT);
     }
 
     @Test

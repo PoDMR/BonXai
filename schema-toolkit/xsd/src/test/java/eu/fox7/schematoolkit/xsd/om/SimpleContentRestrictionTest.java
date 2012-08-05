@@ -281,7 +281,7 @@ public class SimpleContentRestrictionTest extends junit.framework.TestCase {
     public void testSetWhitespace() {
         SimpleContentFixableRestrictionProperty<SimpleContentPropertyWhitespace> val =
             new SimpleContentFixableRestrictionProperty<SimpleContentPropertyWhitespace>(
-                SimpleContentPropertyWhitespace.Replace,
+                SimpleContentPropertyWhitespace.replace,
                 true
             );
         SymbolTableRef<Type> base = new SymbolTableRef<Type>("Testsymboltableref16");

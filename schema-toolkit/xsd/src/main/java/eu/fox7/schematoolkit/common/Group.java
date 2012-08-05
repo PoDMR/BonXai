@@ -16,10 +16,12 @@
  */
 package eu.fox7.schematoolkit.common;
 
+import eu.fox7.schematoolkit.xsd.saxparser.NamedXSDElement;
+
 /**
  * Interface Group referenced by the class GroupRef
  */
-public interface Group {
+public interface Group extends NamedXSDElement {
 
 
     /**
@@ -28,9 +30,4 @@ public interface Group {
      */
     public Particle getParticle();
 
-    /**
-     * Returns name of the group
-     * @return name
-     */
-    public QualifiedName getName();
 }

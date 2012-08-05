@@ -24,7 +24,7 @@ import eu.fox7.schematoolkit.common.*;
  * Reflects XMLSchema ComplexContentType as well as the pure ComplexType structure where no inheritance is defined at all.
  * This implies that in this only a particle reference is stored.
  */
-public class ComplexContentType extends Content {
+public class ComplexContentType extends Content implements PContainer {
 
     /**
      * Variable for the ComplexContentInheritance description of the ComplexContentType
@@ -92,8 +92,8 @@ public class ComplexContentType extends Content {
      * Sets the inheritance of ComplexContentType
      * @param inheritance
      */
-    public void setInheritance(ComplexContentInheritance inheritance) {
-        this.inheritance = inheritance;
+    public void setInheritance(Inheritance inheritance) {
+        this.inheritance = (ComplexContentInheritance) inheritance;
     }
 
     /**
@@ -126,5 +126,13 @@ public class ComplexContentType extends Content {
      */
     public void setParticle(eu.fox7.schematoolkit.common.Particle particle) {
         this.particle = particle;
+    }
+
+    /**
+     * Sets the value of particle
+     * @param val
+     */
+    public void addParticle(eu.fox7.schematoolkit.common.Particle particle) {
+    	this.particle = particle;
     }
 }

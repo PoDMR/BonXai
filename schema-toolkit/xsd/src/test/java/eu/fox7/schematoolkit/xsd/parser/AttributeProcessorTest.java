@@ -1,5 +1,7 @@
 package eu.fox7.schematoolkit.xsd.parser;
 
+import eu.fox7.schematoolkit.common.AttributeRef;
+import eu.fox7.schematoolkit.common.AttributeUse;
 import eu.fox7.schematoolkit.xsd.om.*;
 import eu.fox7.schematoolkit.xsd.parser.SchemaProcessor;
 import eu.fox7.schematoolkit.xsd.parser.exceptions.attribute.*;
@@ -52,7 +54,7 @@ public class AttributeProcessorTest extends junit.framework.TestCase{
         assertTrue(attribute.getTypeAttr());
         assertTrue(attribute.getSimpleType() != null);
         assertTrue(attribute.getForm() == XSDSchema.Qualification.unqualified);
-        assertTrue(attribute.getUse() == AttributeUse.Required);
+        assertTrue(attribute.getUse() == AttributeUse.required);
         assertTrue(attribute.getFixed().equals("boo"));
 
         complexType = (ComplexType) schema.getTypeSymbolTable().getReference("{http://www.w3.org/2001/XMLSchema}type").getReference();
@@ -76,7 +78,7 @@ public class AttributeProcessorTest extends junit.framework.TestCase{
         assertTrue(object instanceof AttributeRef);
         AttributeRef attributeRef = (AttributeRef) object;
         assertTrue(attributeRef.getId().equals("id"));
-        assertTrue(attributeRef.getUse() == AttributeUse.Required);
+        assertTrue(attributeRef.getUse() == AttributeUse.required);
         assertTrue(attributeRef.getFixed().equals("boo"));
 
         complexType = (ComplexType) schema.getTypeSymbolTable().getReference("{http://www.w3.org/2001/XMLSchema}type").getReference();

@@ -4,10 +4,10 @@ import static org.junit.Assert.fail;
 
 import org.junit.*;
 
+import eu.fox7.schematoolkit.common.AttributeUse;
 import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.Attribute;
-import eu.fox7.schematoolkit.xsd.om.AttributeUse;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.SimpleType;
 import eu.fox7.schematoolkit.xsd.om.Type;
@@ -47,19 +47,19 @@ public class AttributeTest extends junit.framework.TestCase {
     	QualifiedName attributeName= new QualifiedName(Namespace.EMPTY_NAMESPACE,"someName");
         Attribute attribute = new Attribute(attributeName);
 
-        assertEquals(AttributeUse.Optional, attribute.getUse());
+        assertEquals(AttributeUse.optional, attribute.getUse());
 
-        attribute.setUse(AttributeUse.Required);
+        attribute.setUse(AttributeUse.required);
 
-        assertEquals(AttributeUse.Required, attribute.getUse());
+        assertEquals(AttributeUse.required, attribute.getUse());
 
-        attribute.setUse(AttributeUse.Prohibited);
+        attribute.setUse(AttributeUse.prohibited);
 
-        assertEquals(AttributeUse.Prohibited, attribute.getUse());
+        assertEquals(AttributeUse.prohibited, attribute.getUse());
 
-        attribute.setUse(AttributeUse.Optional);
+        attribute.setUse(AttributeUse.optional);
 
-        assertEquals(AttributeUse.Optional, attribute.getUse());
+        assertEquals(AttributeUse.optional, attribute.getUse());
     }
 
     public void testSetGetDefault()

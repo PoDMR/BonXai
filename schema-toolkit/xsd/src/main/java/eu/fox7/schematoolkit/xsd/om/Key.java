@@ -31,6 +31,8 @@ import eu.fox7.schematoolkit.common.QualifiedName;
  */
 public class Key extends SimpleConstraint {
 
+	public Key () {}
+	
     /**
      * Constructor with name and selector.
      *

@@ -84,13 +84,13 @@ public class AttributeProcessor extends Processor {
             if (attributes.getNamedItem("use") != null) {
                 String useValue = ((Attr) attributes.getNamedItem("use")).getValue();
                 if (useValue.equals("optional")) {
-                    attributeUse = AttributeUse.Optional;
+                    attributeUse = AttributeUse.optional;
                 } else {
                     if (useValue.equals("prohibited")) {
-                        attributeUse = AttributeUse.Prohibited;
+                        attributeUse = AttributeUse.prohibited;
                     } else {
                         if (useValue.equals("required")) {
-                            attributeUse = AttributeUse.Required;
+                            attributeUse = AttributeUse.required;
                         } else {
                             throw new InvalidUseValueException(attributeName);
                         }

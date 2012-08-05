@@ -16,6 +16,8 @@ import org.xml.sax.*;
  * @author Lars Schmidt, Dominik Wolff
  */
 public class XSDParser {
+	
+	private Locator locator;
 
     // Flag if the EDC should be validated by the parser.
     private boolean validateEDC = false;
@@ -43,35 +45,34 @@ public class XSDParser {
 
     public XSDSchema parse(String uriString) throws FileNotFoundException, IOException, XSDParseException {
         // Begin processing the XSD
-        // try {
-            // Build the document tree from a file
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
+    	// Build the document tree from a file
+    	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    	factory.setNamespaceAware(true);    		 
 
-            this.schema = new XSDSchema();
-            this.schemaProcessor = new SchemaProcessor(schema);
-            try {
-				doc = factory.newDocumentBuilder().parse(uriString);
-			} catch (SAXException e) {
-				throw new XSDParseException(e);
-			} catch (ParserConfigurationException e) {
-				throw new XSDParseException(e);
-			}
+    	this.schema = new XSDSchema();
+    	this.schemaProcessor = new SchemaProcessor(schema);
+    	try {
+    		doc = factory.newDocumentBuilder().parse(uriString);
+    	} catch (SAXException e) {
+    		throw new XSDParseException(e);
+    	} catch (ParserConfigurationException e) {
+    		throw new XSDParseException(e);
+    	}
+    	
+    	
+    	Node schemaNode = doc.getFirstChild();
+    	// We have to find the right starting node for the schemaProcessor
+    	// It is possible, that DTD information is written before the xsd
+    	// schema node. In DTD the Doctype root node can also be named
+    	// "schema" so we have to check the type of the found node.
+    	// Type == 1 means that it is the correct XSD node type
+    	while (schemaNode != null && !(schemaNode.getNodeType() == 1 && schemaNode.getNodeName().endsWith("schema"))) {
+    		schemaNode = schemaNode.getNextSibling();
+    	}
 
-            Node schemaNode = doc.getFirstChild();
-            // We have to find the right starting node for the schemaProcessor
-            // It is possible, that DTD information is written before the xsd
-            // schema node. In DTD the Doctype root node can also be named
-            // "schema" so we have to check the type of the found node.
-            // Type == 1 means that it is the correct XSD node type
-            while (schemaNode != null && !(schemaNode.getNodeType() == 1 && schemaNode.getNodeName().endsWith("schema"))) {
-                schemaNode = schemaNode.getNextSibling();
-            }
+    	schemaProcessor.processNode(schemaNode);
 
-
-            schemaProcessor.processNode(schemaNode);
-
-            schema.setSchemaLocation(doc.getBaseURI());
+    	schema.setSchemaLocation(doc.getBaseURI());
 
         return this.schema;
     }
@@ -114,36 +115,36 @@ public class XSDParser {
     	return this.schema;
     }
 
-    public XSDSchema parseForeignSchema(String uriString, String targetNamespace) throws FileNotFoundException, IOException, XSDParseException {
-        // Begin processing the XSD
-    	// Build the document tree from a file
-    	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    	factory.setNamespaceAware(true);
-
-    	this.schema = new XSDSchema();
-    	this.schemaProcessor = new SchemaProcessor(schema);
-    	try {
-			doc = factory.newDocumentBuilder().parse(uriString);
-		} catch (SAXException e) {
-			throw new XSDParseException(e);
-		} catch (ParserConfigurationException e) {
-			throw new XSDParseException(e);
-		}
-
-    	Node schemaNode = doc.getFirstChild();
-    	// We have to find the right starting node for the schemaProcessor
-    	// It is possible, that DTD information is written before the xsd
-    	// schema node. In DTD the Doctype root node can also be named
-    	// "schema" so we have to check the type of the found node.
-    	// Type == 1 means that it is the correct XSD node type
-    	while (schemaNode != null && !(schemaNode.getNodeType() == 1 && schemaNode.getNodeName().endsWith("schema"))) {
-    		schemaNode = schemaNode.getNextSibling();
-    	}
-    	schemaProcessor.setIncludeTargetNamespace(targetNamespace);
-    	schemaProcessor.processNode(schemaNode);
-
-    	schema.setSchemaLocation(doc.getBaseURI());
-
-        return this.schema;
-    }
+//    public XSDSchema parseForeignSchema(String uriString, String targetNamespace) throws FileNotFoundException, IOException, XSDParseException {
+//        // Begin processing the XSD
+//    	// Build the document tree from a file
+//    	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//    	factory.setNamespaceAware(true);
+//
+//    	this.schema = new XSDSchema();
+//    	this.schemaProcessor = new SchemaProcessor(schema);
+//    	try {
+//			doc = factory.newDocumentBuilder().parse(uriString);
+//		} catch (SAXException e) {
+//			throw new XSDParseException(e);
+//		} catch (ParserConfigurationException e) {
+//			throw new XSDParseException(e);
+//		}
+//
+//    	Node schemaNode = doc.getFirstChild();
+//    	// We have to find the right starting node for the schemaProcessor
+//    	// It is possible, that DTD information is written before the xsd
+//    	// schema node. In DTD the Doctype root node can also be named
+//    	// "schema" so we have to check the type of the found node.
+//    	// Type == 1 means that it is the correct XSD node type
+//    	while (schemaNode != null && !(schemaNode.getNodeType() == 1 && schemaNode.getNodeName().endsWith("schema"))) {
+//    		schemaNode = schemaNode.getNextSibling();
+//    	}
+//    	schemaProcessor.setIncludeTargetNamespace(targetNamespace);
+//    	schemaProcessor.processNode(schemaNode);
+//
+//    	schema.setSchemaLocation(doc.getBaseURI());
+//
+//        return this.schema;
+//    }
 }

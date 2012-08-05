@@ -37,6 +37,9 @@ public class SimpleType extends Type {
      */
     private SimpleTypeInheritance inheritance = null;
 
+    public SimpleType() {
+    }
+    
     /**
      * Contstructor of SimpleType
      * @param name
@@ -101,7 +104,7 @@ public class SimpleType extends Type {
      * Sets the inheritance of SimpleType
      * @param inheritance
      */
-    protected void setInheritance(SimpleTypeInheritance inheritance) {
+    public void setInheritance(SimpleTypeInheritance inheritance) {
         this.inheritance = inheritance;
     }
 

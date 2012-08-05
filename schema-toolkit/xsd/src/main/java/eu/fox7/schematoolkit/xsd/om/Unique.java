@@ -27,6 +27,8 @@ import eu.fox7.schematoolkit.common.QualifiedName;
  */
 public class Unique extends SimpleConstraint {
 
+	public Unique() {}
+	
     public Unique (QualifiedName uniqueName, String selector) {
          super(uniqueName, selector);
     }

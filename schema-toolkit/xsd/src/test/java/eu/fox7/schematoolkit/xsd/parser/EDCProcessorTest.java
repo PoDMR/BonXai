@@ -33,7 +33,7 @@ public class EDCProcessorTest extends junit.framework.TestCase {
 //    @Test
 //    public void testInvalidCaseWithInheritance() throws Exception {
 //        String filePath = new String("tests/eu/fox7/bonxai/xsd/parser/xsds/EDCTests/invalid_case_inheritance.xsd");
-//        XSDParser instance = new XSDParser(false, false);
+//        XSDParserHandler instance = new XSDParserHandler(false, false);
 //        EDCChecker edcProcessor = new EDCChecker(instance.parse(filePath));
 //        assertFalse(edcProcessor.isValid());
 //    }
@@ -45,7 +45,7 @@ public class EDCProcessorTest extends junit.framework.TestCase {
 //    @Test
 //    public void testInvalidCaseWithSubstitutionGroup() throws Exception {
 //        String filePath = new String("tests/eu/fox7/bonxai/xsd/parser/xsds/EDCTests/invalid_case_substitutionGroup.xsd");
-//        XSDParser instance = new XSDParser(false, false);
+//        XSDParserHandler instance = new XSDParserHandler(false, false);
 //        EDCChecker edcProcessor = new EDCChecker(instance.parse(filePath));
 //        assertFalse(edcProcessor.isValid());
 //    }
@@ -57,7 +57,7 @@ public class EDCProcessorTest extends junit.framework.TestCase {
 //    @Test
 //    public void testInvalidCaseWithComplexSchema() throws Exception {
 //        String filePath = new String("tests/eu/fox7/bonxai/xsd/parser/xsds/EDCTests/invalid_case_complexSchema.xsd");
-//        XSDParser instance = new XSDParser(false, false);
+//        XSDParserHandler instance = new XSDParserHandler(false, false);
 //        EDCChecker edcProcessor = new EDCChecker(instance.parse(filePath));
 //        assertFalse(edcProcessor.isValid());
 //    }

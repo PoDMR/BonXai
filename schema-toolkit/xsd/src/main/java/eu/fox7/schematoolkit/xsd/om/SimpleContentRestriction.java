@@ -173,5 +173,9 @@ public class SimpleContentRestriction extends SimpleContentInheritance implement
         this.enumeration = enumeration;
     }
 
+	public void addEnumeration(String value) {
+		enumeration.add(value);
+	}
+
 
 }

@@ -21,18 +21,7 @@ import eu.fox7.schematoolkit.common.*;
 /*
  * implements class Group
  */
-public class Group extends AnnotationElement implements eu.fox7.schematoolkit.common.Group {
-
-    protected boolean dummy;
-
-    public boolean isDummy() {
-        return dummy;
-    }
-
-    public void setDummy(boolean dummy) {
-        this.dummy = dummy;
-    }
-
+public class Group extends AnnotationElement implements eu.fox7.schematoolkit.common.Group, PContainer {
     public void setName(QualifiedName name) {
         this.name = name;
     }
@@ -40,9 +29,6 @@ public class Group extends AnnotationElement implements eu.fox7.schematoolkit.co
     public void setParticle(Particle particle) {
         this.particle = particle;
     }
-
-    
-    
 
     protected Particle particle;
     /**
@@ -54,6 +40,8 @@ public class Group extends AnnotationElement implements eu.fox7.schematoolkit.co
      */
     protected QualifiedName name;
 
+    public Group(){}
+    
     /**
      * Constructor with name and particle container.
      *
@@ -73,6 +61,11 @@ public class Group extends AnnotationElement implements eu.fox7.schematoolkit.co
         return particle;
     }
 
+    public void addParticle(Particle particle) {
+        this.particle = particle;
+    }
+
+    
     /**
      * Returns the name of the group.
      *

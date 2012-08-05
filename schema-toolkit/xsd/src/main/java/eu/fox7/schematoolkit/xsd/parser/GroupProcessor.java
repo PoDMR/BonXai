@@ -81,7 +81,6 @@ public class GroupProcessor extends Processor {
             }
             group.setId(node.getAttributes().getNamedItem("id").getNodeValue());
         }
-        group.setDummy(false);
         return group;
     }
 

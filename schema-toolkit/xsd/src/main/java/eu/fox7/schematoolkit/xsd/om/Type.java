@@ -18,11 +18,12 @@ package eu.fox7.schematoolkit.xsd.om;
 
 import eu.fox7.schematoolkit.common.AnnotationElement;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.xsd.saxparser.NamedXSDElement;
 
 /**
  * Abstract Type Class
  */
-public abstract class Type extends AnnotationElement {
+public abstract class Type extends AnnotationElement implements NamedXSDElement {
 
     protected boolean isAnonymous = false;
 
@@ -43,6 +44,11 @@ public abstract class Type extends AnnotationElement {
         this.name = name;
         this.isAnonymous = false;
     }
+    
+    public Type() {
+    	
+    }
+
 
     /**
      * Returns the name of the type.

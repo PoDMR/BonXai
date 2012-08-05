@@ -461,13 +461,13 @@ public class RestrictionProcessor extends Processor {
                         boolean booleanFixed =  (attributeFixed != null && attributeFixed.getValue().equals("true"));
                         SimpleContentPropertyWhitespace scpw = null;
                         if (stringValue.equals("collapse")) {
-                            scpw = SimpleContentPropertyWhitespace.Collapse;
+                            scpw = SimpleContentPropertyWhitespace.collapse;
                         }
                         if (stringValue.equals("preserve")) {
-                            scpw = SimpleContentPropertyWhitespace.Preserve;
+                            scpw = SimpleContentPropertyWhitespace.preserve;
                         }
                         if (stringValue.equals("replace")) {
-                            scpw = SimpleContentPropertyWhitespace.Replace;
+                            scpw = SimpleContentPropertyWhitespace.replace;
                         }
 
                         SimpleContentFixableRestrictionProperty<SimpleContentPropertyWhitespace> scfrp = new SimpleContentFixableRestrictionProperty<SimpleContentPropertyWhitespace>(scpw, booleanFixed);

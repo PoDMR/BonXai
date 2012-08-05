@@ -23,6 +23,7 @@ import org.w3c.dom.*;
 import eu.fox7.schematoolkit.common.AnyAttribute;
 import eu.fox7.schematoolkit.common.AttributeGroupReference;
 import eu.fox7.schematoolkit.common.AttributeParticle;
+import eu.fox7.schematoolkit.common.AttributeRef;
 import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.*;
@@ -92,20 +93,22 @@ public abstract class AttributeWriter {
         }
         AnnotationWriter.writeAnnotation(attrNode, attribute, schema);
 
-        QualifiedName simpleTypeName = attribute.getSimpleTypeName();
-        if (!simpleTypeName.getFullyQualifiedName().equals("{http://www.w3.org/2001/XMLSchema}anySimpleType")) {
-            QualifiedName typeName = attribute.getSimpleTypeName();
-            try {
-            	sType = (SimpleType) schema.getType(typeName);
-            } catch (ClassCastException e) {
-            	throw new RuntimeException("Attribute has a complex type.", e);
-            }
+    	QualifiedName simpleTypeName = attribute.getSimpleTypeName();
+        if (simpleTypeName!=null) {
+        	if (!simpleTypeName.getFullyQualifiedName().equals("{http://www.w3.org/2001/XMLSchema}anySimpleType")) {
+        		QualifiedName typeName = attribute.getSimpleTypeName();
+        		try {
+        			sType = (SimpleType) schema.getType(typeName);
+        		} catch (ClassCastException e) {
+        			throw new RuntimeException("Attribute has a complex type.", e);
+        		}
 
-            if (sType == null || !sType.isAnonymous() || (sType.getInheritance() == null && sType.getFinalModifiers() == null)) {
-                attrNode.setAttribute("type", schema.getQualifiedName(typeName));
-            } else {
-                TypeWriter.writeSimpleType(attrNode, sType, schema, false);
-            }
+        		if (sType == null || !sType.isAnonymous() || (sType.getInheritance() == null && sType.getFinalModifiers() == null)) {
+        			attrNode.setAttribute("type", schema.getQualifiedName(typeName));
+        		} else {
+        			TypeWriter.writeSimpleType(attrNode, sType, schema, false);
+        		}
+        	}
         }
         if (attribute.getDefault() != null) {
             attrNode.setAttribute("default", attribute.getDefault());
@@ -121,19 +124,19 @@ public abstract class AttributeWriter {
             if (attribute.getForm().equals(XSDSchema.Qualification.qualified)) {
                 attrNode.setAttribute("form", "qualified");
             } else {
-                attrNode.setAttribute("form", "unqualified");
+//                attrNode.setAttribute("form", "unqualified");
             }
         }
 
         if (attribute.getUse() != null) {
             switch (attribute.getUse()) {
-                case Optional:
+                case optional:
                     useString = "optional";
                     break;
-                case Prohibited:
+                case prohibited:
                     useString = "prohibited";
                     break;
-                case Required:
+                case required:
                     useString = "required";
                     break;
             }
@@ -181,13 +184,13 @@ public abstract class AttributeWriter {
         }
 
         switch (anyAttr.getProcessContentsInstruction()) {
-            case Lax:
+            case LAX:
                 procCont = "lax";
                 break;
-            case Skip:
+            case SKIP:
                 procCont = "skip";
                 break;
-            case Strict:
+            case STRICT:
                 procCont = "strict";
                 break;
         }
@@ -227,13 +230,13 @@ public abstract class AttributeWriter {
         }
         if (attr.getUse() != null) {
             switch (attr.getUse()) {
-                case Optional:
+                case optional:
                     useString = "optional";
                     break;
-                case Prohibited:
+                case prohibited:
                     useString = "prohibited";
                     break;
-                case Required:
+                case required:
                     useString = "required";
                     break;
             }
@@ -243,7 +246,7 @@ public abstract class AttributeWriter {
             }
         }
 
-        attrNode.setAttribute("ref", schema.getQualifiedName(attr.getAttributeName()));
+        attrNode.setAttribute("ref", schema.getQualifiedName(attr.getName()));
 
         root.appendChild(attrNode);
     }

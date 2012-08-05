@@ -25,19 +25,24 @@ import java.util.Iterator;
 import eu.fox7.schematoolkit.common.Annotation;
 import eu.fox7.schematoolkit.common.Annotationable;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.xsd.saxparser.NamedXSDElement;
 
 /**
  * Base class for the standard XSD constraints {@link Unique}, {@link Key} and
  * {@link KeyRef}. Overrides {@link equals() and hashCode(), since constraints
  * must have a unique name in XSD.
  */
-public abstract class SimpleConstraint extends Constraint implements Annotationable {
+public abstract class SimpleConstraint extends Constraint implements Annotationable,NamedXSDElement {
 
     protected boolean dummy;
     protected HashSet<String> fields;
     protected String selector;
     protected QualifiedName name;
     private Annotation annotation;
+    
+    public SimpleConstraint() {
+        this.fields = new HashSet<String>();
+    }
 
     public SimpleConstraint(QualifiedName uniqueName, String selector) {
         this.fields = new HashSet<String>();
@@ -94,7 +99,7 @@ public abstract class SimpleConstraint extends Constraint implements Annotationa
     }
 
     /**
-     * Replace the currently set selector with another one.
+     * replace the currently set selector with another one.
      */
     public void setSelector(String selector) {
         this.selector = selector;

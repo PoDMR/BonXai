@@ -16,16 +16,14 @@
  */
 package eu.fox7.schematoolkit.common;
 
-
-
+import java.util.Collection;
+import java.util.LinkedList;
 
 /*
  * implements class Particle
  */
 
 public abstract class Particle extends AnnotationElement{
-
-     
     public Particle () {
     }
     
@@ -37,5 +35,18 @@ public abstract class Particle extends AnnotationElement{
     {
         return this.getClass().getName();
     }
+    
+	public static Collection<Particle> getAllElementlikeParticles(Particle particle) {
+		Collection<Particle> particles = new LinkedList<Particle>();
+		if ((particle instanceof Element) || (particle instanceof ElementRef))
+			particles.add(particle);
+		else if (particle instanceof ParticleContainer)
+			for (Particle child: ((ParticleContainer) particle).getParticles())
+				particles.addAll(getAllElementlikeParticles(child));
+		else if (particle instanceof CountingPattern)
+			particles.addAll(getAllElementlikeParticles(((CountingPattern) particle).getParticle()));
+		
+		return particles;
+	}
 }
 

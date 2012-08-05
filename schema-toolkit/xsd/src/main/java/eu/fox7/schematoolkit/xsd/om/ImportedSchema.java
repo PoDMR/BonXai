@@ -27,6 +27,8 @@ public class ImportedSchema extends ForeignSchema {
 
     protected Namespace namespace;
 
+    public ImportedSchema () {}
+    
     /**
      * Creates a new Foreignschema with namespace and location of the imported
      * schema.

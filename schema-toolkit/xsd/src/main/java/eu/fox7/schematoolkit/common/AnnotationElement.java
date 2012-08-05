@@ -1,10 +1,39 @@
 package eu.fox7.schematoolkit.common;
 
-public abstract class AnnotationElement implements Annotationable {
+public abstract class AnnotationElement implements Annotationable, Locatable, ID {
 
 	   private Annotation annotation;
+	   private Position startPosition, endPosition;
 
-	    @Override
+	    /**
+	 * @return the startPosition
+	 */
+	public Position getStartPosition() {
+		return startPosition;
+	}
+
+	/**
+	 * @param startPosition the startPosition to set
+	 */
+	public void setStartPosition(Position startPosition) {
+		this.startPosition = startPosition;
+	}
+
+	/**
+	 * @return the endPosition
+	 */
+	public Position getEndPosition() {
+		return endPosition;
+	}
+
+	/**
+	 * @param endPosition the endPosition to set
+	 */
+	public void setEndPosition(Position endPosition) {
+		this.endPosition = endPosition;
+	}
+
+		@Override
 	    public Annotation getAnnotation() {
 	        return annotation;
 	    }

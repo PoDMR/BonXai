@@ -19,7 +19,7 @@ package eu.fox7.schematoolkit.common;
 /**
  * Namespace representation for Bonxai
  */
-public abstract class Namespace {
+public abstract class Namespace implements eu.fox7.schematoolkit.Namespace {
 
     public static final Namespace EMPTY_NAMESPACE = new DefaultNamespace("");
 	public static final Namespace ANY_NAMESPACE = new AnonymousNamespace("##ANY");

@@ -16,14 +16,18 @@
  */
 package eu.fox7.schematoolkit.common;
 
+import eu.fox7.schematoolkit.xsd.saxparser.NamedXSDElement;
+
 /**
  * AttributeGroupReference-Element of an AttributeList
  */
-public class AttributeGroupReference extends AttributeParticle {
+public class AttributeGroupReference extends AttributeParticle implements NamedXSDElement {
     /**
      * The name of the referenced group
      */
     private QualifiedName attributeGroupName;
+    
+    public AttributeGroupReference() {}
     
     public AttributeGroupReference(QualifiedName attributeGroupName) {
     	this.attributeGroupName = attributeGroupName;
@@ -32,4 +36,9 @@ public class AttributeGroupReference extends AttributeParticle {
     public QualifiedName getName() {
     	return this.attributeGroupName;
     }
+
+	@Override
+	public void setName(QualifiedName name) {
+		this.attributeGroupName = name;
+	}
 }

@@ -32,6 +32,8 @@ package eu.fox7.schematoolkit.xsd.om;
 public class SimpleContentRestrictionProperty < T > {
 
     protected T value;
+    
+    public SimpleContentRestrictionProperty() {}
 
     /**
      * Creates an instance of Simple Content Restriction

@@ -21,11 +21,9 @@ public enum ProcessContentsInstruction {
      * Holds an enumeration of the three possible values for
      * ProcessContentsInstruction as defined in the XML-XSDSchema-reference.
      */
-    Strict,
-
-    Lax,
-
-    Skip;
+    STRICT,
+    LAX,
+    SKIP;
 
 
 }

@@ -69,7 +69,7 @@ public class ParticleWriterTest extends junit.framework.TestCase {
 
     @Test
     public void testWriteAnyPattern() {
-        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.Lax, "http://example.com/bar");
+        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.LAX, "http://example.com/bar");
         ParticleWriter.writeAnyPattern(writer.root, anyPattern, 0, 99, s);
         assertTrue(writer.root.getFirstChild().getLocalName().equals("any"));
         assertTrue(writer.root.getFirstChild().getAttributes().getNamedItem("namespace").getTextContent().equals("http://example.com/bar"));
@@ -122,7 +122,7 @@ public class ParticleWriterTest extends junit.framework.TestCase {
     @Test
     public void testWriteParticleContainer() {
         SequencePattern sequencePattern = new SequencePattern();
-        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.Lax, "http://example.com/bar");
+        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.LAX, "http://example.com/bar");
         sequencePattern.addParticle(anyPattern);
         GroupReference groupRef = new GroupReference(new QualifiedName(defaultNamespace,"someGroup"));
         sequencePattern.addParticle(groupRef);
@@ -137,7 +137,7 @@ public class ParticleWriterTest extends junit.framework.TestCase {
     @Test
     public void testWriteParticleContainerWithStandardOccurrence() {
         SequencePattern sequencePattern = new SequencePattern();
-        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.Lax, "http://example.com/bar");
+        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.LAX, "http://example.com/bar");
         sequencePattern.addParticle(anyPattern);
         GroupReference groupRef = new GroupReference(new QualifiedName(defaultNamespace,"someGroup"));
         sequencePattern.addParticle(groupRef);

@@ -36,5 +36,7 @@ public class SimpleContentList extends Inheritance implements SimpleTypeInherita
     public SimpleContentList() {
         super();
     }
+
+
 }
 

@@ -10,6 +10,7 @@ import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 import eu.fox7.schematoolkit.xsd.parser.XSDParser;
+import eu.fox7.schematoolkit.xsd.saxparser.XSDSaxParser;
 import eu.fox7.schematoolkit.xsd.writer.XSDWriter;
 
 public class XSDSchemaHandler extends SchemaHandler {
@@ -20,7 +21,7 @@ public class XSDSchemaHandler extends SchemaHandler {
 	
 	@Override
 	public void parseSchema(InputStream stream) throws IOException, SchemaToolkitException {
-		XSDParser parser = new XSDParser(false, false);
+		XSDSaxParser parser = new XSDSaxParser();
 		schema = parser.parse(stream);
 	}
 

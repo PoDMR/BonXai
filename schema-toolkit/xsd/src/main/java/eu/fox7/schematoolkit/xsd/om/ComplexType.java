@@ -19,7 +19,10 @@ package eu.fox7.schematoolkit.xsd.om;
 import java.util.LinkedList;
 import java.util.HashSet;
 
+import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.common.AttributeParticle;
+import eu.fox7.schematoolkit.common.PContainer;
+import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.QualifiedName;
 
 /**
@@ -28,7 +31,7 @@ import eu.fox7.schematoolkit.common.QualifiedName;
  * Not the overridden implementations of hashCode() and equals() in the {@link
  * Type} base class!
  */
-public class ComplexType extends Type {
+public class ComplexType extends Type implements PContainer, AContainer {
 
     /**
      * Boolean variable for determining if the ComplexType is abstract
@@ -66,6 +69,9 @@ public class ComplexType extends Type {
     public ComplexType(QualifiedName name, Content content) {
         super(name);
         this.content = content;
+    }
+    
+    public ComplexType() {
     }
 
     /**
@@ -210,5 +216,15 @@ public class ComplexType extends Type {
 	public void setMixed(boolean mixed) {
 		if (this.content instanceof ComplexContentType)
 			((ComplexContentType) this.content).setMixed(mixed);
+	}
+
+	@Override
+	public void addParticle(Particle particle) throws SchemaToolkitException {
+		this.content = new ComplexContentType(particle);
+	}
+
+	@Override
+	public void addAttributeParticle(AttributeParticle attributeParticle) {
+		this.addAttribute(attributeParticle);
 	}   
 }

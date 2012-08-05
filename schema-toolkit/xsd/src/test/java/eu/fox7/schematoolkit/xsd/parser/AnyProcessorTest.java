@@ -99,7 +99,7 @@ public class AnyProcessorTest extends junit.framework.TestCase {
 
         assertEquals("anyOne", any.getId());
         assertEquals("##other", any.getNamespace());
-        assertEquals(ProcessContentsInstruction.Strict, any.getProcessContentsInstruction());
+        assertEquals(ProcessContentsInstruction.STRICT, any.getProcessContentsInstruction());
     }
 
     @Test
@@ -141,7 +141,7 @@ public class AnyProcessorTest extends junit.framework.TestCase {
 
         assertEquals("anyOne", any.getId());
         assertEquals("##other", any.getNamespace());
-        assertEquals(ProcessContentsInstruction.Strict, any.getProcessContentsInstruction());
+        assertEquals(ProcessContentsInstruction.STRICT, any.getProcessContentsInstruction());
     }
 
     @Test

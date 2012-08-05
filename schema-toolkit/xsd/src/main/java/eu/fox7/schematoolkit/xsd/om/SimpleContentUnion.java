@@ -34,6 +34,8 @@ public class SimpleContentUnion extends Inheritance implements SimpleTypeInherit
      */
     protected Collection<QualifiedName> memberTypes = new LinkedList<QualifiedName>();
 
+    public SimpleContentUnion() {}
+    
     /**
      * Creates an instance with the given simpleTypes.
      * @param memberTypes

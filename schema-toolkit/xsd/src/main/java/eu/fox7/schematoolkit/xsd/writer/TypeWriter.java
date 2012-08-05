@@ -233,10 +233,10 @@ public abstract class TypeWriter {
          * are listed in the member types attribute, otherwise their
          * definition is appended to the simple content union
          */
-        if (simpleType.isAnonymous()) {
+        if ((simpleType!=null) && (simpleType.isAnonymous())) {
             writeSimpleType(listElement, simpleType, schema, false);
         } else {
-            listElement.setAttribute("itemType", schema.getQualifiedName(simpleType.getName()));
+            listElement.setAttribute("itemType", schema.getQualifiedName(simpleTypeName));
         }
         if (contentlist.getId() != null) {
             listElement.setAttribute("id", contentlist.getId());
@@ -273,7 +273,7 @@ public abstract class TypeWriter {
         boolean first = true;
         for (QualifiedName typeName: types) {
         	SimpleType sType = (SimpleType) schema.getType(typeName);
-        	if (sType.isAnonymous()) {
+        	if ((sType!=null) && sType.isAnonymous()) {
         		writeSimpleType(unionElement, sType, schema, false);
         	} else {
         		if (!first) {
@@ -318,7 +318,7 @@ public abstract class TypeWriter {
         QualifiedName baseTypeName = contentRestrict.getBaseType();
         baseType = schema.getType(baseTypeName);
         
-        if (baseType.isAnonymous()) {
+        if ((baseType!=null) && baseType.isAnonymous()) {
             writeSimpleType(restrElement, (SimpleType) baseType, schema, false);
         } else {
             restrElement.setAttribute("base", schema.getQualifiedName(baseTypeName));
@@ -421,13 +421,13 @@ public abstract class TypeWriter {
             tmpElement = root.getOwnerDocument().createElementNS("http://www.w3.org/2001/XMLSchema", "whiteSpace");
             DOMHelper.setXSDPrefix(tmpElement, schema);
             switch (contentRestrict.getWhitespace().getValue()) {
-                case Collapse:
+                case collapse:
                     value = "collapse";
                     break;
-                case Preserve:
+                case preserve:
                     value = "preserve";
                     break;
-                case Replace:
+                case replace:
                     value = "replace";
                     break;
             }

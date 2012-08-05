@@ -17,7 +17,7 @@ import org.w3c.dom.*;
 class AnyProcessor extends Processor {
 
     // Value of the processContentInstruction attribute
-    private ProcessContentsInstruction processContentsInstruction = ProcessContentsInstruction.Strict;
+    private ProcessContentsInstruction processContentsInstruction = ProcessContentsInstruction.STRICT;
 
     // Namespace and id attributes
     private String namespace, idString;
@@ -98,11 +98,11 @@ class AnyProcessor extends Processor {
             // processContents Attribute of Any
             if (attributes.getNamedItem("processContents") != null) {
                 if (((Attr) attributes.getNamedItem("processContents")).getValue().equals("strict")) {
-                    processContentsInstruction = ProcessContentsInstruction.Strict;
+                    processContentsInstruction = ProcessContentsInstruction.STRICT;
                 } else if (((Attr) attributes.getNamedItem("processContents")).getValue().equals("lax")) {
-                    processContentsInstruction = ProcessContentsInstruction.Lax;
+                    processContentsInstruction = ProcessContentsInstruction.LAX;
                 } else if (((Attr) attributes.getNamedItem("processContents")).getValue().equals("skip")) {
-                    processContentsInstruction = ProcessContentsInstruction.Skip;
+                    processContentsInstruction = ProcessContentsInstruction.SKIP;
                 } else {
                     throw new InvalidProcessContentsValueException("any");
                 }

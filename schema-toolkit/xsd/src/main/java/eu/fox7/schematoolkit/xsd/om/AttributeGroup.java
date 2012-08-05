@@ -21,12 +21,13 @@ import java.util.LinkedList;
 import eu.fox7.schematoolkit.common.AnnotationElement;
 import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.xsd.saxparser.NamedXSDElement;
 
 /**
  * The AttributeGroup has a unique name and stores attribute particles in a
  * LinkedList.
  */
-public class AttributeGroup extends AnnotationElement{
+public class AttributeGroup extends AnnotationElement implements AContainer, NamedXSDElement {
 
     protected boolean dummy;
 
@@ -58,6 +59,10 @@ public class AttributeGroup extends AnnotationElement{
      */
     protected LinkedList<AttributeParticle> attributeParticles;
 
+    public AttributeGroup(){
+        attributeParticles = new LinkedList<AttributeParticle>();
+    }
+    
     /**
      * Creates a new attribute group with an assigned name and an empty list of
      * attribute particles.
@@ -92,6 +97,7 @@ public class AttributeGroup extends AnnotationElement{
     /**
      * Adds an attribute particle to the group.
      */
+    @Override
     public void addAttributeParticle(AttributeParticle attributeParticle) {
         attributeParticles.add(attributeParticle);
     }
@@ -108,6 +114,8 @@ public class AttributeGroup extends AnnotationElement{
         return ((that instanceof AttributeGroup)
                 && this.name.equals(((AttributeGroup) that).name));
     }
+
+
 
 }
 

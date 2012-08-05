@@ -45,7 +45,7 @@ public class ForeignSchemaLoaderTest extends junit.framework.TestCase {
 //
 ////        String uri = "tests/eu/fox7/bonxai/xsd/parser/xsds/foreignSchemaLoaderTests/importBase.xsd";
 //        String uri = "tests/eu/fox7/bonxai/converter/xsd2relaxng/preparationTests/xhtml/redefineBase.xsd";
-//        XSDParser instance = new XSDParser(true, false);
+//        XSDParserHandler instance = new XSDParserHandler(true, false);
 //        Schema xmlSchema = instance.parse(uri);
 //
 //        ForeignSchemaLoader foreignSchemaLoader = new ForeignSchemaLoader(xmlSchema, false);

@@ -29,6 +29,8 @@ public class AnyPattern extends Particle {
     protected ProcessContentsInstruction processContentsInstruction;
     protected List<Namespace> namespaces = new LinkedList<Namespace>();
 
+    public AnyPattern() {}
+    
     public AnyPattern(ProcessContentsInstruction processContentsInstruction, String namespace) {
         this.processContentsInstruction = processContentsInstruction;
         this.setNamespace(namespace);
@@ -107,5 +109,9 @@ public class AnyPattern extends Particle {
     public void addNamespace(Namespace namespace) {
     	this.namespaces.add(namespace);
     }
+
+	public void setProcessContentsInstruction(ProcessContentsInstruction processContentsInstruction) {
+		this.processContentsInstruction = processContentsInstruction;
+	}
 }
 

@@ -18,11 +18,11 @@ package eu.fox7.schematoolkit.xsd.om;
 
 public enum SimpleContentPropertyWhitespace {
 
-    Preserve,
+    preserve,
 
-    Replace,
+    replace,
 
-    Collapse;
+    collapse;
 
 
 }

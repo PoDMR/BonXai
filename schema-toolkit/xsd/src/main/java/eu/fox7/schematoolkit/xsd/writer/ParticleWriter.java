@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import org.w3c.dom.Node;
 
 import eu.fox7.schematoolkit.common.*;
+import eu.fox7.schematoolkit.xsd.XSDSimpleTypes;
 import eu.fox7.schematoolkit.xsd.om.*;
 
 public abstract class ParticleWriter {
@@ -180,7 +181,7 @@ public abstract class ParticleWriter {
         root.appendChild(elementNode);
         
         Type type = schema.getType(element.getTypeName());
-        if (type != null && !type.getName().getName().equals("anyType") && type.isAnonymous())
+        if (type != null && type.isAnonymous())
         	TypeWriter.writeType(elementNode, type, schema, false);
         else
         	elementNode.setAttribute("type", schema.getQualifiedName(element.getTypeName()));
@@ -292,7 +293,7 @@ public abstract class ParticleWriter {
         if (anyPattern.getId() != null) {
             anyPatternNode.setAttribute("id", anyPattern.getId());
         }
-        if (anyPattern.getProcessContentsInstruction() != null && anyPattern.getProcessContentsInstruction() != ProcessContentsInstruction.Strict) {
+        if (anyPattern.getProcessContentsInstruction() != null && anyPattern.getProcessContentsInstruction() != ProcessContentsInstruction.STRICT) {
             anyPatternNode.setAttribute("processContents", anyPattern.getProcessContentsInstruction().toString().toLowerCase());
         }
         AnnotationWriter.writeAnnotation(anyPatternNode, anyPattern, schema);
