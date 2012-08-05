@@ -1,10 +1,12 @@
 package eu.fox7.bonxai.converter.dtd2xsd.exceptions;
 
+import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
+
 /**
  * There is an unsupported DTD particle used in a content model of an element
  * @author Lars Schmidt
  */
-public class UnsupportedDTDParticleException extends Exception {
+public class UnsupportedDTDParticleException extends ConversionFailedException {
 
     /**
 	 * 

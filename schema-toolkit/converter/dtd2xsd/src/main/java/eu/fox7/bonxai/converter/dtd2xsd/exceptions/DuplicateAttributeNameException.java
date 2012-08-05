@@ -1,10 +1,12 @@
 package eu.fox7.bonxai.converter.dtd2xsd.exceptions;
 
+import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
+
 /**
  * There are duplicate attribute-names
  * @author Lars Schmidt
  */
-public class DuplicateAttributeNameException extends Exception {
+public class DuplicateAttributeNameException extends ConversionFailedException {
 
     /**
 	 * 

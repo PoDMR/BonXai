@@ -4,6 +4,9 @@ import eu.fox7.bonxai.converter.dtd2xsd.exceptions.DTDNameIsEmptyException;
 import eu.fox7.bonxai.converter.dtd2xsd.exceptions.DTDNameStartsWithUnsupportedSymbolException;
 import eu.fox7.bonxai.converter.dtd2xsd.exceptions.IdentifiedNamespaceNotFoundException;
 import eu.fox7.schematoolkit.common.IdentifiedNamespace;
+import eu.fox7.schematoolkit.common.Namespace;
+import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 import eu.fox7.schematoolkit.xsd.om.ForeignSchema;
 import eu.fox7.schematoolkit.xsd.om.ImportedSchema;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
@@ -18,13 +21,11 @@ import java.util.Iterator;
 public abstract class ConverterBase extends NameChecker {
 
     protected XSDSchema xmlSchema;
-    protected IdentifiedNamespace targetNamespace;
-    protected boolean namespaceAware;
+    protected Namespace targetNamespace;
 
-    public ConverterBase(XSDSchema xmlSchema, IdentifiedNamespace targetNamespace, boolean namespaceAware) {
+    public ConverterBase(XSDSchema xmlSchema, Namespace targetNamespace) {
         this.xmlSchema = xmlSchema;
         this.targetNamespace = targetNamespace;
-        this.namespaceAware = namespaceAware;
     }
 
     /**
@@ -38,95 +39,22 @@ public abstract class ConverterBase extends NameChecker {
      * Dummies and use their abbreviation for the full-qualified name in the XSD
      * object model.
      *
-     * @param dtdNameString
-     * @return String
+     * @param qualifiedName
+     * @return QualifiedName
      * @throws Exception 
      */
-    protected String generateXSDFQName(String dtdNameString) throws Exception {
-        String returnXSDFQName = "";
-
-        if (dtdNameString == null || dtdNameString.equals("")) {
+    protected QualifiedName generateXSDFQName(QualifiedName qualifiedName) throws ConversionFailedException {
+        if (qualifiedName == null || qualifiedName.equals("")) {
             throw new DTDNameIsEmptyException();
         }
 
-        String targetUri = ((this.targetNamespace == null) ? "" : this.targetNamespace.getUri());
-
-        if (this.namespaceAware) {
-            if (isQName(dtdNameString) && dtdNameString.contains(":")) {
-                String[] nameArray = dtdNameString.split(":");
-
-                if (nameArray.length == 2) {
-                    String resultNamespaceUri = "";
-
-                    // Namespace handling
-                    IdentifiedNamespace idNamespace = this.xmlSchema.getNamespaceList().getNamespaceByIdentifier(nameArray[0]);
-                    if (idNamespace.getUri() != null) {
-                        resultNamespaceUri = idNamespace.getUri();
-                    } else {
-                        String dummyNamespaceUri = DTD2XSDConverter.DUMMY_NAMESPACE_DOMAIN + "/" + nameArray[0];
-                        IdentifiedNamespace identifiedNamespace = new IdentifiedNamespace(nameArray[0], dummyNamespaceUri);
-                        this.xmlSchema.getNamespaceList().addIdentifiedNamespace(identifiedNamespace);
-                        resultNamespaceUri = dummyNamespaceUri;
-                    }
-                    returnXSDFQName = "{" + resultNamespaceUri + "}" + nameArray[1].replaceAll("[^0-9a-zA-Z\\.\\-\\_]", "-");
-                }
-            } else {
-                String newName = dtdNameString.replaceAll("[^0-9a-zA-Z\\.\\-\\_]", "-");
-                if (newName.startsWith("-")) {
-                    throw new DTDNameStartsWithUnsupportedSymbolException(dtdNameString);
-                }
-                returnXSDFQName = "{" + targetUri + "}" + newName;
-            }
-        } else {
-            String newName = dtdNameString.replaceAll("[^0-9a-zA-Z\\.\\-\\_]", "-");
-            if (newName.startsWith("-")) {
-                throw new DTDNameStartsWithUnsupportedSymbolException(dtdNameString);
-            }
-            returnXSDFQName = "{" + targetUri + "}" + newName;
+        String newName = qualifiedName.getName().replaceAll("[^0-9a-zA-Z\\.\\-\\_]", "-");
+        if (newName.startsWith("-")) {
+        	throw new DTDNameStartsWithUnsupportedSymbolException(qualifiedName.getFullyQualifiedName());
         }
+        QualifiedName returnXSDFQName = new QualifiedName(this.targetNamespace,newName);
+
         return returnXSDFQName;
     }
 
-    /**
-     * Method for generating or getting a schema for a given namespace.
-     * If a schema with this namespace is already in the identifiedNamespaceList
-     * this schema will be returned. If not, a new import will be generated
-     * referencing a corresponding schema with the given namespace.
-     * @param namespace     String namespace for check or generation
-     * @return ImportedSchema   ForeignSchema object holding the schema with the given namespace
-     * @throws Exception        IdentifiedNamespaceNotFoundException
-     */
-    protected ImportedSchema updateOrCreateImportedSchema(String namespace) throws Exception {
-        // Check if there is already an imported schema for the current namespace and return it.
-        for (Iterator<ForeignSchema> it1 = this.xmlSchema.getForeignSchemas().iterator(); it1.hasNext();) {
-            ForeignSchema foreignSchema = (ImportedSchema) it1.next();
-            if (foreignSchema instanceof ImportedSchema) {
-                ImportedSchema importedSchema = (ImportedSchema) foreignSchema;
-                if (importedSchema.getNamespace().equals(namespace)) {
-                    return importedSchema;
-                }
-            }
-        }
-
-        // If there is no imported schema for the given namespace, create a new one
-        if (this.xmlSchema.getNamespaceList().getNamespaceByUri(namespace).getIdentifier() == null) {
-            throw new IdentifiedNamespaceNotFoundException(namespace);
-        }
-
-        ImportedSchema importedSchema = new ImportedSchema(namespace, "importedSchema_" + this.xmlSchema.getNamespaceList().getNamespaceByUri(namespace).getIdentifier() + ".xsd");
-        importedSchema.setParentSchema(this.xmlSchema);
-        XSDSchema newExternalSchema = new XSDSchema(namespace);
-        newExternalSchema.setTargetNamespace(namespace);
-        
-        // Set the XML XSDSchema namespace to the identifiedNamespacelist of the new schema
-        IdentifiedNamespace xmlSchemaIdentifiedNamespace = new IdentifiedNamespace("xs", DTD2XSDConverter.XMLSCHEMA_NAMESPACE);
-        newExternalSchema.getNamespaceList().addIdentifiedNamespace(xmlSchemaIdentifiedNamespace);
-
-        importedSchema.setSchema(newExternalSchema);
-        this.xmlSchema.addForeignSchema(importedSchema);
-        
-        // return the new imported schema
-        return importedSchema;
-
-    }
 }

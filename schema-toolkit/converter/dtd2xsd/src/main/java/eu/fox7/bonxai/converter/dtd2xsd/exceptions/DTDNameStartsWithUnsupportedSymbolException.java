@@ -1,11 +1,13 @@
 package eu.fox7.bonxai.converter.dtd2xsd.exceptions;
 
+import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
+
 /**
  * This exception will be thrown if there is a DTD name that starts with an
  * unsupported symbol
  * @author Lars Schmidt
  */
-public class DTDNameStartsWithUnsupportedSymbolException extends Exception {
+public class DTDNameStartsWithUnsupportedSymbolException extends ConversionFailedException {
 
     /**
 	 * 

@@ -21,7 +21,7 @@ import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 public class NotationConverter extends ConverterBase {
 
     NotationConverter(XSDSchema xmlSchema, IdentifiedNamespace targetNamespace, boolean namespaceAware) {
-        super(xmlSchema, targetNamespace, namespaceAware);
+        super(xmlSchema, targetNamespace);
     }
 
     void convert(DocumentTypeDefinition dtd) {

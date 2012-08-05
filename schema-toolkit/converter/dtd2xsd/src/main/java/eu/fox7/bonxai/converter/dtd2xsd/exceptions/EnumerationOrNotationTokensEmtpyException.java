@@ -1,10 +1,12 @@
 package eu.fox7.bonxai.converter.dtd2xsd.exceptions;
 
+import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
+
 /**
  * There are no values in an enumeration type of DTD
  * @author Lars Schmidt
  */
-public class EnumerationOrNotationTokensEmtpyException extends Exception {
+public class EnumerationOrNotationTokensEmtpyException extends ConversionFailedException {
 
     /**
 	 * 
