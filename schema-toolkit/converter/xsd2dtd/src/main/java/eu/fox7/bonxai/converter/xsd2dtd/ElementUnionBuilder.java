@@ -1,9 +1,7 @@
 package eu.fox7.bonxai.converter.xsd2dtd;
 
-import eu.fox7.bonxai.dtd.Element;
-import eu.fox7.bonxai.dtd.ElementRef;
-import eu.fox7.bonxai.dtd.common.ElementContentModelProcessor;
-import eu.fox7.bonxai.tools.StatusLogger;
+import eu.fox7.schematoolkit.dtd.om.Element;
+import eu.fox7.schematoolkit.dtd.common.ElementContentModelProcessor;
 import eu.fox7.schematoolkit.common.AnyPattern;
 import eu.fox7.schematoolkit.common.ChoicePattern;
 import eu.fox7.schematoolkit.common.CountingPattern;
@@ -20,7 +18,7 @@ import java.util.Stack;
  * Class ElementUnionBuilder
  *
  * Build the union of all dtdElements in the list of the elementWrapper.
- * Replace the references of the elementRef-objects to the new dtdElement.
+ * replace the references of the elementRef-objects to the new dtdElement.
  *
  * @author Lars Schmidt
  */
@@ -48,7 +46,7 @@ public class ElementUnionBuilder {
             Element currentResultElement = elementStack.pop();
 
             if (!elementStack.isEmpty()) {
-                StatusLogger.logWarning("XSD2DTD", "Element \"" + elementWrapper.getDTDElementName() + "\" has " + elementWrapper.getDTDElements().size() + " occurrences in different locations in the XML XSDSchema document. They will be unified to an upper approximation!");
+//                StatusLogger.logWarning("XSD2DTD", "Element \"" + elementWrapper.getDTDElementName() + "\" has " + elementWrapper.getDTDElements().size() + " occurrences in different locations in the XML XSDSchema document. They will be unified to an upper approximation!");
             }
             while (!elementStack.isEmpty()) {
                 currentResultElement = this.unifyTwoElements(currentResultElement, elementStack.pop());
@@ -215,7 +213,7 @@ public class ElementUnionBuilder {
                     }
 
                     // Alternative solution for content model merging/combination: ANY
-//                    element1.setParticle(new AnyPattern(ProcessContentsInstruction.Strict, ""));
+//                    element1.setParticle(new AnyPattern(ProcessContentsInstruction.STRICT, ""));
                     if (returnElement == null) {
                         returnElement = element1;
                     }
@@ -285,7 +283,7 @@ public class ElementUnionBuilder {
                     }
 
                     if (isAnyPattern) {
-                        element2.setParticle(new AnyPattern(ProcessContentsInstruction.Strict, ""));
+                        element2.setParticle(new AnyPattern(ProcessContentsInstruction.STRICT, ""));
                         element2.setMixedStar(false);
                         element2.setMixed(false);
                         returnElement = element2;
@@ -343,7 +341,7 @@ public class ElementUnionBuilder {
                     }
 
                     if (isAnyPattern) {
-                        element1.setParticle(new AnyPattern(ProcessContentsInstruction.Strict, ""));
+                        element1.setParticle(new AnyPattern(ProcessContentsInstruction.STRICT, ""));
                         element1.setMixedStar(false);
                         element1.setMixed(false);
                         returnElement = element1;

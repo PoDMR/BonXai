@@ -2,15 +2,18 @@ package eu.fox7.bonxai.converter.xsd2dtd;
 
 import eu.fox7.schematoolkit.common.AnyAttribute;
 import eu.fox7.schematoolkit.common.AttributeParticle;
+import eu.fox7.schematoolkit.common.AttributeRef;
+import eu.fox7.schematoolkit.common.AttributeUse;
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.dtd.om.Attribute;
 import eu.fox7.schematoolkit.dtd.om.AttributeType;
-import eu.fox7.schematoolkit.xsd.om.AttributeRef;
-import eu.fox7.schematoolkit.xsd.om.AttributeUse;
+import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.SimpleContentExtension;
 import eu.fox7.schematoolkit.xsd.om.SimpleContentRestriction;
 import eu.fox7.schematoolkit.xsd.om.SimpleContentType;
 import eu.fox7.schematoolkit.xsd.om.SimpleType;
+import eu.fox7.schematoolkit.xsd.om.Type;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 import java.util.Arrays;
@@ -43,15 +46,18 @@ public class AttributeConverter {
      *
      * @param element   element holding the source xsd attributes for the conversion
      * @return LinkedList<Attribute>    resulting list of DTD attributes
+     * @throws ConversionFailedException 
      */
-    public LinkedList<Attribute> convertAttributes(eu.fox7.schematoolkit.xsd.om.Element element) {
+    public LinkedList<Attribute> convertAttributes(eu.fox7.schematoolkit.xsd.om.Element element) throws ConversionFailedException {
         LinkedList<Attribute> resultdtdAttributeList = new LinkedList<Attribute>();
-        if (element.getType() != null) {
+        QualifiedName typename = element.getTypeName();
+        Type type = xmlSchema.getType(typename);
+        if (type != null) {
             // only types can hold attributeParticles in XML XSDSchema
-            if (element.getType() instanceof ComplexType) {
+            if (type instanceof ComplexType) {
 
                 // only CompleyTypes and SimpleContentExtension can hold attributeParticles in this place, because all other appearances are resolved by the inheritance resolver
-                ComplexType complexType = (ComplexType) element.getType();
+                ComplexType complexType = (ComplexType) type;
 
                 if (complexType.getContent() != null && complexType.getContent() instanceof SimpleContentType) {
                     SimpleContentType simpleContentType = (SimpleContentType) complexType.getContent();
@@ -87,18 +93,19 @@ public class AttributeConverter {
      *
      * @param xsdAttributeParticle
      * @return
+     * @throws ConversionFailedException 
      */
-    public Attribute convertAttribute(AttributeParticle xsdAttributeParticle) {
+    public Attribute convertAttribute(AttributeParticle xsdAttributeParticle) throws ConversionFailedException {
         // Prepare the result
         Attribute resultAttribute = null;
         // Initialize the NameGenerator
         DTDNameGenerator dtdNameGenerator = new DTDNameGenerator(this.xmlSchema);
 
         // Switch over the different AttributeParticle variants
-        if (xsdAttributeParticle instanceof eu.fox7.schematoolkit.xsd.om.AttributeRef) {
+        if (xsdAttributeParticle instanceof eu.fox7.schematoolkit.common.AttributeRef) {
             // Case "AttributeRef":
-            eu.fox7.schematoolkit.xsd.om.AttributeRef attributeRef = (AttributeRef) xsdAttributeParticle;
-            resultAttribute = convertAttribute(attributeRef.getAttribute());
+            eu.fox7.schematoolkit.common.AttributeRef attributeRef = (AttributeRef) xsdAttributeParticle;
+            resultAttribute = convertAttribute(xmlSchema.getAttribute(attributeRef));
         } else if (xsdAttributeParticle instanceof AnyAttribute) {
             // Case "AnyAttribute":
             return null;
@@ -111,11 +118,11 @@ public class AttributeConverter {
             // Handle the default of fixed properties
             String defaultPresenceMode = null;
             if (xsdAttribute.getUse() != null) {
-                if (xsdAttribute.getUse().equals(AttributeUse.Optional)) {
+                if (xsdAttribute.getUse().equals(AttributeUse.optional)) {
                     defaultPresenceMode = "#IMPLIED";
-                } else if (xsdAttribute.getUse().equals(AttributeUse.Required)) {
+                } else if (xsdAttribute.getUse().equals(AttributeUse.required)) {
                     defaultPresenceMode = "#REQUIRED";
-                } else if (xsdAttribute.getUse().equals(AttributeUse.Prohibited)) {
+                } else if (xsdAttribute.getUse().equals(AttributeUse.prohibited)) {
                     return null;
                 }
             }
@@ -137,8 +144,11 @@ public class AttributeConverter {
             resultAttribute = new Attribute(dtdAttributeName, defaultPresenceMode, dtdAttributeValue);
 
             // Handle the type of the given xsd attribute
-            if (xsdAttribute.getSimpleType() != null) {
-                this.convertAttributeType(resultAttribute, xsdAttribute.getSimpleType());
+           	Type type = xmlSchema.getType(xsdAttribute.getSimpleTypeName());
+            if (type != null) {
+            	if (!(type instanceof SimpleType))
+            		throw new ConversionFailedException("Only simple types allowed for attributes.");
+                this.convertAttributeType(resultAttribute, (SimpleType) type);
             } else {
                 resultAttribute.setType(AttributeType.CDATA);
             }

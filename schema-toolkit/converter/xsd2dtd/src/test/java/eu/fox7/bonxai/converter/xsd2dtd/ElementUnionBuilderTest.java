@@ -108,7 +108,7 @@ public class ElementUnionBuilderTest extends junit.framework.TestCase {
         Boolean element1mixed = false;
         Boolean element2mixed = false;
         Particle dtdElement1particle = null;
-        Particle dtdElement2particle = new AnyPattern(ProcessContentsInstruction.Strict, null);
+        Particle dtdElement2particle = new AnyPattern(ProcessContentsInstruction.STRICT, null);
 
         //--------------------------------------------------------------------//
 
@@ -485,8 +485,8 @@ public class ElementUnionBuilderTest extends junit.framework.TestCase {
 
         Boolean element1mixed = false;
         Boolean element2mixed = false;
-        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.Strict, null);
-        Particle dtdElement2particle = new AnyPattern(ProcessContentsInstruction.Strict, null);
+        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.STRICT, null);
+        Particle dtdElement2particle = new AnyPattern(ProcessContentsInstruction.STRICT, null);
 
         //--------------------------------------------------------------------//
 
@@ -530,7 +530,7 @@ public class ElementUnionBuilderTest extends junit.framework.TestCase {
 
         Boolean element1mixed = false;
         Boolean element2mixed = true;
-        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.Strict, null);
+        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.STRICT, null);
         Particle dtdElement2particle = null;
 
         //--------------------------------------------------------------------//
@@ -575,7 +575,7 @@ public class ElementUnionBuilderTest extends junit.framework.TestCase {
 
         Boolean element1mixed = false;
         Boolean element2mixed = true;
-        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.Strict, null);
+        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.STRICT, null);
         CountingPattern countingPattern = new CountingPattern(0, null);
         ChoicePattern choicePattern = new ChoicePattern();
         choicePattern.addParticle(new eu.fox7.schematoolkit.common.dtd.ElementRef(dtd.getElementSymbolTable().updateOrCreateReference("element", new Element("element"))));
@@ -624,7 +624,7 @@ public class ElementUnionBuilderTest extends junit.framework.TestCase {
 
         Boolean element1mixed = false;
         Boolean element2mixed = false;
-        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.Strict, null);
+        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.STRICT, null);
         CountingPattern countingPattern = new CountingPattern(0, 1);
         countingPattern.addParticle(new eu.fox7.schematoolkit.common.dtd.ElementRef(dtd.getElementSymbolTable().updateOrCreateReference("element", new Element("element"))));
         Particle dtdElement2particle = countingPattern;
@@ -671,7 +671,7 @@ public class ElementUnionBuilderTest extends junit.framework.TestCase {
 
         Boolean element1mixed = false;
         Boolean element2mixed = false;
-        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.Strict, null);
+        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.STRICT, null);
         CountingPattern countingPattern = new CountingPattern(0, null);
         countingPattern.addParticle(new eu.fox7.schematoolkit.common.dtd.ElementRef(dtd.getElementSymbolTable().updateOrCreateReference("element", new Element("element"))));
         Particle dtdElement2particle = countingPattern;
@@ -718,7 +718,7 @@ public class ElementUnionBuilderTest extends junit.framework.TestCase {
 
         Boolean element1mixed = false;
         Boolean element2mixed = false;
-        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.Strict, null);
+        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.STRICT, null);
         CountingPattern countingPattern = new CountingPattern(1, null);
         countingPattern.addParticle(new eu.fox7.schematoolkit.common.dtd.ElementRef(dtd.getElementSymbolTable().updateOrCreateReference("element", new Element("element"))));
         Particle dtdElement2particle = countingPattern;
@@ -765,7 +765,7 @@ public class ElementUnionBuilderTest extends junit.framework.TestCase {
 
         Boolean element1mixed = false;
         Boolean element2mixed = false;
-        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.Strict, null);
+        Particle dtdElement1particle = new AnyPattern(ProcessContentsInstruction.STRICT, null);
         SequencePattern sequencePattern = new SequencePattern();
         sequencePattern.addParticle(new eu.fox7.schematoolkit.common.dtd.ElementRef(dtd.getElementSymbolTable().updateOrCreateReference("element", new Element("element"))));
         sequencePattern.addParticle(new eu.fox7.schematoolkit.common.dtd.ElementRef(dtd.getElementSymbolTable().updateOrCreateReference("element2", new Element("element2"))));

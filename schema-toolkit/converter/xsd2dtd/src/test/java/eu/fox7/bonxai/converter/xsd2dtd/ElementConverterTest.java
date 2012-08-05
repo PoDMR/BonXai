@@ -451,7 +451,7 @@ public class ElementConverterTest extends junit.framework.TestCase {
 
         eu.fox7.schematoolkit.xsd.om.Element element = new eu.fox7.schematoolkit.xsd.om.Element("{" + XSD2DTDConverter.XMLSCHEMA_NAMESPACE + "}name");
 
-        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.Strict, null);
+        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.STRICT, null);
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(anyPattern);
 
@@ -483,7 +483,7 @@ public class ElementConverterTest extends junit.framework.TestCase {
         choicePattern.addParticle(new eu.fox7.schematoolkit.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element1", new eu.fox7.schematoolkit.xsd.om.Element("{}element1"))));
         choicePattern.addParticle(new eu.fox7.schematoolkit.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element2", new eu.fox7.schematoolkit.xsd.om.Element("{}element2"))));
         choicePattern.addParticle(new eu.fox7.schematoolkit.common.ElementRef(schema.getElementSymbolTable().updateOrCreateReference("{}element3", new eu.fox7.schematoolkit.xsd.om.Element("{}element1"))));
-        choicePattern.addParticle(new AnyPattern(ProcessContentsInstruction.Strict, null));
+        choicePattern.addParticle(new AnyPattern(ProcessContentsInstruction.STRICT, null));
         ComplexContentType complexContentType = new ComplexContentType();
         complexContentType.setParticle(choicePattern);
 

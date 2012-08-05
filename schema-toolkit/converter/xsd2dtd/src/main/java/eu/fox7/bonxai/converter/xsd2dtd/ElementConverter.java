@@ -9,8 +9,12 @@ import eu.fox7.schematoolkit.common.AllPattern;
 import eu.fox7.schematoolkit.common.AnyPattern;
 import eu.fox7.schematoolkit.common.ChoicePattern;
 import eu.fox7.schematoolkit.common.CountingPattern;
+import eu.fox7.schematoolkit.common.ElementRef;
+import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.Particle;
+import eu.fox7.schematoolkit.common.ParticleContainer;
 import eu.fox7.schematoolkit.common.ProcessContentsInstruction;
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.common.SequencePattern;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
@@ -20,6 +24,7 @@ import eu.fox7.schematoolkit.xsd.om.Key;
 import eu.fox7.schematoolkit.xsd.om.KeyRef;
 import eu.fox7.schematoolkit.xsd.om.SimpleConstraint;
 import eu.fox7.schematoolkit.xsd.om.SimpleType;
+import eu.fox7.schematoolkit.xsd.om.Type;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 import java.util.HashSet;
@@ -32,16 +37,9 @@ import java.util.LinkedList;
  * @author Lars Schmidt
  */
 public class ElementConverter {
-
-    /**
-     * HashMap for DTD elements and a list of possible content models
-     * This list of content models
-     */
-    private LinkedHashMap<String, ElementWrapper> elementMap;
     private XSDSchema xmlSchema;
     private DocumentTypeDefinition dtd;
     private LinkedHashSet<SimpleConstraint> globalConstraints;
-    private HashSet<XSDSchema> alreadyHandledSchemas;
     // HashSet used for marking already converted elements
     private HashSet<eu.fox7.schematoolkit.xsd.om.Element> alreadyConvertedElements;
 
@@ -59,125 +57,8 @@ public class ElementConverter {
     public ElementConverter(XSDSchema xmlSchema, DocumentTypeDefinition dtd) {
         this.xmlSchema = xmlSchema;
         this.dtd = dtd;
-        this.elementMap = new LinkedHashMap<String, ElementWrapper>();
         this.globalConstraints = new LinkedHashSet<SimpleConstraint>();
-        this.alreadyHandledSchemas = new HashSet<XSDSchema>();
         this.alreadyConvertedElements = new HashSet<eu.fox7.schematoolkit.xsd.om.Element>();
-    }
-
-    /**
-     * Method: convert
-     *
-     * This method is the base method of this class. It starts the conversion
-     * with all globaly defined elements in the given XML Schema.
-     *
-     * All elements (inner elements, too) are noticed in the elementMap for
-     * later progressing and conversion.
-     *
-     * @return LinkedHashMap<String, ElementWrapper>
-     */
-    public LinkedHashMap<String, ElementWrapper> convert() {
-
-        LinkedList<eu.fox7.schematoolkit.xsd.om.Element> startElements = new LinkedList<eu.fox7.schematoolkit.xsd.om.Element>();
-
-        // Find all top-level elements recursivly from within all external and local schemas
-        findStartElements(xmlSchema, startElements);
-
-        for (Iterator<eu.fox7.schematoolkit.xsd.om.Element> it = startElements.iterator(); it.hasNext();) {
-            eu.fox7.schematoolkit.xsd.om.Element element = it.next();
-            this.convertElement(element);
-        }
-        
-        return this.elementMap;
-    }
-
-    /**
-     * Find all start elements from the current XML Schema object structure
-     * representing a local schema and all of its foreign or external schemas
-     * recursivly.
-     * @param currentXSDSchema      The current XML schema document object
-     * @param startElements         List of all found elements, that can be used as start elements for valid XML instances
-     */
-    private void findStartElements(XSDSchema currentXSDSchema, LinkedList<eu.fox7.schematoolkit.xsd.om.Element> startElements) {
-        this.alreadyHandledSchemas.add(currentXSDSchema);
-
-        startElements.addAll(currentXSDSchema.getElements());
-
-        // Walk trough all foreignSchemas.
-        if (currentXSDSchema.getForeignSchemas() != null && !currentXSDSchema.getForeignSchemas().isEmpty()) {
-            for (Iterator<ForeignSchema> it = currentXSDSchema.getForeignSchemas().iterator(); it.hasNext();) {
-                ForeignSchema foreignSchema = it.next();
-                if (!this.alreadyHandledSchemas.contains(foreignSchema.getSchema())) {
-                    findStartElements(foreignSchema.getSchema(), startElements);
-                }
-            }
-        }
-    }
-
-    /**
-     * Method addDTDElement
-     *
-     * Add a given element or elementRef or both to the elementMap and the
-     * correct elementWrapper object according to the given full qualified XSD
-     * name.
-     *
-     * @param dtdName
-     * @param element
-     * @param elementRef
-     */
-    public void addDTDElement(String dtdName, Element element, ElementRef elementRef) {
-        if (this.elementMap.get(dtdName) == null) {
-            // Case: No Entry in the HashMap
-            ElementWrapper elementWrapper = new ElementWrapper(xmlSchema, dtdName);
-            if (element != null) {
-                elementWrapper.addDTDElement(element);
-            }
-            if (elementRef != null) {
-                elementWrapper.addDTDElementRef(elementRef);
-            }
-            this.elementMap.put(dtdName, elementWrapper);
-        } else {
-            // Case: There is already an entry in the HashMap
-            ElementWrapper elementWrapper = this.elementMap.get(dtdName);
-            if (element != null) {
-                elementWrapper.addDTDElement(element);
-            }
-            if (elementRef != null) {
-                elementWrapper.addDTDElementRef(elementRef);
-            }
-        }
-    }
-
-    /**
-     * Method addDTDAttributes
-     *
-     * Add a given list of DTD attributes to the elementWrapper with respect to
-     * the dtdName of the element
-     *
-     * @param dtdName   the DTD name of the element
-     * @param dtdAttributeList     list of DTD attributes for addition
-     */
-    public void addDTDAttributes(String dtdName, LinkedList<Attribute> dtdAttributeList) {
-        if (this.elementMap.get(dtdName) == null) {
-            // Case: No Entry in the HashMap
-            ElementWrapper elementWrapper = new ElementWrapper(xmlSchema, dtdName);
-            if (dtdAttributeList != null && !dtdAttributeList.isEmpty()) {
-                for (Iterator<Attribute> it = dtdAttributeList.iterator(); it.hasNext();) {
-                    Attribute attribute = it.next();
-                    elementWrapper.addDTDAttribute(attribute);
-                }
-            }
-            this.elementMap.put(dtdName, elementWrapper);
-        } else {
-            // Case: There is already an entry in the HashMap
-            ElementWrapper elementWrapper = this.elementMap.get(dtdName);
-            if (dtdAttributeList != null && !dtdAttributeList.isEmpty()) {
-                for (Iterator<Attribute> it = dtdAttributeList.iterator(); it.hasNext();) {
-                    Attribute attribute = it.next();
-                    elementWrapper.addDTDAttribute(attribute);
-                }
-            }
-        }
     }
 
     /**
@@ -189,59 +70,51 @@ public class ElementConverter {
      * @param dtdName   the DTD name of the element
      * @param xsdConstraints    list of XML Schema constraints for addition
      */
-    public void addConstraints(String dtdName, LinkedList<Constraint> xsdConstraints) {
-        for (Iterator<Constraint> it = xsdConstraints.iterator(); it.hasNext();) {
-            Constraint constraint = it.next();
-
-            if (constraint instanceof Key) {
-                Key key = (Key) constraint;
-
-                if (key.getSelector().matches("\\.//[a-zA-Z0-9\\*]*")) {
-                    String selectorName = key.getSelector().substring(key.getSelector().lastIndexOf("/") + 1, key.getSelector().length());
-                    if (selectorName.equals("*")) {
-                        // put Constraint to ALL elements.
-                        this.globalConstraints.add(key);
-                    } else {
-                        // put Constraint to element with given selector name
-                        ElementWrapper elementWrapper = null;
-                        if (this.elementMap.get(selectorName) == null) {
-                            elementWrapper = new ElementWrapper(xmlSchema, selectorName);
-                            this.elementMap.put(dtdName, elementWrapper);
-                        } else {
-                            elementWrapper = this.elementMap.get(selectorName);
-                        }
-                        elementWrapper.addXSDConstraint(key);
-                    }
-                }
-            } else if (constraint instanceof KeyRef) {
-                KeyRef keyRef = (KeyRef) constraint;
-                if (keyRef.getSelector().matches("\\.//[a-zA-Z0-9\\*]*")) {
-                    String selectorName = keyRef.getSelector().substring(keyRef.getSelector().lastIndexOf("/") + 1, keyRef.getSelector().length());
-                    if (selectorName.equals("*")) {
-                        // put Constraint to ALL elements.
-                        this.globalConstraints.add(keyRef);
-                    } else {
-                        // put Constraint to element with given selector name
-                        ElementWrapper elementWrapper = null;
-                        if (this.elementMap.get(selectorName) == null) {
-                            elementWrapper = new ElementWrapper(xmlSchema, selectorName);
-                            this.elementMap.put(dtdName, elementWrapper);
-                        } else {
-                            elementWrapper = this.elementMap.get(selectorName);
-                        }
-                        elementWrapper.addXSDConstraint(keyRef);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Getter for the generated elementMap
-     * @return LinkedHashMap<String, ElementWrapper>
-     */
-    public LinkedHashMap<String, ElementWrapper> getElementMap() {
-        return elementMap;
+     public void addConstraints(QualifiedName dtdName, LinkedList<Constraint> xsdConstraints) {
+//        for (Iterator<Constraint> it = xsdConstraints.iterator(); it.hasNext();) {
+//            Constraint constraint = it.next();
+//
+//            if (constraint instanceof Key) {
+//                Key key = (Key) constraint;
+//
+//                if (key.getSelector().matches("\\.//[a-zA-Z0-9\\*]*")) {
+//                    String selectorName = key.getSelector().substring(key.getSelector().lastIndexOf("/") + 1, key.getSelector().length());
+//                    if (selectorName.equals("*")) {
+//                        // put Constraint to ALL elements.
+//                        this.globalConstraints.add(key);
+//                    } else {
+//                        // put Constraint to element with given selector name
+//                        ElementWrapper elementWrapper = null;
+//                        if (this.elementMap.get(selectorName) == null) {
+//                            elementWrapper = new ElementWrapper(xmlSchema, selectorName);
+//                            this.elementMap.put(dtdName, elementWrapper);
+//                        } else {
+//                            elementWrapper = this.elementMap.get(selectorName);
+//                        }
+//                        elementWrapper.addXSDConstraint(key);
+//                    }
+//                }
+//            } else if (constraint instanceof KeyRef) {
+//                KeyRef keyRef = (KeyRef) constraint;
+//                if (keyRef.getSelector().matches("\\.//[a-zA-Z0-9\\*]*")) {
+//                    String selectorName = keyRef.getSelector().substring(keyRef.getSelector().lastIndexOf("/") + 1, keyRef.getSelector().length());
+//                    if (selectorName.equals("*")) {
+//                        // put Constraint to ALL elements.
+//                        this.globalConstraints.add(keyRef);
+//                    } else {
+//                        // put Constraint to element with given selector name
+//                        ElementWrapper elementWrapper = null;
+//                        if (this.elementMap.get(selectorName) == null) {
+//                            elementWrapper = new ElementWrapper(xmlSchema, selectorName);
+//                            this.elementMap.put(dtdName, elementWrapper);
+//                        } else {
+//                            elementWrapper = this.elementMap.get(selectorName);
+//                        }
+//                        elementWrapper.addXSDConstraint(keyRef);
+//                    }
+//                }
+//            }
+//        }
     }
 
     /**
@@ -253,22 +126,19 @@ public class ElementConverter {
      * @param element       eu.fox7.schematoolkit.xsd.om.Element
      * @return  Element     eu.fox7.bonxai.dtd.Element
      */
-    public Element convertElement(eu.fox7.schematoolkit.xsd.om.Element element) {
+    public Element convertElement(QualifiedName elementName, Type type) {
         // Initialize the DTDNameGenerator
         DTDNameGenerator dtdNameGenerator = new DTDNameGenerator(xmlSchema);
-        String dtdElementName = dtdNameGenerator.getDTDElementName(element.getName(), element.getForm());
+        String dtdElementName = dtdNameGenerator.getDTDElementName(elementName);
 
         // Prepare the result
-        Element dtdElement = new Element(dtdElementName);
-
-		// Mark the element as already seen/converted
-        alreadyConvertedElements.add(element);
+        Element dtdElement = new Element(new QualifiedName(Namespace.EMPTY_NAMESPACE,dtdElementName));
 
         Particle dtdParticle = null;
 
-        if (element.getType() != null) {
-            if (element.getType() instanceof ComplexType) {
-                ComplexType complexType = (ComplexType) element.getType();
+        if (type != null) {
+            if (type instanceof ComplexType) {
+                ComplexType complexType = (ComplexType) type;
                 if (complexType.getContent() != null) {
                     if (complexType.getContent() instanceof ComplexContentType) {
                         // Case: Complex content model
@@ -293,12 +163,10 @@ public class ElementConverter {
 
                                 if (isAnyPattern) {
                                     // ANY type found
-                                    dtdParticle = new AnyPattern(ProcessContentsInstruction.Strict, "");
+                                    dtdParticle = new AnyPattern(ProcessContentsInstruction.STRICT, "");
                                 } else {
                                     // Mixed content has to be framed with a countingPattern (...)*
-                                    CountingPattern dtdCountingPattern = new CountingPattern(0, null);
-                                    dtdCountingPattern.addParticle(dtdChoicePattern);
-                                    dtdParticle = dtdCountingPattern;
+                                    dtdParticle = new CountingPattern(dtdChoicePattern, 0, null);
                                 }
                                 dtdElement.setMixedStar(true);
                             }
@@ -318,11 +186,11 @@ public class ElementConverter {
                     dtdElement.setMixedStar(false);
                     dtdParticle = null;
                 }
-            } else if (element.getType() instanceof SimpleType) {
-                SimpleType simpleType = (SimpleType) element.getType();
+            } else if (type instanceof SimpleType) {
+                SimpleType simpleType = (SimpleType) type;
                 if (simpleType.getLocalName().equals("anyType")) {
                     // Case ANY:
-                    dtdParticle = new AnyPattern(ProcessContentsInstruction.Strict, "");
+                    dtdParticle = new AnyPattern(ProcessContentsInstruction.STRICT, "");
                 } else {
                     // CASE (#PCDATA)*:
                     dtdElement.setMixedStar(true);
@@ -332,7 +200,7 @@ public class ElementConverter {
             // Case EMPTY:
             dtdElement.setMixedStar(false);
             // ANY type
-            dtdParticle = new AnyPattern(ProcessContentsInstruction.Strict, "");
+            dtdParticle = new AnyPattern(ProcessContentsInstruction.STRICT, "");
         }
 
         if (dtdParticle != null) {
@@ -342,18 +210,14 @@ public class ElementConverter {
         // Convert attributes
         AttributeConverter attributeConverter = new AttributeConverter(this.xmlSchema);
         LinkedList<Attribute> dtdAttributes = attributeConverter.convertAttributes(element);
-
-        if (dtdAttributes != null && !dtdAttributes.isEmpty()) {
-            this.addDTDAttributes(dtdElement.getName(), dtdAttributes);
-        }
+        
+        for (Attribute attribute: dtdAttributes)
+        	dtdElement.addAttribute(attribute);
 
         // Handle Constraints for DTD ID/IDREF
         if (element.getConstraints() != null && !element.getConstraints().isEmpty()) {
             this.addConstraints(dtdElement.getName(), element.getConstraints());
         }
-
-        // Add the DTD element to the correct elementWrapper
-        this.addDTDElement(dtdElement.getName(), dtdElement, null);
 
         // return the result
         return dtdElement;
@@ -365,109 +229,61 @@ public class ElementConverter {
      * @return Particle     DTD particle as result
      */
     private Particle convertContentModel(Particle particle) {
-        Integer level = new Integer(0);
-        LinkedHashMap<Integer, Integer> tempHash = new LinkedHashMap<Integer, Integer>();
-        return this.convertContentModel(particle, level, tempHash);
-    }
-
-    /**
-     * Convert a XML Schema content model to its DTD counterpart 
-     * (There is no handling of mixed content in this method.)
-     * 
-     * @param particle      XSD particle structure
-     * @return Particle     DTD particle structure
-     */
-    private Particle convertContentModel(Particle particle, Integer level, LinkedHashMap<Integer, Integer> countingPatternMap) {
         Particle dtdParticle = null;
-        level++;
         if (particle instanceof eu.fox7.schematoolkit.common.ElementRef) {
-
             // Case "ElementRef":
-
             eu.fox7.schematoolkit.common.ElementRef elementRef = (eu.fox7.schematoolkit.common.ElementRef) particle;
-            if (elementRef.getElement() != null) {
-
-                eu.fox7.schematoolkit.xsd.om.Element xsdElement = elementRef.getElement();
+            eu.fox7.schematoolkit.xsd.om.Element xsdElement = this.xmlSchema.getElement(elementRef);
+            if (xsdElement != null) {
                 DTDNameGenerator dtdNameGenerator = new DTDNameGenerator(xmlSchema);
-                String dtdElementName = dtdNameGenerator.getDTDElementName(xsdElement.getName(), xsdElement.getForm());
+                QualifiedName dtdElementName = dtdNameGenerator.getDTDElementName(xsdElement.getName(), xsdElement.getForm());
 
-                SymbolTableRef<Element> symbolTableRef = new SymbolTableRef<Element>(dtdElementName, new Element(dtdElementName));
-                ElementRef dtdElementRef = new ElementRef(symbolTableRef);
+                ElementRef dtdElementRef = new ElementRef(dtdElementName);
 
-                this.addDTDElement(dtdElementName, null, dtdElementRef);
                 dtdParticle = dtdElementRef;
-
             } else {
                 // Failure with elementRef --> ANY
-                dtdParticle = new AnyPattern(ProcessContentsInstruction.Strict, "");
+                dtdParticle = new AnyPattern(ProcessContentsInstruction.STRICT, "");
             }
         } else if (particle instanceof eu.fox7.schematoolkit.xsd.om.Element) {
-
             // Case "Element":
-
             eu.fox7.schematoolkit.xsd.om.Element xsdElement = (eu.fox7.schematoolkit.xsd.om.Element) particle;
 
-            String dtdElementName = null;
-            SymbolTableRef<Element> symbolTableRef = null;
-
-            if (!this.alreadyConvertedElements.contains(xsdElement)) {
-                Element dtdContentElement = this.convertElement(xsdElement);
-                dtdElementName = dtdContentElement.getName();
-                symbolTableRef = this.dtd.getElementSymbolTable().updateOrCreateReference(dtdElementName, dtdContentElement);
-            } else {
-                DTDNameGenerator dtdNameGenerator = new DTDNameGenerator(xmlSchema);
-                dtdElementName = dtdNameGenerator.getDTDElementName(xsdElement.getName(), xsdElement.getForm());
-                symbolTableRef = this.dtd.getElementSymbolTable().getReference(dtdElementName);
-            }
-
-            ElementRef dtdElementRef = new ElementRef(symbolTableRef);
-            this.addDTDElement(dtdElementName, null, dtdElementRef);
-            dtdParticle = dtdElementRef;
-
+            dtdParticle = new ElementRef(xsdElement.getName());
         } else if (particle instanceof SequencePattern) {
-
             // Case "SequencePattern":
-
             SequencePattern dtdSequencePattern = new SequencePattern();
             SequencePattern xsdSequencePattern = (SequencePattern) particle;
-            for (Iterator<Particle> it = xsdSequencePattern.getParticles().iterator(); it.hasNext();) {
-                Particle curentXSDParticle = it.next();
-                Particle newDTDParticle = convertContentModel(curentXSDParticle, level, countingPatternMap);
+            for (Particle curentXSDParticle: xsdSequencePattern.getParticles()) {
+                Particle newDTDParticle = convertContentModel(curentXSDParticle);
                 if (newDTDParticle != null) {
                     dtdSequencePattern.addParticle(newDTDParticle);
                 }
                 if (newDTDParticle instanceof AnyPattern) {
-                    return new AnyPattern(ProcessContentsInstruction.Strict, "");
+                    return new AnyPattern(ProcessContentsInstruction.STRICT, "");
                 }
             }
             dtdParticle = dtdSequencePattern;
         } else if (particle instanceof ChoicePattern) {
-
             // Case "ChoicePattern":
-
             ChoicePattern dtdChoicePattern = new ChoicePattern();
             ChoicePattern xsdChoicePattern = (ChoicePattern) particle;
-            for (Iterator<Particle> it = xsdChoicePattern.getParticles().iterator(); it.hasNext();) {
-                Particle curentXSDParticle = it.next();
-                Particle newDTDParticle = convertContentModel(curentXSDParticle, level, countingPatternMap);
+            for (Particle curentXSDParticle: xsdChoicePattern.getParticles()) {
+                Particle newDTDParticle = convertContentModel(curentXSDParticle);
                 if (newDTDParticle != null) {
                     dtdChoicePattern.addParticle(newDTDParticle);
                 }
                 if (newDTDParticle instanceof AnyPattern) {
-                    return new AnyPattern(ProcessContentsInstruction.Strict, "");
+                    return new AnyPattern(ProcessContentsInstruction.STRICT, "");
                 }
             }
             dtdParticle = dtdChoicePattern;
         } else if (particle instanceof AnyPattern) {
-
             // Case "AnyPattern":
-
             // ANY has to be set as root particle --> backtracking
-            dtdParticle = new AnyPattern(ProcessContentsInstruction.Strict, "");
+            dtdParticle = new AnyPattern(ProcessContentsInstruction.STRICT, "");
         } else if (particle instanceof AllPattern) {
-
             // Case "AllPattern":
-
             AllPattern xsdAllPattern = (AllPattern) particle;
             int countParticles = xsdAllPattern.getParticles().size();
 
@@ -483,12 +299,12 @@ public class ElementConverter {
 
                 for (Iterator<Particle> it = xsdAllPattern.getParticles().iterator(); it.hasNext();) {
                     Particle curentXSDParticle = it.next();
-                    Particle newDTDParticle = convertContentModel(curentXSDParticle, level, countingPatternMap);
+                    Particle newDTDParticle = convertContentModel(curentXSDParticle);
                     if (newDTDParticle != null) {
                         particleList.add(newDTDParticle);
                     }
                     if (newDTDParticle instanceof AnyPattern) {
-                        return new AnyPattern(ProcessContentsInstruction.Strict, "");
+                        return new AnyPattern(ProcessContentsInstruction.STRICT, "");
                     }
                 }
                 countParticles = particleList.size();
@@ -510,12 +326,12 @@ public class ElementConverter {
                 ChoicePattern dtdChoicePattern = new ChoicePattern();
                 for (Iterator<Particle> it = xsdAllPattern.getParticles().iterator(); it.hasNext();) {
                     Particle curentXSDParticle = it.next();
-                    Particle newDTDParticle = convertContentModel(curentXSDParticle, level, countingPatternMap);
+                    Particle newDTDParticle = convertContentModel(curentXSDParticle);
                     if (newDTDParticle != null) {
                         dtdChoicePattern.addParticle(newDTDParticle);
                     }
                     if (newDTDParticle instanceof AnyPattern) {
-                        return new AnyPattern(ProcessContentsInstruction.Strict, "");
+                        return new AnyPattern(ProcessContentsInstruction.STRICT, "");
                     }
                 }
                 SequencePattern dtdSequencePattern = new SequencePattern();
@@ -530,179 +346,80 @@ public class ElementConverter {
                 ChoicePattern dtdChoicePattern = new ChoicePattern();
                 for (Iterator<Particle> it = xsdAllPattern.getParticles().iterator(); it.hasNext();) {
                     Particle curentXSDParticle = it.next();
-                    Particle newDTDParticle = convertContentModel(curentXSDParticle, level, countingPatternMap);
+                    Particle newDTDParticle = convertContentModel(curentXSDParticle);
                     if (newDTDParticle != null) {
                         dtdChoicePattern.addParticle(newDTDParticle);
                     }
                     if (newDTDParticle instanceof AnyPattern) {
-                        return new AnyPattern(ProcessContentsInstruction.Strict, "");
+                        return new AnyPattern(ProcessContentsInstruction.STRICT, "");
                     }
                 }
-                CountingPattern dtdCountingPattern = new CountingPattern(0, null);
-
-                dtdCountingPattern.addParticle(dtdChoicePattern);
-                dtdParticle = dtdCountingPattern;
+                dtdParticle = new CountingPattern(dtdChoicePattern, 0, null);
             } else {
                 for (Iterator<Particle> it = xsdAllPattern.getParticles().iterator(); it.hasNext();) {
                     Particle curentXSDParticle = it.next();
                     // The individual xsdParticles have to be converted for writing out declarations of new elements in the DTD,
                     // which are not used in other positions
-                    convertContentModel(curentXSDParticle, level, countingPatternMap);
+                    convertContentModel(curentXSDParticle);
                 }
-                dtdParticle = new AnyPattern(ProcessContentsInstruction.Strict, "");
+                dtdParticle = new AnyPattern(ProcessContentsInstruction.STRICT, "");
+            }
+        } else if (particle instanceof CountingPattern) {
+            // Case "CountingPattern":
+            CountingPattern xsdCountingPattern = (CountingPattern) particle;
+            int min = xsdCountingPattern.getMin();
+            Integer max = xsdCountingPattern.getMax();
+
+            Particle newDTDParticle = convertContentModel(xsdCountingPattern.getParticle());
+            if (newDTDParticle == null) {
+                return null;
+            } else if (newDTDParticle instanceof AnyPattern) {
+                return new AnyPattern(ProcessContentsInstruction.STRICT, "");
             }
 
-        } else if (particle instanceof CountingPattern) {
-
-            // Case "CountingPattern":
-
-            CountingPattern xsdCountingPattern = (CountingPattern) particle;
-
-            if (xsdCountingPattern.getMin() != null && xsdCountingPattern.getMin() == 0
-                    && xsdCountingPattern.getMax() == null) {
-
-                // Case "CountingPattern" --> "(...)*":
-
-                CountingPattern dtdCountingPattern = new CountingPattern(0, null);
-                countingPatternMap.put(level, 1);
-                Integer countingPatternMultiplicity = 1;
-                for (Iterator<Integer> it = countingPatternMap.keySet().iterator(); it.hasNext();) {
-                    Integer currentKey = it.next();
-                    countingPatternMultiplicity = countingPatternMultiplicity * countingPatternMap.get(currentKey);
-                }
-                Particle newDTDParticle = convertContentModel(xsdCountingPattern.getParticles().getFirst(), level, countingPatternMap);
-                if (newDTDParticle == null) {
-                    return null;
-                } else if (newDTDParticle instanceof AnyPattern) {
-                    return new AnyPattern(ProcessContentsInstruction.Strict, "");
-                } else {
-                    dtdCountingPattern.addParticle(newDTDParticle);
-                }
-                dtdParticle = dtdCountingPattern;
-            } else if (xsdCountingPattern.getMin() != null && xsdCountingPattern.getMin() == 1
-                    && xsdCountingPattern.getMax() == null) {
-
-                // Case "CountingPattern" --> "(...)+":
-
-                CountingPattern dtdCountingPattern = new CountingPattern(1, null);
-                countingPatternMap.put(level, 1);
-                Integer countingPatternMultiplicity = 1;
-                for (Iterator<Integer> it = countingPatternMap.keySet().iterator(); it.hasNext();) {
-                    Integer currentKey = it.next();
-                    countingPatternMultiplicity = countingPatternMultiplicity * countingPatternMap.get(currentKey);
-                }
-                Particle newDTDParticle = convertContentModel(xsdCountingPattern.getParticles().getFirst(), level, countingPatternMap);
-                if (newDTDParticle == null) {
-                    return null;
-                } else if (newDTDParticle instanceof AnyPattern) {
-                    return new AnyPattern(ProcessContentsInstruction.Strict, "");
-                } else {
-                    dtdCountingPattern.addParticle(newDTDParticle);
-                }
-                dtdParticle = dtdCountingPattern;
-            } else if (xsdCountingPattern.getMin() != null && xsdCountingPattern.getMin() == 0
-                    && xsdCountingPattern.getMax() != null && xsdCountingPattern.getMax() == 1) {
-
-                // Case "CountingPattern" --> "(...)?":
-
-                CountingPattern dtdCountingPattern = new CountingPattern(0, 1);
-                countingPatternMap.put(level, 1);
-                Particle newDTDParticle = convertContentModel(xsdCountingPattern.getParticles().getFirst(), level, countingPatternMap);
-                if (newDTDParticle == null) {
-                    return null;
-                } else if (newDTDParticle instanceof AnyPattern) {
-                    return new AnyPattern(ProcessContentsInstruction.Strict, "");
-                } else {
-                    dtdCountingPattern.addParticle(newDTDParticle);
-                }
-                dtdParticle = dtdCountingPattern;
-            } else if (xsdCountingPattern.getMin() != null
-                    && xsdCountingPattern.getMax() == null) {
-
+            if ((max != null) && (XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND > 0 && max > XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND))
+            	max = null;
+            
+            if ((max == null) && (XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND > 0 && min > XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND))
+            	min = 0;
+            
+            if ((min==0 && max==null) ||
+                (min==1 && max==null) ||
+                (min==0 && max.equals(1))) {
+               	dtdParticle = new CountingPattern(newDTDParticle, min, max);
+            } else if (max == null) {
                 // Case "CountingPattern" --> (a)[2,unbounded] --> "(a,a,a*)":
-
-                countingPatternMap.put(level, xsdCountingPattern.getMin());
-                Integer countingPatternMultiplicity = 1;
-                for (Iterator<Integer> it = countingPatternMap.keySet().iterator(); it.hasNext();) {
-                    Integer currentKey = it.next();
-                    countingPatternMultiplicity = countingPatternMultiplicity * countingPatternMap.get(currentKey);
-                }
-                if (XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND_MULTIPLICITY > 0 && countingPatternMultiplicity > XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND_MULTIPLICITY) {
-                    CountingPattern dtdCountingPattern = new CountingPattern(0, null);
-                    countingPatternMap.put(level, 1);
-                    Particle newDTDParticle = convertContentModel(xsdCountingPattern.getParticles().getFirst(), level, countingPatternMap);
-                    if (newDTDParticle == null) {
-                        return null;
-                    } else if (newDTDParticle instanceof AnyPattern) {
-                        return new AnyPattern(ProcessContentsInstruction.Strict, "");
-                    } else {
-                        dtdCountingPattern.addParticle(newDTDParticle);
-                    }
-                    dtdParticle = dtdCountingPattern;
-                } else {
-                    Particle newDTDParticle = convertContentModel(xsdCountingPattern.getParticles().getFirst(), level, countingPatternMap);
-                    if (newDTDParticle == null) {
-                        return null;
-                    } else if (newDTDParticle instanceof AnyPattern) {
-                        return new AnyPattern(ProcessContentsInstruction.Strict, "");
-                    }
-                    SequencePattern dtdSequencePattern = new SequencePattern();
-                    for (int i = 0; i < xsdCountingPattern.getMin(); i++) {
-                        dtdSequencePattern.addParticle(newDTDParticle);
-                    }
-                    CountingPattern newOptionalCountingpattern = new CountingPattern(0, null);
-                    newOptionalCountingpattern.addParticle(newDTDParticle);
-                    dtdSequencePattern.addParticle(newOptionalCountingpattern);
-                    dtdParticle = dtdSequencePattern;
-                }
-            } else if (xsdCountingPattern.getMin() != null
-                    && xsdCountingPattern.getMax() != null) {
-
+            	SequencePattern dtdSequencePattern = new SequencePattern();
+            	for (int i = 0; i < min; i++) {
+            		dtdSequencePattern.addParticle(newDTDParticle);
+            	}
+            	CountingPattern newOptionalCountingpattern = new CountingPattern(newDTDParticle, 0, null);
+            	dtdSequencePattern.addParticle(newOptionalCountingpattern);
+            	dtdParticle = dtdSequencePattern;
+            } else if (max != null) {
                 // Case "CountingPattern" --> (a)[2,3] --> "(a,a,a?)":
-
-                if (xsdCountingPattern.getMin() == 0 && xsdCountingPattern.getMax() == 0) {
+                if (min == 0 && max == 0) {
                     return null;
                 }
 
-                countingPatternMap.put(level, xsdCountingPattern.getMax());
-                Integer countingPatternMultiplicity = 1;
-                for (Iterator<Integer> it = countingPatternMap.keySet().iterator(); it.hasNext();) {
-                    Integer currentKey = it.next();
-                    countingPatternMultiplicity = countingPatternMultiplicity * countingPatternMap.get(currentKey);
+                SequencePattern dtdSequencePattern = new SequencePattern();
+                for (int i = 0; i < xsdCountingPattern.getMin(); i++) {
+                	dtdSequencePattern.addParticle(newDTDParticle);
                 }
-                if (XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND_MULTIPLICITY > 0 && countingPatternMultiplicity > XSD2DTDConverter.COUNTINGPATTERN_UPPER_BOUND_MULTIPLICITY) {
-                    CountingPattern dtdCountingPattern = new CountingPattern(0, null);
-                    countingPatternMap.put(level, 1);
-                    Particle newDTDParticle = convertContentModel(xsdCountingPattern.getParticles().getFirst(), level, countingPatternMap);
-                    if (newDTDParticle == null) {
-                        return null;
-                    } else if (newDTDParticle instanceof AnyPattern) {
-                        return new AnyPattern(ProcessContentsInstruction.Strict, "");
-                    } else {
-                        dtdCountingPattern.addParticle(newDTDParticle);
-                    }
-                    dtdParticle = dtdCountingPattern;
-                } else {
-                    Particle newDTDParticle = convertContentModel(xsdCountingPattern.getParticles().getFirst(), level, countingPatternMap);
-                    if (newDTDParticle == null) {
-                        return null;
-                    } else if (newDTDParticle instanceof AnyPattern) {
-                        return new AnyPattern(ProcessContentsInstruction.Strict, "");
-                    }
-                    SequencePattern dtdSequencePattern = new SequencePattern();
-                    for (int i = 0; i < xsdCountingPattern.getMin(); i++) {
-                        dtdSequencePattern.addParticle(newDTDParticle);
-                    }
-                    CountingPattern newOptionalCountingpattern = new CountingPattern(0, 1);
-                    newOptionalCountingpattern.addParticle(newDTDParticle);
-                    for (int i = 0; i < xsdCountingPattern.getMax() - xsdCountingPattern.getMin(); i++) {
-                        dtdSequencePattern.addParticle(newOptionalCountingpattern);
-                    }
-                    dtdParticle = dtdSequencePattern;
+                
+                if (max > min) { // (a(a(a)?)?)?
+                	CountingPattern newOptionalCountingpattern = new CountingPattern(newDTDParticle, 0, 1);
+                	for (int i = 0; i < max - min - 1; i++) {
+                		SequencePattern sp = new SequencePattern();
+                		sp.addParticle(newDTDParticle);
+                		sp.addParticle(newOptionalCountingpattern);
+                		newOptionalCountingpattern = new CountingPattern(sp, 0, 1);
+                	}
+                	dtdSequencePattern.addParticle(newOptionalCountingpattern);
                 }
+                dtdParticle = dtdSequencePattern;
             }
         }
-        level--;
         return dtdParticle;
     }
 
@@ -714,23 +431,18 @@ public class ElementConverter {
      * @param alreadySeen   reminder for already seen element names (recursion)
      * @return Particle     DTD particle structure
      */
-    private LinkedList<Particle> convertMixedContentModel(Particle particle, HashSet<String> alreadySeen) {
+    private LinkedList<Particle> convertMixedContentModel(Particle particle, HashSet<QualifiedName> alreadySeen) {
         LinkedList<Particle> particleList = new LinkedList<Particle>();
 
         if (particle instanceof eu.fox7.schematoolkit.common.ElementRef) {
-
             // Case "ElementRef":
-
             eu.fox7.schematoolkit.common.ElementRef elementRef = (eu.fox7.schematoolkit.common.ElementRef) particle;
-            if (elementRef.getElement() != null) {
-                eu.fox7.schematoolkit.xsd.om.Element xsdElement = elementRef.getElement();
+            eu.fox7.schematoolkit.xsd.om.Element xsdElement = this.xmlSchema.getElement(elementRef);
+            if (xsdElement != null) {
                 DTDNameGenerator dtdNameGenerator = new DTDNameGenerator(xmlSchema);
-                String dtdElementName = dtdNameGenerator.getDTDElementName(xsdElement.getName(), xsdElement.getForm());
+                QualifiedName dtdElementName = dtdNameGenerator.getDTDElementName(xsdElement.getName(), xsdElement.getForm());
 
-                SymbolTableRef<Element> symbolTableRef = new SymbolTableRef<Element>(dtdElementName, new Element(dtdElementName));
-                ElementRef dtdElementRef = new ElementRef(symbolTableRef);
-
-                this.addDTDElement(dtdElementName, null, dtdElementRef);
+                ElementRef dtdElementRef = new ElementRef(dtdElementName);
 
                 if (!alreadySeen.contains(dtdElementName)) {
                     alreadySeen.add(dtdElementName);
@@ -738,12 +450,19 @@ public class ElementConverter {
                 }
             } else {
                 // Failure with elementRef --> ANY
-                particleList.add(new AnyPattern(ProcessContentsInstruction.Strict, ""));
+                particleList.add(new AnyPattern(ProcessContentsInstruction.STRICT, ""));
             }
         } else if (particle instanceof eu.fox7.schematoolkit.xsd.om.Element) {
-
             // Case "Element":
+            eu.fox7.schematoolkit.xsd.om.Element xsdElement = (eu.fox7.schematoolkit.xsd.om.Element) particle;
 
+            if (!alreadySeen.contains(dtdElementName)) {
+                particleList.add(dtdElementRef);
+                alreadySeen.add(dtdElementName);
+            }
+            dtdParticle = new ElementRef(xsdElement.getName());
+        } else if (particle instanceof eu.fox7.schematoolkit.xsd.om.Element) {
+            // Case "Element":
             eu.fox7.schematoolkit.xsd.om.Element xsdElement = (eu.fox7.schematoolkit.xsd.om.Element) particle;
 
             String dtdElementName = null;
@@ -766,57 +485,26 @@ public class ElementConverter {
                 particleList.add(dtdElementRef);
                 alreadySeen.add(dtdElementName);
             }
-        } else if (particle instanceof SequencePattern) {
-
-            // Case "SequencePattern":
-
-            SequencePattern xsdSequencePattern = (SequencePattern) particle;
-            for (Iterator<Particle> it = xsdSequencePattern.getParticles().iterator(); it.hasNext();) {
-                Particle curentXSDParticle = it.next();
-                LinkedList<Particle> innerParticleList = convertMixedContentModel(curentXSDParticle, alreadySeen);
-                if (innerParticleList != null) {
-                    particleList.addAll(innerParticleList);
-                }
-            }
-        } else if (particle instanceof ChoicePattern) {
-
-            // Case "ChoicePattern":
-
-            ChoicePattern xsdChoicePattern = (ChoicePattern) particle;
-            for (Iterator<Particle> it = xsdChoicePattern.getParticles().iterator(); it.hasNext();) {
-                Particle curentXSDParticle = it.next();
+        } else if (particle instanceof ParticleContainer) {
+            // Case "SequencePattern", ChoicePattern or AllPattern:
+            ParticleContainer xsdParticleContainer = (ParticleContainer) particle;
+            for (Particle curentXSDParticle: xsdParticleContainer.getParticles()) {
                 LinkedList<Particle> innerParticleList = convertMixedContentModel(curentXSDParticle, alreadySeen);
                 if (innerParticleList != null) {
                     particleList.addAll(innerParticleList);
                 }
             }
         } else if (particle instanceof AnyPattern) {
-
             // Case "AnyPattern":
-
             // ANY has to be set as root particle --> backtracking
-            particleList.add(new AnyPattern(ProcessContentsInstruction.Strict, ""));
-        } else if (particle instanceof AllPattern) {
-
-            // Case "AllPattern":
-
-            AllPattern xsdAllPattern = (AllPattern) particle;
-            for (Iterator<Particle> it = xsdAllPattern.getParticles().iterator(); it.hasNext();) {
-                Particle curentXSDParticle = it.next();
-                LinkedList<Particle> innerParticleList = convertMixedContentModel(curentXSDParticle, alreadySeen);
-                if (innerParticleList != null) {
-                    particleList.addAll(innerParticleList);
-                }
-            }
+            particleList.add(new AnyPattern(ProcessContentsInstruction.STRICT, ""));
         } else if (particle instanceof CountingPattern) {
-
             // Case "CountingPattern":
-
             CountingPattern xsdCountingPattern = (CountingPattern) particle;
-            if (xsdCountingPattern.getMin() != null && xsdCountingPattern.getMin() == 0 && xsdCountingPattern.getMax() != null && xsdCountingPattern.getMax() == 0) {
+            if (xsdCountingPattern.getMin() == 0 && xsdCountingPattern.getMax() != null && xsdCountingPattern.getMax() == 0) {
                 return null;
             } else {
-                LinkedList<Particle> innerParticleList = convertMixedContentModel(xsdCountingPattern.getParticles().getFirst(), alreadySeen);
+                LinkedList<Particle> innerParticleList = convertMixedContentModel(xsdCountingPattern.getParticle(), alreadySeen);
                 if (innerParticleList != null) {
                     particleList.addAll(innerParticleList);
                 }

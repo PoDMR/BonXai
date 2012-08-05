@@ -1,7 +1,7 @@
 package eu.fox7.bonxai.converter.xsd2dtd;
 
-import eu.fox7.bonxai.dtd.Attribute;
-import eu.fox7.bonxai.dtd.AttributeType;
+import eu.fox7.schematoolkit.dtd.om.Attribute;
+import eu.fox7.schematoolkit.dtd.om.AttributeType;
 import eu.fox7.schematoolkit.xsd.om.Key;
 import eu.fox7.schematoolkit.xsd.om.KeyRef;
 import eu.fox7.schematoolkit.xsd.om.SimpleConstraint;

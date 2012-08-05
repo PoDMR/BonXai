@@ -5,9 +5,9 @@ import eu.fox7.bonxai.converter.xsd2dtd.XSD2DTDConverter;
 import eu.fox7.bonxai.dtd.Attribute;
 import eu.fox7.bonxai.dtd.AttributeType;
 import eu.fox7.schematoolkit.common.AnyAttribute;
+import eu.fox7.schematoolkit.common.AttributeRef;
+import eu.fox7.schematoolkit.common.AttributeUse;
 import eu.fox7.schematoolkit.xsd.om.AttributeGroup;
-import eu.fox7.schematoolkit.xsd.om.AttributeRef;
-import eu.fox7.schematoolkit.xsd.om.AttributeUse;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.Element;
 import eu.fox7.schematoolkit.xsd.om.SimpleContentRestriction;
@@ -64,7 +64,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{}string", simpleType),
                 "default",
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -96,7 +96,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{}string", simpleType),
                 null,
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -122,7 +122,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{}string", simpleType),
                 null,
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -176,7 +176,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{}string", simpleType),
                 null,
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -202,7 +202,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{}string", simpleType),
                 null,
                 null,
-                AttributeUse.Required,
+                AttributeUse.required,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -228,7 +228,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{}string", simpleType),
                 null,
                 null,
-                AttributeUse.Prohibited,
+                AttributeUse.prohibited,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -276,7 +276,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{}string", simpleType),
                 null,
                 "fixed",
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -326,7 +326,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{" + XSD2DTDConverter.XMLSCHEMA_NAMESPACE + "}boolean", simpleType),
                 null,
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -352,7 +352,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{" + XSD2DTDConverter.XMLSCHEMA_NAMESPACE + "}IDREFS", simpleType),
                 null,
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -378,7 +378,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{" + XSD2DTDConverter.XMLSCHEMA_NAMESPACE + "}NMTOKENS", simpleType),
                 null,
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -404,7 +404,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{" + XSD2DTDConverter.XMLSCHEMA_NAMESPACE + "}ID", simpleType),
                 null,
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -430,7 +430,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{" + XSD2DTDConverter.XMLSCHEMA_NAMESPACE + "}IDREF", simpleType),
                 null,
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -456,7 +456,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{" + XSD2DTDConverter.XMLSCHEMA_NAMESPACE + "}ENTITY", simpleType),
                 null,
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -483,7 +483,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{}mySimpleType", simpleType),
                 null,
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -517,7 +517,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{}mySimpleType", simpleType),
                 null,
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);
@@ -551,7 +551,7 @@ public class AttributeConverterTest extends junit.framework.TestCase {
                 schema.getTypeSymbolTable().updateOrCreateReference("{}mySimpleType", simpleType),
                 null,
                 null,
-                AttributeUse.Optional,
+                AttributeUse.optional,
                 Boolean.TRUE,
                 XSDSchema.Qualification.qualified,
                 null);

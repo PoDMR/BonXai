@@ -1,5 +1,6 @@
 package eu.fox7.bonxai.converter.xsd2dtd;
 
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 import java.util.Iterator;
@@ -31,8 +32,9 @@ public class DTDNameGenerator {
      * @param instanceQualification     the current qualification property of the xsd element
      * @return String   the generated DTD element name
      */
-    public String getDTDElementName(String fullQualifiedXSDName, XSDSchema.Qualification instanceQualification) {
-        if (this.isTopLevelElement(fullQualifiedXSDName)) {
+    public QualifiedName getDTDElementName(QualifiedName xsdName, XSDSchema.Qualification instanceQualification) {
+    	String fullQualifiedXSDName = xsdName.getFullyQualifiedName();
+    	if (this.isTopLevelElement(fullQualifiedXSDName)) {
             this.topLevel = true;
         }
 
@@ -53,8 +55,9 @@ public class DTDNameGenerator {
      * @param instanceQualification     the current qualification property of the xsd attribute
      * @return String   the generated DTD attribute name
      */
-    public String getDTDAttributeName(String fullQualifiedXSDName, XSDSchema.Qualification instanceQualification) {
-        if (this.isTopLevelAttribute(fullQualifiedXSDName)) {
+    public QualifiedName getDTDAttributeName(QualifiedName xsdAttributeName, XSDSchema.Qualification instanceQualification) {
+        String fullQualifiedXSDName = xsdAttributeName.getFullyQualifiedName();
+    	if (this.isTopLevelAttribute(fullQualifiedXSDName)) {
             this.topLevel = true;
         }
 
