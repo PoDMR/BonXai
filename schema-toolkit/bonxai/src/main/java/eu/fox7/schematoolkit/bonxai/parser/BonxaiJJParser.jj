@@ -641,10 +641,12 @@ String AnnotationNameValue() : {Token t; String name="";}
 // old:APattern            ::= SimpleAPattern FullAPattern? | FullAPattern
 // new: APattern            ::= SimpleAPattern | FullAPattern
 // ignoring simple aPatterns for now!
-AncestorPattern APattern(): {AncestorPattern aPattern;}
+AncestorPattern APattern(): {AncestorPattern aPattern; QualifiedName name;}
 {
 //	( SimpleAPattern() [ LOOKAHEAD(2) FullAPattern() { jjtThis.setNodeChoice("simple_full"); }  ] | FullAPattern() { jjtThis.setNodeChoice("full"); }  )
-	aPattern=FullAPattern()
+	(	   aPattern=FullAPattern() |
+	   name=Name() { aPattern=new DoubleSlashPrefixedContainer(new AncestorPatternElement(name)); }
+    )
     { return aPattern; }
 }
 
@@ -838,7 +840,7 @@ Particle NamedType(): {Token t; BonxaiType type; Particle p; QualifiedName name;
 
 //AttributePattern    ::= Foreign "attribute" "*" NameSpaceList ( "," AttributeList )? | AttributeList
 //TODO: foreign
-AttributePattern AttributePattern(): {QualifiedName name; AttributeParticle a;  AttributePattern attributePattern = new AttributePattern();}
+AttributePattern AttributePattern(): {AttributeParticle a;  AttributePattern attributePattern = new AttributePattern();}
 {
 //	( foreign=Foreign() <ATTRIBUTE> <STAR> namespaceLst= NameSpaceList() [ LOOKAHEAD(2) <COMMA> attributeLst=AttributeList() ] | attributeLst=AttributeList() )
 	( a=AttributeGroupRef() | a=Attribute() | a=AttributeRef() ) { attributePattern.addAttribute(a); }
@@ -862,7 +864,7 @@ AttributeGroupReference AttributeGroupRef(): { QualifiedName name; }
 
 Attribute Attribute(): { QualifiedName name; BonxaiType type=null; boolean required=true; }
 {
-	<ATTRIBUTE> name=Name() { setState(DEFAULT); } 
+	<ATTRIBUTE> name=AttributeName() { setState(DEFAULT); } 
 	[ <OPENING_CURLY_BRACKET> type=BonxaiType()	<CLOSING_CURLY_BRACKET> ] 
 	[ <QUESTION_MARK> { required=false; } ]
 	{ return new Attribute(name, type, required); }
@@ -911,6 +913,19 @@ QualifiedName Name(): {String s=null ; String t=null;}
 	{ 
   		if (t == null) {
     		return new QualifiedName(this.bonxai.getDefaultNamespace(),s);
+  		} else {
+    		return new QualifiedName(this.bonxai.getNamespaceByIdentifier(s),t);
+  		}
+	}
+}
+
+
+QualifiedName AttributeName(): {String s=null ; String t=null;}
+{
+	s=Identifier() [<COLON> t=Identifier() ]
+	{ 
+  		if (t == null) {
+    		return new QualifiedName(Namespace.EMPTY_NAMESPACE,s);
   		} else {
     		return new QualifiedName(this.bonxai.getNamespaceByIdentifier(s),t);
   		}

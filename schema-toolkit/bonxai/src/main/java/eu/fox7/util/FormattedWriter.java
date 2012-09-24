@@ -87,7 +87,6 @@ public class FormattedWriter extends FilterWriter {
 	 */
 	@Override
 	public void flush() throws IOException {
-		// TODO Auto-generated method stub
 		super.flush();
 	}
 

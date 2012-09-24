@@ -78,10 +78,6 @@ public class Bonxai implements NamespaceAwareSchema {
      * Group part of the schema
      */
     private List<BonxaiAbstractGroup> groups = new LinkedList<BonxaiAbstractGroup>();
-
-    /**
-     * TODO: DatatypeList
-     */
     
     /**
      * RootElementList

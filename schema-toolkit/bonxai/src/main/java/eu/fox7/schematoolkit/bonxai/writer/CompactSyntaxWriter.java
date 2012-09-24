@@ -9,6 +9,7 @@ import java.util.TreeSet;
 
 import eu.fox7.schematoolkit.bonxai.om.AncestorPattern;
 import eu.fox7.schematoolkit.bonxai.om.AncestorPatternElement;
+import eu.fox7.schematoolkit.bonxai.om.Annotation;
 import eu.fox7.schematoolkit.bonxai.om.Attribute;
 import eu.fox7.schematoolkit.bonxai.om.AttributePattern;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
@@ -403,13 +404,24 @@ public class CompactSyntaxWriter {
      * @throws IOException 
      */
     protected void writeExpression(Expression expression) throws IOException {
+    	writer.newLine();
+    	writeAnnotations(expression.getAnnotations());
         writeAncestorPattern(expression.getAncestorPattern(), true);
         writer.append(" = ");
         writeChildPattern(expression.getChildPattern());
         writer.newLine();
     }
 
-    /**
+    private void writeAnnotations(List<Annotation> annotations) throws IOException {
+		for (Annotation annotation: annotations) {
+			writer.append("@"+annotation.getKey());
+			writer.append(" = ");
+			writer.append(annotation.getValue());
+			writer.newLine();
+		}
+	}
+
+	/**
      * Visit ChildPattern object.
      * @throws IOException 
      */
@@ -451,6 +463,14 @@ public class CompactSyntaxWriter {
         writeAncestorPattern(cardinalityParticle.getChild(), leadingSlash);
         writer.popIndent();
         writer.append(")");
+        String operator = "";
+        if ((cardinalityParticle.getMin() == 0) && cardinalityParticle.getMax() == null)
+        	operator = "*";
+        else if ((cardinalityParticle.getMin() == 0) && (cardinalityParticle.getMax() == 1))
+        	operator = "?";
+        else if ((cardinalityParticle.getMin() == 1) && (cardinalityParticle.getMax() == null))
+        	operator = "+";
+        writer.append(operator);
     }
 
     /**

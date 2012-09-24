@@ -115,4 +115,11 @@ public class Expression {
     public void setChildPattern(ChildPattern childPattern) {
         this.childPattern = childPattern;
     }
+    
+    public String getAnnotation(String name) {
+    	for (Annotation annotation: annotations) 
+    		if (annotation.getKey().equals(name))
+    			return annotation.getValue();
+    	return null;
+    }
 }

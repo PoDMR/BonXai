@@ -375,6 +375,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         case AT:
         case DOUBLESLASH:
         case SLASH:
+        case LABEL:
           ;
           break;
         default:
@@ -522,9 +523,22 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
   final public AncestorPattern APattern() throws ParseException {
     trace_call("APattern");
     try {
-                             AncestorPattern aPattern;
-      //	( SimpleAPattern() [ LOOKAHEAD(2) FullAPattern() { jjtThis.setNodeChoice("simple_full"); }  ] | FullAPattern() { jjtThis.setNodeChoice("full"); }  )
-              aPattern = FullAPattern();
+                             AncestorPattern aPattern; QualifiedName name;
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case OPENING_ROUND_BRACKET:
+      case DOUBLESLASH:
+      case SLASH:
+        aPattern = FullAPattern();
+        break;
+      case LABEL:
+        name = Name();
+                         aPattern=new DoubleSlashPrefixedContainer(new AncestorPatternElement(name));
+        break;
+      default:
+        jj_la1[16] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
       {if (true) return aPattern;}
     throw new Error("Missing return statement in function");
     } finally {
@@ -553,7 +567,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         jj_consume_token(CLOSING_ROUND_BRACKET);
         break;
       default:
-        jj_la1[16] = jj_gen;
+        jj_la1[17] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -579,7 +593,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           ;
           break;
         default:
-          jj_la1[17] = jj_gen;
+          jj_la1[18] = jj_gen;
           break label_9;
         }
         jj_consume_token(OR);
@@ -617,7 +631,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           ;
           break;
         default:
-          jj_la1[18] = jj_gen;
+          jj_la1[19] = jj_gen;
           break label_10;
         }
       }
@@ -663,12 +677,12 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                                                                                                                                                 s=null;
           break;
         default:
-          jj_la1[19] = jj_gen;
+          jj_la1[20] = jj_gen;
           ;
         }
         break;
       default:
-        jj_la1[20] = jj_gen;
+        jj_la1[21] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -705,7 +719,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           ;
           break;
         default:
-          jj_la1[21] = jj_gen;
+          jj_la1[22] = jj_gen;
           break label_11;
         }
         jj_consume_token(OR);
@@ -737,7 +751,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                                                            max=1;
         break;
       default:
-        jj_la1[22] = jj_gen;
+        jj_la1[23] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -761,7 +775,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                    mixed = true;
         break;
       default:
-        jj_la1[23] = jj_gen;
+        jj_la1[24] = jj_gen;
         ;
       }
       jj_consume_token(OPENING_CURLY_BRACKET);
@@ -804,7 +818,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           jj_consume_token(OR);
           break;
         default:
-          jj_la1[24] = jj_gen;
+          jj_la1[25] = jj_gen;
           ;
         }
         if (jj_2_2(2147483647)) {
@@ -821,14 +835,14 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
             type = BonxaiType();
             break;
           default:
-            jj_la1[25] = jj_gen;
+            jj_la1[26] = jj_gen;
             jj_consume_token(-1);
             throw new ParseException();
           }
         }
         break;
       default:
-        jj_la1[26] = jj_gen;
+        jj_la1[27] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -855,7 +869,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         jj_consume_token(QUESTION_MARK);
         break;
       default:
-        jj_la1[27] = jj_gen;
+        jj_la1[28] = jj_gen;
         ;
       }
       label_12:
@@ -868,7 +882,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           jj_consume_token(QUESTION_MARK);
           break;
         default:
-          jj_la1[28] = jj_gen;
+          jj_la1[29] = jj_gen;
           ;
         }
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -876,7 +890,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           ;
           break;
         default:
-          jj_la1[29] = jj_gen;
+          jj_la1[30] = jj_gen;
           break label_12;
         }
       }
@@ -909,7 +923,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           ;
           break;
         default:
-          jj_la1[30] = jj_gen;
+          jj_la1[31] = jj_gen;
           break label_13;
         }
         jj_consume_token(OR);
@@ -939,7 +953,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           ;
           break;
         default:
-          jj_la1[31] = jj_gen;
+          jj_la1[32] = jj_gen;
           break label_14;
         }
         jj_consume_token(COMMA);
@@ -973,7 +987,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                                 setState(DEFAULT);
         break;
       default:
-        jj_la1[32] = jj_gen;
+        jj_la1[33] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -985,7 +999,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         r = RegexOp(r);
         break;
       default:
-        jj_la1[33] = jj_gen;
+        jj_la1[34] = jj_gen;
         ;
       }
           {if (true) return r;}
@@ -1027,19 +1041,19 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                                                                                                         max=null;
             break;
           default:
-            jj_la1[34] = jj_gen;
+            jj_la1[35] = jj_gen;
             jj_consume_token(-1);
             throw new ParseException();
           }
           break;
         default:
-          jj_la1[35] = jj_gen;
+          jj_la1[36] = jj_gen;
           ;
         }
         jj_consume_token(CLOSING_SQUARED_BRACKET);
         break;
       default:
-        jj_la1[36] = jj_gen;
+        jj_la1[37] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1074,7 +1088,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                                                                                             missing=true;
             break;
           default:
-            jj_la1[37] = jj_gen;
+            jj_la1[38] = jj_gen;
             ;
           }
           type = BonxaiType();
@@ -1082,7 +1096,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                           ((Element) p).setType(type,missing); setState(DEFAULT);
           break;
         default:
-          jj_la1[38] = jj_gen;
+          jj_la1[39] = jj_gen;
           ;
         }
         break;
@@ -1097,7 +1111,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                                                p = new ElementRef(name, new BonxaiLocation(t.beginLine, t.beginColumn, identifierEndLine, identifierEndColumn));
         break;
       default:
-        jj_la1[39] = jj_gen;
+        jj_la1[40] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1113,7 +1127,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
   final public AttributePattern AttributePattern() throws ParseException {
     trace_call("AttributePattern");
     try {
-                                      QualifiedName name; AttributeParticle a;  AttributePattern attributePattern = new AttributePattern();
+                                      AttributeParticle a;  AttributePattern attributePattern = new AttributePattern();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ATTRIBUTEGROUP:
         a = AttributeGroupRef();
@@ -1125,7 +1139,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         a = AttributeRef();
         break;
       default:
-        jj_la1[40] = jj_gen;
+        jj_la1[41] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1149,7 +1163,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           a = AttributeRef();
           break;
         default:
-          jj_la1[41] = jj_gen;
+          jj_la1[42] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -1182,14 +1196,14 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           defaultValue = Quotation();
           break;
         default:
-          jj_la1[42] = jj_gen;
+          jj_la1[43] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
         jj_consume_token(CLOSING_CURLY_BRACKET);
         break;
       default:
-        jj_la1[43] = jj_gen;
+        jj_la1[44] = jj_gen;
         ;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1198,7 +1212,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                        required=false;
         break;
       default:
-        jj_la1[44] = jj_gen;
+        jj_la1[45] = jj_gen;
         ;
       }
     {if (true) return new AttributeRef(name, fixedValue, defaultValue, required);}
@@ -1226,8 +1240,8 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     try {
                          QualifiedName name; BonxaiType type=null; boolean required=true;
       jj_consume_token(ATTRIBUTE);
-      name = Name();
-                                  setState(DEFAULT);
+      name = AttributeName();
+                                           setState(DEFAULT);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case OPENING_CURLY_BRACKET:
         jj_consume_token(OPENING_CURLY_BRACKET);
@@ -1235,7 +1249,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         jj_consume_token(CLOSING_CURLY_BRACKET);
         break;
       default:
-        jj_la1[45] = jj_gen;
+        jj_la1[46] = jj_gen;
         ;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1244,7 +1258,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                             required=false;
         break;
       default:
-        jj_la1[46] = jj_gen;
+        jj_la1[47] = jj_gen;
         ;
       }
           {if (true) return new Attribute(name, type, required);}
@@ -1272,7 +1286,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                                                                          {if (true) return "skip";}
         break;
       default:
-        jj_la1[47] = jj_gen;
+        jj_la1[48] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1305,13 +1319,13 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                                            type.setDefaultValue(value);
           break;
         default:
-          jj_la1[48] = jj_gen;
+          jj_la1[49] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
         break;
       default:
-        jj_la1[49] = jj_gen;
+        jj_la1[50] = jj_gen;
         ;
       }
           {if (true) return type;}
@@ -1362,7 +1376,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         t = Identifier();
         break;
       default:
-        jj_la1[50] = jj_gen;
+        jj_la1[51] = jj_gen;
         ;
       }
                 if (t == null) {
@@ -1373,6 +1387,31 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("Name");
+    }
+  }
+
+  final public QualifiedName AttributeName() throws ParseException {
+    trace_call("AttributeName");
+    try {
+                                String s=null ; String t=null;
+      s = Identifier();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case COLON:
+        jj_consume_token(COLON);
+        t = Identifier();
+        break;
+      default:
+        jj_la1[52] = jj_gen;
+        ;
+      }
+                if (t == null) {
+                {if (true) return new QualifiedName(Namespace.EMPTY_NAMESPACE,s);}
+                } else {
+                {if (true) return new QualifiedName(this.bonxai.getNamespaceByIdentifier(s),t);}
+                }
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("AttributeName");
     }
   }
 
@@ -1430,15 +1469,15 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
 
   final private boolean jj_3R_25() {
     if (jj_scan_token(ATTRIBUTE)) return true;
-    if (jj_3R_27()) return true;
+    if (jj_3R_29()) return true;
     return false;
   }
 
   final private boolean jj_3R_27() {
-    if (jj_3R_29()) return true;
+    if (jj_3R_30()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_30()) jj_scanpos = xsp;
+    if (jj_3R_31()) jj_scanpos = xsp;
     return false;
   }
 
@@ -1448,7 +1487,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     return false;
   }
 
-  final private boolean jj_3R_36() {
+  final private boolean jj_3R_37() {
     if (jj_scan_token(QUOTATION)) return true;
     return false;
   }
@@ -1481,12 +1520,12 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     return false;
   }
 
-  final private boolean jj_3R_29() {
+  final private boolean jj_3R_30() {
     if (jj_scan_token(LABEL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_31() {
+  final private boolean jj_3R_32() {
     if (jj_scan_token(MISSING)) return true;
     if (jj_scan_token(OR)) return true;
     return false;
@@ -1496,15 +1535,15 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     if (jj_scan_token(OPENING_CURLY_BRACKET)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_31()) jj_scanpos = xsp;
-    if (jj_3R_32()) return true;
+    if (jj_3R_32()) jj_scanpos = xsp;
+    if (jj_3R_33()) return true;
     if (jj_scan_token(CLOSING_CURLY_BRACKET)) return true;
     return false;
   }
 
-  final private boolean jj_3R_35() {
+  final private boolean jj_3R_36() {
     if (jj_scan_token(DEFAULTT)) return true;
-    if (jj_3R_36()) return true;
+    if (jj_3R_37()) return true;
     return false;
   }
 
@@ -1513,9 +1552,9 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     return false;
   }
 
-  final private boolean jj_3R_34() {
+  final private boolean jj_3R_35() {
     if (jj_scan_token(FIXED)) return true;
-    if (jj_3R_36()) return true;
+    if (jj_3R_37()) return true;
     return false;
   }
 
@@ -1538,12 +1577,12 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     return false;
   }
 
-  final private boolean jj_3R_33() {
+  final private boolean jj_3R_34() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_34()) {
+    if (jj_3R_35()) {
     jj_scanpos = xsp;
-    if (jj_3R_35()) return true;
+    if (jj_3R_36()) return true;
     }
     return false;
   }
@@ -1560,12 +1599,12 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     return false;
   }
 
-  final private boolean jj_3R_32() {
+  final private boolean jj_3R_33() {
     if (jj_scan_token(TYPE)) return true;
     if (jj_3R_27()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_33()) jj_scanpos = xsp;
+    if (jj_3R_34()) jj_scanpos = xsp;
     return false;
   }
 
@@ -1574,9 +1613,9 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     return false;
   }
 
-  final private boolean jj_3R_30() {
+  final private boolean jj_3R_31() {
     if (jj_scan_token(COLON)) return true;
-    if (jj_3R_29()) return true;
+    if (jj_3R_30()) return true;
     return false;
   }
 
@@ -1589,6 +1628,11 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     return false;
   }
 
+  final private boolean jj_3R_29() {
+    if (jj_3R_30()) return true;
+    return false;
+  }
+
   public BonxaiJJParserTokenManager token_source;
   public Token token, jj_nt;
   private int jj_ntk;
@@ -1597,7 +1641,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
   public boolean lookingAhead = false;
   private boolean jj_semLA;
   private int jj_gen;
-  final private int[] jj_la1 = new int[51];
+  final private int[] jj_la1 = new int[53];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -1605,10 +1649,10 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
       jj_la1_1();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x600,0x80000,0x8000,0x600,0x0,0x70000,0x70000,0x0,0x300000,0x300000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1000000,0x4000000,0x18100800,0x1e100800,0x0,0x0,0x0,0x0,0x0,0x18100000,0x0,0x0,0x0,0x0,0x4000000,0x0,0x18100000,0xe00000,0xe00000,0x1000,0x0,0x0,0x0,0x0,0xe0000000,0x1000,0x1000,0x0,};
+      jj_la1_0 = new int[] {0x600,0x80000,0x8000,0x600,0x0,0x70000,0x70000,0x0,0x300000,0x300000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1000000,0x4000000,0x18100800,0x1e100800,0x0,0x0,0x0,0x0,0x0,0x18100000,0x0,0x0,0x0,0x0,0x4000000,0x0,0x18100000,0xe00000,0xe00000,0x1000,0x0,0x0,0x0,0x0,0xe0000000,0x1000,0x1000,0x0,0x0,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x34000000,0x0,0x0,0x200,0x0,0x0,0x6404,0x200,0x4000000,0x400,0x400,0x4000000,0x4000404,0x800,0x6004,0x38000,0x6004,0x800,0x38000,0x0,0x0,0x4,0x4,0x20000,0x20000,0x1000,0x800,0x200,0x4,0x38010,0x8002,0x200,0x38010,0x0,0x40,0x0,0x0,0x0,0x1,0x40,0x20000,0x40,0x20000,0x0,0x1,0x1,0x40000,};
+      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x34000000,0x0,0x0,0x200,0x0,0x0,0x4006404,0x200,0x4000000,0x400,0x400,0x4000000,0x4006004,0x4000404,0x800,0x6004,0x38000,0x6004,0x800,0x38000,0x0,0x0,0x4,0x4,0x20000,0x20000,0x1000,0x800,0x200,0x4,0x38010,0x8002,0x200,0x38010,0x0,0x40,0x0,0x0,0x0,0x1,0x40,0x20000,0x40,0x20000,0x0,0x1,0x1,0x40000,0x40000,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[3];
   private boolean jj_rescan = false;
@@ -1619,7 +1663,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 51; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 53; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -1628,7 +1672,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 51; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 53; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -1637,7 +1681,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 51; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 53; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -1646,7 +1690,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 51; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 53; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -1767,7 +1811,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 51; i++) {
+    for (int i = 0; i < 53; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
