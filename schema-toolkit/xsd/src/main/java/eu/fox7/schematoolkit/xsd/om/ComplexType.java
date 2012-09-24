@@ -16,10 +16,13 @@
  */
 package eu.fox7.schematoolkit.xsd.om;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.HashSet;
 
 import eu.fox7.schematoolkit.SchemaToolkitException;
+import eu.fox7.schematoolkit.common.AbstractAttribute;
+import eu.fox7.schematoolkit.common.AttributeGroupReference;
 import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.PContainer;
 import eu.fox7.schematoolkit.common.Particle;
@@ -227,4 +230,19 @@ public class ComplexType extends Type implements PContainer, AContainer {
 	public void addAttributeParticle(AttributeParticle attributeParticle) {
 		this.addAttribute(attributeParticle);
 	}   
+	
+	
+    public Collection<AbstractAttribute> getAttributes(XSDSchema schema) {
+    	Collection<AbstractAttribute> attributes = new LinkedList<AbstractAttribute>();
+    	for (AttributeParticle aParticle: this.attributes)
+        	if (aParticle instanceof AbstractAttribute)
+        		attributes.add((AbstractAttribute) aParticle);
+        	else if (aParticle instanceof AttributeGroupReference) {
+        		AttributeGroup aGroup = schema.getAttributeGroup(((AttributeGroupReference) aParticle).getName());
+        		if (aGroup != null)
+        			attributes.addAll(aGroup.getAttributes(schema));
+        	}
+    	
+    	return attributes;
+    }
 }

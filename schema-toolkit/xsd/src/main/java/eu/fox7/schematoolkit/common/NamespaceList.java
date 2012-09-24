@@ -83,13 +83,20 @@ public class NamespaceList {
 	public void setTargetNamespace(String targetNamespaceURI) {
 		this.targetNamespace = this.getNamespaceByUri(targetNamespaceURI);
 	}
-	
+
 	public QualifiedName getQualifiedName(String qName) {
+		return getQualifiedName(qName, false);
+	}
+
+	public QualifiedName getQualifiedName(String qName, boolean useEmptyNamespaceAsDefault) {
 		Namespace namespace = null;
 		String localName;
 		int pos = qName.lastIndexOf(':');
 		if (pos == -1 ) {
-			namespace = this.defaultNamespace;
+			if (useEmptyNamespaceAsDefault)
+				namespace = Namespace.EMPTY_NAMESPACE;
+			else 
+				namespace = this.defaultNamespace;
 			localName = qName;
 		} else {
 			String prefix = qName.substring(0, pos);

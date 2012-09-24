@@ -16,9 +16,12 @@
  */
 package eu.fox7.schematoolkit.xsd.om;
 
+import java.util.Collection;
 import java.util.LinkedList;
 
+import eu.fox7.schematoolkit.common.AbstractAttribute;
 import eu.fox7.schematoolkit.common.AnnotationElement;
+import eu.fox7.schematoolkit.common.AttributeGroupReference;
 import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.xsd.saxparser.NamedXSDElement;
@@ -113,6 +116,20 @@ public class AttributeGroup extends AnnotationElement implements AContainer, Nam
     public boolean equals(Object that) {
         return ((that instanceof AttributeGroup)
                 && this.name.equals(((AttributeGroup) that).name));
+    }
+
+    public Collection<AbstractAttribute> getAttributes(XSDSchema schema) {
+    	Collection<AbstractAttribute> attributes = new LinkedList<AbstractAttribute>();
+    	for (AttributeParticle aParticle: this.attributeParticles)
+        	if (aParticle instanceof AbstractAttribute)
+        		attributes.add((AbstractAttribute) aParticle);
+        	else if (aParticle instanceof AttributeGroupReference) {
+        		AttributeGroup aGroup = schema.getAttributeGroup(((AttributeGroupReference) aParticle).getName());
+        		if (aGroup != null)
+        			attributes.addAll(aGroup.getAttributes(schema));
+        	}
+    	
+    	return attributes;
     }
 
 

@@ -185,10 +185,6 @@ public class XSDSchema implements NamespaceAwareSchema, PContainer {
     private Qualification elementFormDefault = Qualification.unqualified;
     private HashSet<BlockDefault> blockDefault = new HashSet<BlockDefault>(); // There is no default-Value for this property
     private HashSet<FinalDefault> finalDefault = new HashSet<FinalDefault>(); // There is no default-Value for this property
-    /**
-     * HashMap for all occurrences of SubstitutionGroup in the schema.
-     */
-// TODO:    private HashMap<SymbolTableRef<Element>, HashSet<SymbolTableRef<Element>>> substitutionElements;
 
     /**
      * Creates a new schema with empty containers.

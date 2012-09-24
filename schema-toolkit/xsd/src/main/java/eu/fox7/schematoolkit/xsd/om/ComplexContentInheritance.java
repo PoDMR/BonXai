@@ -20,6 +20,7 @@ import java.util.LinkedList;
 
 import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.PContainer;
+import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.QualifiedName;
 
 /**
@@ -76,6 +77,6 @@ public abstract class ComplexContentInheritance extends Inheritance implements A
         this.attributes = attributeParticles;
     }
     
-    
+    public abstract Particle getParticle();
 }
 
