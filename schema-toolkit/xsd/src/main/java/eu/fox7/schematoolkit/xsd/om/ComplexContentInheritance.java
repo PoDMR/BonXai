@@ -76,7 +76,5 @@ public abstract class ComplexContentInheritance extends Inheritance implements A
     public void setAttributes(LinkedList<AttributeParticle> attributeParticles) {
         this.attributes = attributeParticles;
     }
-    
-    public abstract Particle getParticle();
 }
 
