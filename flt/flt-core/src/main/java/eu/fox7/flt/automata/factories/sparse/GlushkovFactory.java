@@ -12,6 +12,7 @@ import eu.fox7.util.tree.SExpressionParseException;
 import eu.fox7.util.tree.Tree;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -53,11 +54,21 @@ public class GlushkovFactory {
         return create(nfa, this.glushkov.regex().getTree(regex));
     }
 
-    public SparseNFA create(SparseNFA nfa, Tree tree)
+    public SparseNFA create(SparseNFA nfa, Tree tree) throws UnknownOperatorException, FeatureNotSupportedException {
+    	return create(nfa, tree, false);
+    }
+
+    public SparseNFA create(SparseNFA nfa, Tree tree, boolean isMarked)
             throws UnknownOperatorException, FeatureNotSupportedException {
-        Set<String> sigma = glushkov.symbols(tree);
-        Tree markedTree = glushkov.mark(tree);
+        Tree markedTree = isMarked?tree:glushkov.mark(tree);
         Set<String> pi = glushkov.symbols(markedTree);
+        Set<String> sigma = new HashSet<String>();
+        if (isMarked)
+        	for (String symbol: pi)
+        		sigma.add(Glushkov.unmark(symbol));
+        else
+            sigma = glushkov.symbols(tree);
+        
         Set<String> firstSet = glushkov.first(markedTree);
         Set<String> lastSet = glushkov.last(markedTree);
         Map<String,Set<String>> followMap = new HashMap<String,Set<String>>();

@@ -11,6 +11,7 @@ import eu.fox7.flt.automata.factories.sparse.GNFAFactory;
 import eu.fox7.flt.automata.impl.sparse.GNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateDFA;
+import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.flt.regex.Regex;
 
 
@@ -33,8 +34,8 @@ public class StateEliminationFactory {
 		this.gnfaFactory = new GNFAFactory(regex);
 	}
 
-	public Regex create(StateDFA dfa, boolean isGlushkov) {
-		GNFA gnfa = gnfaFactory.create(dfa, isGlushkov);
+	public Regex create(StateNFA nfa, boolean isGlushkov) {
+		GNFA gnfa = gnfaFactory.create(nfa, isGlushkov);
 		return create(gnfa);
 	}
 

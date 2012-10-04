@@ -8,6 +8,7 @@ import static eu.fox7.util.Collections.extractSingleton;
 import eu.fox7.flt.automata.impl.sparse.GNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateDFA;
+import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.flt.automata.impl.sparse.StatePair;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
 import eu.fox7.flt.automata.impl.sparse.Transition;
@@ -38,24 +39,24 @@ public class GNFAFactory {
 		this.factory = new RegexFactory(regex);
 	}
 	
-	public GNFA create(StateDFA dfa, boolean isGlushkov) {
+	public GNFA create(StateNFA nfa, boolean isGlushkov) {
 		GNFA gnfa = new GNFA();
 		gnfa.setRegex(gnfa.getInitialState(), gnfa.getFinalState(), factory.createEmpty());
 		Map<State,State> stateMap = new HashMap<State,State>();
 		if (!isGlushkov) {
-			registerState(stateMap, dfa.getInitialState());
+			registerState(stateMap, nfa.getInitialState());
 			gnfa.setRegex(gnfa.getInitialState(),
-			              stateMap.get(dfa.getInitialState()),
+			              stateMap.get(nfa.getInitialState()),
 			              factory.createEpsilon());
 		} else
-			stateMap.put(dfa.getInitialState(), gnfa.getInitialState());
-		for (State finalState : dfa.getFinalStates()) {
+			stateMap.put(nfa.getInitialState(), gnfa.getInitialState());
+		for (State finalState : nfa.getFinalStates()) {
 			registerState(stateMap, finalState);
 			gnfa.setRegex(stateMap.get(finalState), gnfa.getFinalState(),
 			              factory.createEpsilon());
 		}
 		Map<StatePair,Set<Symbol>> symbolMap = new HashMap<StatePair,Set<Symbol>>();
-		for (Transition transition : dfa.getTransitionMap().getTransitions()) {
+		for (Transition transition : nfa.getTransitionMap().getTransitions()) {
 			State fromState = transition.getFromState();
 			registerState(stateMap, fromState);
 			State toState = transition.getToState();

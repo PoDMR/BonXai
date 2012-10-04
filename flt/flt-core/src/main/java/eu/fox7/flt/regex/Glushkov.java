@@ -237,7 +237,8 @@ public class Glushkov {
                         break;
                     }
                 }
-            } else if (node.key().equals(regex.unionOperator())) {
+            } else if (node.key().equals(regex.unionOperator())
+            		|| node.key().equals(regex.interleaveOperator())) {
                 for (int i = 0; i < node.getNumberOfChildren(); i++) {
                     set.addAll(first(node.child(i)));
                 }
@@ -281,7 +282,8 @@ public class Glushkov {
                         break;
                     }
                 }
-            } else if (node.key().equals(regex.unionOperator())) {
+            } else if (node.key().equals(regex.unionOperator())
+            		|| node.key().equals(regex.interleaveOperator())) {
                 for (int i = 0; i < node.getNumberOfChildren(); i++) {
                     set.addAll(last(node.child(i)));
                 }
@@ -319,7 +321,8 @@ public class Glushkov {
                         break;
                     }
                 }
-            } else if (node.key().equals(regex.unionOperator())) {
+            } else if (node.key().equals(regex.unionOperator())
+            		|| node.key().equals(regex.interleaveOperator())) {
                 for (int i = 0; i < node.getNumberOfChildren(); i++) {
                     set.addAll(lastNodes(node.child(i)));
                 }
