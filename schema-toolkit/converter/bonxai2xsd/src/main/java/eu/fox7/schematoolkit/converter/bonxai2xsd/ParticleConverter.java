@@ -29,6 +29,7 @@ import eu.fox7.schematoolkit.bonxai.om.ElementRef;
 import eu.fox7.schematoolkit.common.*;
 import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
+import eu.fox7.schematoolkit.xsd.om.XSDSchema.Qualification;
 
 /**
  * Bonxai2XSDConverter for group declarations inside an Bonxai schema.
@@ -208,8 +209,9 @@ public class ParticleConverter {
      */
     protected AttributeParticle convertAttribute(AttributeParticle attribute) {
         if (attribute instanceof eu.fox7.schematoolkit.bonxai.om.Attribute) {
-            return new eu.fox7.schematoolkit.xsd.om.Attribute(((eu.fox7.schematoolkit.bonxai.om.Attribute) attribute).getName(),
-                    ((eu.fox7.schematoolkit.bonxai.om.Attribute) attribute).getType().getTypename());
+        	eu.fox7.schematoolkit.bonxai.om.Attribute bonxaiAttribute = (eu.fox7.schematoolkit.bonxai.om.Attribute) attribute;
+            AttributeUse attributeUse = bonxaiAttribute.isRequired()?AttributeUse.required:AttributeUse.optional;
+			return new eu.fox7.schematoolkit.xsd.om.Attribute(bonxaiAttribute.getName(), bonxaiAttribute.getType().getTypename(), bonxaiAttribute.getDefault(), bonxaiAttribute.getFixed(), attributeUse, Qualification.unqualified, null);
         } else if (attribute instanceof AttributeGroupReference) {
             return new AttributeGroupReference( ((AttributeGroupReference) attribute).getName() );
         } else if (attribute instanceof AttributeRef) {

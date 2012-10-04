@@ -17,23 +17,31 @@ import eu.fox7.schematoolkit.common.QualifiedName;
 
 public class ChildSymbolExtractor {
 	public static Set<Symbol> getChildSymbols(ChildPattern childPattern, Bonxai bonxai) {
-		return (childPattern.getElementPattern() == null)?new HashSet<Symbol>():getSymbols(childPattern.getElementPattern().getRegexp(), bonxai);
+		return getChildSymbols(childPattern, bonxai, false);
+	}
+
+	public static Set<Symbol> getChildSymbolsWithBonxaiType(ChildPattern childPattern, Bonxai bonxai) {
+		return getChildSymbols(childPattern, bonxai, false);
 	}
 	
-	private static Set<Symbol> getSymbols(Particle particle, Bonxai bonxai) {
+	private static Set<Symbol> getChildSymbols(ChildPattern childPattern, Bonxai bonxai, boolean bonxaiTypes) {
+		return (childPattern.getElementPattern() == null)?new HashSet<Symbol>():getSymbols(childPattern.getElementPattern().getRegexp(), bonxai, bonxaiTypes);
+	}
+
+	private static Set<Symbol> getSymbols(Particle particle, Bonxai bonxai, boolean bonxaiTypes) {
 		Set<Symbol> symbols = new HashSet<Symbol>();
 		if (particle instanceof Element) {
 			Element element = (Element) particle;
-			if (element.getType()==null) {
+			if ((element.getType()!=null) == bonxaiTypes) {
 				Symbol symbol = Symbol.create(element.getName().getFullyQualifiedName());
 				symbols.add(symbol);
 			}
 		} else if (particle instanceof CountingPattern) {
-			symbols = getSymbols(((CountingPattern) particle).getParticle(), bonxai);
+			symbols = getSymbols(((CountingPattern) particle).getParticle(), bonxai, bonxaiTypes);
 		} else if (particle instanceof ParticleContainer) {
 			ParticleContainer particleContainer = (ParticleContainer) particle;
 			for (Particle childParticle: particleContainer.getParticles()) {
-				symbols.addAll(getSymbols(childParticle, bonxai));
+				symbols.addAll(getSymbols(childParticle, bonxai, bonxaiTypes));
 			}
 		} else if (particle instanceof AnyPattern) {
 			//nothing to do here. 
@@ -41,7 +49,7 @@ public class ChildSymbolExtractor {
 			GroupReference groupRef = (GroupReference) particle;
 			QualifiedName groupName = groupRef.getName();
 			BonxaiGroup group = bonxai.getElementGroup(groupName);
-			symbols = getSymbols(group.getParticle(), bonxai);
+			symbols = getSymbols(group.getParticle(), bonxai, bonxaiTypes);
 		} // just ignore other Particles. We just need the child symbols here. An error may be thrown during the actual conversion .
 		return symbols;
 	}

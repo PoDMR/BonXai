@@ -1,8 +1,8 @@
 package eu.fox7.schematoolkit.typeautomaton.factories;
 
-import eu.fox7.schematoolkit.bonxai.om.AncestorPattern;
+import eu.fox7.schematoolkit.bonxai.om.Expression;
 import eu.fox7.schematoolkit.common.QualifiedName;
 
 public interface TypeNameGenerator {
-	public QualifiedName generateTypeName(AncestorPattern ap);
+	public QualifiedName generateTypeName(Expression ex);
 }

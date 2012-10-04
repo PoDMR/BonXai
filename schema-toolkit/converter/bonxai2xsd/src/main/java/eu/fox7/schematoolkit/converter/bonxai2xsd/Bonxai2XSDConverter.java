@@ -17,6 +17,7 @@ import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
+import eu.fox7.schematoolkit.typeautomaton.factories.AdvancedTypeNameGenerator;
 import eu.fox7.schematoolkit.typeautomaton.factories.BonxaiTypeAutomatonConstruction;
 import eu.fox7.schematoolkit.typeautomaton.factories.TrivialTypeNameGenerator;
 import eu.fox7.schematoolkit.typeautomaton.factories.TypeNameGenerator;
@@ -48,7 +49,7 @@ public class Bonxai2XSDConverter extends AbstractSchemaConverter {
 		xsdSchema.setDefaultNamespace(bonxai.getTargetNamespace());
 		
 		BonxaiTypeAutomatonConstruction btac = new BonxaiTypeAutomatonConstruction();
-		TypeNameGenerator tng = new TrivialTypeNameGenerator(bonxai.getTargetNamespace());
+		TypeNameGenerator tng = new AdvancedTypeNameGenerator(bonxai.getTargetNamespace());
 		typeAutomaton = btac.constructTypeAutomaton(bonxai, tng, false);
 		btac.convertGroups(xsdSchema);
 		expressionStateMap = btac.getExpressionStateMap();

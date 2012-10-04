@@ -15,7 +15,6 @@ import eu.fox7.flt.automata.impl.sparse.ModifiableAnnotatedStateNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateDFA;
 import eu.fox7.flt.automata.impl.sparse.Symbol;
-import eu.fox7.schematoolkit.bonxai.om.AncestorPattern;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
 import eu.fox7.schematoolkit.bonxai.om.ChildPattern;
 import eu.fox7.schematoolkit.bonxai.om.ElementPattern;
@@ -215,16 +214,20 @@ public class BonxaiTypeAutomatonConstruction {
 			newState = new State();
 			typeAutomaton.addState(newState);
 			Expression expression = productDFA.getAnnotation(newProductState);
-			AncestorPattern ap = expression.getAncestorPattern();
-			ChildPattern cp = expression.getChildPattern();
-			QualifiedName typename;
-			if (cp.getElementPattern().getBonxaiType()!=null)
-				typename = cp.getElementPattern().getBonxaiType().getTypename();
-			else
-				typename = typeNameGenerator.generateTypeName(ap);
-			typeAutomaton.setTypeName(newState, typename);
-			stateMap.put(newState, newProductState);
-			workingQueue.add(newState);
+			if (expression == null) {
+				
+			} else {
+				ChildPattern cp = expression.getChildPattern();
+				QualifiedName typename;
+				if (cp.getElementPattern().getBonxaiType()!=null)
+					typename = cp.getElementPattern().getBonxaiType().getTypename();
+				else {
+					typename = typeNameGenerator.generateTypeName(expression);
+					stateMap.put(newState, newProductState);
+					workingQueue.add(newState);
+				}
+				typeAutomaton.setTypeName(newState, typename);
+			}
 		} else {
 			newState = stateMap.getKey(newProductState);
 		}

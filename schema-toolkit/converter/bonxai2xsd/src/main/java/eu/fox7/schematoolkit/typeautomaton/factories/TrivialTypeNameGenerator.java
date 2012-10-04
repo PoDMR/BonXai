@@ -1,6 +1,6 @@
 package eu.fox7.schematoolkit.typeautomaton.factories;
 
-import eu.fox7.schematoolkit.bonxai.om.AncestorPattern;
+import eu.fox7.schematoolkit.bonxai.om.Expression;
 import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
 
@@ -14,7 +14,7 @@ public class TrivialTypeNameGenerator implements TypeNameGenerator {
 	}
 	
 	@Override
-	public QualifiedName generateTypeName(AncestorPattern ap) {
+	public QualifiedName generateTypeName(Expression ex) {
 		return new QualifiedName(namespace,"Type"+(count++));
 	}
 
