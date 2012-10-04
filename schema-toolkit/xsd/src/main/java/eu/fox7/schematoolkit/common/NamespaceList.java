@@ -59,6 +59,8 @@ public class NamespaceList {
 	public Namespace getNamespaceByIdentifier(String identifier) {
 		if (identifier == null || identifier.equals(""))
 			return this.defaultNamespace;
+		else if (Namespace.XML_NAMESPACE.getIdentifier().equals(identifier))
+			return Namespace.XML_NAMESPACE;
 		else
 			for (Namespace namespace: this.namespaces) 
 				if (namespace.getIdentifier().equals(identifier))
@@ -76,6 +78,8 @@ public class NamespaceList {
 	public Namespace getNamespaceByUri(String uri) {
 		if (this.defaultNamespace.getUri().equals(uri))
 			return this.defaultNamespace;
+		else if (Namespace.XML_NAMESPACE.getUri().equals(uri))
+			return Namespace.XML_NAMESPACE;
 		else
 			for (Namespace namespace: this.namespaces) 
 				if (namespace.getUri().equals(uri))

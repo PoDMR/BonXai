@@ -284,9 +284,9 @@ class ExtensionProcessor extends Processor {
             idString = node.getAttributes().getNamedItem("id").getNodeValue();
         }
 
-        // Check for Attribute "base" and get the typeRef from the Type Symboltable
+        // Check for Attribute "base"
         if (node.getAttributes() != null && node.getAttributes().getNamedItem("base") != null) {
-            QualifiedName baseTypeName = getName(node.getAttributes().getNamedItem("base"));
+            QualifiedName baseTypeName = getName(node.getAttributes().getNamedItem("base").getNodeValue());
 
             // Check the type of the parent and generate the corresponding Extension object
             if (this.isComplexContentExtension) {

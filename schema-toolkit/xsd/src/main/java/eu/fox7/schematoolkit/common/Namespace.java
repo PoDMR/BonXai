@@ -22,6 +22,7 @@ package eu.fox7.schematoolkit.common;
 public abstract class Namespace implements eu.fox7.schematoolkit.Namespace {
 
     public static final DefaultNamespace EMPTY_NAMESPACE = new DefaultNamespace("");
+    public static final Namespace XML_NAMESPACE = new IdentifiedNamespace("xml","http://www.w3.org/XML/1998/namespace");
 	public static final Namespace ANY_NAMESPACE = new AnonymousNamespace("##ANY");
 	public static final Namespace TARGET_NAMESPACE = new AnonymousNamespace("##TARGETNAMESPACE");
 	public static final Namespace OTHER_NAMESPACE = new AnonymousNamespace("##OTHER");

@@ -110,8 +110,6 @@ public abstract class Processor extends NameChecker {
         }
     }
 
-
-
     /**
      * Returns a name for a node which has no name, because it represents an
      * anonymous <element>

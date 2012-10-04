@@ -570,7 +570,7 @@ public class RestrictionProcessor extends Processor {
 
         // Check for Attribute "base" and get the typeRef from the Type Symboltable
         if (node.getAttributes() != null && node.getAttributes().getNamedItem("base") != null) {
-            baseTypeName = getName(node.getAttributes().getNamedItem("base"));
+            baseTypeName = getName(node.getAttributes().getNamedItem("base").getNodeValue());
         }
         // If there is an ID, we can add it to the corresponding object.
         if (node.getAttributes().getNamedItem("id") != null) {
