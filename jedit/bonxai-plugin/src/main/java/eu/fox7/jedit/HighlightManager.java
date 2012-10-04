@@ -13,8 +13,13 @@ import java.util.Vector;
 import org.gjt.sp.jedit.buffer.JEditBuffer;
 import org.gjt.sp.jedit.textarea.TextArea;
 
+import eu.fox7.jedit.textelement.BonxaiElement;
+import eu.fox7.jedit.textelement.BonxaiExpression;
 import eu.fox7.jedit.textelement.Linktype;
 import eu.fox7.jedit.textelement.TextElement;
+import eu.fox7.jedit.textelement.XMLElement;
+import eu.fox7.jedit.textelement.XSDElement;
+import eu.fox7.jedit.textelement.XSDType;
 
 public class HighlightManager {
 	private Map<JEditBuffer,Collection<Highlight>> activeHighlights = new HashMap<JEditBuffer,Collection<Highlight>>();
@@ -38,35 +43,6 @@ public class HighlightManager {
 		return element;
 	}
 	
-//	private class BufferListener extends BufferAdapter {
-//		@Override
-//		public void preContentInserted(JEditBuffer buffer, int startLine,
-//				int offset, int numLines, int length) {
-//			System.err.println("PreContentInserted: " + startLine +","+offset+" lines: " + numLines +" length: "+length);
-//			Vector<Vector<Highlight>> bufferHighlights = HighlightManager.this.activeHighlights.get(buffer);
-//			if (bufferHighlights!=null && bufferHighlights.size()>startLine) {
-//				Vector<Highlight> lineHighlights = bufferHighlights.get(startLine);
-//				//TODO handle highlights in this line
-//				for (int i=0; i<numLines; ++i)
-//					bufferHighlights.add(startLine+1, null);
-//			}
-//			
-//		}
-//
-//		@Override
-//		public void preContentRemoved(JEditBuffer buffer, int startLine,
-//				int offset, int numLines, int length) {
-//			System.err.println("PreContentRemoved: " + startLine +","+offset+" lines: " + numLines +" length: "+length);
-////			Vector<Vector<Highlight>> bufferHighlights = HighlightManager.this.activeHighlights.get(buffer);
-////			if (bufferHighlights.size()>startLine) {
-////				Vector<Highlight> lineHighlights = bufferHighlights.get(startLine);
-////				//TODO handle highlights in this line
-////				for (int i=0; i<numLines; ++i)
-////					bufferHighlights.remove(startLine+1, null);
-////			}
-//		}
-//		
-//	}
 
 	public void addBuffer(JEditBuffer buffer) {
 //		buffer.addBufferListener(this.bufferListener);
@@ -128,6 +104,9 @@ public class HighlightManager {
 	}
 
 	public void addHighlight(TextElement textElement, Color color, int key) {
+		if (color == null)
+			color = getColor(textElement);
+		
 		Collection<Highlight> bufferHighlights = activeHighlights.get(textElement.getBuffer());
 		if (bufferHighlights == null) {
 			bufferHighlights = new Vector<Highlight>();
@@ -141,6 +120,21 @@ public class HighlightManager {
 		this.redraw(textElement);
 	}
 
+	private Color getColor(TextElement textElement) {
+		if (textElement instanceof BonxaiExpression)
+			return Color.GREEN;
+		if (textElement instanceof BonxaiElement)
+			return Color.MAGENTA;
+		if (textElement instanceof XSDType)
+			return Color.GREEN;
+		if (textElement instanceof XSDElement)
+			return Color.MAGENTA;
+		if (textElement instanceof XMLElement)
+			return Color.MAGENTA;
+
+		return Color.BLACK;
+	}
+
 	public void highlightLinks(TextElement textElement, Linktype linktype, Color color, int key) {
 		Collection<TextElement> textElements = this.getLinks(textElement, linktype);
 		if (textElements != null)
@@ -151,9 +145,9 @@ public class HighlightManager {
 	public void highlightAllLinks(TextElement textElement, Color color, int key) {
 		Collection<TextElement> textElements = new LinkedList<TextElement>();
 		for (Map<TextElement, Collection<TextElement>> links2: links.values()) {
-			Collection<TextElement> tes = links2.get(textElement);
-			if (tes!=null)
-				textElements.addAll(tes);
+			Collection<TextElement> te = links2.get(textElement);
+			if (te!=null)
+				textElements.addAll(te);
 		}
 		
 		for (TextElement te: textElements)

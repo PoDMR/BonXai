@@ -9,6 +9,7 @@ import org.gjt.sp.jedit.jEdit;
 import org.gjt.sp.jedit.buffer.JEditBuffer;
 import org.gjt.sp.jedit.io.VFSFile;
 
+import eu.fox7.jedit.action.RegisterSchema;
 import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.schematoolkit.SchemaToolkitException;
@@ -57,13 +58,14 @@ public abstract class FoxlibAction {
 		return handler;
 	}
 	
-	protected void openSchemaInNewBuffer(SchemaHandler schemaHandler, View view) throws IOException, SchemaToolkitException {
-		JEditBuffer buffer = jEdit.newFile(view);
+	protected Buffer openSchemaInNewBuffer(SchemaHandler schemaHandler, View view) throws IOException, SchemaToolkitException {
+		Buffer buffer = jEdit.newFile(view);
 		// USE AWT-Thread?
 		buffer.insert(0, schemaHandler.getSchemaString());
 		buffer.setStringProperty("eu.fox7.schemalanguage", schemaHandler.getSchemaLanguage().name());
 	    view.getTextArea().goToBufferStart(false);
 	    view.getBuffer().setMode();
+	    return buffer;
 	}
 	
 	protected SchemaHandler parseFile(VFSFile file) throws IOException, SchemaToolkitException {

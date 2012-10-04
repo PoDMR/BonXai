@@ -2,14 +2,9 @@
 
 <!DOCTYPE ACTIONS SYSTEM "actions.dtd">
 <ACTIONS>
-  <ACTION NAME="bonxai.convertXSD">
+  <ACTION NAME="bonxai.convertSchema">
     <CODE>
-      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "convert2XMLSCHEMA");
-    </CODE>
-  </ACTION>
-  <ACTION NAME="bonxai.convertBonxai">
-    <CODE>
-      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "convert2BONXAI");
+      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBufferAction(view, "convertSchema");
     </CODE>
   </ACTION>
   <ACTION NAME="bonxai.registerSchema">

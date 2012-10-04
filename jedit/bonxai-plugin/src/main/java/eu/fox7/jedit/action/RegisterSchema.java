@@ -44,7 +44,6 @@ public class RegisterSchema extends FoxlibAction {
 		} else if (schemaHandler.getSchemaLanguage().equals(SchemaLanguage.XMLSCHEMA)) {
 			XSDSchema schema = (XSDSchema) schemaHandler.getSchema();
 			bonxaiManager.addSchema(schema, buffer);
-			
 		}
 		
 	}

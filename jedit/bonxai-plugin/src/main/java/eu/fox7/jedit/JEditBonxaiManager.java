@@ -1,5 +1,6 @@
 package eu.fox7.jedit;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,10 +8,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import org.gjt.sp.jedit.Buffer;
+import org.gjt.sp.jedit.View;
+import org.gjt.sp.jedit.jEdit;
 import org.gjt.sp.jedit.buffer.JEditBuffer;
 import eu.fox7.flt.automata.impl.sparse.AnnotatedStateNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
+import eu.fox7.jedit.action.RegisterSchema;
 import eu.fox7.jedit.action.ValidateXML;
 import eu.fox7.jedit.textelement.BonxaiElement;
 import eu.fox7.jedit.textelement.BonxaiExpression;
@@ -19,6 +25,8 @@ import eu.fox7.jedit.textelement.XSDElement;
 import eu.fox7.jedit.textelement.XSDType;
 import eu.fox7.schematoolkit.NamespaceAwareSchema;
 import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.SchemaConverter;
+import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
@@ -26,6 +34,7 @@ import eu.fox7.schematoolkit.bonxai.om.Expression;
 import eu.fox7.schematoolkit.bonxai.om.Locatable;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 import eu.fox7.schematoolkit.xmlvalidator.AbstractXMLValidator;
 import eu.fox7.schematoolkit.xsd.om.Element;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
@@ -51,7 +60,7 @@ public class JEditBonxaiManager  {
 		}
 
 		private final String namespace;
-		private JEditBuffer buffers[] = new JEditBuffer[2];
+		private Buffer buffers[] = new Buffer[2];
 		private NamespaceAwareSchema schemas[] = new NamespaceAwareSchema[2];
 		private ExtendedContextAutomaton contextAutomaton;
 		private SchemaLanguage primaryLanguage = null;
@@ -63,18 +72,29 @@ public class JEditBonxaiManager  {
 		
 		
 		
-		private void addSchema(NamespaceAwareSchema schema, JEditBuffer buffer) {
+		private void addSchema(NamespaceAwareSchema schema, Buffer buffer) {
 			int slot=(primaryLanguage == null || schema.getSchemaLanguage()==primaryLanguage)?0:1;
-						
+			
+			// workaround, as it is not yet possible to validate XMLSchema against an existing contextAutomaton
+			// here we force XMLSchema to always be the primary language
+			if (slot==1 && schema.getSchemaLanguage()==SchemaLanguage.XMLSCHEMA) {
+				removeBuffer(buffers[0]);
+				buffers[1] = buffers[0];
+				schemas[1] = schemas[0];
+				slot=0;
+			}
+			
 			buffers[slot] = buffer;
 			schemas[slot] = schema;
 			if (slot == 0) {
 				primaryLanguage = schema.getSchemaLanguage();
 				contextAutomaton = computeContextAutomaton(schema, buffer);
-				reValidateXML();
 			}
 			if (schemas[1]!=null)
 				verifySchema();
+
+			//always revalidate to update links
+			reValidateXML();
 		}
 		
 		private void verifySchema() {
@@ -147,7 +167,7 @@ public class JEditBonxaiManager  {
 	private class SchemaMap extends HashMap<String,SchemaWrapper> {
 		private static final long serialVersionUID = 1L;
 
-		private void putSchema(NamespaceAwareSchema schema, JEditBuffer buffer) {
+		private void putSchema(NamespaceAwareSchema schema, Buffer buffer) {
 			SchemaWrapper wrapper = this.get(schema.getTargetNamespace().getUri());
 			if (wrapper == null) {
 				wrapper = new SchemaWrapper(schema.getTargetNamespace().getUri());
@@ -191,14 +211,62 @@ public class JEditBonxaiManager  {
 		return new XMLValidator();
 	}
 	
-	public void convertXSD(XSDSchema xmlSchema, JEditBuffer bonxaiBuffer) {
-		// TODO Auto-generated method stub
-		
+	public void convertXSD(XSDSchema xmlSchema, Buffer bonxaiBuffer, View view) {
+		convertSchema(xmlSchema, bonxaiBuffer, SchemaLanguage.BONXAI, view);
 	}
 
-	public void convertBonxai(Bonxai bonxai, JEditBuffer xmlSchemaBuffer) {
-		// TODO Auto-generated method stub
-		
+	public void convertBonxai(Bonxai bonxai, Buffer xmlSchemaBuffer, View view) {
+		convertSchema(bonxai, xmlSchemaBuffer, SchemaLanguage.XMLSCHEMA, view);
+	}
+	
+	public void convertSchema(Buffer sourceBuffer, View view) {
+		Schema sourceSchema = null;
+		Buffer targetBuffer = null;
+		for (SchemaWrapper schemaWrapper: schemaMap.values()) {
+			if (schemaWrapper.buffers[0] == sourceBuffer) {
+				sourceSchema = schemaWrapper.schemas[0];
+				targetBuffer = schemaWrapper.buffers[1];
+				break;
+			} else if (schemaWrapper.buffers[1] == sourceBuffer) {
+				sourceSchema = schemaWrapper.schemas[1];
+				targetBuffer = schemaWrapper.buffers[0];
+				break;
+			}
+		}
+		if (sourceSchema!=null) {
+			SchemaLanguage targetLanguage = (sourceSchema.getSchemaLanguage()==SchemaLanguage.BONXAI)?SchemaLanguage.XMLSCHEMA:SchemaLanguage.BONXAI;
+			this.convertSchema(sourceSchema, targetBuffer, targetLanguage, view);
+		}
+	}
+	
+	private void convertSchema(Schema sourceSchema, Buffer targetBuffer, SchemaLanguage targetLanguage, View view) {
+		SchemaLanguage sourceLanguage = sourceSchema.getSchemaLanguage();
+		sourceLanguage.getConverter(targetLanguage);
+		SchemaConverter converter = sourceLanguage.getConverter(targetLanguage);
+		if (converter==null)
+			throw new RuntimeException("Schemaconverter from " + sourceLanguage + " to " + targetLanguage + " not found.");
+		try {
+			SchemaHandler target = converter.convert(sourceSchema.getSchemaHandler());
+			if (targetBuffer==null)
+				targetBuffer = jEdit.newFile(view);
+			else {
+				targetBuffer.remove(0, targetBuffer.getLength());
+				this.removeBuffer(targetBuffer);
+			}
+
+			targetBuffer.insert(0, target.getSchemaString());
+			targetBuffer.setStringProperty("eu.fox7.schemalanguage", targetLanguage.name());
+		    view.getTextArea().goToBufferStart(false);
+		    view.getBuffer().setMode();
+		    new RegisterSchema().registerSchema(targetBuffer);
+		} catch (ConversionFailedException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (SchemaToolkitException e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 
 	private boolean verifyContextAutomaton(NamespaceAwareSchema schema, ExtendedContextAutomaton contextAutomaton, JEditBuffer buffer) {
@@ -207,29 +275,26 @@ public class JEditBonxaiManager  {
 		if (schema.getSchemaLanguage()==SchemaLanguage.BONXAI)
 			computeVerifyContextAutomaton((Bonxai) schema, buffer, contextAutomaton, correct);
 		else
-			correct = verifyContextAutomaton((XSDSchema) schema, contextAutomaton, buffer);
+			computeVerifyContextAutomaton((XSDSchema) schema, buffer, contextAutomaton, correct);
 		return correct;
 	}
-
-	private boolean verifyContextAutomaton(XSDSchema xmlSchema,
-			ExtendedContextAutomaton contextAutomaton, JEditBuffer buffer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 
 	private ExtendedContextAutomaton computeContextAutomaton(NamespaceAwareSchema schema, JEditBuffer buffer) {
 		BonXaiPlugin.getHighlightManager().removeBuffer(buffer);
 		if (schema.getSchemaLanguage()==SchemaLanguage.BONXAI)
 			return computeVerifyContextAutomaton((Bonxai) schema, buffer, null, null);
 		else
-			return computeContextAutomaton((XSDSchema) schema, buffer);
+			return computeVerifyContextAutomaton((XSDSchema) schema, buffer, null, null);
 	}
 
 	
-	private ExtendedContextAutomaton computeContextAutomaton(XSDSchema xmlSchema, JEditBuffer buffer) {
+	private ExtendedContextAutomaton computeVerifyContextAutomaton(XSDSchema xmlSchema, JEditBuffer buffer, ExtendedContextAutomaton eca, Boolean correct) {
 		XSD2ContextAutomatonConverter converter = new XSD2ContextAutomatonConverter(true);
-		ExtendedContextAutomaton eca = converter.convertXSD(xmlSchema);
+		if (eca == null)
+			eca = converter.convertXSD(xmlSchema);
+		else
+			correct = converter.verify(xmlSchema, eca);
+		
 		Map<QualifiedName, State> typeMap = converter.getTypeMap();
 		for (Entry<QualifiedName, State> entry: typeMap.entrySet())
 			if (entry.getKey().getNamespaceURI().equals(xmlSchema.getDefaultNamespace().getUri())) {
@@ -295,7 +360,7 @@ public class JEditBonxaiManager  {
 		this.schemaMap.removeBuffer(buffer);
 	}
 
-	public void addSchema(NamespaceAwareSchema schema, JEditBuffer buffer) {
+	public void addSchema(NamespaceAwareSchema schema, Buffer buffer) {
 		this.schemaMap.putSchema(schema, buffer);
 	}
 

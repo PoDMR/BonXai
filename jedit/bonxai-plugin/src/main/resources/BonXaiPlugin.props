@@ -16,6 +16,6 @@ plugin.eu.fox7.jedit.BonXaiPlugin.jars=xsd.jar bonxai.jar schemahandler.jar
 #options.eu.fox7.bonxai.bonxaiplugin.title=Bonxai
 #options.eu.fox7.bonxai.bonxaiplugin.label=Bonxai
 
-plugin.eu.fox7.jedit.BonXaiPlugin.menu=bonxai.convertXSD bonxai.convertBonxai bonxai.registerSchema bonxai.validate bonxai.printSchemaMap bonxai.printHighlights bonxai.printLinks
+plugin.eu.fox7.jedit.BonXaiPlugin.menu=bonxai.convertSchema bonxai.registerSchema bonxai.validate bonxai.printSchemaMap bonxai.printHighlights bonxai.printLinks
 
 # Action labels

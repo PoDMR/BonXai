@@ -50,7 +50,7 @@ public abstract class AbstractTextElement implements TextElement {
 	protected void fireAction(JEditBonxaiManager bonxaiManager, HighlightManager highlightManager) {
 		highlightManager.removeHighlight(Highlight.LINK);
 		highlightManager.addHighlight(this, Color.CYAN, Highlight.LINK);
-		highlightManager.highlightAllLinks(this, Color.GREEN, Highlight.LINK);
+		highlightManager.highlightAllLinks(this, null, Highlight.LINK);
 	}
 
 	@Override
