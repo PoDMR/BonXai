@@ -42,7 +42,10 @@ public class NamespaceList {
 	}
 
 	public Namespace getTargetNamespace() {
-		return targetNamespace;
+		if (targetNamespace==null)
+	      return Namespace.EMPTY_NAMESPACE;
+		else 
+		  return targetNamespace;
 	}
 
 	public List<IdentifiedNamespace> getNamespaces() {
