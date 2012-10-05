@@ -12,9 +12,4 @@
 	  <artifactId>foxlib</artifactId>
 	  <version>1.0-SNAPSHOT</version>
 	</parent>
-
-	<modules>
-		<module>jedit</module>
-	</modules>
-
 </project>
