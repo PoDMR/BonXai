@@ -1,8 +1,0 @@
-default namespace http://example.org/namespace
-grammar { roots {description}
-
-//description = mixed {
-                          element abstract  {type string},
-                          element second   {type string}
-}
-}

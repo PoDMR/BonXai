@@ -33,12 +33,12 @@
     <dependency>
       <groupId>org.jedit</groupId>
       <artifactId>jedit</artifactId>
-      <version>4.3.2</version>
+      <version>4.5.2</version>
     </dependency>
     
     <dependency>
       <groupId>eu.fox7.jedit</groupId>
-      <artifactId>foxlib-plugin</artifactId>
+      <artifactId>bonxai-plugin</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
     

@@ -1,3 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE myElement SYSTEM "elements_unsupported_particle.dtd">
-<myElement/> <!-- NullPointerException in SAX Parser, when there is no root-XML-Element -->

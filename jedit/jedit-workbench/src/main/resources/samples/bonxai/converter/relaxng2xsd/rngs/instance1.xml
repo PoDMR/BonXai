@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<start xmlns:ns1="www.test.de" xmlns:ns2="www.bob.de"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <ns1:B/>
-    <ns2:C/>
-    <A>
-        <B2>B20</B2>
-    </A>
-</start>

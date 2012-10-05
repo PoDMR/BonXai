@@ -1,3 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE myElement01 SYSTEM "elements.dtd">
-<myElement01/> <!-- NullPointerException in SAX Parser, when there is no root-XML-Element -->
