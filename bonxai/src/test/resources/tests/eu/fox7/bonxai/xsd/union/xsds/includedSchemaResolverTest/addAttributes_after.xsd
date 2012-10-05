@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xs:schema xmlns="www.A.org" xmlns:A="www.A.org" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.A.org">
-    <xs:include schemaLocation="includedSchema.xsd"/>
-    <xs:import namespace="www.B.org"/>
-    <xs:attribute name="a" type="xs:string"/>
-    <xs:attribute name="b"/>
-</xs:schema>

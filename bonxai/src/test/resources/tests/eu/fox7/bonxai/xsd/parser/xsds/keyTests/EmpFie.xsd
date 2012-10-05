@@ -1,8 +1,0 @@
-<xs:schema targetNamespace="http://www.w3.org/2001/XMLSchema" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xml:lang="EN">
- <xs:element name="keyElement"> 
-  <xs:key name="emptyField">
-   <xs:selector xpath="xs:group"/>
-   <xs:field xpath=""/>
-  </xs:key>
- </xs:element>
-</xs:schema>

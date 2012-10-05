@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<element name="foo" ns="http://www.example.org">
-    <ref name="test"/>
-</element>
-

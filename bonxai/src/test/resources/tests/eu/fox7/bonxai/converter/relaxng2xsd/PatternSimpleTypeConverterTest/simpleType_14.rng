@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<element name="bob" xmlns="http://relaxng.org/ns/structure/1.0">
-    <data type="decimal" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-        <param name="pattern">pattern1</param>
-        <param name="pattern">pattern2</param>
-    </data>
-</element>

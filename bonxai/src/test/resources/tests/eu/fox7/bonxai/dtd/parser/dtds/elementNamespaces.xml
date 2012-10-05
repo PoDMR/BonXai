@@ -1,3 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE snake SYSTEM "elementNamespaces.dtd">
-<snake/> <!-- NullPointerException in SAX Parser, when there is no root-XML-Element -->

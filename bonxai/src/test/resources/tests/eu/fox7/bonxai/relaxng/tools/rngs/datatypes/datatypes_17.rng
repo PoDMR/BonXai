@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<element name="bob" xmlns="http://relaxng.org/ns/structure/1.0">
-    <data type="integer" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-        <except>
-            <data type="boolean"/>
-        </except>
-    </data>
-</element>

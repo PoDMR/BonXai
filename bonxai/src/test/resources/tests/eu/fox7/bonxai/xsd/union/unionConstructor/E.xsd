@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.Y.org">
-
-    <xs:element name="c" type="xs:gDay"/>
-    
-    <xs:element name="e" type="xs:gMonth"/>
-
-</xs:schema>

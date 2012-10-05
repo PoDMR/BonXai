@@ -28,7 +28,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
+<!--
   <modules>
     <module>../xsd</module>
     <module>../bonxai</module>
@@ -38,4 +38,5 @@
     <module>../converter/xsd2bonxai</module>
     <module>../converter/bonxai2xsd</module>
   </modules>
+-->
 </project>
