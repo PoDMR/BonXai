@@ -23,7 +23,7 @@
   	  <dependency>
 	    <groupId>org.jedit</groupId>
 	    <artifactId>jedit</artifactId>
-	    <version>4.3.2</version>
+	    <version>4.5.2</version>
 	    <scope>provided</scope>
 	  </dependency>
 	</dependencies>
