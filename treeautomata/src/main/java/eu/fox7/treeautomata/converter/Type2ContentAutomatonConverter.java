@@ -2,6 +2,7 @@ package eu.fox7.treeautomata.converter;
 
 
 
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.schematoolkit.common.EmptyPattern;
 import eu.fox7.schematoolkit.common.Particle;
@@ -13,7 +14,7 @@ import eu.fox7.schematoolkit.xsd.om.SimpleType;
 import eu.fox7.schematoolkit.xsd.om.Type;
 
 public class Type2ContentAutomatonConverter extends Particle2ContentAutomatonConverter  {
-	public StateNFA convertType(Type type) {
+	public SparseNFA convertType(Type type) {
 		Particle particle = new EmptyPattern();
 		if (type instanceof SimpleType) {
 			// nothing todo here
@@ -31,7 +32,7 @@ public class Type2ContentAutomatonConverter extends Particle2ContentAutomatonCon
 				throw new RuntimeException("Unknown content type in complex type.");
 			}
 		}
-		StateNFA contentAutomaton = this.convertParticle(particle);
+		SparseNFA contentAutomaton = this.convertParticle(particle);
 		
 		return contentAutomaton;
 	}

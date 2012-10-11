@@ -143,6 +143,9 @@ public class Bonxai2ContextAutomatonConverter {
 					for (Symbol symbol: children) {
 						insertChild(state, productState, symbol, compute);
 					}
+					
+					children = ChildSymbolExtractor.getChildSymbolsWithBonxaiType(matchingExpression.getChildPattern(), bonxai);
+					
 				}
 			} else {
 				System.err.println("No product state for state "+state.toString());

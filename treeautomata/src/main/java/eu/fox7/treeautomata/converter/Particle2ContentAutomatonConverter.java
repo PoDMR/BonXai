@@ -11,6 +11,7 @@ import org.apache.commons.collections15.bidimap.DualHashBidiMap;
 
 import eu.fox7.flt.automata.FeatureNotSupportedException;
 import eu.fox7.flt.automata.factories.sparse.GlushkovFactory;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.flt.automata.impl.sparse.Transition;
@@ -36,7 +37,7 @@ public class Particle2ContentAutomatonConverter {
 	private Map<String,Particle> stringElementMap;
 	private BidiMap<Particle,State> elementStateMap;
 	
-	public StateNFA convertParticle(Particle particle) {
+	public SparseNFA convertParticle(Particle particle) {
 		count = 0;
 		this.stringElementMap = new HashMap<String,Particle>();
 		this.elementStateMap = new DualHashBidiMap<Particle,State>();
