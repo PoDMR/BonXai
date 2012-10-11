@@ -1,6 +1,7 @@
 package eu.fox7.upafixer.impl;
 
 import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.flt.regex.Regex;
 import eu.fox7.flt.regex.UnknownOperatorException;
@@ -16,7 +17,7 @@ public class BKWUPAFixer extends AbstractUPAFixer {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public Regex fixUPA(StateNFA contentAutomaton) throws SchemaToolkitException {
+	public Regex fixUPA(SparseNFA contentAutomaton) throws SchemaToolkitException {
 		DeterministicExpression deFactory = new DeterministicExpressionBKW();
 		Tree tree;
 		try {

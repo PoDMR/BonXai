@@ -5,6 +5,7 @@ import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.typeautomaton.factories.XSDTypeAutomatonFactory;
 import eu.fox7.schematoolkit.xsd.om.Type;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.flt.regex.Regex;
@@ -31,7 +32,7 @@ public abstract class AbstractUPAFixer implements UPAFixer {
 				Type type = typeAutomaton.getType(state);
 				if (type !=null) {
 					QualifiedName typename = type.getName();
-					StateNFA contentAutomaton = typeConverter.convertType(type);
+					SparseNFA contentAutomaton = typeConverter.convertType(type);
 					Regex regex = this.fixUPA(contentAutomaton);
 					Type newType = this.caConverter.convertRegex(regex, typename, state);
 					this.typeAutomaton.setType(typename, newType);
@@ -40,9 +41,8 @@ public abstract class AbstractUPAFixer implements UPAFixer {
 		}
 	}
 
-	public abstract Regex fixUPA(StateNFA contentAutomaton) throws SchemaToolkitException;
+	public abstract Regex fixUPA(SparseNFA contentAutomaton) throws SchemaToolkitException;
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void fixUPA(Schema schema) throws SchemaToolkitException {
 		XSDSchema xsdSchema;
