@@ -217,8 +217,8 @@ public class ComplexTypeProcessor extends Processor {
                     if (alreadyAnAttributeAdded) {
                         throw new AttributeIsNotLastInContentModelException(this.complexType.getName().getFullyQualifiedName());
                     }
-                    GroupProcessor groupProcessor = new GroupProcessor(schema);
-                    Object object = groupProcessor.processNode(childNode);
+                    GroupReferenceProcessor groupRefProcessor = new GroupReferenceProcessor(schema);
+                    Object object = groupRefProcessor.processNode(childNode);
                     if (object instanceof Particle) {
                         particle = (Particle) object;
                         complexTypeContent = new ComplexContentType(particle, this.mixed);
