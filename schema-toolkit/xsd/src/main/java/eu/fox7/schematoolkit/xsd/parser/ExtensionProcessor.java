@@ -76,8 +76,8 @@ class ExtensionProcessor extends Processor {
                             throw new AttributeIsNotLastInContentModelException("group to extension");
                         }
                         if (this.particle == null) {
-                            GroupProcessor groupProcessor = new GroupProcessor(schema);
-                            Object object = groupProcessor.processNode(childNode);
+                            GroupReferenceProcessor groupRefProcessor = new GroupReferenceProcessor(schema);
+                            Object object = groupRefProcessor.processNode(childNode);
                             if (object instanceof Particle) {
                                 particle = (Particle) object;
                             } else {

@@ -123,8 +123,8 @@ class ChoiceProcessor extends Processor {
                     if (getDebug()) {
                         System.out.println("group");
                     }
-                    GroupProcessor groupProcessor = new GroupProcessor(schema);
-                    Object object = groupProcessor.processNode(childNode);
+                    GroupReferenceProcessor groupRefProcessor = new GroupReferenceProcessor(schema);
+                    Object object = groupRefProcessor.processNode(childNode);
                     if (object instanceof Particle) {
                         choicePattern.addParticle((Particle) object);
                     } else {
