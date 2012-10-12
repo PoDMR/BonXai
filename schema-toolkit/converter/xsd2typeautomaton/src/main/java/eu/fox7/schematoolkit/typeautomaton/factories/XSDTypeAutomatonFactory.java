@@ -17,6 +17,7 @@ import eu.fox7.schematoolkit.Schema;
 import eu.fox7.schematoolkit.SchemaConverter;
 import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaLanguage;
+import eu.fox7.schematoolkit.common.AnyPattern;
 import eu.fox7.schematoolkit.common.CountingPattern;
 import eu.fox7.schematoolkit.common.ElementRef;
 import eu.fox7.schematoolkit.common.EmptyPattern;
@@ -138,7 +139,11 @@ public class XSDTypeAutomatonFactory implements SchemaConverter {
 				childs.add(element);
 			else
 			  childs.add(particle);
-		} else
+		} else if (particle instanceof AnyPattern) {
+			//TODO: better handling
+			// We ignore AnyPattern for now, as it is not clear what semantics AnyPattern should have in an Automaton. 
+			// Open- vs. Closed-World-Assumption.
+		}  else
 			throw new RuntimeException("Unkown Particle of class " + particle.getClass().getCanonicalName());
 		return childs;
 	}
