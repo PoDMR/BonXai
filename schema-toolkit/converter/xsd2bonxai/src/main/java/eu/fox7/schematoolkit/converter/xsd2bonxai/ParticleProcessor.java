@@ -23,6 +23,7 @@ import eu.fox7.schematoolkit.xsd.om.*;
 
 class ParticleProcessor {
     private XSDSchema schema;
+    private boolean addBonxaiTypes;
     
     /**
      * Creates a new ParticleProcessor.
@@ -31,8 +32,9 @@ class ParticleProcessor {
      * GroupRef transformation. The given elementGroupSymbolTable must be the
      * one used in the target {@link Bonxai} instance.
      */
-    public ParticleProcessor(XSDSchema schema) {
+    public ParticleProcessor(XSDSchema schema, boolean addBonxaiTypes) {
         this.schema = schema;
+        this.addBonxaiTypes = addBonxaiTypes;
     }
 
 
@@ -109,12 +111,11 @@ class ParticleProcessor {
      * Converts a single Element.
      */
     public eu.fox7.schematoolkit.bonxai.om.Element convertElement(eu.fox7.schematoolkit.xsd.om.Element xsdElement) {
-    	// TODO: decide whether to produce a BonxaiType a BonxaiSimpleType or just a plain Element
     	QualifiedName typename = xsdElement.getTypeName();
     	Type type = schema.getType(typename);
     	BonxaiType bonxaiType = null;
     	
-    	if (type == null) {
+    	if (this.addBonxaiTypes && (type == null)) {
     		bonxaiType = new BonxaiType(typename);
     		bonxaiType.setFixedValue(xsdElement.getFixed());
     		bonxaiType.setDefaultValue(xsdElement.getDefault());
