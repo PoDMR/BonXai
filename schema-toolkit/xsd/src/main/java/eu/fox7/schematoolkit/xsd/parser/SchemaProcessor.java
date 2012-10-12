@@ -303,6 +303,10 @@ public class SchemaProcessor extends Processor {
                         System.out.println("Node with name " + nodeName + " is not parsed");
                     }
                     break;
+                case REDEFINE:
+                	//we ignore redefine, as it is not supported by the object model.
+                	break;
+                
                 default:
                     throw new UnsupportedContentException(nodeName, "schema");
             }
