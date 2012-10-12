@@ -22,7 +22,8 @@ public class Type2ContentAutomatonConverter extends Particle2ContentAutomatonCon
 			ComplexType complexType = (ComplexType) type;
 			Content content = complexType.getContent();
 			if (content instanceof SimpleContentType) {
-				//nothing todo here	
+				//nothing todo here
+				//content automata cannot handle simple types
 			} else if (content instanceof ComplexContentType) {
 				ComplexContentType complexContent = (ComplexContentType) content;
 				particle = complexContent.getParticle();
