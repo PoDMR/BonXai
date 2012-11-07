@@ -64,6 +64,17 @@ public class XSDTypeAutomatonFactory implements SchemaConverter {
 	public XSDTypeAutomatonFactory() {
 		this.addSimpleTypes = false;
 	}
+	
+    private boolean namespaceAware = true;
+
+    /**
+     * Note that this only applies to the labels of the type automaton and not to the used types
+     * This is used to create ContextAutomata without namespaces.
+     * @param namespaceAware
+     */
+    public void setNamespaceAware(boolean namespaceAware) {
+		this.namespaceAware = false;
+	}
 
 	public TypeAutomaton createTypeAutomaton(XSDSchema schema) {
     	this.typeAutomaton = new AnnotatedNFATypeAutomaton();
@@ -149,18 +160,18 @@ public class XSDTypeAutomatonFactory implements SchemaConverter {
 	}
 
 	private void addChild(State state, Particle child) {
-		String name;
+		QualifiedName name;
 		QualifiedName typename = null;
 		if (child instanceof ElementRef) {
 			ElementRef elementRef = (ElementRef) child;
-			name = elementRef.getElementName().getFullyQualifiedName();
+			name = elementRef.getElementName();
     	} else if (child instanceof Element) {
     		Element element = (Element) child;
-    		name = element.getName().getFullyQualifiedName();
+    		name = element.getName();
     		typename = element.getTypeName();
     	} else
     		throw new RuntimeException("child is neither Element nor ElementRef.");
-		Symbol symbol = Symbol.create(name);
+		Symbol symbol = Symbol.create(namespaceAware?name.getFullyQualifiedName():name.getName());
     	typeAutomaton.addSymbol(symbol);
     	Type type = schema.getType(typename);
     	State newState;
