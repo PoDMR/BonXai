@@ -99,10 +99,10 @@ public abstract class Processor extends NameChecker {
     	return getName(node, false);
     }
     
-    protected QualifiedName getName(Node node, boolean useDefaultNamespace) throws UnknownNamespaceException, DOMException {
+    protected QualifiedName getName(Node node, boolean useTargetNamespace) throws UnknownNamespaceException, DOMException {
         Node nameNode = node.getAttributes().getNamedItem("name");
         if (nameNode != null && !nameNode.getNodeValue().equals(""))
-        	return this.getName(nameNode.getNodeValue(), useDefaultNamespace);
+        	return this.getName(nameNode.getNodeValue(), useTargetNamespace);
         else {
         	String returnName = this.generateUniqueName(node);
         	Namespace namespace = this.schema.getTargetNamespace();
@@ -140,7 +140,7 @@ public abstract class Processor extends NameChecker {
     }
 
     
-    protected QualifiedName getName(String xmlNameReference, boolean useDefaultNamespace) throws UnknownNamespaceException {
+    protected QualifiedName getName(String xmlNameReference, boolean useTargetNamespace) throws UnknownNamespaceException {
         String returnName = "";
         Namespace namespace = null;
         
@@ -158,8 +158,8 @@ public abstract class Processor extends NameChecker {
         // The name is unqualified and therefore not prefixed with a namespace
         // abbreviation ==> look up the default namespace
         else {
-            if (useDefaultNamespace)
-            	namespace = schema.getDefaultNamespace();
+            if (useTargetNamespace)
+            	namespace = schema.getTargetNamespace();
             else
             	namespace = Namespace.EMPTY_NAMESPACE;
             returnName = xmlNameReference;
@@ -168,7 +168,7 @@ public abstract class Processor extends NameChecker {
     }
     
     protected QualifiedName getUniqueName() {
-    	return new QualifiedName(schema.getDefaultNamespace(),UUID.randomUUID().toString());
+    	return new QualifiedName(schema.getTargetNamespace(),UUID.randomUUID().toString());
     }
 
 }

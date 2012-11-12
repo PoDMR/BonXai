@@ -202,19 +202,6 @@ public class SchemaProcessor extends Processor {
                     importedSchema.setParentSchema(schema);
                     schema.addForeignSchema(importedSchema);
                     break;
-// TODO: Redefine
-//                case REDEFINE:
-//                    if (getDebug()) {
-//                        System.out.println("redefine");
-//                    }
-//                    if (foreignSchemaPartOver) {
-//                        throw new InvalidForeignSchemaLocationException();
-//                    }
-//                    RedefineProcessor redefineProcessor = new RedefineProcessor(schema);
-//                    RedefinedSchema redefinedSchema = redefineProcessor.processNode(childNode);
-//                    redefinedSchema.setParentSchema(schema);
-//                    schema.addForeignSchema(redefinedSchema);
-//                    break;
                 case ATTRIBUTE:
                     if (getDebug()) {
                         System.out.println("attribute");

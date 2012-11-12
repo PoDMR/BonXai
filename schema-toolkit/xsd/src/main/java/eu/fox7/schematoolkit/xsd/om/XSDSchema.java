@@ -444,9 +444,7 @@ public class XSDSchema implements NamespaceAwareSchema, PContainer {
      *
      * Returns a list of all {@link Group}s defined in the schema.  Note that
      * {@link Group}s can only be defined in the top level of the <schema />
-     * tag. Note: The returned list is a *copy* of the; internal referenced
-     * schema list. You can not use this list to manipulate; the schemas
-     * referenced! To do this, use the {@link addGroup()}; method!
+     * tag. 
      */
     public Collection<eu.fox7.schematoolkit.xsd.om.Group> getGroups() {
         return groups.values();
