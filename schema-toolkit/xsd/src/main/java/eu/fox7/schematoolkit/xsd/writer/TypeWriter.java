@@ -104,7 +104,7 @@ public abstract class TypeWriter {
         }
 
         if (writeName) {
-            sTypeNode.setAttribute("name", schema.getQualifiedName(type.getName()));
+            sTypeNode.setAttribute("name", type.getName().getName());
         }
         if (type.getId() != null) {
             sTypeNode.setAttribute("id", type.getId());
@@ -139,7 +139,7 @@ public abstract class TypeWriter {
         cTypeNode = root.getOwnerDocument().createElementNS("http://www.w3.org/2001/XMLSchema", "complexType");
         DOMHelper.setXSDPrefix(cTypeNode, schema);
         if (writeName) {
-            cTypeNode.setAttribute("name", schema.getQualifiedName(type.getName()));
+            cTypeNode.setAttribute("name", type.getName().getName());
         }
         AnnotationWriter.writeAnnotation(cTypeNode, type, schema);
         root.appendChild(cTypeNode);
