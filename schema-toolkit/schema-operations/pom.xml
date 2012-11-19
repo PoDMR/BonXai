@@ -3,7 +3,7 @@
   <name>TypeAutomaton Operations</name>
   <parent>
   	<groupId>eu.fox7.schema-toolkit</groupId>
-  	<artifactId>schema-operations</artifactId>
+  	<artifactId>schema-toolkit</artifactId>
   	<version>1.0-SNAPSHOT</version>
   </parent>
   <dependencies>
