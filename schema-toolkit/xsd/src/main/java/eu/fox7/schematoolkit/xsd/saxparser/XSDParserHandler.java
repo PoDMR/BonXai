@@ -318,12 +318,13 @@ public class XSDParserHandler extends DefaultHandler {
 					for (XMLAttribute attribute: attributeList) {
 						QualifiedName name = null;
 
-						if (attribute.localName.equals("name") || attribute.localName.equals("type") || attribute.localName.equals("ref") || attribute.localName.equals("itemType") || attribute.localName.equals("base"))
+						if (attribute.localName.equals("type") || attribute.localName.equals("ref") || attribute.localName.equals("itemType") || attribute.localName.equals("base"))
 							name = this.namespaceList.getQualifiedName(attribute.value, object instanceof Attribute);
-
-						if (attribute.localName.equals("name"))
+						
+						if (attribute.localName.equals("name")) {
+							name = new QualifiedName(this.namespaceList.getTargetNamespace(),attribute.value);
 							((NamedXSDElement) object).setName(name);
-						else if (attribute.localName.equals("type"))
+						} else if (attribute.localName.equals("type"))
 							((TypedXSDElement) object).setTypeName(name);
 						else if (attribute.localName.equals("minOccurs")) {
 							counting = true;
