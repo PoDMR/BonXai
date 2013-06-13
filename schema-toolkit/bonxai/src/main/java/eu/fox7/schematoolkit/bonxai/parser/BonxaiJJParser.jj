@@ -650,14 +650,14 @@ AncestorPattern APattern(): { AncestorPattern aPattern; }
 {
 //	( SimpleAPattern() [ LOOKAHEAD(2) FullAPattern() { jjtThis.setNodeChoice("simple_full"); }  ] | FullAPattern() { jjtThis.setNodeChoice("full"); }  )
 	(	   LOOKAHEAD((<OPENING_ROUND_BRACKET>)* (<SLASH> | <DOUBLESLASH>)) aPattern = FullAPattern() |
-	   aPattern=SimpleAPatternX() { aPattern=new DoubleSlashPrefixedContainer(aPattern); }
+	   aPattern=SimpleAPatternX() { aPattern = new DoubleSlashPrefixedContainer(aPattern); } 
     ) 
 	{ return aPattern; }
 }
 
 AncestorPattern SimpleAPatternX(): { SequenceExpression seq = new SequenceExpression(); AncestorPattern aPattern; }
 {
-    aPattern=SimpleAPattern() { aPattern=new DoubleSlashPrefixedContainer(aPattern); }
+    aPattern=SimpleAPattern() { seq.addChild(aPattern); }
     ( aPattern = FullAPatternX() { seq.addChild(aPattern); } )*
 	{
 		if (seq.getChildren().size()==1)
@@ -781,7 +781,7 @@ ElementPattern ElementPattern(): {boolean empty=false; Particle particle=null; B
 //All                 ::= NamedType "?"? ( "&" NamedType "?"? )+
 AllPattern All(): {Particle particle; List<Particle> particles=new LinkedList<Particle>();}
 {
-	particle=NamedType() {particles.add(particle); setState(DEFAULT); } [ <QUESTION_MARK> ] ( <ANDLITERAL> particle=NamedType() {particles.add(particle); setState(DEFAULT); } [ <QUESTION_MARK> ])+
+	particle=NamedType() [ particle=RegexOp(particle) ] {particles.add(particle); setState(DEFAULT); }  ( <ANDLITERAL> particle=NamedType() [ particle=RegexOp(particle) ] {particles.add(particle); setState(DEFAULT); } )+
 	{ return new AllPattern(particles);	}
 }
 

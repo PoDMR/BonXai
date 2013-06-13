@@ -238,7 +238,12 @@ public class CompactSyntaxWriter {
 	 * @throws IOException 
      */
     protected void writeAttributeList(Collection<AttributeParticle> attributeList) throws IOException {
-        for(AttributeParticle attributeElement: attributeList) {
+        boolean first = true;
+    	for(AttributeParticle attributeElement: attributeList) {
+    		if (!first) {
+    			writer.append(", ");
+        		writer.allowBreak();
+    		}
             if (attributeElement instanceof Attribute) {
                 writeAttribute((Attribute) attributeElement);
             } else if (attributeElement instanceof AttributeGroupReference) {
@@ -246,6 +251,7 @@ public class CompactSyntaxWriter {
             } else if (attributeElement instanceof AttributeRef) {
             	writeAttributeRef((AttributeRef) attributeElement);
             }
+            first = false;
         }
     }
 
@@ -309,9 +315,9 @@ public class CompactSyntaxWriter {
      */
     protected void writeParticle(Particle particle) throws IOException {
         if (particle instanceof AllPattern) {
-            writeParticleContainer((ParticleContainer) particle, "& ");
+            writeParticleContainer((ParticleContainer) particle, " & ");
         } else if (particle instanceof ChoicePattern) {
-            writeParticleContainer((ParticleContainer) particle, "| ");
+            writeParticleContainer((ParticleContainer) particle, " | ");
         } else if (particle instanceof CountingPattern) {
             writeCountingPattern((CountingPattern) particle);
         } else if (particle instanceof SequencePattern) {
@@ -325,7 +331,7 @@ public class CompactSyntaxWriter {
         } else if (particle instanceof GroupReference) {
             writeGroupReference((GroupReference) particle);
         } else if (particle instanceof EmptyPattern) {
-        	// nothing todo here
+        	writer.append("empty");
         } else {
             throw new RuntimeException("Cannot write Particle of " + particle.getClass());
         }
@@ -421,7 +427,7 @@ public class CompactSyntaxWriter {
     protected void writeExpression(Expression expression) throws IOException {
     	writer.newLine();
     	writeAnnotations(expression.getAnnotations());
-        writeAncestorPattern(expression.getAncestorPattern(), true);
+        writeAncestorPattern(expression.getAncestorPattern(), true, true);
         writer.append(" = ");
         writeChildPattern(expression.getChildPattern());
         writer.newLine();
@@ -436,11 +442,16 @@ public class CompactSyntaxWriter {
 		}
 	}
 
+    protected void writeAncestorPattern(AncestorPattern aPattern, boolean leadingSlash) throws IOException {
+    	this.writeAncestorPattern(aPattern, leadingSlash, false);
+    }
+        
+    
 	/**
      * Visit ChildPattern object.
      * @throws IOException 
      */
-    protected void writeAncestorPattern(AncestorPattern aPattern, boolean leadingSlash) throws IOException {
+    protected void writeAncestorPattern(AncestorPattern aPattern, boolean leadingSlash, boolean removeDoubleSlash) throws IOException {
         if (aPattern instanceof AncestorPatternElement) {
             writeAncestorPatternElement((AncestorPatternElement) aPattern, leadingSlash);
         } else if (aPattern instanceof CardinalityParticle) {
@@ -450,7 +461,7 @@ public class CompactSyntaxWriter {
         } else if (aPattern instanceof SequenceExpression) {
             writeSequenceExpression((SequenceExpression) aPattern, leadingSlash);
         } else if (aPattern instanceof DoubleSlashPrefixedContainer) {
-        	writeDoubleSlashPrefixedContainer((DoubleSlashPrefixedContainer) aPattern, leadingSlash);
+        	writeDoubleSlashPrefixedContainer((DoubleSlashPrefixedContainer) aPattern, leadingSlash, removeDoubleSlash);
         } else {
             throw new RuntimeException("Unknown AncestorPattern " + aPattern.getClass());
         }
@@ -463,8 +474,9 @@ public class CompactSyntaxWriter {
 		writeName(aPattern.getName());
 	}
 
-	private void writeDoubleSlashPrefixedContainer(DoubleSlashPrefixedContainer aParticle, boolean leadingSlash) throws IOException {
-    	writer.append("//");
+	private void writeDoubleSlashPrefixedContainer(DoubleSlashPrefixedContainer aParticle, boolean leadingSlash, boolean removeDoubleSlash) throws IOException {
+    	if (!removeDoubleSlash)
+    		writer.append("//");
     	writeAncestorPattern(aParticle.getChild(), false);
 	}
 
@@ -541,14 +553,17 @@ public class CompactSyntaxWriter {
      */
     protected void writeElementPattern(ElementPattern ePattern, boolean first) throws IOException {
         if (ePattern != null && ePattern.getRegexp() != null) {
-        	if (!first) {
-        		writer.allowBreak(", ");
+        	if (! (ePattern.getRegexp() instanceof EmptyPattern)) {
+        		if (!first) {
+        			writer.allowBreak(", ");
+        		}
+        		writeParticle(ePattern.getRegexp());
         	}
-            writeParticle(ePattern.getRegexp());
         } else if (ePattern != null && ePattern.getBonxaiType() != null ) {
         	if (!first) {
         		writer.allowBreak(", ");
         	}
+        	writer.append("type ");
             writeBonxaiType(ePattern.getBonxaiType());
         }
     }
