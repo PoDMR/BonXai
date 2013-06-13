@@ -21,9 +21,6 @@ package eu.fox7.schematoolkit.bonxai.om;
 
 import eu.fox7.schematoolkit.common.QualifiedName;
 
-/**
- * Abstract class for a prefix element implemented either as SingleSlashPrefixElement or as DoubleSlashPrefixElement
- */
 public class AncestorPatternElement extends AncestorPattern {
 
     /**

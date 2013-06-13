@@ -115,7 +115,7 @@ public class CompactSyntaxWriter {
     }
     
     protected void writeTargetNamespace(Namespace namespace) throws IOException {
-        writer.appendLine("default namespace " +  namespace.getUri());
+        writer.appendLine("target namespace " +  namespace.getUri());
     }
 
     /**
@@ -279,17 +279,17 @@ public class CompactSyntaxWriter {
 	private void writeAttribute(Attribute attribute) throws IOException {
         writer.append("attribute ");
         writeName(attribute.getName());
-        if (attribute.getType() != null)
+        if (attribute.getType() != null) {
         	writer.append(" { ");
             writeBonxaiType(attribute.getType());
         	writer.append(" }");
+        }
         if (!attribute.isRequired()) {
             writer.append('?');
         }
 	}
 
 	private void writeBonxaiType(BonxaiType type) throws IOException {
-        writer.append("type ");
         writeName(type.getTypename());
 
         if (type.getFixedValue() != null) {
@@ -339,11 +339,7 @@ public class CompactSyntaxWriter {
         	writer.append(" { ");
         	writeBonxaiType(particle.getType());
         	writer.append(" }");
-        }
-
-        if (particle.isMissing()) {
-        	writer.append(" | missing");
-        }        
+        }      
 	}
 
     private void writeElementRef(ElementRef particle) throws IOException {

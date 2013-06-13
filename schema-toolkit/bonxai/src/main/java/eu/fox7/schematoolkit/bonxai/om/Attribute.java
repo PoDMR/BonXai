@@ -41,8 +41,10 @@ public class Attribute extends AbstractAttribute {
     public Attribute(QualifiedName name, BonxaiType type) {
     	super(name);
     	this.type = type;
-        this.setDefault(type.getDefaultValue());
-        this.setFixed(type.getFixedValue());
+    	if (type!=null) {
+          this.setDefault(type.getDefaultValue());
+          this.setFixed(type.getFixedValue());
+    	}
     }
 
     /**

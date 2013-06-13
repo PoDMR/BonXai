@@ -41,11 +41,6 @@ public class Element extends eu.fox7.schematoolkit.common.Element implements Loc
     protected QualifiedName name;
     
     /**
-     * True if the element might be missing (nillable in XSD).
-     */
-    protected boolean missing = false;
-
-    /**
      * Creates an element with namespace and name.
      */
     public Element (QualifiedName name) {
@@ -68,21 +63,6 @@ public class Element extends eu.fox7.schematoolkit.common.Element implements Loc
         this.type = type;
     }
 
-    /**
-     * Creates an element with namespace, name, type and missing flag.
-     */
-    public Element (QualifiedName name, BonxaiType type, boolean missing) {
-        this(name, type);
-        this.missing = missing;
-    }
-
-    /**
-     * Creates an element with namespace, name and missing flag.
-     */
-    public Element (QualifiedName name, boolean missing) {
-        this(name);
-        this.missing = missing;
-    }
 
     /**
      * Returns the type of the element.
@@ -91,16 +71,8 @@ public class Element extends eu.fox7.schematoolkit.common.Element implements Loc
         return type;
     }
 
-    /**
-     * If the element might be left empty (nillable in XSD).
-     */
-    public boolean isMissing() {
-        return missing;
-    }
-
-	public void setType(eu.fox7.schematoolkit.bonxai.om.BonxaiType type, boolean missing) {
+	public void setType(eu.fox7.schematoolkit.bonxai.om.BonxaiType type) {
 		this.type=type;
-		this.missing=missing;
 	}
 	
 	public QualifiedName getName() {

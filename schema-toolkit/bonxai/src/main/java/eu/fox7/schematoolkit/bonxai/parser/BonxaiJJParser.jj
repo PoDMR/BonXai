@@ -98,7 +98,7 @@ TOKEN:
 { 
 	< ROOTS: "roots" >: NAME
 | 	< GRAMMAR: "grammar"  >
-|	< DEFAULT_NAMESPACE: "default namespace">: NAME
+|	< TARGET_NAMESPACE: "target namespace">: NAME
 |	< NAMESPACE: "namespace" >: NAME 
 |	< TYPE: "type" >: NAME
 |	< DEFAULTT: "default" >
@@ -115,13 +115,17 @@ TOKEN:
 |	< ATTRIBUTE: "attribute" >: NAME
 |	< MIXED: "mixed" >
 |	< EMPTY: "empty" >
-|	< MISSING: "missing" >
+|	< NILLABLE: "nillable" >
 |	< ELEMENTREF: "elementref" >: NAME
 |	< ELEMENT: "element" >: NAME
 |	< STRICT: "strict" >
 |	< LAX: "lax" >
 |	< SKIPP: "skip" >
-|	< FIXED: "fixed" >  
+|	< FIXED: "fixed" >
+|   < ANY: "any" >
+|   < ANYATTRIBUTE: "anyattribute" >
+|   < NOT: "not" >
+|   < NAMEX: "name" >
 }
 
 
@@ -146,6 +150,7 @@ TOKEN:
 |	<QUESTION_MARK: "?" >
 |	<COLON: ":" >
 |	<POINT: ".">
+|   <PERCENT: "%">
 //|	<ANNOTATION_VALUE: (~["\n", "\r"])+ >
 |	<ANNOTATION_VALUE: "annotation">
 |	<#DIGIT: (["0"-"9"])> 
@@ -510,7 +515,7 @@ void Decl(): {String uri="" ; String ident=""; String url="";}
 {
 (
  <NAMESPACE> ident=Identifier() <EQUALS> uri=NamespaceUriLiteral() { this.bonxai.addNamespace(new IdentifiedNamespace(ident,uri));}
-| <DEFAULT_NAMESPACE> uri=NamespaceUriLiteral() { this.bonxai.setDefaultNamespace(new DefaultNamespace(uri));}
+| <TARGET_NAMESPACE> uri=NamespaceUriLiteral() { this.bonxai.setDefaultNamespace(new DefaultNamespace(uri));}
 //| <DATATYPES> ident=Identifier() <EQUALS> url=NamespaceUriLiteral() { jjtThis.setNodeChoice("datatypes"); }
 //| <IMPORT> uri=NamespaceUriLiteral() [ <EQUALS> url=NamespaceUriLiteral() ] { jjtThis.setNodeChoice("import"); } 
 ) { setState(DEFAULT); }
@@ -541,18 +546,18 @@ void Constraint(): {}
 
 
 //UniqueConstraint    ::= "unique" APattern "=" "{" ConstraintSelector ConstraintFields "}"
-void UniqueConstraint(): {AncestorPattern aPattern, selector; List<AncestorPattern> fields;}
+void UniqueConstraint(): {AncestorPattern aPattern=null; AncestorPattern selector; List<AncestorPattern> fields;}
 {
-<UNIQUE> aPattern=APattern() <EQUALS> <OPENING_CURLY_BRACKET> selector=APattern() fields=ConstraintFields() <CLOSING_CURLY_BRACKET>
+<UNIQUE> [aPattern=APattern()] <EQUALS> <OPENING_CURLY_BRACKET> selector=APattern() fields=ConstraintFields() <CLOSING_CURLY_BRACKET>
 	{
         bonxai.addConstraint(new UniqueConstraint(aPattern, selector, fields));
 	}
 }
 
 // KeyConstraint       ::= "key" Name APattern "{" ConstraintSelector ConstraintFields "}"
-void KeyConstraint(): {QualifiedName name; AncestorPattern aPattern, selector; List<AncestorPattern> fields;}
+void KeyConstraint(): {QualifiedName name; AncestorPattern aPattern=null; AncestorPattern selector; List<AncestorPattern> fields;}
 {
-<KEY> name=Name() aPattern=APattern() <EQUALS> <OPENING_CURLY_BRACKET> selector=APattern() fields=ConstraintFields() <CLOSING_CURLY_BRACKET>
+<KEY> name=Name() [aPattern=APattern()] <EQUALS> <OPENING_CURLY_BRACKET> selector=APattern() fields=ConstraintFields() <CLOSING_CURLY_BRACKET>
 	{
         bonxai.addConstraint(new KeyConstraint(name, aPattern, selector, fields));
 	}
@@ -560,9 +565,9 @@ void KeyConstraint(): {QualifiedName name; AncestorPattern aPattern, selector; L
 
 
 // KeyRefConstraint    ::= "keyref" Name APattern "{" ConstraintSelector ConstraintFields "}"
-void KeyRefConstraint(): {QualifiedName name; AncestorPattern aPattern, selector; List<AncestorPattern> fields;}
+void KeyRefConstraint(): {QualifiedName name; AncestorPattern aPattern=null; AncestorPattern selector; List<AncestorPattern> fields;}
 {
-	<KEYREF> name=Name() aPattern=APattern() <EQUALS> <OPENING_CURLY_BRACKET> selector=APattern() fields=ConstraintFields() <CLOSING_CURLY_BRACKET>
+	<KEYREF> name=Name() [aPattern=APattern()] <EQUALS> <OPENING_CURLY_BRACKET> selector=APattern() fields=ConstraintFields() <CLOSING_CURLY_BRACKET>
 	{
         bonxai.addConstraint(new KeyRefConstraint(name, aPattern, selector, fields));
 	}
@@ -625,12 +630,12 @@ List<Annotation> Annotations(): { Annotation annotation; List<Annotation> annota
 // new: Annotation            ::= "@" AnnotationName (" " AnnotationValue)
 Annotation Annotation(): {String name; String value;}
 {
-	<AT>  name=AnnotationNameValue() <EQUALS> value=AnnotationNameValue()
+	<PERCENT>  name=AnnotationNameValue() <EQUALS> value=AnnotationNameValue()
 	{ return new Annotation(name,value); }
 }
 
 
-// AnnotationName      ::= "@" ["a"-"z", "A"-"Z"]+
+// AnnotationName      ::= ["a"-"z", "A"-"Z"]+
 String AnnotationNameValue() : {Token t; String name="";}
 {
 	(t=<LABEL> {name=name + t.image;})+
@@ -641,13 +646,25 @@ String AnnotationNameValue() : {Token t; String name="";}
 // old:APattern            ::= SimpleAPattern FullAPattern? | FullAPattern
 // new: APattern            ::= SimpleAPattern | FullAPattern
 // ignoring simple aPatterns for now!
-AncestorPattern APattern(): {AncestorPattern aPattern; QualifiedName name;}
+AncestorPattern APattern(): { AncestorPattern aPattern; }
 {
 //	( SimpleAPattern() [ LOOKAHEAD(2) FullAPattern() { jjtThis.setNodeChoice("simple_full"); }  ] | FullAPattern() { jjtThis.setNodeChoice("full"); }  )
-	(	   aPattern=FullAPattern() |
-	   name=Name() { aPattern=new DoubleSlashPrefixedContainer(new AncestorPatternElement(name)); }
-    )
-    { return aPattern; }
+	(	   LOOKAHEAD((<OPENING_ROUND_BRACKET>)* (<SLASH> | <DOUBLESLASH>)) aPattern = FullAPattern() |
+	   aPattern=SimpleAPatternX() { aPattern=new DoubleSlashPrefixedContainer(aPattern); }
+    ) 
+	{ return aPattern; }
+}
+
+AncestorPattern SimpleAPatternX(): { SequenceExpression seq = new SequenceExpression(); AncestorPattern aPattern; }
+{
+    aPattern=SimpleAPattern() { aPattern=new DoubleSlashPrefixedContainer(aPattern); }
+    ( aPattern = FullAPatternX() { seq.addChild(aPattern); } )*
+	{
+		if (seq.getChildren().size()==1)
+			return aPattern;
+		else
+			return seq;
+	}
 }
 
 
@@ -655,7 +672,7 @@ AncestorPattern APattern(): {AncestorPattern aPattern; QualifiedName name;}
 AncestorPattern SimpleAPattern(): {QualifiedName name; AncestorPattern a;}
 {
 	( name=Name() { a=new AncestorPatternElement(name); }  | 
-		<AT> ( name=Name() { a=new AncestorPatternElement(name); }) | 
+		<AT> ( name=Name() { name.setAttribute(true); a=new AncestorPatternElement(name); }) | 
 		<OPENING_ROUND_BRACKET> a=SimpleAPatternOr() <CLOSING_ROUND_BRACKET> 
 	)
     { return a; }
@@ -665,7 +682,7 @@ AncestorPattern SimpleAPattern(): {QualifiedName name; AncestorPattern a;}
 // new: SimpleAPatternOr     ::= SimpleAPattern ("|" SimpleAPattern)*
 OrExpression SimpleAPatternOr(): {AncestorPattern a; OrExpression or = new OrExpression();}
 {
-	a=SimpleAPattern() {or.addChild(a);} (<OR> a=SimpleAPattern() {or.addChild(a);} )*
+	a=SimpleAPatternX() {or.addChild(a);} (<OR> a=SimpleAPatternX() {or.addChild(a);} )*
     { return or; }
 }
 
@@ -733,31 +750,29 @@ AncestorPattern Operator(AncestorPattern aPattern): {int min=0; Integer max = nu
 
 
 // CPattern            ::= "{" ( AttributePattern "," )? ElementPattern "}"
-ChildPattern CPattern(): { boolean mixed = false; AttributePattern attributePattern = null; ElementPattern elementPattern; }
+ChildPattern CPattern(): { boolean mixed = false; boolean nillable = false; AttributePattern attributePattern = null; ElementPattern elementPattern = new ElementPattern(new EmptyPattern()); }
 {
-	[<MIXED> { mixed = true; }] 
-	<OPENING_CURLY_BRACKET> [ LOOKAHEAD(2) attributePattern=AttributePattern() <COMMA> ] elementPattern=ElementPattern()  <CLOSING_CURLY_BRACKET>  
-    { return new ChildPattern(attributePattern, elementPattern, mixed); }
+	(<MIXED> { mixed = true; } [<NILLABLE> { nillable = true; }] | [<NILLABLE> { nillable = true; } [<MIXED> { mixed = true; }]])	<OPENING_CURLY_BRACKET> ( attributePattern=AttributePattern()  [ <COMMA>  elementPattern=ElementPattern() ] | elementPattern=ElementPattern() )  <CLOSING_CURLY_BRACKET>  
+    { return new ChildPattern(attributePattern, elementPattern, mixed, nillable); }
 }
 
 
 // ElementPattern      ::= "empty"
 //                      | "missing"? MixedRegex
-ElementPattern ElementPattern(): {boolean empty=false; boolean missing=false; Particle particle=null; BonxaiType type=null;}
+ElementPattern ElementPattern(): {boolean empty=false; Particle particle=null; BonxaiType type=null;}
 {
-	( <EMPTY> {particle=new EmptyPattern();} | 
-	  [ <MISSING> {missing=true;} <OR> ] 
+	( <EMPTY> {particle=new EmptyPattern();} |
 	  (
-		LOOKAHEAD(NamedType() (<QUESTION_MARK>)? <ANDLITERAL>) particle=All() | 
+		LOOKAHEAD(NamedType() [RegexOp()] <ANDLITERAL>) particle=All() | 
 		particle=Regex() | 
-		type=BonxaiType()
+		<TYPE> type=BonxaiType()
 	  )
 	)
     {
 		if (particle!=null) {
-			return new ElementPattern(particle, missing);
+			return new ElementPattern(particle);
     	} else {
-			return new ElementPattern(type, missing);
+			return new ElementPattern(type);
     	}
 	}
 }
@@ -766,7 +781,7 @@ ElementPattern ElementPattern(): {boolean empty=false; boolean missing=false; Pa
 //All                 ::= NamedType "?"? ( "&" NamedType "?"? )+
 AllPattern All(): {Particle particle; List<Particle> particles=new LinkedList<Particle>();}
 {
-	particle=NamedType() {particles.add(particle);} [ <QUESTION_MARK> ] ( <ANDLITERAL> particle=NamedType() {particles.add(particle);} [ <QUESTION_MARK> ])+
+	particle=NamedType() {particles.add(particle); setState(DEFAULT); } [ <QUESTION_MARK> ] ( <ANDLITERAL> particle=NamedType() {particles.add(particle); setState(DEFAULT); } [ <QUESTION_MARK> ])+
 	{ return new AllPattern(particles);	}
 }
 
@@ -825,18 +840,29 @@ Particle RegexOp(Particle r): { int min=0; Integer max=null; }
 //                      | "group" Name
 //                      | Foreign "element" "*" ( "[" Number ( "," Number )? "]" )? NameSpaceList
 //TODO: foreign
-Particle NamedType(): {Token t; BonxaiType type; Particle p; QualifiedName name; boolean missing=false; }
+Particle NamedType(): {Token t; BonxaiType type; Particle p; QualifiedName name; List<Namespace> namespaceList=new LinkedList<Namespace>(); List<QualifiedName> nameList=new LinkedList<QualifiedName>(); boolean complement = false; ProcessContentsInstruction policy = ProcessContentsInstruction.STRICT; }
 {
 	( 
 		t=<ELEMENT> name=Name() { p = new Element(name, new BonxaiLocation(t.beginLine, t.beginColumn, identifierEndLine, identifierEndColumn)); } 
-			[ <OPENING_CURLY_BRACKET> { setState(DEFAULT); } [ <MISSING> <OR> { missing=true; } ] type=BonxaiType() <CLOSING_CURLY_BRACKET> 
-			{ ((Element) p).setType(type,missing); setState(DEFAULT); } ]  
-		| <GROUP> name=Name()  { p = new GroupReference(name); setState(DEFAULT); }
-		| t=<ELEMENTREF> name=Name() { p = new ElementRef(name, new BonxaiLocation(t.beginLine, t.beginColumn, identifierEndLine, identifierEndColumn)); }//| foreign=Foreign() <ELEMENT_STAR> [ <OPENING_SQUARED_BRACKET> numberBefore=Number() [ <COMMA> numberAfter=Number() ]  <CLOSING_SQUARED_BRACKET> ] lst=NameSpaceList()  { jjtThis.setNodeChoice("foreign"); }
-	)
+			[ <OPENING_CURLY_BRACKET> type=BonxaiType() <CLOSING_CURLY_BRACKET> 
+			{ ((Element) p).setType(type); } ]  
+		| <GROUP> name=Name()  { p = new GroupReference(name); }
+		| t=<ELEMENTREF> name=Name() { p = new ElementRef(name, new BonxaiLocation(t.beginLine, t.beginColumn, identifierEndLine, identifierEndColumn)); }
+		| <ANY> <OPENING_CURLY_BRACKET> [ policy = Policy() ] [ [ <NOT> { complement = true; } ] namespaceList = NamespaceList() ] [ nameList = NameList() ] <CLOSING_CURLY_BRACKET> { p = new AnyPattern(policy, complement, namespaceList, nameList); }	)
 	{ return p; }
 }
 
+
+//NamespaceList       ::= "not"? "{" (NamespaceURI | ##other | ##local | ##targetNamespace)* "}"
+List<Namespace> NamespaceList(): { List<Namespace> namespaceList = new LinkedList<Namespace>(); }
+{   <OPENING_CURLY_BRACKET> <CLOSING_CURLY_BRACKET>
+  {    return namespaceList;
+  }}    //NameList            ::= "name" "not" "{" Name* "}"
+List<QualifiedName> NameList(): { List<QualifiedName> nameList = new LinkedList<QualifiedName>(); QualifiedName name; }
+{
+  <NAMEX> <NOT> <OPENING_CURLY_BRACKET> ( name=Name() { nameList.add(name); } )*  <CLOSING_CURLY_BRACKET>
+  {
+    return nameList;  }}   
 
 //AttributePattern    ::= Foreign "attribute" "*" NameSpaceList ( "," AttributeList )? | AttributeList
 //TODO: foreign
@@ -864,24 +890,24 @@ AttributeGroupReference AttributeGroupRef(): { QualifiedName name; }
 
 Attribute Attribute(): { QualifiedName name; BonxaiType type=null; boolean required=true; }
 {
-	<ATTRIBUTE> name=AttributeName() { setState(DEFAULT); } 
+	<ATTRIBUTE> name=AttributeName()  
 	[ <OPENING_CURLY_BRACKET> type=BonxaiType()	<CLOSING_CURLY_BRACKET> ] 
 	[ <QUESTION_MARK> { required=false; } ]
-	{ return new Attribute(name, type, required); }
+	{ setState(DEFAULT); return new Attribute(name, type, required); }
 }
 
 
-// Foreign             ::= "strict" | "lax" | "skip"
-String Foreign(): {}
+// Policy             ::= "strict" | "lax" | "skip"
+ProcessContentsInstruction Policy(): {}
 {
-	( <STRICT> {return "strict";} | <LAX> {return "lax";} | <SKIPP> {return "skip";} )
+	( <STRICT> {return ProcessContentsInstruction.STRICT;} | <LAX> {return ProcessContentsInstruction.LAX;} | <SKIPP> {return ProcessContentsInstruction.SKIP;} )
 }
 
 
 // BonxaiType          ::= "type" Name
 BonxaiType BonxaiType(): { QualifiedName typename; String value; BonxaiType type; }
 {
-	<TYPE> typename=Name() { type=new BonxaiType(typename); setState(DEFAULT); }
+	typename=Name() { type=new BonxaiType(typename); setState(DEFAULT); }
 	[ ( <FIXED> value=Quotation() { type.setFixedValue(value); } | 
 	    <DEFAULTT> value=Quotation() { type.setDefaultValue(value); } ) ]
 	{ return type;}	

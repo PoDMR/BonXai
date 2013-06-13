@@ -39,6 +39,8 @@ public class BonxaiType {
      * Fixed value for the element.
      */
     private String fixedValue;
+    
+    private boolean nillable=false;
 
     /**
      * Constructor for the class BonxaiType which sets namespace and name
@@ -82,5 +84,21 @@ public class BonxaiType {
     public QualifiedName getTypename() {
         return typename;
     }
+
+	/**
+	 * @return the nillable
+	 */
+	public boolean isNillable() {
+		return nillable;
+	}
+
+	/**
+	 * @param nillable the nillable to set
+	 */
+	public void setNillable(boolean nillable) {
+		this.nillable = nillable;
+	}
+    
+    
 }
 

@@ -19,14 +19,6 @@
 
 package eu.fox7.schematoolkit.bonxai.om;
 
-import java.util.Collection;
-import java.util.LinkedList;
-
-import eu.fox7.schematoolkit.common.CountingPattern;
-import eu.fox7.schematoolkit.common.ElementRef;
-import eu.fox7.schematoolkit.common.Particle;
-import eu.fox7.schematoolkit.common.ParticleContainer;
-
 /**
  * Class representing the child-string in Bonxai
  */
@@ -45,15 +37,18 @@ public class ChildPattern {
      */
     private boolean mixed;
     
+	private boolean nillable;
+    
     /**
      * Constructor for the class ChildPattern
      * @param attributePattern
      * @param elementPattern
      */
-    public ChildPattern(AttributePattern attributePattern, ElementPattern elementPattern, boolean mixed) {
+    public ChildPattern(AttributePattern attributePattern, ElementPattern elementPattern, boolean mixed, boolean nillable) {
         this.attributePattern = attributePattern;
         this.elementPattern = elementPattern;
         this.mixed=mixed;
+        this.setNillable(nillable);
     }
 
     /**
@@ -84,6 +79,20 @@ public class ChildPattern {
 	 */
 	public void setMixed(boolean mixed) {
 		this.mixed = mixed;
+	}
+
+	/**
+	 * @param nillable the nillable to set
+	 */
+	public void setNillable(boolean nillable) {
+		this.nillable = nillable;
+	}
+
+	/**
+	 * @return the nillable
+	 */
+	public boolean isNillable() {
+		return nillable;
 	}
 
 }

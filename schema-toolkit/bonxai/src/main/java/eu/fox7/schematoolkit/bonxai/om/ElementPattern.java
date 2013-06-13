@@ -44,12 +44,6 @@ public class ElementPattern {
     private eu.fox7.schematoolkit.common.Particle regexp;
 
     /**
-     * If the element might be missing (nillable in XSD).
-     */
-    private boolean missing = false;
-
-
-    /**
      * Constructor for the class ElementPattern.
      * Parameterised with an bonxai-type it defines a single element.
      * @param type
@@ -60,35 +54,11 @@ public class ElementPattern {
 
     /**
      * Constructor for the class ElementPattern.
-     *
-     * Parameterised with an bonxai-type it defines a single element. Setting
-     * "missing" to true will allow the element to be left out (nillable in
-     * XSD).
-     */
-    public ElementPattern(BonxaiType type, boolean missing) {
-        this(type);
-        this.missing = missing;
-    }
-
-    /**
-     * Constructor for the class ElementPattern.
      * Parameterised with a regular expression it defines an element pattern.
      * @param regexp
      */
     public ElementPattern(eu.fox7.schematoolkit.common.Particle regexp) {
         this.regexp = regexp;
-    }
-
-    /**
-     * Constructor for the class ElementPattern.
-     *
-     * Parameterised with a regular expression it defines an element pattern.
-     * Setting "missing" to true will allow the element to be left out
-     * (nillable in XSD).
-     */
-    public ElementPattern(eu.fox7.schematoolkit.common.Particle regexp, boolean missing) {
-        this(regexp);
-        this.missing = missing;
     }
 
     /**
@@ -118,17 +88,6 @@ public class ElementPattern {
     public void setRegexp(Particle regexp) {
         this.regexp = regexp;
     }
-
-    /**
-     * If the element might be left empty (nillable in XSD).
-     */
-    public boolean isMissing() {
-        return missing;
-    }
-
-	public void setMissing(boolean missing) {
-		this.missing = missing;
-	}
 
 	/**
 	 * @return the defaultValue
