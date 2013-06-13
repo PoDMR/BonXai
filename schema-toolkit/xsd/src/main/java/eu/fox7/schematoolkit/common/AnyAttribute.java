@@ -77,29 +77,6 @@ public class AnyAttribute extends AttributeParticle {
         return processContentsInstruction;
     }
 
-    /**
-     * Compare two objects of this type to check if they represent the same
-     * content
-     */
-    public boolean equals(AnyPattern that) {
-        return (super.equals(that) && this.namespaces.equals(that.namespaces) && this.processContentsInstruction.equals(that.processContentsInstruction));
-    }
-
-    /**
-     * Return a hashCode for this object
-     *
-     * This needs to be overwritten to fullfill the hashCode/equals contract
-     * enforced by java
-     */
-    public int hashCode() {
-        int hash = super.hashCode();
-        int multiplier = 13;
-//        if (this.namespace != null) {
-        	hash = hash * multiplier + this.namespaces.hashCode();
-//        }
-        hash = hash * multiplier + this.processContentsInstruction.hashCode();
-        return hash;
-    }
 
     /**
      * Set new namespace attribute of the any pattern.

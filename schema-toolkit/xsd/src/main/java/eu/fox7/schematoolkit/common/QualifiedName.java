@@ -112,7 +112,7 @@ public class QualifiedName {
 
 	public static String getNamespaceFromFQN(String fullyQualifiedName) {
 		int pos = fullyQualifiedName.indexOf('}');
-		return fullyQualifiedName.substring(1,pos);
+		return (pos<0)?"":fullyQualifiedName.substring(1,pos);
 	}
 	
 	public static QualifiedName getQualifiedNameFromFQN(String fullyQualifiedName) {
@@ -128,5 +128,12 @@ public class QualifiedName {
 	@Override
 	public String toString() {
 		return getFullyQualifiedName();
+	}
+
+	/**
+	 * @param isAttribute the isAttribute to set
+	 */
+	public void setAttribute(boolean isAttribute) {
+		this.isAttribute = isAttribute;
 	}
 }
