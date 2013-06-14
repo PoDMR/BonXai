@@ -84,7 +84,7 @@ public class ParticleConverter {
                     element.setFixed(type.getFixedValue());
                 }
 
-                if (source.isMissing()) {
+                if (source.getType().isNillable()) {
                     element.setNillable();
                 }
 

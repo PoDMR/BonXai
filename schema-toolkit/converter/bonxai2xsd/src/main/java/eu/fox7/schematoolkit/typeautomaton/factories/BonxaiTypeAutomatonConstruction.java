@@ -177,7 +177,7 @@ public class BonxaiTypeAutomatonConstruction {
 					if (elementPattern != null && elementPattern.getBonxaiType()!=null) {
 						elementProperties.setDefaultValue(elementPattern.getBonxaiType().getDefaultValue());
 						elementProperties.setFixedValue(elementPattern.getBonxaiType().getFixedValue());
-						elementProperties.setNillable(elementPattern.isMissing());
+						elementProperties.setNillable(childPattern.isNillable());
 					
 						typeAutomaton.setElementProperties(state, elementProperties);
 					}
