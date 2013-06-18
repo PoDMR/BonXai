@@ -143,14 +143,26 @@ public class ParticleConverter {
         	return new CountingPattern(convertParticle(namespace, ((CountingPattern) particle).getParticle(), sourceState),
         			((CountingPattern) particle).getMin(),
         			((CountingPattern) particle).getMax());
+        } else if (particle instanceof EmptyPattern) {
+        	return new EmptyPattern();
         } else {
-            throw new RuntimeException("Particle type not supported.");
+            throw new RuntimeException("Particle type not supported: " + particle.getClass());
         }
     }
 
     private Particle convertGroupReference(GroupReference groupReference,
 			State sourceState) {
-		QualifiedName groupName = groupReference.getName();
+    	QualifiedName newGroupName = convertGroupReference(groupReference.getName(), sourceState);
+    	return new GroupReference(newGroupName);
+    }
+    
+    private AttributeParticle convertAttributeGroupReference(AttributeGroupReference attributeGroupReference, State sourceState) {
+    	QualifiedName newGroupName = convertGroupReference(attributeGroupReference.getName(), sourceState);
+    	return new AttributeGroupReference(newGroupName);
+    }
+
+    private QualifiedName convertGroupReference(QualifiedName groupName, State sourceState) {
+    	QualifiedName newGroupName = null;
     	if (eliminateGroups) {
     		//TODO
     		return null;
@@ -161,9 +173,9 @@ public class ParticleConverter {
     			groupMap.put(groupName, stateGroupMap);
     			stateGroupMap.put(sourceState, groupName);
     			groupTodo.add(new GroupTodo(groupName, sourceState, groupName));
-    			groupReference = new GroupReference(groupName);
+    			newGroupName = groupName;
     		} else {
-    			QualifiedName newGroupName = stateGroupMap.get(sourceState);
+    			newGroupName = stateGroupMap.get(sourceState);
     			if (newGroupName == null) {
     				int number = 1;
     				newGroupName = new QualifiedName(groupName.getNamespaceURI(),groupName.getName()+number);
@@ -174,21 +186,20 @@ public class ParticleConverter {
     				stateGroupMap.put(sourceState, newGroupName);
     				groupTodo.add(new GroupTodo(groupName, sourceState, newGroupName));
     			}
-
-    			groupReference = new GroupReference(newGroupName);
     		}
-    		return groupReference;
+    		return newGroupName;
     	}
     }
-
+    
 	/**
      * Convert an attribute pattern.
      *
      * Converts an attribute pattern to the equivalent classes in XSD.
+	 * @param sourceState 
      *
      * @return particle
      */
-    public LinkedList<AttributeParticle> convertParticle(AttributePattern pattern) {
+    public LinkedList<AttributeParticle> convertParticle(AttributePattern pattern, State sourceState) {
         LinkedList<AttributeParticle> list = new LinkedList<AttributeParticle>();
 
         // Append any attribute, if available
@@ -198,7 +209,7 @@ public class ParticleConverter {
 
         if (pattern.getAttributeList() != null) {
             for (AttributeParticle attribute : pattern.getAttributeList()) {
-                list.add(this.convertAttribute(attribute));
+                list.add(this.convertAttribute(attribute, sourceState));
             }
         }
 
@@ -207,16 +218,42 @@ public class ParticleConverter {
 
     /**
      * Convert a single attribute.
+     * @param sourceState 
      *
      * @return attributeParticle
      */
-    protected AttributeParticle convertAttribute(AttributeParticle attribute) {
+    protected AttributeParticle convertAttribute(AttributeParticle attribute, State sourceState) {
         if (attribute instanceof eu.fox7.schematoolkit.bonxai.om.Attribute) {
         	eu.fox7.schematoolkit.bonxai.om.Attribute bonxaiAttribute = (eu.fox7.schematoolkit.bonxai.om.Attribute) attribute;
+        	BonxaiType type = bonxaiAttribute.getType();
+        	if (type==null) {
+        		State targetState;
+				try {
+					targetState = this.typeAutomaton.getNextState(Symbol.create(bonxaiAttribute.getName().getFullyQualifiedName()), sourceState);
+	        		if (targetState!=null) {
+	        			ElementProperties elementProperties = typeAutomaton.getElementProperties(targetState);
+	        			if (elementProperties!=null) {
+	        				type = new BonxaiType(typeAutomaton.getTypeName(targetState));
+	        				type.setDefaultValue(elementProperties.getDefaultValue());
+	        				type.setFixedValue(elementProperties.getFixedValue());
+	        			}
+	        		}
+				} catch (NotDFAException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				bonxaiAttribute = new Attribute(bonxaiAttribute.getName(), type, bonxaiAttribute.isRequired());
+        	}
+        	
+        	QualifiedName typename = null;
+        	if (type!=null)
+        		typename = type.getTypename();
+        	
             AttributeUse attributeUse = bonxaiAttribute.isRequired()?AttributeUse.required:AttributeUse.optional;
-			return new eu.fox7.schematoolkit.xsd.om.Attribute(bonxaiAttribute.getName(), bonxaiAttribute.getType().getTypename(), bonxaiAttribute.getDefault(), bonxaiAttribute.getFixed(), attributeUse, Qualification.unqualified, null);
+			return new eu.fox7.schematoolkit.xsd.om.Attribute(bonxaiAttribute.getName(), typename, bonxaiAttribute.getDefault(), bonxaiAttribute.getFixed(), attributeUse, Qualification.unqualified, null);
         } else if (attribute instanceof AttributeGroupReference) {
-            return new AttributeGroupReference( ((AttributeGroupReference) attribute).getName() );
+            return this.convertAttributeGroupReference((AttributeGroupReference) attribute, sourceState);
         } else if (attribute instanceof AttributeRef) {
         	AttributeRef attributeRef = (AttributeRef) attribute;
         	AttributeRef newAttributeRef = new AttributeRef(attributeRef.getName(), attributeRef.getDefault(), attributeRef.getFixed(), attributeRef.getUse(), null);
@@ -231,9 +268,22 @@ public class ParticleConverter {
     		GroupTodo todo = groupTodo.iterator().next();
     		groupTodo.remove(0);
     		BonxaiGroup group = bonxai.getElementGroup(todo.sourceName);
-    		Particle particle = convertParticle(bonxai.getDefaultNamespace(),group.getParticle(),todo.sourceState);
-    		eu.fox7.schematoolkit.xsd.om.Group newGroup = new eu.fox7.schematoolkit.xsd.om.Group(todo.targetName, particle);
-    		xsdSchema.addGroup(newGroup);
+    		BonxaiAttributeGroup attributeGroup = bonxai.getAttributeGroup(todo.sourceName);
+    		if (group!=null) {
+    			Particle particle = convertParticle(bonxai.getTargetNamespace(),group.getParticle(),todo.sourceState);
+    			eu.fox7.schematoolkit.xsd.om.Group newGroup = new eu.fox7.schematoolkit.xsd.om.Group(todo.targetName, particle);
+    			xsdSchema.addGroup(newGroup);
+    		}
+    		if (attributeGroup!=null) {
+    			eu.fox7.schematoolkit.xsd.om.AttributeGroup newAttributeGroup = new eu.fox7.schematoolkit.xsd.om.AttributeGroup(todo.targetName);
+    			if (attributeGroup.getAttributePattern().getAnyAttribute()!=null)
+    				newAttributeGroup.addAttributeParticle(attributeGroup.getAttributePattern().getAnyAttribute());
+    			for (AttributeParticle attributeParticle: attributeGroup.getAttributePattern().getAttributeList()) {
+    				AttributeParticle newAttributeParticle = convertAttribute(attributeParticle, todo.sourceState);
+        			newAttributeGroup.addAttributeParticle(newAttributeParticle);
+    			}
+    			xsdSchema.addAttributeGroup(newAttributeGroup);
+    		}
     	}
     }
 }

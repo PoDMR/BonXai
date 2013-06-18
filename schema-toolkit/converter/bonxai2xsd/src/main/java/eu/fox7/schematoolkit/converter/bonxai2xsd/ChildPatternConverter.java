@@ -26,7 +26,6 @@ import eu.fox7.schematoolkit.bonxai.om.ChildPattern;
 import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.DefaultNamespace;
 import eu.fox7.schematoolkit.common.EmptyPattern;
-import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
@@ -72,7 +71,7 @@ public class ChildPatternConverter {
 
                 ComplexType complexType = new ComplexType(typeName, content);
 
-                for (AttributeParticle attrParticle: converter.convertParticle(childPattern.getAttributePattern())) {
+                for (AttributeParticle attrParticle: converter.convertParticle(childPattern.getAttributePattern(), sourceState)) {
                     complexType.addAttribute(attrParticle);
                 }
 
@@ -91,9 +90,8 @@ public class ChildPatternConverter {
          
 
             // Append attributes, if existing
-            if (childPattern.getAttributePattern() != null)
-            {
-                for (AttributeParticle attrParticle: converter.convertParticle(childPattern.getAttributePattern())) {
+            if (childPattern.getAttributePattern() != null) {
+                for (AttributeParticle attrParticle: converter.convertParticle(childPattern.getAttributePattern(), sourceState)) {
                     complexType.addAttribute(attrParticle);
                 }
             }
@@ -107,7 +105,7 @@ public class ChildPatternConverter {
         if ((childPattern.getAttributePattern() != null) &&
             ((childPattern.getElementPattern() == null) || (childPattern.getElementPattern().getRegexp() instanceof EmptyPattern))) {
             ComplexType complexType = new ComplexType(typename, null);
-            for (AttributeParticle attrParticle: converter.convertParticle(childPattern.getAttributePattern())) {
+            for (AttributeParticle attrParticle: converter.convertParticle(childPattern.getAttributePattern(), sourceState)) {
                 complexType.addAttribute(attrParticle);
             }
             

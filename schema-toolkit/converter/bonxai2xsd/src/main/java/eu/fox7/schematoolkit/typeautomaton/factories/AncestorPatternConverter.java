@@ -39,6 +39,7 @@ import eu.fox7.flt.automata.impl.sparse.Symbol;
 import eu.fox7.flt.automata.impl.sparse.Transition;
 import eu.fox7.schematoolkit.bonxai.om.AncestorPattern;
 import eu.fox7.schematoolkit.bonxai.om.AncestorPatternElement;
+import eu.fox7.schematoolkit.bonxai.om.AncestorPatternWildcard;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
 import eu.fox7.schematoolkit.bonxai.om.CardinalityParticle;
 import eu.fox7.schematoolkit.bonxai.om.DoubleSlashPrefixedContainer;
@@ -216,6 +217,8 @@ public class AncestorPatternConverter {
 			nfa.addSymbol(WILDCARD);
 			AncestorPattern childParticle = doubleSlashPrefixedContainer.getChild();
 			convertAncestorPatternParticle(childParticle, nfa, initialState, finalState);
+		} else if (ancestorPatternParticle instanceof AncestorPatternWildcard) { // wildcard (*)
+			nfa.addTransition(WILDCARD, initialState, finalState);
 		} else {
 			throw new RuntimeException("Cannot convert AncestorPattern of class "+ancestorPatternParticle.getClass());
 		}

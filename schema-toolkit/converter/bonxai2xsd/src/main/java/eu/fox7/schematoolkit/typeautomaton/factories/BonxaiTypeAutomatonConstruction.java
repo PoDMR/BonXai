@@ -155,7 +155,7 @@ public class BonxaiTypeAutomatonConstruction {
 				
 				this.mapStateToExpression(state, matchingExpression);
 			
-				Set<Symbol> children = ChildSymbolExtractor.getChildSymbols(matchingExpression.getChildPattern(), bonxai);
+				Set<Symbol> children = ChildSymbolExtractor.getChildSymbolsWithAttributes(matchingExpression.getChildPattern(), bonxai);
 				for (Symbol symbol: children) {
 					insertChild(state, productState, symbol);
 				}
@@ -182,7 +182,7 @@ public class BonxaiTypeAutomatonConstruction {
 						typeAutomaton.setElementProperties(state, elementProperties);
 					}
 				} else {
-					System.err.println("No product state for state "+state.toString());
+					System.err.println("YNo product state for state "+state.toString());
 				}
 			}
 		}
@@ -200,7 +200,7 @@ public class BonxaiTypeAutomatonConstruction {
 					if (type != null) 
 						typeAutomaton.setType(typename, type);
 				} else {
-					System.err.println("No product state for state "+state.toString());
+					System.err.println("XNo product state for state "+state.toString());
 				}
 			}
 		}
@@ -222,9 +222,9 @@ public class BonxaiTypeAutomatonConstruction {
 		State newProductState;
 		try {
 			newProductState = ((StateDFA) productDFA).getNextState(symbol, productState);
-//			if (newProductState == null) {
-//				throw new RuntimeException("No product state found.");
-//			}
+			if (newProductState == null) {
+				System.err.println("No product state found: " + state + " " + symbol);
+			}
 		} catch (NotDFAException e) {
 			throw new RuntimeException(e);
 		}
@@ -242,9 +242,9 @@ public class BonxaiTypeAutomatonConstruction {
 					typename = cp.getElementPattern().getBonxaiType().getTypename();
 				else {
 					typename = typeNameGenerator.generateTypeName(expression);
-					stateMap.put(newState, newProductState);
 					workingQueue.add(newState);
 				}
+				stateMap.put(newState, newProductState);
 				typeAutomaton.setTypeName(newState, typename);
 			}
 		} else {
