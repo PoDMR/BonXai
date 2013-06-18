@@ -102,7 +102,7 @@ public class QualifiedName {
 	}
 
 	public String getFullyQualifiedName() {
-		return "{"+this.namespace+"}"+this.name;
+		return "{"+this.namespace+"}"+(isAttribute?"@":"")+this.name;
 	}
 	
 	public static String getLocalNameFromFQN(String fullyQualifiedName) {
