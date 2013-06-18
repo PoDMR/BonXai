@@ -672,9 +672,9 @@ AncestorPattern SimpleAPatternX(): { SequenceExpression seq = new SequenceExpres
 AncestorPattern SimpleAPattern(): {QualifiedName name; AncestorPattern a;}
 {
 	( name=Name() { a=new AncestorPatternElement(name); }  | 
-		<AT> ( name=Name() { name.setAttribute(true); a=new AncestorPatternElement(name); }) | 
-		<OPENING_ROUND_BRACKET> a=SimpleAPatternOr() <CLOSING_ROUND_BRACKET> 
-	)
+		<AT> ( name=AttributeName() { a=new AncestorPatternElement(name); }) | 
+		<OPENING_ROUND_BRACKET> a=SimpleAPatternOr() <CLOSING_ROUND_BRACKET> |
+		<STAR> { a=new AncestorPatternWildcard(); }	)
     { return a; }
 }
 
@@ -949,12 +949,16 @@ QualifiedName Name(): {String s=null ; String t=null;}
 QualifiedName AttributeName(): {String s=null ; String t=null;}
 {
 	s=Identifier() [<COLON> t=Identifier() ]
-	{ 
+	{
+	  	QualifiedName name = null;
   		if (t == null) {
-    		return new QualifiedName(Namespace.EMPTY_NAMESPACE,s);
+    		name = new QualifiedName(Namespace.EMPTY_NAMESPACE,s);
   		} else {
-    		return new QualifiedName(this.bonxai.getNamespaceByIdentifier(s),t);
+    		name = new QualifiedName(this.bonxai.getNamespaceByIdentifier(s),t);
   		}
+  		name.setAttribute(true);
+
+  		return name;
 	}
 }
 

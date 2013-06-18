@@ -28,6 +28,7 @@ import java.util.TreeSet;
 
 import eu.fox7.schematoolkit.bonxai.om.AncestorPattern;
 import eu.fox7.schematoolkit.bonxai.om.AncestorPatternElement;
+import eu.fox7.schematoolkit.bonxai.om.AncestorPatternWildcard;
 import eu.fox7.schematoolkit.bonxai.om.Annotation;
 import eu.fox7.schematoolkit.bonxai.om.Attribute;
 import eu.fox7.schematoolkit.bonxai.om.AttributePattern;
@@ -454,6 +455,8 @@ public class CompactSyntaxWriter {
     protected void writeAncestorPattern(AncestorPattern aPattern, boolean leadingSlash, boolean removeDoubleSlash) throws IOException {
         if (aPattern instanceof AncestorPatternElement) {
             writeAncestorPatternElement((AncestorPatternElement) aPattern, leadingSlash);
+        } else if (aPattern instanceof AncestorPatternWildcard) {
+        	writeAncestorPatternWildcard(leadingSlash);
         } else if (aPattern instanceof CardinalityParticle) {
             writeCardinalityParticle((CardinalityParticle) aPattern, leadingSlash);
         } else if (aPattern instanceof OrExpression) {
@@ -467,7 +470,13 @@ public class CompactSyntaxWriter {
         }
     }
 
-    private void writeAncestorPatternElement(AncestorPatternElement aPattern,
+    private void writeAncestorPatternWildcard(boolean leadingSlash) throws IOException {
+		if (leadingSlash) 
+			writer.append('/');
+		writer.append('*');
+	}
+
+	private void writeAncestorPatternElement(AncestorPatternElement aPattern,
 			boolean leadingSlash) throws IOException {
 		if (leadingSlash) 
 			writer.append('/');
