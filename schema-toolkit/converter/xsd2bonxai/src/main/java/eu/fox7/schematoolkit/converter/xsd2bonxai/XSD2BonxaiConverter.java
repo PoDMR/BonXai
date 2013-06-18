@@ -287,8 +287,7 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
 			elementPattern = new ElementPattern(particle);
 		elementPattern.setDefaultValue(elementProperties.getDefaultValue());
 		elementPattern.setFixedValue(elementProperties.getFixedValue());
-		elementPattern.setMissing(elementProperties.isNillable());
-		ChildPattern childPattern = new ChildPattern(attributePattern, elementPattern, mixed);
+		ChildPattern childPattern = new ChildPattern(attributePattern, elementPattern, mixed, elementProperties.isNillable());
 		return childPattern;
 	}
 

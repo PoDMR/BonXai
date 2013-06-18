@@ -122,12 +122,12 @@ class ParticleProcessor {
     		bonxaiType = new BonxaiType(typename);
     		bonxaiType.setFixedValue(xsdElement.getFixed());
     		bonxaiType.setDefaultValue(xsdElement.getDefault());
+    		bonxaiType.setNillable(xsdElement.isNillable());
     	}
     	
     	eu.fox7.schematoolkit.bonxai.om.Element bonxaiElement = new eu.fox7.schematoolkit.bonxai.om.Element(
             xsdElement.getName(),
-            bonxaiType,
-            xsdElement.isNillable()
+            bonxaiType
         );
 
 
