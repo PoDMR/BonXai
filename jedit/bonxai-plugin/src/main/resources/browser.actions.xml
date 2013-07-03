@@ -2,4 +2,9 @@
 
 <!DOCTYPE ACTIONS SYSTEM "actions.dtd">
 <ACTIONS>
+  <ACTION NAME="bonxai.learnXMLSCHEMA">
+    <CODE>
+      jEdit.getPlugin("eu.fox7.jedit.BonXaiPlugin").handleBrowserAction(view, files, "learnXMLSCHEMA");
+    </CODE>
+  </ACTION>
 </ACTIONS>

@@ -21,8 +21,10 @@ import org.gjt.sp.jedit.visitors.JEditVisitorAdapter;
 
 import eu.fox7.jedit.action.ConvertSchema;
 import eu.fox7.jedit.action.DebugPrinter;
+import eu.fox7.jedit.action.Learner;
 import eu.fox7.jedit.action.RegisterSchema;
 import eu.fox7.jedit.action.ValidateXML;
+import eu.fox7.schematoolkit.xsd.XSDSchemaHandler;
 import gatchan.highlight.color.FlexColorPainter;
 
 public class BonXaiPlugin extends EditPlugin {
@@ -66,9 +68,12 @@ public class BonXaiPlugin extends EditPlugin {
 	 */
 	@Override
 	public void start() {
+		XSDSchemaHandler.useSaxParser(true);
+
 		this.addAction(new ConvertSchema());
 		this.addAction(new RegisterSchema());
 		this.addAction(new ValidateXML());
+		this.addAction(new Learner());
 		this.addAction(new DebugPrinter());
 		jEdit.visit(new TextAreaInitializer());
 //		jEdit.visit(new ViewInitializer());

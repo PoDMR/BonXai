@@ -15,6 +15,7 @@ import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
 import eu.fox7.schematoolkit.bonxai.om.Expression;
+import eu.fox7.schematoolkit.xsd.XSDSchemaHandler;
 import eu.fox7.schematoolkit.xsd.om.Element;
 import eu.fox7.schematoolkit.xsd.om.Type;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
