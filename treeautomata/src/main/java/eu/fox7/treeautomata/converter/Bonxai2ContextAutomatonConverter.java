@@ -144,7 +144,7 @@ public class Bonxai2ContextAutomatonConverter {
 						insertChild(state, productState, symbol, compute);
 					}
 					
-					children = ChildSymbolExtractor.getChildSymbolsWithBonxaiType(matchingExpression.getChildPattern(), bonxai);
+					children = ChildSymbolExtractor.getChildSymbols(matchingExpression.getChildPattern(), bonxai);
 					
 				}
 			} else {

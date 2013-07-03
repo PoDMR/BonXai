@@ -37,6 +37,12 @@ public class Particle2ContentAutomatonConverter {
 	private Map<String,Particle> stringElementMap;
 	private BidiMap<Particle,State> elementStateMap;
 	
+	private boolean namespaceAware = true;
+	
+	public void setNamespaceAware(boolean namespaceAware) {
+		this.namespaceAware = namespaceAware;
+	}
+	
 	public SparseNFA convertParticle(Particle particle) {
 		count = 0;
 		this.stringElementMap = new HashMap<String,Particle>();
