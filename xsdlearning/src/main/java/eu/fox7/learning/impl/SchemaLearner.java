@@ -83,6 +83,7 @@ public class SchemaLearner implements eu.fox7.schematoolkit.SchemaLearner {
 		try {
 			ContextMap contextMap = this.computeContextMap();
 			ContextAutomaton contextAutomaton = this.learnContextAutomaton(contextMap);
+			System.err.println("ContextAutomaton: "  + contextAutomaton);
 			ContextAutomaton2XSDConverter caConverter = new ContextAutomaton2XSDConverter();
 			XSDSchema xsdSchema = caConverter.convert(contextAutomaton);
 			return xsdSchema;
