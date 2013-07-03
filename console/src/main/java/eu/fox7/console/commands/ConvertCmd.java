@@ -6,7 +6,6 @@ import java.util.List;
 import jline.ArgumentCompletor;
 import jline.Completor;
 import eu.fox7.console.Command;
-import eu.fox7.schematoolkit.Schema;
 import eu.fox7.schematoolkit.SchemaConverter;
 import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaLanguage;

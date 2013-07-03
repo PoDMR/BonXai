@@ -6,7 +6,6 @@ import jline.ArgumentCompletor;
 import jline.Completor;
 import jline.MultiCompletor;
 import jline.SimpleCompletor;
-import eu.fox7.console.Command;
 import eu.fox7.console.CommandCollection;
 import eu.fox7.schematoolkit.Schema;
 import eu.fox7.schematoolkit.SchemaLearner;

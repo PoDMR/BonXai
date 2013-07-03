@@ -12,12 +12,10 @@ import jline.Completor;
 import jline.ConsoleReader;
 import jline.FileNameCompletor;
 import jline.MultiCompletor;
-import jline.NullCompletor;
 import jline.SimpleCompletor;
 
 
 
-import eu.fox7.schematoolkit.Schema;
 import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.SchemaLanguage;
 import eu.fox7.console.commands.*;
@@ -214,9 +212,10 @@ public class Console {
 		console.addCommand(new ExitCmd());
 		console.addCommand(console.new ListCmd());
 		console.addCommand(new FixUPACmd());
-		console.addCommand(new Learner());
+//		console.addCommand(new Learner());
 		console.addCommand(new UnionCmd());
 		console.addCommand(new IntersectionCmd());
+		console.addCommand(new ValidateCmd());
 		console.work();
 //		if (args.length == 0) {
 //		} else {
