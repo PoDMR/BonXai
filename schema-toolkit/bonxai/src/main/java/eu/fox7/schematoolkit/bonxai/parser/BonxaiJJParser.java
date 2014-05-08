@@ -9,12 +9,15 @@ import eu.fox7.schematoolkit.bonxai.om.Annotation;
 import eu.fox7.schematoolkit.common.*;
 
 public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParserConstants {
+  private int identifierBeginLine=0;
+  private int identifierBeginColumn=0;
   private int identifierEndLine=0;
   private int identifierEndColumn=0;
   private int aPatternBeginLine=0;
   private int aPatternBeginColumn=0;
   private int aPatternEndLine=0;
   private int aPatternEndColumn=0;
+  private boolean startOfAPattern=true;
 
 
   private void setState(int state) {
@@ -78,6 +81,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         }
         Decl();
       }
+      GlobalBlock();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case GROUPS:
         GroupBlock();
@@ -135,6 +139,43 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     }
   }
 
+// GlobalBlock			::= "global" "{" NCName* "}"
+  final public void GlobalBlock() throws ParseException {
+    trace_call("GlobalBlock");
+    try {
+                     QualifiedName name;
+      jj_consume_token(GLOBAL);
+      jj_consume_token(OPENING_CURLY_BRACKET);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case LABEL:
+        name = Name();
+                    this.bonxai.addRootElementName(name);
+        label_2:
+        while (true) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case COMMA:
+            ;
+            break;
+          default:
+            jj_la1[4] = jj_gen;
+            break label_2;
+          }
+          jj_consume_token(COMMA);
+          name = Name();
+                              this.bonxai.addRootElementName(name);
+        }
+        break;
+      default:
+        jj_la1[5] = jj_gen;
+        ;
+      }
+        setState(DEFAULT);
+      jj_consume_token(CLOSING_CURLY_BRACKET);
+    } finally {
+      trace_return("GlobalBlock");
+    }
+  }
+
   final public String NamespaceUriLiteral() throws ParseException {
     trace_call("NamespaceUriLiteral");
     try {
@@ -150,7 +191,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         t = jj_consume_token(QUOTATION);
         break;
       default:
-        jj_la1[4] = jj_gen;
+        jj_la1[6] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -167,7 +208,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     try {
       jj_consume_token(CONSTRAINTS);
       jj_consume_token(OPENING_CURLY_BRACKET);
-      label_2:
+      label_3:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case UNIQUE:
@@ -176,8 +217,8 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           ;
           break;
         default:
-          jj_la1[5] = jj_gen;
-          break label_2;
+          jj_la1[7] = jj_gen;
+          break label_3;
         }
         Constraint();
       }
@@ -202,7 +243,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         KeyRefConstraint();
         break;
       default:
-        jj_la1[6] = jj_gen;
+        jj_la1[8] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -228,7 +269,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         aPattern = APattern();
         break;
       default:
-        jj_la1[7] = jj_gen;
+        jj_la1[9] = jj_gen;
         ;
       }
       jj_consume_token(EQUALS);
@@ -259,7 +300,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         aPattern = APattern();
         break;
       default:
-        jj_la1[8] = jj_gen;
+        jj_la1[10] = jj_gen;
         ;
       }
       jj_consume_token(EQUALS);
@@ -290,7 +331,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         aPattern = APattern();
         break;
       default:
-        jj_la1[9] = jj_gen;
+        jj_la1[11] = jj_gen;
         ;
       }
       jj_consume_token(EQUALS);
@@ -312,15 +353,15 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
       jj_consume_token(OPENING_CURLY_BRACKET);
       field = APattern();
                                                     fields.add(field);
-      label_3:
+      label_4:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case COMMA:
           ;
           break;
         default:
-          jj_la1[10] = jj_gen;
-          break label_3;
+          jj_la1[12] = jj_gen;
+          break label_4;
         }
         jj_consume_token(COMMA);
         field = APattern();
@@ -340,7 +381,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     try {
       jj_consume_token(GROUPS);
       jj_consume_token(OPENING_CURLY_BRACKET);
-      label_4:
+      label_5:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case GROUP:
@@ -348,8 +389,8 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           ;
           break;
         default:
-          jj_la1[11] = jj_gen;
-          break label_4;
+          jj_la1[13] = jj_gen;
+          break label_5;
         }
         GroupRule();
       }
@@ -387,7 +428,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
                                                                                                                                                                    this.bonxai.addGroup(new BonxaiAttributeGroup(name, attributePattern));
         break;
       default:
-        jj_la1[12] = jj_gen;
+        jj_la1[14] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -403,8 +444,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     try {
       jj_consume_token(GRAMMAR);
       jj_consume_token(OPENING_CURLY_BRACKET);
-      RootElements();
-      label_5:
+      label_6:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case OPENING_ROUND_BRACKET:
@@ -417,8 +457,8 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
           ;
           break;
         default:
-          jj_la1[13] = jj_gen;
-          break label_5;
+          jj_la1[15] = jj_gen;
+          break label_6;
         }
         Expr();
       }
@@ -429,47 +469,11 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     }
   }
 
-// RootElements
-  final public void RootElements() throws ParseException {
-    trace_call("RootElements");
-    try {
-                      QualifiedName name;
-      jj_consume_token(ROOTS);
-      jj_consume_token(OPENING_CURLY_BRACKET);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case LABEL:
-        name = Name();
-                                                        this.bonxai.addRootElementName(name);
-        label_6:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case COMMA:
-            ;
-            break;
-          default:
-            jj_la1[14] = jj_gen;
-            break label_6;
-          }
-          jj_consume_token(COMMA);
-          name = Name();
-                                                                                                                        this.bonxai.addRootElementName(name);
-        }
-        break;
-      default:
-        jj_la1[15] = jj_gen;
-        ;
-      }
-      jj_consume_token(CLOSING_CURLY_BRACKET);
-    } finally {
-      trace_return("RootElements");
-    }
-  }
-
 // Expr                ::= Annotations? APattern "=" CPattern
   final public void Expr() throws ParseException {
     trace_call("Expr");
     try {
-              aPatternBeginLine=0; AncestorPattern aPattern; ChildPattern cPattern; List<Annotation> annotations=new LinkedList<Annotation>();
+              startOfAPattern=true; AncestorPattern aPattern; ChildPattern cPattern; List<Annotation> annotations=new LinkedList<Annotation>();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PERCENT:
         annotations = Annotations();
@@ -621,16 +625,21 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
   final public AncestorPattern SimpleAPattern() throws ParseException {
     trace_call("SimpleAPattern");
     try {
-                                   QualifiedName name; AncestorPattern a;
+  QualifiedName name;
+  AncestorPattern a;
+  boolean start=startOfAPattern;
+  startOfAPattern=false;
+  Token t = null;
+  Token s = null;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LABEL:
         name = Name();
-                        a=new AncestorPatternElement(name);
+            a=new AncestorPatternElement(name);
         break;
       case AT:
         jj_consume_token(AT);
         name = AttributeName();
-                                              a=new AncestorPatternElement(name);
+                                    a=new AncestorPatternElement(name);
         break;
       case OPENING_ROUND_BRACKET:
         jj_consume_token(OPENING_ROUND_BRACKET);
@@ -639,14 +648,31 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         break;
       case STAR:
         jj_consume_token(STAR);
-                         a=new AncestorPatternWildcard();
+                   a=new AncestorPatternWildcard();
         break;
       default:
         jj_la1[21] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
-      {if (true) return a;}
+      if (start) {
+        if (t == null) {
+              aPatternBeginLine = identifierBeginLine;
+              aPatternBeginColumn = identifierBeginColumn;
+            } else {
+              aPatternBeginLine = t.beginLine;
+              aPatternBeginColumn = t.beginColumn;
+            }
+
+        if (s == null) {
+              aPatternEndLine = identifierEndLine;
+              aPatternEndColumn = identifierEndColumn;
+            } else {
+              aPatternEndLine = s.endLine;
+              aPatternEndColumn = s.endColumn;
+            }
+      }
+          {if (true) return a;}
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("SimpleAPattern");
@@ -726,6 +752,8 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
   boolean separator=false;
   boolean sequence=false;
   boolean or=false;
+  boolean start=startOfAPattern;
+  startOfAPattern=false;
   AncestorPattern aPattern, aPattern1;
   Token t = null;
   Token s = null;
@@ -761,7 +789,7 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
         jj_consume_token(-1);
         throw new ParseException();
       }
-      if (aPatternBeginLine == 0) {
+      if (start) {
             aPatternBeginLine = t.beginLine;
             aPatternBeginColumn = t.beginColumn;
       }
@@ -1536,6 +1564,8 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     try {
                       Token t;
       t = jj_consume_token(LABEL);
+          identifierBeginLine = t.beginLine;
+          identifierEndColumn = t.endColumn;
           identifierEndLine = t.endLine;
           identifierEndColumn = t.endColumn;
           {if (true) return t.image;}
@@ -1647,6 +1677,186 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     finally { jj_save(2, xla); }
   }
 
+  final private boolean jj_3_3() {
+    if (jj_scan_token(COMMA)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(23)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(21)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(22)) return true;
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_27() {
+    if (jj_3R_36()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_41() {
+    if (jj_scan_token(COMMA)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_47()) {
+    jj_scanpos = xsp;
+    if (jj_3R_48()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_19() {
+    if (jj_3R_24()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_40() {
+    if (jj_scan_token(CONSTANT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_29() {
+    if (jj_3R_39()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_44() {
+    if (jj_scan_token(LAX)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_2() {
+    if (jj_3R_18()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_19()) jj_scanpos = xsp;
+    if (jj_scan_token(ANDLITERAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_34() {
+    if (jj_scan_token(COLON)) return true;
+    if (jj_3R_33()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_31() {
+    if (jj_scan_token(QUESTION_MARK)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_26() {
+    if (jj_scan_token(OPENING_CURLY_BRACKET)) return true;
+    if (jj_3R_35()) return true;
+    if (jj_scan_token(CLOSING_CURLY_BRACKET)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_39() {
+    if (jj_scan_token(NAMEX)) return true;
+    if (jj_scan_token(NOT)) return true;
+    if (jj_scan_token(OPENING_CURLY_BRACKET)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_46()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(CLOSING_CURLY_BRACKET)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_23() {
+    if (jj_scan_token(ANY)) return true;
+    if (jj_scan_token(OPENING_CURLY_BRACKET)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_27()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_28()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_29()) jj_scanpos = xsp;
+    if (jj_scan_token(CLOSING_CURLY_BRACKET)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_22() {
+    if (jj_scan_token(ELEMENTREF)) return true;
+    if (jj_3R_25()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_25() {
+    if (jj_3R_33()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_34()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_21() {
+    if (jj_scan_token(GROUP)) return true;
+    if (jj_3R_25()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_38() {
+    if (jj_scan_token(OPENING_CURLY_BRACKET)) return true;
+    if (jj_scan_token(CLOSING_CURLY_BRACKET)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_20() {
+    if (jj_scan_token(ELEMENT)) return true;
+    if (jj_3R_25()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_26()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_51() {
+    if (jj_scan_token(QUOTATION)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_30() {
+    if (jj_scan_token(PLUS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_18() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_20()) {
+    jj_scanpos = xsp;
+    if (jj_3R_21()) {
+    jj_scanpos = xsp;
+    if (jj_3R_22()) {
+    jj_scanpos = xsp;
+    if (jj_3R_23()) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_33() {
+    if (jj_scan_token(LABEL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_32() {
+    if (jj_scan_token(OPENING_SQUARED_BRACKET)) return true;
+    if (jj_3R_40()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_41()) jj_scanpos = xsp;
+    if (jj_scan_token(CLOSING_SQUARED_BRACKET)) return true;
+    return false;
+  }
+
   final private boolean jj_3R_50() {
     if (jj_scan_token(DEFAULTT)) return true;
     if (jj_3R_51()) return true;
@@ -1726,6 +1936,20 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
     return false;
   }
 
+  final private boolean jj_3_1() {
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_scan_token(38)) { jj_scanpos = xsp; break; }
+    }
+    xsp = jj_scanpos;
+    if (jj_scan_token(50)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(49)) return true;
+    }
+    return false;
+  }
+
   final private boolean jj_3R_28() {
     Token xsp;
     xsp = jj_scanpos;
@@ -1741,200 +1965,6 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
 
   final private boolean jj_3R_47() {
     if (jj_3R_40()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_3() {
-    if (jj_scan_token(COMMA)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(23)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(21)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(22)) return true;
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_27() {
-    if (jj_3R_36()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_41() {
-    if (jj_scan_token(COMMA)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_47()) {
-    jj_scanpos = xsp;
-    if (jj_3R_48()) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_19() {
-    if (jj_3R_24()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_29() {
-    if (jj_3R_39()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_40() {
-    if (jj_scan_token(CONSTANT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_44() {
-    if (jj_scan_token(LAX)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_2() {
-    if (jj_3R_18()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_19()) jj_scanpos = xsp;
-    if (jj_scan_token(ANDLITERAL)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_34() {
-    if (jj_scan_token(COLON)) return true;
-    if (jj_3R_33()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_31() {
-    if (jj_scan_token(QUESTION_MARK)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_26() {
-    if (jj_scan_token(OPENING_CURLY_BRACKET)) return true;
-    if (jj_3R_35()) return true;
-    if (jj_scan_token(CLOSING_CURLY_BRACKET)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_39() {
-    if (jj_scan_token(NAMEX)) return true;
-    if (jj_scan_token(NOT)) return true;
-    if (jj_scan_token(OPENING_CURLY_BRACKET)) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_46()) { jj_scanpos = xsp; break; }
-    }
-    if (jj_scan_token(CLOSING_CURLY_BRACKET)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_23() {
-    if (jj_scan_token(ANY)) return true;
-    if (jj_scan_token(OPENING_CURLY_BRACKET)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_27()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_28()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_29()) jj_scanpos = xsp;
-    if (jj_scan_token(CLOSING_CURLY_BRACKET)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_22() {
-    if (jj_scan_token(ELEMENTREF)) return true;
-    if (jj_3R_25()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_21() {
-    if (jj_scan_token(GROUP)) return true;
-    if (jj_3R_25()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_25() {
-    if (jj_3R_33()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_34()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_38() {
-    if (jj_scan_token(OPENING_CURLY_BRACKET)) return true;
-    if (jj_scan_token(CLOSING_CURLY_BRACKET)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_20() {
-    if (jj_scan_token(ELEMENT)) return true;
-    if (jj_3R_25()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_26()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_51() {
-    if (jj_scan_token(QUOTATION)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_1() {
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_scan_token(38)) { jj_scanpos = xsp; break; }
-    }
-    xsp = jj_scanpos;
-    if (jj_scan_token(50)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(49)) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_30() {
-    if (jj_scan_token(PLUS)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_18() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_20()) {
-    jj_scanpos = xsp;
-    if (jj_3R_21()) {
-    jj_scanpos = xsp;
-    if (jj_3R_22()) {
-    jj_scanpos = xsp;
-    if (jj_3R_23()) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_33() {
-    if (jj_scan_token(LABEL)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_32() {
-    if (jj_scan_token(OPENING_SQUARED_BRACKET)) return true;
-    if (jj_3R_40()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_41()) jj_scanpos = xsp;
-    if (jj_scan_token(CLOSING_SQUARED_BRACKET)) return true;
     return false;
   }
 
@@ -1956,13 +1986,13 @@ public class BonxaiJJParser extends BonxaiJJParserBase implements BonxaiJJParser
       jj_la1_2();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x600,0x80000,0x8000,0x600,0x0,0x70000,0x70000,0x0,0x0,0x0,0x0,0x300000,0x300000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4000000,0x1000000,0x4000000,0x1000000,0x0,0x1af00800,0x18100800,0x1a100800,0x0,0x0,0x0,0x0,0x0,0x18100000,0x0,0x0,0x0,0x0,0x0,0xe0000000,0x0,0x0,0x0,0x18100000,0x0,0xe00000,0xe00000,0x1000,0x0,0x0,0x0,0x0,0xe0000000,0x1000,0x1000,0x0,0x0,};
+      jj_la1_0 = new int[] {0x600,0x80000,0x8000,0x600,0x0,0x0,0x0,0x70000,0x70000,0x0,0x0,0x0,0x0,0x300000,0x300000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4000000,0x1000000,0x4000000,0x1000000,0x0,0x1af00800,0x18100800,0x1a100800,0x0,0x0,0x0,0x0,0x0,0x18100000,0x0,0x0,0x0,0x0,0x0,0xe0000000,0x0,0x0,0x0,0x18100000,0x0,0xe00000,0xe00000,0x1000,0x0,0x0,0x0,0x0,0xe0000000,0x1000,0x1000,0x0,0x0,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x80000000,0x0,0x0,0x800e4040,0x800e4040,0x800e4040,0x2000,0x0,0x0,0x810e4040,0x2000,0x80000000,0x1000000,0x1000000,0x80000000,0x80084040,0x60040,0x80084040,0x8000,0x60040,0x380000,0x60040,0x8000,0x380000,0x0,0x0,0x0,0x0,0x2000,0x42,0x42,0x42,0x380100,0x380100,0x10000,0x8000,0x2000,0x42,0x380100,0x80020,0x2000,0x380100,0x400,0x0,0x8,0x408,0x10,0x2,0x80000000,0x0,0x0,0x1,0x400,0x200000,0x400,0x200000,0x0,0x1,0x1,0x400000,0x400000,};
+      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x2000,0x80000000,0x80000000,0x0,0x0,0x800e4040,0x800e4040,0x800e4040,0x2000,0x0,0x0,0x810e4040,0x1000000,0x1000000,0x80000000,0x80084040,0x60040,0x80084040,0x8000,0x60040,0x380000,0x60040,0x8000,0x380000,0x0,0x0,0x0,0x0,0x2000,0x42,0x42,0x42,0x380100,0x380100,0x10000,0x8000,0x2000,0x42,0x380100,0x80020,0x2000,0x380100,0x400,0x0,0x8,0x408,0x10,0x2,0x80000000,0x0,0x0,0x1,0x400,0x200000,0x400,0x200000,0x0,0x1,0x1,0x400000,0x400000,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x6,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x6,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[3];
   private boolean jj_rescan = false;

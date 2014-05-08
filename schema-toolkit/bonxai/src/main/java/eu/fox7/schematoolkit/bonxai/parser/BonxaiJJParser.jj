@@ -20,12 +20,15 @@ import eu.fox7.schematoolkit.bonxai.om.Annotation;
 import eu.fox7.schematoolkit.common.*;
 
 public class BonxaiJJParser extends BonxaiJJParserBase {
+  private int identifierBeginLine=0;
+  private int identifierBeginColumn=0;
   private int identifierEndLine=0;
   private int identifierEndColumn=0;
   private int aPatternBeginLine=0;
   private int aPatternBeginColumn=0;
   private int aPatternEndLine=0;
   private int aPatternEndColumn=0;
+  private boolean startOfAPattern=true;
   
   
   private void setState(int state) {
@@ -96,8 +99,8 @@ TOKEN_MGR_DECLS : {
 
 TOKEN:
 { 
-	< ROOTS: "roots" >: NAME
-| 	< GRAMMAR: "grammar"  >
+	< GLOBAL: "global" >: NAME
+| 	< GRAMMAR: "grammar"  >: NAME
 |	< TARGET_NAMESPACE: "target namespace">: NAME
 |	< NAMESPACE: "namespace" >: NAME 
 |	< TYPE: "type" >: NAME
@@ -503,7 +506,7 @@ TOKEN:
 
 Bonxai bonxai(): {}
 {
-	( Decl())* [GroupBlock()] Block() [ConstraintBlock()] <EOF>
+	( Decl())* GlobalBlock() [GroupBlock()] Block() [ConstraintBlock()] <EOF>
 	{ return this.bonxai; }
 }
 
@@ -521,6 +524,16 @@ void Decl(): {String uri="" ; String ident=""; String url="";}
 ) { setState(DEFAULT); }
 }
 
+// GlobalBlock			::= "global" "{" NCName* "}"
+void GlobalBlock(): {QualifiedName name; }
+{
+  <GLOBAL> <OPENING_CURLY_BRACKET> 
+    [ 
+      name=Name() { this.bonxai.addRootElementName(name); } 
+      ( <COMMA> name=Name() { this.bonxai.addRootElementName(name); } )* 
+    ] { setState(DEFAULT); }
+  <CLOSING_CURLY_BRACKET> 
+}
 
 String NamespaceUriLiteral(): {Token t;}
 {
@@ -600,19 +613,13 @@ void GroupRule() : {QualifiedName name; Particle particle; AttributePattern attr
 //Block               ::= "grammar" "{" Expr* "}"
 void Block(): {}
 {
-	<GRAMMAR> <OPENING_CURLY_BRACKET> RootElements() ( Expr())*  <CLOSING_CURLY_BRACKET>
+	<GRAMMAR> <OPENING_CURLY_BRACKET> ( Expr())*  <CLOSING_CURLY_BRACKET>
 	{ setState(DEFAULT); }
-}
-
-// RootElements
-void RootElements(): {QualifiedName name; }
-{
-	<ROOTS> <OPENING_CURLY_BRACKET> [ name=Name() { this.bonxai.addRootElementName(name); } ( <COMMA> name=Name() { this.bonxai.addRootElementName(name); } )* ] <CLOSING_CURLY_BRACKET>
 }
 
 
 // Expr                ::= Annotations? APattern "=" CPattern
-void Expr(): {aPatternBeginLine=0; AncestorPattern aPattern; ChildPattern cPattern; List<Annotation> annotations=new LinkedList<Annotation>();}
+void Expr(): {startOfAPattern=true; AncestorPattern aPattern; ChildPattern cPattern; List<Annotation> annotations=new LinkedList<Annotation>();}
 {
 	[annotations=Annotations()] aPattern=APattern() <EQUALS> { setState(DEFAULT); } cPattern=CPattern()
 	{ this.bonxai.addExpression(new Expression(annotations, aPattern, cPattern, new BonxaiLocation(aPatternBeginLine,aPatternBeginColumn,aPatternEndLine,aPatternEndColumn))); setState(NAME); }
@@ -669,13 +676,39 @@ AncestorPattern SimpleAPatternX(): { SequenceExpression seq = new SequenceExpres
 
 
 //SimpleAPattern       ::= Name | "@"Name | "(" SimpleAPatternOr ")"
-AncestorPattern SimpleAPattern(): {QualifiedName name; AncestorPattern a;}
+AncestorPattern SimpleAPattern(): {
+  QualifiedName name; 
+  AncestorPattern a; 
+  boolean start=startOfAPattern;
+  startOfAPattern=false; 
+  Token t = null;
+  Token s = null; }
 {
-	( name=Name() { a=new AncestorPatternElement(name); }  | 
-		<AT> ( name=AttributeName() { a=new AncestorPatternElement(name); }) | 
-		<OPENING_ROUND_BRACKET> a=SimpleAPatternOr() <CLOSING_ROUND_BRACKET> |
-		<STAR> { a=new AncestorPatternWildcard(); }	)
-    { return a; }
+	( name=Name() { 
+	    a=new AncestorPatternElement(name); 
+	  }  | 
+      <AT> ( name=AttributeName() { a=new AncestorPatternElement(name); }) | 
+	  <OPENING_ROUND_BRACKET> a=SimpleAPatternOr() <CLOSING_ROUND_BRACKET> |
+	  <STAR> { a=new AncestorPatternWildcard(); }	)
+    { 
+      if (start) {
+        if (t == null) {
+	      aPatternBeginLine = identifierBeginLine;
+	      aPatternBeginColumn = identifierBeginColumn;
+	    } else {
+   	      aPatternBeginLine = t.beginLine;
+	      aPatternBeginColumn = t.beginColumn;
+	    }
+
+        if (s == null) {
+	      aPatternEndLine = identifierEndLine;
+	      aPatternEndColumn = identifierEndColumn;
+	    } else {
+	      aPatternEndLine = s.endLine;
+	      aPatternEndColumn = s.endColumn;
+	    }
+      }
+	  return a; }
 }
 
 // old: SimpleAPatternOr     ::= SimpleAPattern ("|" SimpleAPattern)*
@@ -710,7 +743,9 @@ AncestorPattern FullAPattern(): { SequenceExpression seq = new SequenceExpressio
 AncestorPattern FullAPatternX(): {
   boolean separator=false; 
   boolean sequence=false; 
-  boolean or=false; 
+  boolean or=false;
+  boolean start=startOfAPattern;
+  startOfAPattern=false;
   AncestorPattern aPattern, aPattern1;
   Token t = null;
   Token s = null; }
@@ -719,7 +754,8 @@ AncestorPattern FullAPatternX(): {
 	|   t=<DOUBLESLASH> aPattern1=SimpleAPattern() { aPattern=new DoubleSlashPrefixedContainer(aPattern1); }  
 	| (t=<OPENING_ROUND_BRACKET>  aPattern1=FullAPatternOr() {aPattern=aPattern1;} s=<CLOSING_ROUND_BRACKET> [aPattern=Operator(aPattern1) {s=null;}] ))   
     {
-      if (aPatternBeginLine == 0) {  	    aPatternBeginLine = t.beginLine;
+      if (start) {
+  	    aPatternBeginLine = t.beginLine;
 	    aPatternBeginColumn = t.beginColumn;
       }
       if (s == null) {	    aPatternEndLine = identifierEndLine;
@@ -919,6 +955,8 @@ String Identifier(): {Token t;}
 {
 	t=<LABEL>   
 	{
+	  identifierBeginLine = t.beginLine;
+	  identifierEndColumn = t.endColumn;
 	  identifierEndLine = t.endLine;
 	  identifierEndColumn = t.endColumn;
 	  return t.image;
