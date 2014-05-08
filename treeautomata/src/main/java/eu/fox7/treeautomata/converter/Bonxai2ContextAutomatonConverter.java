@@ -31,6 +31,20 @@ import eu.fox7.schematoolkit.typeautomaton.factories.ChildSymbolExtractor;
 import eu.fox7.treeautomata.om.ExtendedContextAutomaton;
 
 public class Bonxai2ContextAutomatonConverter {
+	private class MyGroupResolver implements  Particle2ContentAutomatonConverter.GroupResolver {
+		Bonxai bonxai;
+		
+		public MyGroupResolver(Bonxai bonxai) {
+			this.bonxai = bonxai;
+		}
+		
+		@Override
+		public Particle getGroup(QualifiedName groupName) {
+			return bonxai.getElementGroup(groupName).getParticle();
+		}
+		
+	}
+	
 	private ExtendedContextAutomaton eca;
 	private boolean correct;
 	
@@ -100,6 +114,7 @@ public class Bonxai2ContextAutomatonConverter {
 		elementStateMap = new HashMap<Locatable,Set<State>>();
 		
 		this.childPatternConverter = new ChildPattern2ContentAutomatonConverter();
+		this.childPatternConverter.setGroupResolver(new MyGroupResolver(bonxai));
 
 //		expressions = new Vector<Expression>(bonxai.getExpressions());
 //		List<QualifiedName> rootElements = bonxai.getRootElementNames();
@@ -187,11 +202,11 @@ public class Bonxai2ContextAutomatonConverter {
 							StateNFA contentAutomaton = childPatternConverter.convertChildPattern(childPattern);
 							eca.setContentAutomaton(state, contentAutomaton);
 						} else {
-							boolean caCorrect = childPatternConverter.verifyChildPattern(childPattern, eca.getAnnotation(state));
-							if (!caCorrect) {
-								this.correct = false;
+//							boolean caCorrect = childPatternConverter.verifyChildPattern(childPattern, eca.getAnnotation(state));
+//							if (!caCorrect) {
+//								this.correct = false;
 								//TODO
-							}
+//							}
 						}
 						for (Entry<Particle,State> entry: childPatternConverter.getElementStateMap().entrySet()) {
 							if (entry.getKey() instanceof Locatable) {

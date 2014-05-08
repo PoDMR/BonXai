@@ -1,6 +1,7 @@
 package eu.fox7.treeautomata.converter;
 
 import org.apache.commons.collections15.BidiMap;
+
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.schematoolkit.bonxai.om.ChildPattern;
@@ -8,9 +9,14 @@ import eu.fox7.schematoolkit.bonxai.om.ElementPattern;
 import eu.fox7.schematoolkit.common.EmptyPattern;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.Element;
+import eu.fox7.schematoolkit.common.QualifiedName;
 
 public class ChildPattern2ContentAutomatonConverter {
 	private Particle2ContentAutomatonConverter particleConverter = new Particle2ContentAutomatonConverter();
+	
+	public void setGroupResolver(Particle2ContentAutomatonConverter.GroupResolver groupResolver) {
+		this.particleConverter.setGroupResolver(groupResolver);
+	}
 	
 	public StateNFA convertChildPattern(ChildPattern childPattern) {
 		StateNFA contentAutomaton = null;

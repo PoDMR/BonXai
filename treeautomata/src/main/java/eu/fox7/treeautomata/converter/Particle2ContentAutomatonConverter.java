@@ -30,6 +30,7 @@ import eu.fox7.schematoolkit.common.EmptyPattern;
 import eu.fox7.schematoolkit.common.GroupReference;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.ParticleContainer;
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.common.SequencePattern;
 
 public class Particle2ContentAutomatonConverter {
@@ -38,6 +39,15 @@ public class Particle2ContentAutomatonConverter {
 	private BidiMap<Particle,State> elementStateMap;
 	
 	private boolean namespaceAware = true;
+	private GroupResolver groupResolver;
+	
+	public interface GroupResolver {
+		public Particle getGroup(QualifiedName groupName);
+	}
+	
+	public void setGroupResolver(GroupResolver groupResolver) {
+		this.groupResolver = groupResolver;
+	}
 	
 	public void setNamespaceAware(boolean namespaceAware) {
 		this.namespaceAware = namespaceAware;
@@ -121,7 +131,8 @@ public class Particle2ContentAutomatonConverter {
 			} else if (particle instanceof ChoicePattern) {
 				return factory.createUnion(childs.toArray(new Regex[0]));
 			} else if (particle instanceof AllPattern) {
-				return factory.createInterleave(childs.toArray(new Regex[0]));
+				// interleave is not supported by automaton library. Therefore we change ( a & b & c ) to ( a + b + c )* 
+				return factory.createMultiplicity(factory.createUnion(childs.toArray(new Regex[0])), 0, RegexFactory.INFINITY);
 			}else {
 				throw new RuntimeException("Unknown particle container");
 			}
@@ -142,7 +153,10 @@ public class Particle2ContentAutomatonConverter {
 		} else if (particle == null) {
 			return factory.createEpsilon();
 		} else if (particle instanceof GroupReference) {
-			throw new RuntimeException("Groups are not supported yet.");
+			if (this.groupResolver == null)
+				throw new RuntimeException("GroupReference found but no GroupResolver available.");
+			Particle childParticle = this.groupResolver.getGroup(((GroupReference) particle).getName());
+			return this.convertParticleRecursive(childParticle);
 		} else {
 			throw new RuntimeException("Unknown Particle of class " + particle.getClass().getCanonicalName());
 		}
