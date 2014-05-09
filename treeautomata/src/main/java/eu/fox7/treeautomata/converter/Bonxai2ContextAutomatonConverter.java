@@ -202,11 +202,11 @@ public class Bonxai2ContextAutomatonConverter {
 							StateNFA contentAutomaton = childPatternConverter.convertChildPattern(childPattern);
 							eca.setContentAutomaton(state, contentAutomaton);
 						} else {
-//							boolean caCorrect = childPatternConverter.verifyChildPattern(childPattern, eca.getAnnotation(state));
-//							if (!caCorrect) {
-//								this.correct = false;
+							boolean caCorrect = childPatternConverter.verifyChildPattern(childPattern, eca.getAnnotation(state));
+							if (!caCorrect) {
+								this.correct = false;
 								//TODO
-//							}
+							}
 						}
 						for (Entry<Particle,State> entry: childPatternConverter.getElementStateMap().entrySet()) {
 							if (entry.getKey() instanceof Locatable) {

@@ -10,6 +10,7 @@ import org.apache.commons.collections15.BidiMap;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.flt.automata.misc.StateRemapper;
+import eu.fox7.schematoolkit.bonxai.om.Bonxai;
 import eu.fox7.schematoolkit.common.AbstractAttribute;
 import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.Particle;
@@ -30,6 +31,21 @@ public class XSD2ContextAutomatonConverter {
 	private ExtendedContextAutomaton contextAutomaton;
 	private boolean correct;
 
+	private class MyGroupResolver implements Particle2ContentAutomatonConverter.GroupResolver {
+		XSDSchema xsd;
+		
+		public MyGroupResolver(XSDSchema xsd) {
+			this.xsd = xsd;
+		}
+		
+		@Override
+		public Particle getGroup(QualifiedName groupName) {
+			return xsd.getGroup(groupName).getParticle();
+		}
+		
+	}
+
+	
     /** 
      * Maps types to states of the context automaton
      */
@@ -55,6 +71,7 @@ public class XSD2ContextAutomatonConverter {
 	private void computeVerify(XSDSchema xsd, boolean compute) {
 		this.elementStateMap = new HashMap<Element,State>();
 		this.typeConverter = new Type2ContentAutomatonConverter();
+				typeConverter.setGroupResolver(new MyGroupResolver(xsd));
 		XSDTypeAutomatonFactory factory = new XSDTypeAutomatonFactory(this.addSimpleTypes);
 		TypeAutomaton typeAutomaton = factory.createTypeAutomaton(xsd);
 
