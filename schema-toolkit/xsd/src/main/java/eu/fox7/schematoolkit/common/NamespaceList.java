@@ -114,12 +114,12 @@ public class NamespaceList {
 		return getQualifiedName(qName, false);
 	}
 
-	public QualifiedName getQualifiedName(String qName, boolean useEmptyNamespaceAsDefault) {
+	public QualifiedName getQualifiedName(String qName, boolean isAttribute) {
 		Namespace namespace = null;
 		String localName;
 		int pos = qName.lastIndexOf(':');
 		if (pos == -1 ) {
-			if (useEmptyNamespaceAsDefault)
+			if (isAttribute)
 				namespace = Namespace.EMPTY_NAMESPACE;
 			else 
 				namespace = this.defaultNamespace;
@@ -135,7 +135,7 @@ public class NamespaceList {
 			namespace = Namespace.EMPTY_NAMESPACE;
 		}
 		
-		return new QualifiedName(namespace.getUri(), localName);
+		return new QualifiedName(namespace.getUri(), localName, isAttribute);
 	}
 
 	public String getQualifiedName(QualifiedName name) {

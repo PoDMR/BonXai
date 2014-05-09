@@ -86,6 +86,12 @@ public class QualifiedName {
 		this.name = name;
 	}
 
+	public QualifiedName(String uri, String name, boolean isAttribute) {
+		this.namespace = uri;
+		this.name = name;
+		this.isAttribute = isAttribute;
+	}
+
 	public String getName() {
 		return name;
 	}
