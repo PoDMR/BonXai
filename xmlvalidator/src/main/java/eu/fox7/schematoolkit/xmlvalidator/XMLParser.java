@@ -282,6 +282,7 @@ public class XMLParser extends DefaultHandler {
 			for (XMLAttribute attribute: xmlAttributes) {
 				System.err.println("Checking attribute " + attribute.localName);
 				QualifiedName attributeName = new QualifiedName(attribute.uri, attribute.localName);
+				attributeName.setAttribute(true);
 				boolean found = false;
 				if (declaredAttributes!=null)
 					for (AbstractAttribute declaredAttribute: declaredAttributes)
@@ -305,6 +306,7 @@ public class XMLParser extends DefaultHandler {
 						boolean found = false;
 						for (XMLAttribute attribute: xmlAttributes) {
 							QualifiedName attributeName = new QualifiedName(attribute.uri, attribute.localName);
+							attributeName.setAttribute(true);
 							if (declaredAttribute.getName().equals(attributeName))
 								found = true;
 						}
@@ -317,7 +319,6 @@ public class XMLParser extends DefaultHandler {
 						}
 					}
 				}
-
 		}
     	
     	Pair<Integer,Integer> pos = locations.pop();
