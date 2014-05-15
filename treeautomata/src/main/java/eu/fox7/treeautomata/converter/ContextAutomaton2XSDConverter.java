@@ -39,6 +39,8 @@ public class ContextAutomaton2XSDConverter {
 			State state;
 			try {
 				state = typeAutomaton.getNextState(Symbol.create(rootElement.getFullyQualifiedName()), typeAutomaton.getInitialState());
+				if (state == null && rootElement.getNamespaceURI().equals(""))
+					state = typeAutomaton.getNextState(Symbol.create(rootElement.getName()), typeAutomaton.getInitialState());
 			} catch (NotDFAException e) {
 				throw new RuntimeException(e);
 			}
