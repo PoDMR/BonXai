@@ -4,6 +4,7 @@
  */
 package eu.fox7.flt.treeautomata.impl;
 
+import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.SupportNFA;
 
 /**
@@ -11,4 +12,13 @@ import eu.fox7.flt.automata.impl.sparse.SupportNFA;
  * @version $Revision: 1.1 $
  *
  */
-public class ContentAutomaton extends SupportNFA {}
+public class ContentAutomaton extends SupportNFA {
+
+	public ContentAutomaton(SparseNFA nfa) {
+		super(nfa);
+	}
+
+	public ContentAutomaton() {
+	}
+	
+}

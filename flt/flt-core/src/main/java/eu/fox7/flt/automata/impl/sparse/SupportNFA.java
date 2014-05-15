@@ -11,6 +11,13 @@ package eu.fox7.flt.automata.impl.sparse;
  */
 public class SupportNFA extends AnnotatedSparseNFA<Integer, Integer> {
 
+	public SupportNFA(SparseNFA nfa) {
+		super(nfa);
+	}
+
+	public SupportNFA() {
+	}
+
 	public int getTotalSupport() {
 		int totalSupport = 0;
 		for (State finalState : getFinalStates())
