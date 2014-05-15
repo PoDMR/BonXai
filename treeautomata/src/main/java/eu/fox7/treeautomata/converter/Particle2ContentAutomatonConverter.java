@@ -10,6 +10,7 @@ import org.apache.commons.collections15.BidiMap;
 import org.apache.commons.collections15.bidimap.DualHashBidiMap;
 
 import eu.fox7.flt.automata.FeatureNotSupportedException;
+import eu.fox7.flt.automata.converters.NFAMinimizer;
 import eu.fox7.flt.automata.factories.sparse.GlushkovFactory;
 import eu.fox7.flt.automata.factories.sparse.ThompsonFactory;
 import eu.fox7.flt.automata.impl.sparse.SparseNFA;
@@ -96,23 +97,27 @@ public class Particle2ContentAutomatonConverter {
 	
 
 	private ContentAutomaton convertRegex(Regex regex) {
-		//GlushkovFactory factory = new GlushkovFactory();
-		//ContentAutomaton nfa = new ContentAutomaton();
-		//try {
-		//	return (ContentAutomaton) factory.create(nfa,regex.getTree(), true);
-		//} catch (UnknownOperatorException e) {
-		//	throw new RuntimeException(e);
-		//} catch (FeatureNotSupportedException e) {
-		//	throw new RuntimeException(e);
-		//}
-		ThompsonFactory factory = new ThompsonFactory();
-		SparseNFA nfa;
+		GlushkovFactory factory = new GlushkovFactory();
+		ContentAutomaton nfa = new ContentAutomaton();
 		try {
-			nfa = factory.create(regex.getTree());
+			return (ContentAutomaton) factory.create(nfa,regex.getTree(), true);
 		} catch (UnknownOperatorException e) {
 			throw new RuntimeException(e);
+		} catch (FeatureNotSupportedException e) {
+			throw new RuntimeException(e);
 		}
-		return new ContentAutomaton(nfa);
+		//ThompsonFactory factory = new ThompsonFactory();
+		//SparseNFA nfa;
+		//try {
+		//	nfa = factory.create(regex.getTree());
+		//} catch (UnknownOperatorException e) {
+		//	throw new RuntimeException(e);
+		//}
+		
+		//NFAMinimizer nfaMinimizer = new NFAMinimizer();
+		//nfaMinimizer.minimize(nfa);
+		
+		//return new ContentAutomaton(nfa);
 	}
 
 	/**
