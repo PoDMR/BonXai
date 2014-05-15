@@ -1,9 +1,9 @@
 package eu.fox7.treeautomata.converter;
 
 import java.util.Collection;
+
 import eu.fox7.flt.automata.NotDFAException;
 import eu.fox7.flt.automata.impl.sparse.AnnotatedSparseNFA;
-import eu.fox7.flt.automata.impl.sparse.AnnotatedStateNFA;
 import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
@@ -17,7 +17,7 @@ import eu.fox7.schematoolkit.xsd.om.Type;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 
 public class ContextAutomaton2XSDConverter {
-	public XSDSchema convert(AnnotatedSparseNFA<? extends SparseNFA, ?> contextAutomaton) {
+	public XSDSchema convert(AnnotatedSparseNFA<? extends StateNFA, ?> contextAutomaton) {
 		XSDSchema xsdSchema = new XSDSchema();
 		
 		ContextAutomatonTypeAutomatonFactory taFactory = new ContextAutomatonTypeAutomatonFactory();

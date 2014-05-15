@@ -3,7 +3,6 @@ package eu.fox7.treeautomata.converter;
 
 
 import eu.fox7.flt.automata.impl.sparse.SparseNFA;
-import eu.fox7.flt.automata.impl.sparse.StateNFA;
 import eu.fox7.schematoolkit.common.EmptyPattern;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;

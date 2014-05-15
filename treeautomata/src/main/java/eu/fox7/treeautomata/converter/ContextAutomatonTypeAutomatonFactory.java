@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import eu.fox7.flt.automata.impl.sparse.AnnotatedSparseNFA;
-import eu.fox7.flt.automata.impl.sparse.AnnotatedStateNFA;
 import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
@@ -29,7 +28,7 @@ public class ContextAutomatonTypeAutomatonFactory {
 	}
 	
 	
-	public TypeAutomaton convertContextAutomaton(AnnotatedSparseNFA<? extends SparseNFA, ?> contextAutomaton) {
+	public TypeAutomaton convertContextAutomaton(AnnotatedSparseNFA<? extends StateNFA, ?> contextAutomaton) {
 		Map<State,State> stateMap = StateRemapper.stateRemapping(contextAutomaton);
 		TypeAutomaton typeAutomaton = new AnnotatedNFATypeAutomaton(contextAutomaton,stateMap);
 		this.caConverter = new ContentAutomaton2TypeConverter(typeAutomaton);
@@ -64,7 +63,7 @@ public class ContextAutomatonTypeAutomatonFactory {
 	}
 
 	private Namespace getTargetNamespace(
-			AnnotatedSparseNFA<? extends SparseNFA, ?> contextAutomaton) {
+			AnnotatedSparseNFA<? extends StateNFA, ?> contextAutomaton) {
 		try {
 			State initial = contextAutomaton.getInitialState();
 			Transition transition = contextAutomaton.getOutgoingTransitions(initial).iterator().next();

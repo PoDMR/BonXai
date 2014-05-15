@@ -11,6 +11,7 @@ import org.apache.commons.collections15.bidimap.DualHashBidiMap;
 
 import eu.fox7.flt.automata.FeatureNotSupportedException;
 import eu.fox7.flt.automata.factories.sparse.GlushkovFactory;
+import eu.fox7.flt.automata.factories.sparse.ThompsonFactory;
 import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
 import eu.fox7.flt.automata.impl.sparse.StateNFA;
@@ -95,15 +96,23 @@ public class Particle2ContentAutomatonConverter {
 	
 
 	private ContentAutomaton convertRegex(Regex regex) {
-		GlushkovFactory factory = new GlushkovFactory();
-		ContentAutomaton nfa = new ContentAutomaton();
+		//GlushkovFactory factory = new GlushkovFactory();
+		//ContentAutomaton nfa = new ContentAutomaton();
+		//try {
+		//	return (ContentAutomaton) factory.create(nfa,regex.getTree(), true);
+		//} catch (UnknownOperatorException e) {
+		//	throw new RuntimeException(e);
+		//} catch (FeatureNotSupportedException e) {
+		//	throw new RuntimeException(e);
+		//}
+		ThompsonFactory factory = new ThompsonFactory();
+		SparseNFA nfa;
 		try {
-			return (ContentAutomaton) factory.create(nfa,regex.getTree(), true);
+			nfa = factory.create(regex.getTree());
 		} catch (UnknownOperatorException e) {
 			throw new RuntimeException(e);
-		} catch (FeatureNotSupportedException e) {
-			throw new RuntimeException(e);
 		}
+		return new ContentAutomaton(nfa);
 	}
 
 	/**
