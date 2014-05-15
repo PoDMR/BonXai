@@ -139,13 +139,18 @@ public class NamespaceList {
 	}
 
 	public String getQualifiedName(QualifiedName name) {
+		return getQualifiedName(name, false);
+	}
+
+	
+	public String getQualifiedName(QualifiedName name, boolean prefixAttributeWithAT) {
 		if (name==null)
 			//throw new RuntimeException("Name is null.");
 			return "NULL";
 		Namespace namespace = this.getNamespaceByUri(name.getNamespaceURI());
 		if (namespace == null)
 			namespace = Namespace.EMPTY_NAMESPACE;
-		if (name.isAttribute())
+		if (prefixAttributeWithAT && name.isAttribute())
 			return namespace.getPrefix()+'@'+name.getName();
 		else
 			return namespace.getPrefix()+name.getName();
