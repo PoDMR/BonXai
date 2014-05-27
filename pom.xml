@@ -96,6 +96,7 @@
 		<module>treeautomata</module>
 		<module>upafixer</module>
 		<module>xsdlearning</module>
+		<module>xmlvalidator</module>
 <!--		<module>jedit</module> -->
 	</modules>
 </project>

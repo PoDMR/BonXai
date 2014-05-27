@@ -37,5 +37,6 @@
     <module>schemahandler</module>
     <module>converter/xsd2bonxai</module>
     <module>converter/bonxai2xsd</module>
+    <module>converter/xsd2typeautomaton</module>
   </modules>
 </project>
