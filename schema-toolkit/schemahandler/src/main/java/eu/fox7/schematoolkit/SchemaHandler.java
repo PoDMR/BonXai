@@ -30,6 +30,8 @@ import java.io.StringBufferInputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
+
 @SuppressWarnings("deprecation")
 public abstract class SchemaHandler {
 	protected Schema schema;
@@ -90,5 +92,14 @@ public abstract class SchemaHandler {
 
 	public SchemaLanguage getSchemaLanguage() {
 		return this.getSchema().getSchemaLanguage();
+	}
+	
+	public SchemaHandler convert(SchemaLanguage targetLanguage) throws ConversionFailedException {
+		SchemaConverter converter = this.getConverter(targetLanguage);
+		return converter.convert(this);
+	}
+	
+	public SchemaConverter getConverter(SchemaLanguage targetLanguage) {
+		return this.getSchemaLanguage().getConverter(targetLanguage);
 	}
 }
