@@ -88,16 +88,14 @@
 	      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-<!--	
 	<modules>
-		<module>external</module>
+<!--		<module>external</module> -->
 		<module>flt</module>
-		<module>schema-toolkit/schema-toolkit</module>
-		<module>console</module>
+		<module>schema-toolkit</module>
+<!--		<module>console</module> -->
 		<module>treeautomata</module>
 		<module>upafixer</module>
 		<module>xsdlearning</module>
-		<module>jedit</module>
+<!--		<module>jedit</module> -->
 	</modules>
--->
 </project>

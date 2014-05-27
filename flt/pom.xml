@@ -13,12 +13,10 @@
           <version>1.0-SNAPSHOT</version>
         </parent>
 
-<!--	
 	<modules>
 		<module>flt-utilities</module>
 		<module>flt-core</module>
 		<module>flt-learning</module>
 		<module>flt-disambiguate</module>
 	</modules>
--->
 </project>

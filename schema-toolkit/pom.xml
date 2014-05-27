@@ -28,15 +28,14 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-<!--
+
   <modules>
-    <module>../xsd</module>
-    <module>../bonxai</module>
-    <module>../relaxng</module>
-    <module>../typeautomaton</module>
-    <module>../schemahandler</module>
-    <module>../converter/xsd2bonxai</module>
-    <module>../converter/bonxai2xsd</module>
+    <module>xsd</module>
+    <module>bonxai</module>
+<!--<module>relaxng</module> -->
+    <module>typeautomaton</module>
+    <module>schemahandler</module>
+    <module>converter/xsd2bonxai</module>
+    <module>converter/bonxai2xsd</module>
   </modules>
--->
 </project>
