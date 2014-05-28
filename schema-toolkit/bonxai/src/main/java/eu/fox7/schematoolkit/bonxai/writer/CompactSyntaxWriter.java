@@ -105,10 +105,10 @@ public class CompactSyntaxWriter {
     	writeTargetNamespace(schema.getTargetNamespace());
         writeIdentifiedNamespaces(schema.getNamespaces());
         writer.newLine();
+        writeGlobalElements(schema.getRootElementNames());
         writeGroups(schema.getGroups());
         writer.appendLine("grammar {");
         writer.pushIndent();
-        writeRootElements(schema.getRootElementNames());
         writeExpressions(schema.getExpressions());
         writeConstraints(schema.getConstraints());
         writer.popIndent();
@@ -130,8 +130,8 @@ public class CompactSyntaxWriter {
         }
     }
     
-    protected void writeRootElements(List<QualifiedName> rootElementNames) throws IOException {
-    	writer.append("roots { ");
+    protected void writeGlobalElements(List<QualifiedName> rootElementNames) throws IOException {
+    	writer.append("global { ");
     	writer.pushIndent();
     	boolean first=true;
     	for (QualifiedName name: rootElementNames) {
@@ -480,7 +480,7 @@ public class CompactSyntaxWriter {
 			boolean leadingSlash) throws IOException {
 		if (leadingSlash) 
 			writer.append('/');
-		writeName(aPattern.getName());
+		writeName(aPattern.getName(), true);
 	}
 
 	private void writeDoubleSlashPrefixedContainer(DoubleSlashPrefixedContainer aParticle, boolean leadingSlash, boolean removeDoubleSlash) throws IOException {
@@ -617,7 +617,11 @@ public class CompactSyntaxWriter {
     }
 
     private void writeName(QualifiedName name) throws IOException {
-    	writer.append(schema.getNamespaceList().getQualifiedName(name));
+    	writeName(name, false);
+    }
+
+    private void writeName(QualifiedName name, boolean prefixAttributeWithAT) throws IOException {
+    	writer.append(schema.getNamespaceList().getQualifiedName(name, prefixAttributeWithAT));
 	}
 
 

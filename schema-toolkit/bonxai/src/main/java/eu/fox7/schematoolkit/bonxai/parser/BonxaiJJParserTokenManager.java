@@ -11,7 +11,7 @@ public class BonxaiJJParserTokenManager implements BonxaiJJParserConstants
 {
     // Required by SetState
     void backup(int n) { input_stream.backup(n); }
-  public  java.io.PrintStream debugStream = System.out;
+  public  java.io.PrintStream debugStream = System.err;
   public  void setDebugStream(java.io.PrintStream ds) { debugStream = ds; }
 private final int jjStopStringLiteralDfa_3(int pos, long active0, long active1)
 {
