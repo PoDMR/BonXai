@@ -322,7 +322,7 @@ public class XSDParserHandler extends DefaultHandler {
 							name = this.namespaceList.getQualifiedName(attribute.value, object instanceof Attribute);
 						
 						if (attribute.localName.equals("name")) {
-							if (object instanceof Type) 
+							if ((object instanceof Type) || (object instanceof Group)) 
 								name = new QualifiedName(this.namespaceList.getTargetNamespace(), attribute.value);
 							else
 								name = this.namespaceList.getQualifiedName(attribute.value, object instanceof Attribute);
