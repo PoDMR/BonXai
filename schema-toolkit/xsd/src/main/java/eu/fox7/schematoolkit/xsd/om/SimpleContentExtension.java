@@ -37,6 +37,11 @@ public class SimpleContentExtension extends SimpleContentInheritance {
      */
     private LinkedList<AttributeParticle> attributes = new LinkedList<AttributeParticle>();
 
+    
+    public SimpleContentExtension () {
+    	super();
+    }
+    
     /**
      * Creates an instance of Simple Content Extension
      * with the passed SymbolTable reference base.
