@@ -27,4 +27,8 @@ public class XSDParserException extends SAXException {
 		super(e);
 	}
 
+	public XSDParserException(String s) {
+		super(s);
+	}
+
 }

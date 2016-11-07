@@ -125,27 +125,28 @@ public class XSDParserHandler extends DefaultHandler {
 					throw new RuntimeException(e);
 				}
 			} else {
-				System.err.println("Unhandled element with name " + this.toString());
-				return null;
+				throw new RuntimeException("Unhandled element with name " + this.toString());
 			}
 		}
 
 		public static ElementType getElementType(String elementType, String parent) {
+			ElementType e = null;
 			if (parent.equals("schema")) {
 				if (elementType.equals("import"))
-					return IMPORT;
-				if (elementType.equals("group"))
-					return GROUP;
-				if (elementType.equals("attributeGroup"))
-					return ATTRIBUTEGROUP;
+					e=IMPORT;
+				else if (elementType.equals("group"))
+					e=GROUP;
+				else if (elementType.equals("attributeGroup"))
+					e=ATTRIBUTEGROUP;
 			} 
-			if (parent.equals("complexContent")) {
+			else if (parent.equals("complexContent")) {
 				if (elementType.equals("extension"))
-					return COMPLEXExtension;
-				if (elementType.equals("restriction"))
-					return COMPLEXRestriction;
-			}
-			return valueOf(elementType);
+					e=COMPLEXExtension;
+				else if (elementType.equals("restriction"))
+					e=COMPLEXRestriction;
+			} else
+		        e = valueOf(elementType);
+			return e;
 		}
     	
 	}
@@ -167,6 +168,8 @@ public class XSDParserHandler extends DefaultHandler {
 	private NamespaceList namespaceList;
 	private List<Type> types;
 	private XSDSchema schema;
+	private int insideDocumentation;
+	private boolean topLevel;
 	
 	private Stack<String> elementNames;
     
@@ -187,6 +190,8 @@ public class XSDParserHandler extends DefaultHandler {
     	this.locations = new Stack<Position>();
 		this.namespaceList = new NamespaceList();
 		this.types = new LinkedList<Type>();
+		this.insideDocumentation = 0;
+		this.topLevel = true;
 
 		this.elementStack.push(new LinkedList<Object>());
 		this.elementNames.push("");
@@ -204,7 +209,14 @@ public class XSDParserHandler extends DefaultHandler {
 	@Override
     public void startElement(String uri, String localName,
     		String qName, Attributes attrs) throws SAXException {
-    	if (uri.equals(XSDSchema.XMLSCHEMA_NAMESPACE)) {
+		if (topLevel && !(uri.equals(XSDSchema.XMLSCHEMA_NAMESPACE) && localName.equals("schema")))
+			throw new NoXSDException("Root element is not xs:schema");
+		/* Do not parse below xs:documentation and xs:appinfo.
+		 * We track the depth to catch nested documentation elements
+		 */
+		if ((insideDocumentation>0) || (uri.equals(XSDSchema.XMLSCHEMA_NAMESPACE) && (localName.equals("documentation") || localName.equals("appinfo"))))
+			insideDocumentation++;
+		else if (uri.equals(XSDSchema.XMLSCHEMA_NAMESPACE)) {
     		this.locations.push(new Position(locator.getLineNumber(), locator.getColumnNumber()));
     		this.elementStack.push(new LinkedList<Object>());
     		List<XMLAttribute> attributeList = new LinkedList<XMLAttribute>();
@@ -228,7 +240,12 @@ public class XSDParserHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException  {
     	try {
-			if (uri.equals(XSDSchema.XMLSCHEMA_NAMESPACE)) {
+    		/* Do not parse below xs:documentation and xs:appinfo.
+    		 * We track the depth to catch nested documentation elements
+    		 */
+    		if (insideDocumentation>0)
+    			insideDocumentation--;
+    		else if (uri.equals(XSDSchema.XMLSCHEMA_NAMESPACE)) {
 				elementNames.pop();
 				String parent = elementNames.peek();
 				ElementType elementType = ElementType.getElementType(localName, parent);
@@ -256,7 +273,7 @@ public class XSDParserHandler extends DefaultHandler {
 								else if (object instanceof Attribute)
 									((Attribute) object).setTypeName(((Type) child).getName());
 								else
-									System.err.println("Element of " + object.getClass() + " has a child of " + child.getClass());
+									throw new InvalidXSDException("Element of " + object.getClass() + " has a child of " + child.getClass());
 							}
 						} else if ((child instanceof AttributeParticle) && (object instanceof AContainer))
 							((AContainer) object).addAttributeParticle((AttributeParticle) child);
@@ -304,7 +321,7 @@ public class XSDParserHandler extends DefaultHandler {
 							else if (child instanceof Pattern)
 								((SimpleContentRestriction) object).setPattern((Pattern) child);
 						} else
-							System.err.println("Element of " + object.getClass() + " has a child of " + child.getClass());
+							throw new InvalidXSDException("Element of " + object.getClass() + " has a child of " + child.getClass());
 
 					}
 				}
