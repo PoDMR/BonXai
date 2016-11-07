@@ -129,7 +129,7 @@ public class XSDParserHandler extends DefaultHandler {
 			}
 		}
 
-		public static ElementType getElementType(String elementType, String parent) {
+		public static ElementType getElementType(String elementType, String parent) throws InvalidXSDException {
 			ElementType e = null;
 			if (parent.equals("schema")) {
 				if (elementType.equals("import"))
@@ -145,7 +145,11 @@ public class XSDParserHandler extends DefaultHandler {
 				else if (elementType.equals("restriction"))
 					e=COMPLEXRestriction;
 			} else
-		        e = valueOf(elementType);
+				try {
+					e = valueOf(elementType);
+				} catch (IllegalArgumentException ex) {
+					throw new InvalidXSDException("Unkown element with label " + elementType);
+				}
 			return e;
 		}
     	
