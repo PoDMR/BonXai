@@ -144,16 +144,18 @@ public class XSDParserHandler extends DefaultHandler {
 					e=COMPLEXExtension;
 				else if (elementType.equals("restriction"))
 					e=COMPLEXRestriction;
-			} else
+			} 
+			
+			if (e == null) {
 				try {
 					e = valueOf(elementType);
 				} catch (IllegalArgumentException ex) {
 					throw new InvalidXSDException("Unkown element with label " + elementType);
 				}
+			}
 			return e;
 		}
-    	
-	}
+   	}
     
     private static class XMLAttribute {
     	public XMLAttribute(String localName, String value) {
@@ -215,6 +217,7 @@ public class XSDParserHandler extends DefaultHandler {
     		String qName, Attributes attrs) throws SAXException {
 		if (topLevel && !(uri.equals(XSDSchema.XMLSCHEMA_NAMESPACE) && localName.equals("schema")))
 			throw new NoXSDException("Root element is not xs:schema");
+		topLevel = false;
 		/* Do not parse below xs:documentation and xs:appinfo.
 		 * We track the depth to catch nested documentation elements
 		 */
@@ -227,9 +230,8 @@ public class XSDParserHandler extends DefaultHandler {
     		this.attributeStack.push(attributeList);
 
     		for (int i=0; i<attrs.getLength(); ++i) {
-//    			String attributeName = attrs.getLocalName(i);
-//    			System.err.println("START: Element " + localName + " Attribute " + attributeName);
-    			attributeList.add(new XMLAttribute(attrs.getLocalName(i), attrs.getValue(i)));
+    			if (attrs.getURI(i).equals(""))
+ 	    			attributeList.add(new XMLAttribute(attrs.getLocalName(i), attrs.getValue(i)));
     		}
     		
     		if (localName.equals("schema"))
@@ -283,8 +285,12 @@ public class XSDParserHandler extends DefaultHandler {
 							((AContainer) object).addAttributeParticle((AttributeParticle) child);
 						else if ((child instanceof Attribute) && (object instanceof ComplexContentType))
 							attributes.add(child);
+						else if ((child instanceof Attribute) && (object instanceof XSDSchema))
+							((XSDSchema) object).addAttribute((Attribute) child); 
 						else if ((child instanceof Annotation) && (object instanceof Annotationable))
 							((Annotationable) object).setAnnotation((Annotation) child);
+						else if ((child instanceof Annotation))
+							System.err.println("Unhandled annotation element below " + object.getClass());
 						else if ((child instanceof Content) && (object instanceof ComplexType))
 							((ComplexType) object).setContent((Content) child);
 						else if ((child instanceof SimpleTypeInheritance) && (object instanceof SimpleType))
@@ -303,6 +309,12 @@ public class XSDParserHandler extends DefaultHandler {
 							((Annotation) object).addAppInfos((AppInfo) child);
 						else if ((child instanceof Enumeration) && (object instanceof SimpleContentRestriction))
 							((SimpleContentRestriction) object).addEnumeration(((Enumeration) child).value);
+						else if ((child instanceof XSDParserHandler.Selector) && (object instanceof SimpleConstraint))
+							((SimpleConstraint) object).setSelector(((XSDParserHandler.Selector) child).value);
+						else if ((child instanceof XSDParserHandler.Field) && (object instanceof SimpleConstraint))
+							((SimpleConstraint) object).addField(((XSDParserHandler.Field) child).value);
+						else if ((child instanceof ForeignSchema) && (object instanceof XSDSchema))
+							((XSDSchema) object).addForeignSchema((ForeignSchema) child);
 						else if ((child instanceof SimpleContentRestrictionProperty) && (object instanceof SimpleContentRestriction)) {
 							if (child instanceof MinInclusive)
 								((SimpleContentRestriction) object).setMinInclusive((MinInclusive) child);
@@ -341,13 +353,15 @@ public class XSDParserHandler extends DefaultHandler {
 
 						if (attribute.localName.equals("type") || attribute.localName.equals("ref") || attribute.localName.equals("itemType") || attribute.localName.equals("base"))
 							name = this.namespaceList.getQualifiedName(attribute.value, object instanceof Attribute);
-						
-						if (attribute.localName.equals("name")) {
+						else if (attribute.localName.equals("name")) {
 							if ((object instanceof Type) || (object instanceof Group)) 
 								name = new QualifiedName(this.namespaceList.getTargetNamespace(), attribute.value);
 							else
 								name = this.namespaceList.getQualifiedName(attribute.value, object instanceof Attribute);
-							((NamedXSDElement) object).setName(name);
+							if (object instanceof NamedXSDElement)
+								((NamedXSDElement) object).setName(name);
+							else
+								throw new InvalidXSDException("Elemtn of type " + object.getClass() + " has a name attribute.");
 						} else if (attribute.localName.equals("type"))
 							((TypedXSDElement) object).setTypeName(name);
 						else if (attribute.localName.equals("minOccurs")) {
@@ -381,6 +395,8 @@ public class XSDParserHandler extends DefaultHandler {
 							((Attribute) object).setFixed(attribute.value);
 						else if (attribute.localName.equals("id") && (object instanceof ID))
 							((ID) object).setId(attribute.value);
+						else if (attribute.localName.equals("nillable") && attribute.value.equals("true") && (object instanceof Element))
+							((Element) object).setNillable();
 						else if (attribute.localName.equals("processContents") && (object instanceof AnyAttribute))
 							((AnyAttribute) object).setProcessContentsInstruction(ProcessContentsInstruction.valueOf(attribute.value.toUpperCase()));
 						else if (attribute.localName.equals("processContents") && (object instanceof AnyPattern))
@@ -428,7 +444,10 @@ public class XSDParserHandler extends DefaultHandler {
 				}
 	    		
 	    		if (counting)
-	    			object = new CountingPattern((Particle) object, minOccurs, maxOccurs);
+	    			if (object instanceof Particle)
+	    				object = new CountingPattern((Particle) object, minOccurs, maxOccurs);
+	    			else
+	    				throw new InvalidXSDException("Element of type " + object.getClass() + " has min- or maxOccurs attribute.");
 	    		
 	    		if (object != null)
 	    			this.elementStack.peek().add(object);
@@ -451,8 +470,10 @@ public class XSDParserHandler extends DefaultHandler {
 	}
 
 	@Override
-    public void endDocument() {
-    	this.schema = (XSDSchema) this.elementStack.pop().get(0);
+    public void endDocument() throws NoXSDException {
+		if (topLevel)
+			throw new NoXSDException("Root element is not xs:schema");
+		this.schema = (XSDSchema) this.elementStack.pop().get(0);
     	this.schema.setNamespaceList(namespaceList);
     	for (Type type: types)
     		this.schema.addType(type);

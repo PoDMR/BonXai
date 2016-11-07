@@ -31,7 +31,7 @@ import eu.fox7.schematoolkit.xsd.saxparser.XSDSaxParser;
 import eu.fox7.schematoolkit.xsd.writer.XSDWriter;
 
 public class XSDSchemaHandler extends SchemaHandler {
-	private static boolean useSaxParser = false;
+	private static boolean useSaxParser = true;
 	
 	public XSDSchemaHandler() {}
 	public XSDSchemaHandler(XSDSchema schema) {

@@ -29,7 +29,7 @@ import eu.fox7.schematoolkit.common.QualifiedName;
  * base class which is inherited. No further information is
  * needed for this type of inheritance.
  */
-public class SimpleContentExtension extends SimpleContentInheritance {
+public class SimpleContentExtension extends SimpleContentInheritance implements AContainer {
 
     /**
      * LinkedList holding the AttributeParticle of the SimpleContentInheritance
@@ -60,20 +60,17 @@ public class SimpleContentExtension extends SimpleContentInheritance {
     }
 
     /**
-     * Adds an attribute to the List of attributes
-     * @param attributeParticle
-     */
-    public void addAttribute(AttributeParticle attributeParticle) {
-        this.attributes.add(attributeParticle);
-    }
-
-
-    /**
      * Sets the AttributeParticles LinkedList
      * @param attributeParticles
      */
     public void setAttributes(LinkedList<AttributeParticle> attributeParticles) {
         this.attributes = attributeParticles;
     }
+
+	@Override
+	public void addAttributeParticle(AttributeParticle attributeParticle) {
+		this.attributes.add(attributeParticle);
+		
+	}
 }
 

@@ -231,7 +231,7 @@ public class RestrictionProcessor extends Processor {
                                 throw new AnyAttributeIsNotLastException("attribute to restriction");
                             }
                             // IMPORTANT: xsd object model has to feature attributes for SimpleContentRestriction!
-                            ((SimpleContentRestriction) inheritance).addAttribute(attributeParticle);
+                            ((SimpleContentRestriction) inheritance).addAttributeParticle(attributeParticle);
                             alreadyAnAttributeAdded = true;
                         }
                     } else {
@@ -261,7 +261,7 @@ public class RestrictionProcessor extends Processor {
                                 throw new AnyAttributeIsNotLastException("attributeGroup to restriction");
                             }
                             // IMPORTANT: xsd object model has to feature attributes for SimpleContentRestriction!
-                            ((SimpleContentRestriction) inheritance).addAttribute(attributeGroupRef);
+                            ((SimpleContentRestriction) inheritance).addAttributeParticle(attributeGroupRef);
                             alreadyAnAttributeAdded = true;
                         }
                     } else {
@@ -291,7 +291,7 @@ public class RestrictionProcessor extends Processor {
                                 throw new AnyAttributeIsNotLastException("anyAttribute to restriction");
                             }
                             // IMPORTANT: xsd object model has to feature attributes for SimpleContentRestriction!
-                            ((SimpleContentRestriction) inheritance).addAttribute(anyAttribute);
+                            ((SimpleContentRestriction) inheritance).addAttributeParticle(anyAttribute);
                             alreadyAnAttributeAdded = true;
                         }
                     } else {

@@ -180,7 +180,7 @@ class ExtensionProcessor extends Processor {
                         if (!((SimpleContentExtension) inheritance).getAttributes().isEmpty() && ((SimpleContentExtension) inheritance).getAttributes().getLast() instanceof AnyAttribute) {
                             throw new AnyAttributeIsNotLastException("attribute to extension");
                         }
-                        ((SimpleContentExtension) inheritance).addAttribute(attributeParticle);
+                        ((SimpleContentExtension) inheritance).addAttributeParticle(attributeParticle);
                         alreadyAnAttributeAdded = true;
                     }
                     break;
@@ -204,7 +204,7 @@ class ExtensionProcessor extends Processor {
                         if (!((SimpleContentExtension) inheritance).getAttributes().isEmpty() && ((SimpleContentExtension) inheritance).getAttributes().getLast() instanceof AnyAttribute) {
                             throw new AnyAttributeIsNotLastException("attributeGroup to extension");
                         }
-                        ((SimpleContentExtension) inheritance).addAttribute(attributeGroupRef);
+                        ((SimpleContentExtension) inheritance).addAttributeParticle(attributeGroupRef);
                         alreadyAnAttributeAdded = true;
                     }
                     break;
@@ -228,7 +228,7 @@ class ExtensionProcessor extends Processor {
                         if (!((SimpleContentExtension) inheritance).getAttributes().isEmpty() && ((SimpleContentExtension) inheritance).getAttributes().getLast() instanceof AnyAttribute) {
                             throw new AnyAttributeIsNotLastException("anyAttribute to extension");
                         }
-                        ((SimpleContentExtension) inheritance).addAttribute(anyAttribute);
+                        ((SimpleContentExtension) inheritance).addAttributeParticle(anyAttribute);
                         alreadyAnAttributeAdded = true;
                     }
                     break;

@@ -24,7 +24,7 @@ import java.util.LinkedList;
 import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.QualifiedName;
 
-public class SimpleContentRestriction extends SimpleContentInheritance implements SimpleTypeInheritance {
+public class SimpleContentRestriction extends SimpleContentInheritance implements SimpleTypeInheritance, AContainer {
 
     protected SimpleContentFixableRestrictionProperty<String> minExclusive;
     protected SimpleContentFixableRestrictionProperty<String> maxExclusive;
@@ -160,7 +160,7 @@ public class SimpleContentRestriction extends SimpleContentInheritance implement
      * Adds an attribute to the List of attributes
      * @param attributeParticle
      */
-    public void addAttribute(AttributeParticle attributeParticle) {
+    public void addAttributeParticle(AttributeParticle attributeParticle) {
         this.attributes.add(attributeParticle);
     }
 
