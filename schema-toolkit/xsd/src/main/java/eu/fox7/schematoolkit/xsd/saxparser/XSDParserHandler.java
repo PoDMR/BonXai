@@ -233,7 +233,7 @@ public class XSDParserHandler extends DefaultHandler {
     public void startElement(String uri, String localName,
     		String qName, Attributes attrs) throws SAXException {
 		if (topLevel && !(uri.equals(XSDSchema.XMLSCHEMA_NAMESPACE) && localName.equals("schema")))
-			throw new NoXSDException("Root element is not xs:schema");
+			throw new NoSchemaRootException("Root element is not xs:schema");
 		topLevel = false;
 		/* Do not parse below xs:documentation and xs:appinfo.
 		 * We track the depth to catch nested documentation elements
@@ -509,9 +509,9 @@ public class XSDParserHandler extends DefaultHandler {
 	}
 
 	@Override
-    public void endDocument() throws NoXSDException {
+    public void endDocument() throws NoSchemaRootException {
 		if (topLevel)
-			throw new NoXSDException("Root element is not xs:schema");
+			throw new NoSchemaRootException("Root element is not xs:schema");
 		this.schema = (XSDSchema) this.elementStack.pop().get(0);
     	this.schema.setNamespaceList(namespaceList);
     	for (Type type: types)
