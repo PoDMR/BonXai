@@ -63,9 +63,6 @@ public class XSDParserHandler extends DefaultHandler {
 	public static class Pattern extends SimpleContentRestrictionProperty<String> {}
 	
 	public static class Assert { 
-		public Assert() throws XSDParserException { 
-			throw new XSDParserException("Assert is not supported."); 
-		} 
 	} 
 
 	public static class Alternative { 
@@ -73,6 +70,10 @@ public class XSDParserHandler extends DefaultHandler {
 			throw new XSDParserException("Type alternatives are not supported."); 
 		} 
 	} 
+	
+	public static class Notation {
+	}
+
 
     private enum ElementType {
 		schema(XSDSchema.class),
@@ -102,7 +103,7 @@ public class XSDParserHandler extends DefaultHandler {
 		group(GroupReference.class),
 		attributeGroup(AttributeGroupReference.class),
 		any(AnyPattern.class),
-		notation(null),
+		notation(Notation.class),
 		length(Length.class),
 		minLength(MinLength.class),
 		maxLength(MaxLength.class),
@@ -274,205 +275,209 @@ public class XSDParserHandler extends DefaultHandler {
 				ElementType elementType = ElementType.getElementType(localName, parent);
 				Object object = elementType.getInstance();
 				
+				//silently ignore notation elements for now
+				if (object instanceof Notation)
+					return;
+				
 				Collection<Object> childs = elementStack.pop();
 				Collection<Object> attributes = new LinkedList<Object>();
 				Particle particle = null;
 				
-				if (object != null) {
-					for (Object child: childs) {
-						if ((child instanceof Particle) && (object instanceof PContainer))
-							((PContainer) object).addParticle((Particle) child);
-						else if ((child instanceof Particle) && (object instanceof Inheritance))
-							particle = (Particle) child;
-						else if (child instanceof Type) {
-							this.types.add((Type) child);
-							if (!(object instanceof XSDSchema)) {
-								((Type) child).setName(uniqueTypename());
-								((Type) child).setIsAnonymous(true);
-								if (object instanceof Element) 
-									((Element) object).setTypeName(((Type) child).getName());
-								else if (object instanceof Inheritance)
-									((Inheritance) object).setBaseType(((Type) child).getName());
-								else if (object instanceof Attribute)
-									((Attribute) object).setTypeName(((Type) child).getName());
-								else
-									throw new InvalidXSDException("Element of " + object.getClass() + " has a child of " + child.getClass());
-							}
-						} else if ((child instanceof AttributeParticle) && (object instanceof AContainer))
-							((AContainer) object).addAttributeParticle((AttributeParticle) child);
-						else if ((child instanceof Attribute) && (object instanceof ComplexContentType))
-							attributes.add(child);
-						else if ((child instanceof Attribute) && (object instanceof XSDSchema))
-							((XSDSchema) object).addAttribute((Attribute) child); 
-						else if ((child instanceof Annotation) && (object instanceof Annotationable))
-							((Annotationable) object).setAnnotation((Annotation) child);
-						else if ((child instanceof Annotation))	{} //silently ignore annotation elements for now.
-						else if ((child instanceof Content) && (object instanceof ComplexType))
-							((ComplexType) object).setContent((Content) child);
-						else if ((child instanceof SimpleTypeInheritance) && (object instanceof SimpleType))
-							((SimpleType) object).setInheritance((SimpleTypeInheritance) child);
-						else if ((child instanceof Inheritance) && (object instanceof Content))
-							((Content) object).setInheritance((Inheritance) child);
-						else if ((child instanceof Constraint) && (object instanceof Element))
-							((Element) object).addConstraint((Constraint) child);
-						else if ((child instanceof Group) && (object instanceof XSDSchema))
-							((XSDSchema) object).addGroup((Group) child);
-						else if ((child instanceof AttributeGroup) && (object instanceof XSDSchema))
-							((XSDSchema) object).addAttributeGroup((AttributeGroup) child);
-						else if ((child instanceof Documentation) && (object instanceof Annotation))
-							((Annotation) object).addDocumentations((Documentation) child);
-						else if ((child instanceof AppInfo) && (object instanceof Annotation))
-							((Annotation) object).addAppInfos((AppInfo) child);
-						else if ((child instanceof Enumeration) && (object instanceof SimpleContentRestriction))
-							((SimpleContentRestriction) object).addEnumeration(((Enumeration) child).value);
-						else if ((child instanceof XSDParserHandler.Selector) && (object instanceof SimpleConstraint))
-							((SimpleConstraint) object).setSelector(((XSDParserHandler.Selector) child).value);
-						else if ((child instanceof XSDParserHandler.Field) && (object instanceof SimpleConstraint))
-							((SimpleConstraint) object).addField(((XSDParserHandler.Field) child).value);
-						else if ((child instanceof ForeignSchema) && (object instanceof XSDSchema))
-							((XSDSchema) object).addForeignSchema((ForeignSchema) child);
-						else if ((child instanceof SimpleContentRestrictionProperty) && (object instanceof SimpleContentRestriction)) {
-							if (child instanceof MinInclusive)
-								((SimpleContentRestriction) object).setMinInclusive((MinInclusive) child);
-							else if (child instanceof MaxInclusive)
-								((SimpleContentRestriction) object).setMaxInclusive((MaxInclusive) child);
-							else if (child instanceof MinExclusive)
-								((SimpleContentRestriction) object).setMinExclusive((MinExclusive) child);
-							else if (child instanceof MaxInclusive)
-								((SimpleContentRestriction) object).setMaxExclusive((MaxExclusive) child);
-							else if (child instanceof TotalDigits)
-								((SimpleContentRestriction) object).setTotalDigits((TotalDigits) child);
-							else if (child instanceof FractionDigits)
-								((SimpleContentRestriction) object).setFractionDigits((FractionDigits) child);
-							else if (child instanceof Length)
-								((SimpleContentRestriction) object).setLength((Length) child);
-							else if (child instanceof MinLength)
-								((SimpleContentRestriction) object).setMinLength((MinLength) child);
-							else if (child instanceof MaxLength)
-								((SimpleContentRestriction) object).setMaxLength((MaxLength) child);
-							else if (child instanceof Pattern)
-								((SimpleContentRestriction) object).setPattern((Pattern) child);
-						} else
-							throw new InvalidXSDException("Element of " + object.getClass() + " has a child of " + child.getClass());
+				for (Object child: childs) {
+					if ((child instanceof Particle) && (object instanceof PContainer))
+						((PContainer) object).addParticle((Particle) child);
+					else if ((child instanceof Particle) && (object instanceof Inheritance))
+						particle = (Particle) child;
+					else if (child instanceof Type) {
+						this.types.add((Type) child);
+						if (!(object instanceof XSDSchema)) {
+							((Type) child).setName(uniqueTypename());
+							((Type) child).setIsAnonymous(true);
+							if (object instanceof Element) 
+								((Element) object).setTypeName(((Type) child).getName());
+							else if (object instanceof Inheritance)
+								((Inheritance) object).setBaseType(((Type) child).getName());
+							else if (object instanceof Attribute)
+								((Attribute) object).setTypeName(((Type) child).getName());
+							else
+								throw new InvalidXSDException("Element of " + object.getClass() + " has a child of " + child.getClass());
+						}
+					} else if ((child instanceof AttributeParticle) && (object instanceof AContainer))
+						((AContainer) object).addAttributeParticle((AttributeParticle) child);
+					else if ((child instanceof Attribute) && (object instanceof ComplexContentType))
+						attributes.add(child);
+					else if ((child instanceof Attribute) && (object instanceof XSDSchema))
+						((XSDSchema) object).addAttribute((Attribute) child); 
+					else if ((child instanceof Annotation) && (object instanceof Annotationable))
+						((Annotationable) object).setAnnotation((Annotation) child);
+					else if ((child instanceof Annotation))	{} // silently ignore annotation elements for now.
+					else if ((child instanceof Notation)) {} // silently ignore notation elements for now.
+					else if ((child instanceof Assert)) {} // silently ignore assert elements for now.
+					else if ((child instanceof Content) && (object instanceof ComplexType))
+						((ComplexType) object).setContent((Content) child);
+					else if ((child instanceof SimpleTypeInheritance) && (object instanceof SimpleType))
+						((SimpleType) object).setInheritance((SimpleTypeInheritance) child);
+					else if ((child instanceof Inheritance) && (object instanceof Content))
+						((Content) object).setInheritance((Inheritance) child);
+					else if ((child instanceof Constraint) && (object instanceof Element))
+						((Element) object).addConstraint((Constraint) child);
+					else if ((child instanceof Group) && (object instanceof XSDSchema))
+						((XSDSchema) object).addGroup((Group) child);
+					else if ((child instanceof AttributeGroup) && (object instanceof XSDSchema))
+						((XSDSchema) object).addAttributeGroup((AttributeGroup) child);
+					else if ((child instanceof Documentation) && (object instanceof Annotation))
+						((Annotation) object).addDocumentations((Documentation) child);
+					else if ((child instanceof AppInfo) && (object instanceof Annotation))
+						((Annotation) object).addAppInfos((AppInfo) child);
+					else if ((child instanceof Enumeration) && (object instanceof SimpleContentRestriction))
+						((SimpleContentRestriction) object).addEnumeration(((Enumeration) child).value);
+					else if ((child instanceof XSDParserHandler.Selector) && (object instanceof SimpleConstraint))
+						((SimpleConstraint) object).setSelector(((XSDParserHandler.Selector) child).value);
+					else if ((child instanceof XSDParserHandler.Field) && (object instanceof SimpleConstraint))
+						((SimpleConstraint) object).addField(((XSDParserHandler.Field) child).value);
+					else if ((child instanceof ForeignSchema) && (object instanceof XSDSchema))
+						((XSDSchema) object).addForeignSchema((ForeignSchema) child);
+					else if ((child instanceof SimpleContentRestrictionProperty) && (object instanceof SimpleContentRestriction)) {
+						if (child instanceof MinInclusive)
+							((SimpleContentRestriction) object).setMinInclusive((MinInclusive) child);
+						else if (child instanceof MaxInclusive)
+							((SimpleContentRestriction) object).setMaxInclusive((MaxInclusive) child);
+						else if (child instanceof MinExclusive)
+							((SimpleContentRestriction) object).setMinExclusive((MinExclusive) child);
+						else if (child instanceof MaxInclusive)
+							((SimpleContentRestriction) object).setMaxExclusive((MaxExclusive) child);
+						else if (child instanceof TotalDigits)
+							((SimpleContentRestriction) object).setTotalDigits((TotalDigits) child);
+						else if (child instanceof FractionDigits)
+							((SimpleContentRestriction) object).setFractionDigits((FractionDigits) child);
+						else if (child instanceof Length)
+							((SimpleContentRestriction) object).setLength((Length) child);
+						else if (child instanceof MinLength)
+							((SimpleContentRestriction) object).setMinLength((MinLength) child);
+						else if (child instanceof MaxLength)
+							((SimpleContentRestriction) object).setMaxLength((MaxLength) child);
+						else if (child instanceof Pattern)
+							((SimpleContentRestriction) object).setPattern((Pattern) child);
+					} else
+						throw new InvalidXSDException("Element of " + object.getClass() + " has a child of " + child.getClass());
 
-					}
 				}
+				
 				
 				List<XMLAttribute> attributeList = attributeStack.pop();
 				boolean counting = false;
 				int minOccurs = 1;
 				Integer maxOccurs = 1;
 				
-				if (object !=null ) {
-					for (XMLAttribute attribute: attributeList) {
-						QualifiedName name = null;
+				for (XMLAttribute attribute: attributeList) {
+					QualifiedName name = null;
 
-						if (attribute.localName.equals("type") || attribute.localName.equals("ref") || attribute.localName.equals("itemType") || attribute.localName.equals("base"))
-							name = this.namespaceList.getQualifiedName(attribute.value, object instanceof Attribute);
-						else if (attribute.localName.equals("name")) {
-							if ((object instanceof Type) || (object instanceof Group)) 
-								name = new QualifiedName(this.namespaceList.getTargetNamespace(), attribute.value);
-							else
-								name = this.namespaceList.getQualifiedName(attribute.value, object instanceof Attribute);
-							if (object instanceof NamedXSDElement)
-								((NamedXSDElement) object).setName(name);
-							else
-								throw new InvalidXSDException("Element of type " + object.getClass() + " has a name attribute.");
-						} else if (attribute.localName.equals("type"))
-							((TypedXSDElement) object).setTypeName(name);
-						else if (attribute.localName.equals("minOccurs")) {
-							counting = true;
-							minOccurs = Integer.parseInt(attribute.value);
-						} else if (attribute.localName.equals("maxOccurs")) {
-							counting = true;
-							if (attribute.value.equals("unbounded"))
-								maxOccurs = null;
-							else
-								maxOccurs = Integer.parseInt(attribute.value);
-						} else if (attribute.localName.equals("form")) {
-							((TypedXSDElement) object).setForm(Qualification.valueOf(attribute.value));
-						} else if (attribute.localName.equals("elementFormDefault"))
-							((XSDSchema) object).setElementFormDefault(Qualification.valueOf(attribute.value));
-						else if (attribute.localName.equals("attributeFormDefault"))
-							((XSDSchema) object).setAttributeFormDefault(Qualification.valueOf(attribute.value));
-						else if (attribute.localName.equals("targetNamespace")) {
-							// already added in startElement
-						} else if (attribute.localName.equals("ref") && (object instanceof Element))
-							object = new ElementRef(name);
-						else if (attribute.localName.equals("ref") && (object instanceof Attribute))
-							object = new AttributeRef(name);
-						else if (attribute.localName.equals("ref") && (object instanceof AttributeGroupReference))
-							((AttributeGroupReference) object).setName(name);
-						else if (attribute.localName.equals("ref") && (object instanceof GroupReference))
-							((GroupReference) object).setName(name);
-						else if (attribute.localName.equals("refer") && (object instanceof KeyRef)) 
-							((KeyRef) object).setRefer(this.namespaceList.getQualifiedName(attribute.value));
-						else if (attribute.localName.equals("use") && (object instanceof Attribute))
-							((Attribute) object).setUse(AttributeUse.valueOf(attribute.value));
-						else if (attribute.localName.equals("default") && (object instanceof Attribute))
-							((Attribute) object).setDefault(attribute.value);
-						else if (attribute.localName.equals("default") && (object instanceof Element))
-							((Element) object).setDefault(attribute.value);
-						else if (attribute.localName.equals("fixed") && (object instanceof Attribute))
-							((Attribute) object).setFixed(attribute.value);
-						else if (attribute.localName.equals("fixed") && (object instanceof Element))
-							((Element) object).setFixed(attribute.value);
-						else if (attribute.localName.equals("id") && (object instanceof ID))
-							((ID) object).setId(attribute.value);
-						else if (attribute.localName.equals("nillable") && (object instanceof Element)) {
-							if (Boolean.parseBoolean(attribute.value))
-								((Element) object).setNillable();
-						}
-						else if (attribute.localName.equals("memberTypes") && (object instanceof SimpleContentUnion))
-							for (String memberTypeName: attribute.value.split("\\s+")) {
-								((SimpleContentUnion) object).addMemberType(this.namespaceList.getQualifiedName(memberTypeName));
-							}
-						else if (attribute.localName.equals("processContents") && (object instanceof AnyAttribute))
-							((AnyAttribute) object).setProcessContentsInstruction(ProcessContentsInstruction.valueOf(attribute.value.toUpperCase()));
-						else if (attribute.localName.equals("processContents") && (object instanceof AnyPattern))
-							((AnyPattern) object).setProcessContentsInstruction(ProcessContentsInstruction.valueOf(attribute.value.toUpperCase()));
-						else if (attribute.localName.equals("namespace") && (object instanceof AnyAttribute))
-							((AnyAttribute) object).setNamespace(attribute.value);
-						else if (attribute.localName.equals("namespace") && (object instanceof AnyPattern))
-							((AnyPattern) object).setNamespace(attribute.value);
-						else if (attribute.localName.equals("itemType") && (object instanceof SimpleContentList))
-							((SimpleContentList) object).setBaseType(name);
-						else if (attribute.localName.equals("base") && (object instanceof Inheritance))
-							((Inheritance) object).setBaseType(name);
-						else if (attribute.localName.equals("source") && (object instanceof Documentation))
-							((Documentation) object).setSource(attribute.value);
-						else if (attribute.localName.equals("mixed") && (object instanceof ComplexType))
-							((ComplexType) object).setMixed(Boolean.parseBoolean(attribute.value));
-						else if (attribute.localName.equals("mixed") && (object instanceof ComplexContentType))
-							((ComplexContentType) object).setMixed(Boolean.parseBoolean(attribute.value));
-						else if (attribute.localName.equals("abstract") && (object instanceof ComplexType))
-							((ComplexType) object).setAbstract(Boolean.parseBoolean(attribute.value));
-						else if (attribute.localName.equals("abstract") && (object instanceof Element))
-							((Element) object).setAbstract(Boolean.parseBoolean(attribute.value));
-						else if ((attribute.localName.equals("value") || attribute.localName.equals("xpath"))  && (object instanceof VContainer))
-							((VContainer) object).value = attribute.value;
-						else if (attribute.localName.equals("fixed") && attribute.value.equals("true") && (object instanceof SimpleContentFixableRestrictionProperty))
-							((SimpleContentFixableRestrictionProperty) object).setFixed(true);
-						else if (attribute.localName.equals("value") && (object instanceof Whitespace))
-							((Whitespace) object).setValue(SimpleContentPropertyWhitespace.valueOf(attribute.value));
-						else if (attribute.localName.equals("value") &&
-								((object instanceof MinInclusive) || (object instanceof MaxInclusive) ||
-							     (object instanceof MinExclusive) || (object instanceof MaxExclusive) ||
-							     (object instanceof Pattern)))
-							((SimpleContentRestrictionProperty) object).setValue(attribute.value);
-						else if (attribute.localName.equals("value") &&
-								((object instanceof MinLength) || (object instanceof MaxLength) ||
-							     (object instanceof Length) ||
-							     (object instanceof FractionDigits) || (object instanceof TotalDigits)))
-							((SimpleContentRestrictionProperty) object).setValue(Integer.parseInt(attribute.value));
-						
-						else if (attribute.localName.equals("id")) {} // ignore id attributes not handled yet
-						else if (attribute.localName.equals("version") && object instanceof XSDSchema) {} // ignore version. this attribute has no semantics according to XSD specs
-						else if (attribute.localName.equals("substitutionGroup")) { System.err.println("Substitution groups are not supported"); }
+					if (attribute.localName.equals("type") || attribute.localName.equals("ref") || attribute.localName.equals("itemType") || attribute.localName.equals("base"))
+						name = this.namespaceList.getQualifiedName(attribute.value, object instanceof Attribute);
+					else if (attribute.localName.equals("name")) {
+						if ((object instanceof Type) || (object instanceof Group)) 
+							name = new QualifiedName(this.namespaceList.getTargetNamespace(), attribute.value);
 						else
-							System.err.println("Unhandled attribute with name " + attribute.localName + " and value " + attribute.value + " in " + object.getClass());
+							name = this.namespaceList.getQualifiedName(attribute.value, object instanceof Attribute);
+						if (object instanceof NamedXSDElement)
+							((NamedXSDElement) object).setName(name);
+//						else
+//							throw new InvalidXSDException("Element of type " + object.getClass() + " has a name attribute.");
+					} else if (attribute.localName.equals("type"))
+						((TypedXSDElement) object).setTypeName(name);
+					else if (attribute.localName.equals("minOccurs")) {
+						counting = true;
+						minOccurs = Integer.parseInt(attribute.value);
+					} else if (attribute.localName.equals("maxOccurs")) {
+						counting = true;
+						if (attribute.value.equals("unbounded"))
+							maxOccurs = null;
+						else
+							maxOccurs = Integer.parseInt(attribute.value);
+					} else if (attribute.localName.equals("form")) {
+						((TypedXSDElement) object).setForm(Qualification.valueOf(attribute.value));
+					} else if (attribute.localName.equals("elementFormDefault"))
+						((XSDSchema) object).setElementFormDefault(Qualification.valueOf(attribute.value));
+					else if (attribute.localName.equals("attributeFormDefault"))
+						((XSDSchema) object).setAttributeFormDefault(Qualification.valueOf(attribute.value));
+					else if (attribute.localName.equals("targetNamespace")) {
+						// already added in startElement
+					} else if (attribute.localName.equals("ref") && (object instanceof Element))
+						object = new ElementRef(name);
+					else if (attribute.localName.equals("ref") && (object instanceof Attribute))
+						object = new AttributeRef(name);
+					else if (attribute.localName.equals("ref") && (object instanceof AttributeGroupReference))
+						((AttributeGroupReference) object).setName(name);
+					else if (attribute.localName.equals("ref") && (object instanceof GroupReference))
+						((GroupReference) object).setName(name);
+					else if (attribute.localName.equals("refer") && (object instanceof KeyRef)) 
+						((KeyRef) object).setRefer(this.namespaceList.getQualifiedName(attribute.value));
+					else if (attribute.localName.equals("use") && (object instanceof Attribute))
+						((Attribute) object).setUse(AttributeUse.valueOf(attribute.value));
+					else if (attribute.localName.equals("default") && (object instanceof Attribute))
+						((Attribute) object).setDefault(attribute.value);
+					else if (attribute.localName.equals("default") && (object instanceof Element))
+						((Element) object).setDefault(attribute.value);
+					else if (attribute.localName.equals("fixed") && (object instanceof Attribute))
+						((Attribute) object).setFixed(attribute.value);
+					else if (attribute.localName.equals("fixed") && (object instanceof Element))
+						((Element) object).setFixed(attribute.value);
+					else if (attribute.localName.equals("id") && (object instanceof ID))
+						((ID) object).setId(attribute.value);
+					else if (attribute.localName.equals("nillable") && (object instanceof Element)) {
+						if (Boolean.parseBoolean(attribute.value))
+							((Element) object).setNillable();
 					}
+					else if (attribute.localName.equals("memberTypes") && (object instanceof SimpleContentUnion))
+						for (String memberTypeName: attribute.value.split("\\s+")) {
+							((SimpleContentUnion) object).addMemberType(this.namespaceList.getQualifiedName(memberTypeName));
+						}
+					else if (attribute.localName.equals("processContents") && (object instanceof AnyAttribute))
+						((AnyAttribute) object).setProcessContentsInstruction(ProcessContentsInstruction.valueOf(attribute.value.toUpperCase()));
+					else if (attribute.localName.equals("processContents") && (object instanceof AnyPattern))
+						((AnyPattern) object).setProcessContentsInstruction(ProcessContentsInstruction.valueOf(attribute.value.toUpperCase()));
+					else if (attribute.localName.equals("namespace") && (object instanceof AnyAttribute))
+						((AnyAttribute) object).setNamespace(attribute.value);
+					else if (attribute.localName.equals("namespace") && (object instanceof AnyPattern))
+						((AnyPattern) object).setNamespace(attribute.value);
+					else if (attribute.localName.equals("itemType") && (object instanceof SimpleContentList))
+						((SimpleContentList) object).setBaseType(name);
+					else if (attribute.localName.equals("base") && (object instanceof Inheritance))
+						((Inheritance) object).setBaseType(name);
+					else if (attribute.localName.equals("source") && (object instanceof Documentation))
+						((Documentation) object).setSource(attribute.value);
+					else if (attribute.localName.equals("mixed") && (object instanceof ComplexType))
+						((ComplexType) object).setMixed(Boolean.parseBoolean(attribute.value));
+					else if (attribute.localName.equals("mixed") && (object instanceof ComplexContentType))
+						((ComplexContentType) object).setMixed(Boolean.parseBoolean(attribute.value));
+					else if (attribute.localName.equals("abstract") && (object instanceof ComplexType))
+						((ComplexType) object).setAbstract(Boolean.parseBoolean(attribute.value));
+					else if (attribute.localName.equals("abstract") && (object instanceof Element))
+						((Element) object).setAbstract(Boolean.parseBoolean(attribute.value));
+					else if ((attribute.localName.equals("value") || attribute.localName.equals("xpath"))  && (object instanceof VContainer))
+						((VContainer) object).value = attribute.value;
+					else if (attribute.localName.equals("fixed") && attribute.value.equals("true") && (object instanceof SimpleContentFixableRestrictionProperty))
+						((SimpleContentFixableRestrictionProperty) object).setFixed(true);
+					else if (attribute.localName.equals("value") && (object instanceof Whitespace))
+						((Whitespace) object).setValue(SimpleContentPropertyWhitespace.valueOf(attribute.value));
+					else if (attribute.localName.equals("value") &&
+							((object instanceof MinInclusive) || (object instanceof MaxInclusive) ||
+						     (object instanceof MinExclusive) || (object instanceof MaxExclusive) ||
+						     (object instanceof Pattern)))
+						((SimpleContentRestrictionProperty) object).setValue(attribute.value);
+					else if (attribute.localName.equals("value") &&
+							((object instanceof MinLength) || (object instanceof MaxLength) ||
+						     (object instanceof Length) ||
+						     (object instanceof FractionDigits) || (object instanceof TotalDigits)))
+						((SimpleContentRestrictionProperty) object).setValue(Integer.parseInt(attribute.value));
+					
+					else if (attribute.localName.equals("id")) {} // ignore id attributes not handled yet
+					else if (attribute.localName.equals("version") && object instanceof XSDSchema) {} // ignore version. this attribute has no semantics according to XSD specs
+					else if (attribute.localName.equals("substitutionGroup")) { System.err.println("Substitution groups are not supported"); }
+					else
+						System.err.println("Unhandled attribute with name " + attribute.localName + " and value " + attribute.value + " in " + object.getClass());
 				}
+				
 
 				Position opening = this.locations.pop();
 				Position closing = new Position(locator.getLineNumber(), locator.getColumnNumber());
