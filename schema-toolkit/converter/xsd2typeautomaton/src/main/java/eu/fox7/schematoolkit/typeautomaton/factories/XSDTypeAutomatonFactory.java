@@ -95,7 +95,7 @@ public class XSDTypeAutomatonFactory implements SchemaConverter {
 		this.namespaceAware = false;
 	}
 
-	public TypeAutomaton createTypeAutomaton(XSDSchema schema) {
+	public TypeAutomaton createTypeAutomaton(XSDSchema schema) throws TypeAutomatonConversionException  {
     	this.typeAutomaton = new AnnotatedNFATypeAutomaton();
     	this.typeMap = new HashMap<QualifiedName,State>();
     	this.workingQueue = new LinkedList<State>();
@@ -127,20 +127,31 @@ public class XSDTypeAutomatonFactory implements SchemaConverter {
 	}
 	
 
-    private Set<Particle> getChilds(Type type) {
-		if (type instanceof ComplexType) {
+    private Set<Particle> getChilds(Type type) throws TypeAutomatonConversionException  {
+		Particle particle = null;
+		int counter = 0;
+		while (particle == null && type instanceof ComplexType && counter<10000) {
 			ComplexType complexType = (ComplexType) type;
 			Content content = complexType.getContent();
 			if (content instanceof ComplexContentType) {
 				ComplexContentType complexContentType = (ComplexContentType) content;
-				Particle particle = complexContentType.getParticle();
-				return getChilds(particle);
-			}
+				particle = complexContentType.getParticle();
+				if (particle == null) 
+					if (complexContentType.getInheritance() != null) {
+						QualifiedName base = complexContentType.getInheritance().getBaseType();
+						type = schema.getType(base);
+					} else {
+						throw new TypeAutomatonConversionException("Particle is null in getChilds in type " + type.getName());
+					}
+				else return getChilds(particle);
+			} else
+				return new HashSet<Particle>();
+			counter++;
 		}
 		return new HashSet<Particle>();
 	}
 
-	private Set<Particle> getChilds(Particle particle) {
+	private Set<Particle> getChilds(Particle particle) throws TypeAutomatonConversionException {
 		Set<Particle> childs = new HashSet<Particle>();
 		if (particle instanceof Element) {
 			Element element = (Element) particle;
@@ -174,11 +185,11 @@ public class XSDTypeAutomatonFactory implements SchemaConverter {
 			// We ignore AnyPattern for now, as it is not clear what semantics AnyPattern should have in an Automaton. 
 			// Open- vs. Closed-World-Assumption.
 		}  else
-			throw new RuntimeException("Unkown Particle of class " + particle.getClass().getCanonicalName());
+			throw new TypeAutomatonConversionException("Unkown Particle of class " + particle.getClass().getCanonicalName());
 		return childs;
 	}
 
-	private void addChild(State state, Particle child) {
+	private void addChild(State state, Particle child) throws TypeAutomatonConversionException {
 		QualifiedName name;
 		QualifiedName typename = null;
 		if (child instanceof ElementRef) {
@@ -189,7 +200,7 @@ public class XSDTypeAutomatonFactory implements SchemaConverter {
     		name = element.getName();
     		typename = element.getTypeName();
     	} else
-    		throw new RuntimeException("child is neither Element nor ElementRef.");
+    		throw new TypeAutomatonConversionException("child is neither Element nor ElementRef.");
 		Symbol symbol = Symbol.create(namespaceAware?name.getFullyQualifiedName():name.getName());
     	typeAutomaton.addSymbol(symbol);
     	Type type = schema.getType(typename);
