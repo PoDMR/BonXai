@@ -374,15 +374,14 @@ public class XSDParserHandler extends DefaultHandler {
 
 					if (attribute.localName.equals("type") || attribute.localName.equals("ref") || attribute.localName.equals("itemType") || attribute.localName.equals("base"))
 						name = this.namespaceList.getQualifiedName(attribute.value, object instanceof Attribute);
-					else if (attribute.localName.equals("name")) {
-						if ((object instanceof Type) || (object instanceof Group)) 
+					
+					if (attribute.localName.equals("name")) {
+						if ((object instanceof Type) || (object instanceof Group) || (object instanceof Element)) 
 							name = new QualifiedName(this.namespaceList.getTargetNamespace(), attribute.value);
 						else
 							name = this.namespaceList.getQualifiedName(attribute.value, object instanceof Attribute);
 						if (object instanceof NamedXSDElement)
 							((NamedXSDElement) object).setName(name);
-//						else
-//							throw new InvalidXSDException("Element of type " + object.getClass() + " has a name attribute.");
 					} else if (attribute.localName.equals("type"))
 						((TypedXSDElement) object).setTypeName(name);
 					else if (attribute.localName.equals("minOccurs")) {
