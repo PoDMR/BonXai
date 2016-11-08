@@ -61,6 +61,18 @@ public class XSDParserHandler extends DefaultHandler {
 	public static class MinLength extends SimpleContentFixableRestrictionProperty<Integer> {}
 	public static class MaxLength extends SimpleContentFixableRestrictionProperty<Integer> {}
 	public static class Pattern extends SimpleContentRestrictionProperty<String> {}
+	
+	public static class Assert { 
+		public Assert() throws XSDParserException { 
+			throw new XSDParserException("Assert is not supported."); 
+		} 
+	} 
+
+	public static class Alternative { 
+		public Alternative() throws XSDParserException { 
+			throw new XSDParserException("Type alternatives are not supported."); 
+		} 
+	} 
 
     private enum ElementType {
 		schema(XSDSchema.class),
@@ -84,7 +96,7 @@ public class XSDParserHandler extends DefaultHandler {
 		appinfo(AppInfo.class),
 		key(Key.class),
 		unique(Unique.class),
-		keyRef(KeyRef.class),
+		keyref(KeyRef.class),
 		selector(Selector.class),
 		field(Field.class),
 		group(GroupReference.class),
@@ -106,7 +118,9 @@ public class XSDParserHandler extends DefaultHandler {
 		COMPLEXExtension(ComplexContentExtension.class),
 		COMPLEXRestriction(ComplexContentRestriction.class),
 		GROUP(Group.class),
-		ATTRIBUTEGROUP(AttributeGroup.class);
+		ATTRIBUTEGROUP(AttributeGroup.class),
+		ASSERT(Assert.class),
+		alternative(Alternative.class);
 
 		private Class<Object> elementClass;
 
@@ -115,17 +129,17 @@ public class XSDParserHandler extends DefaultHandler {
 			this.elementClass = elementClass;
 		}
 
-		public Object getInstance() {
+		public Object getInstance() throws XSDParserException {
 			if (this.elementClass!=null) {
 				try {
 					return this.elementClass.newInstance();
 				} catch (InstantiationException e) {
-					throw new RuntimeException(e);
+					throw new XSDParserException(e);
 				} catch (IllegalAccessException e) {
-					throw new RuntimeException(e);
+					throw new XSDParserException(e);
 				}
 			} else {
-				throw new RuntimeException("Unhandled element with name " + this.toString());
+				throw new InvalidXSDException("Unhandled element with name " + this.toString());
 			}
 		}
 
@@ -144,7 +158,10 @@ public class XSDParserHandler extends DefaultHandler {
 					e=COMPLEXExtension;
 				else if (elementType.equals("restriction"))
 					e=COMPLEXRestriction;
-			} 
+			}
+			
+			if (elementType.equals("assert"))
+				e=ASSERT;
 			
 			if (e == null) {
 				try {
@@ -289,8 +306,7 @@ public class XSDParserHandler extends DefaultHandler {
 							((XSDSchema) object).addAttribute((Attribute) child); 
 						else if ((child instanceof Annotation) && (object instanceof Annotationable))
 							((Annotationable) object).setAnnotation((Annotation) child);
-						else if ((child instanceof Annotation))
-							System.err.println("Unhandled annotation element below " + object.getClass());
+						else if ((child instanceof Annotation))	{} //silently ignore annotation elements for now.
 						else if ((child instanceof Content) && (object instanceof ComplexType))
 							((ComplexType) object).setContent((Content) child);
 						else if ((child instanceof SimpleTypeInheritance) && (object instanceof SimpleType))
@@ -361,7 +377,7 @@ public class XSDParserHandler extends DefaultHandler {
 							if (object instanceof NamedXSDElement)
 								((NamedXSDElement) object).setName(name);
 							else
-								throw new InvalidXSDException("Elemtn of type " + object.getClass() + " has a name attribute.");
+								throw new InvalidXSDException("Element of type " + object.getClass() + " has a name attribute.");
 						} else if (attribute.localName.equals("type"))
 							((TypedXSDElement) object).setTypeName(name);
 						else if (attribute.localName.equals("minOccurs")) {
@@ -377,6 +393,8 @@ public class XSDParserHandler extends DefaultHandler {
 							((TypedXSDElement) object).setForm(Qualification.valueOf(attribute.value));
 						} else if (attribute.localName.equals("elementFormDefault"))
 							((XSDSchema) object).setElementFormDefault(Qualification.valueOf(attribute.value));
+						else if (attribute.localName.equals("attributeFormDefault"))
+							((XSDSchema) object).setAttributeFormDefault(Qualification.valueOf(attribute.value));
 						else if (attribute.localName.equals("targetNamespace")) {
 							// already added in startElement
 						} else if (attribute.localName.equals("ref") && (object instanceof Element))
@@ -387,30 +405,50 @@ public class XSDParserHandler extends DefaultHandler {
 							((AttributeGroupReference) object).setName(name);
 						else if (attribute.localName.equals("ref") && (object instanceof GroupReference))
 							((GroupReference) object).setName(name);
+						else if (attribute.localName.equals("refer") && (object instanceof KeyRef)) 
+							((KeyRef) object).setRefer(this.namespaceList.getQualifiedName(attribute.value));
 						else if (attribute.localName.equals("use") && (object instanceof Attribute))
 							((Attribute) object).setUse(AttributeUse.valueOf(attribute.value));
 						else if (attribute.localName.equals("default") && (object instanceof Attribute))
 							((Attribute) object).setDefault(attribute.value);
+						else if (attribute.localName.equals("default") && (object instanceof Element))
+							((Element) object).setDefault(attribute.value);
 						else if (attribute.localName.equals("fixed") && (object instanceof Attribute))
 							((Attribute) object).setFixed(attribute.value);
+						else if (attribute.localName.equals("fixed") && (object instanceof Element))
+							((Element) object).setFixed(attribute.value);
 						else if (attribute.localName.equals("id") && (object instanceof ID))
 							((ID) object).setId(attribute.value);
-						else if (attribute.localName.equals("nillable") && attribute.value.equals("true") && (object instanceof Element))
-							((Element) object).setNillable();
+						else if (attribute.localName.equals("nillable") && (object instanceof Element)) {
+							if (Boolean.parseBoolean(attribute.value))
+								((Element) object).setNillable();
+						}
+						else if (attribute.localName.equals("memberTypes") && (object instanceof SimpleContentUnion))
+							for (String memberTypeName: attribute.value.split("\\s+")) {
+								((SimpleContentUnion) object).addMemberType(this.namespaceList.getQualifiedName(memberTypeName));
+							}
 						else if (attribute.localName.equals("processContents") && (object instanceof AnyAttribute))
 							((AnyAttribute) object).setProcessContentsInstruction(ProcessContentsInstruction.valueOf(attribute.value.toUpperCase()));
 						else if (attribute.localName.equals("processContents") && (object instanceof AnyPattern))
 							((AnyPattern) object).setProcessContentsInstruction(ProcessContentsInstruction.valueOf(attribute.value.toUpperCase()));
 						else if (attribute.localName.equals("namespace") && (object instanceof AnyAttribute))
 							((AnyAttribute) object).setNamespace(attribute.value);
+						else if (attribute.localName.equals("namespace") && (object instanceof AnyPattern))
+							((AnyPattern) object).setNamespace(attribute.value);
 						else if (attribute.localName.equals("itemType") && (object instanceof SimpleContentList))
 							((SimpleContentList) object).setBaseType(name);
 						else if (attribute.localName.equals("base") && (object instanceof Inheritance))
 							((Inheritance) object).setBaseType(name);
 						else if (attribute.localName.equals("source") && (object instanceof Documentation))
 							((Documentation) object).setSource(attribute.value);
-						else if (attribute.localName.equals("abstract") && attribute.value.equals("true") && (object instanceof ComplexType))
-							((ComplexType) object).setAbstract(true);
+						else if (attribute.localName.equals("mixed") && (object instanceof ComplexType))
+							((ComplexType) object).setMixed(Boolean.parseBoolean(attribute.value));
+						else if (attribute.localName.equals("mixed") && (object instanceof ComplexContentType))
+							((ComplexContentType) object).setMixed(Boolean.parseBoolean(attribute.value));
+						else if (attribute.localName.equals("abstract") && (object instanceof ComplexType))
+							((ComplexType) object).setAbstract(Boolean.parseBoolean(attribute.value));
+						else if (attribute.localName.equals("abstract") && (object instanceof Element))
+							((Element) object).setAbstract(Boolean.parseBoolean(attribute.value));
 						else if ((attribute.localName.equals("value") || attribute.localName.equals("xpath"))  && (object instanceof VContainer))
 							((VContainer) object).value = attribute.value;
 						else if (attribute.localName.equals("fixed") && attribute.value.equals("true") && (object instanceof SimpleContentFixableRestrictionProperty))
@@ -429,9 +467,10 @@ public class XSDParserHandler extends DefaultHandler {
 							((SimpleContentRestrictionProperty) object).setValue(Integer.parseInt(attribute.value));
 						
 						else if (attribute.localName.equals("id")) {} // ignore id attributes not handled yet
-						
+						else if (attribute.localName.equals("version") && object instanceof XSDSchema) {} // ignore version. this attribute has no semantics according to XSD specs
+						else if (attribute.localName.equals("substitutionGroup")) { System.err.println("Substitution groups are not supported"); }
 						else
-							System.err.println("Unhandled attribute with name " + attribute.localName + " in " + object.getClass());
+							System.err.println("Unhandled attribute with name " + attribute.localName + " and value " + attribute.value + " in " + object.getClass());
 					}
 				}
 

@@ -32,6 +32,10 @@ import eu.fox7.schematoolkit.common.QualifiedName;
 public class KeyRef extends SimpleConstraint {
     private QualifiedName refer;
 
+    public KeyRef() {
+    	super();
+    }
+    
 	public KeyRef (QualifiedName name, String selector, QualifiedName refer) {
          super(name, selector);
          this.refer = refer;
@@ -42,5 +46,10 @@ public class KeyRef extends SimpleConstraint {
 	 */
 	public QualifiedName getRefer() {
 		return refer;
+	}
+
+	public void setRefer(QualifiedName refer) {
+		this.refer=refer;
+		
 	}
 }

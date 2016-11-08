@@ -54,7 +54,7 @@ public class SimpleContentUnion extends Inheritance implements SimpleTypeInherit
      */
     public void addMemberType (QualifiedName val) {
         if (memberTypes.contains(val)) {
-            throw new RuntimeException("Type " + val + " already contained in membertypelist of union.");
+//            throw new RuntimeException("Type " + val + " already contained in membertypelist of union.");
         } else {
             memberTypes.add(val);
         }
