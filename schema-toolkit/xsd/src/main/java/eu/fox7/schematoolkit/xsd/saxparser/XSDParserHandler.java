@@ -254,8 +254,19 @@ public class XSDParserHandler extends DefaultHandler {
     		
     		if (localName.equals("schema"))
     			for(XMLAttribute attribute: attributeList)
-    				if (attribute.localName.equals("targetNamespace"))
-    					this.namespaceList.setTargetNamespace(namespaceList.getNamespaceByUri(attribute.value));
+    				if (attribute.localName.equals("targetNamespace")) {
+    					Namespace targetNamespace = namespaceList.getNamespaceByUri(attribute.value);
+    					/*
+    					 * If targetnamespace is not available via prefix, it cannot be explicitly referenced.
+    					 * This is possible, e.g., in schemas only declaring global attributes.
+    					 */
+    					if (targetNamespace==null) {
+    						targetNamespace = new IdentifiedNamespace("",attribute.value);
+    						namespaceList.addNamespace((IdentifiedNamespace) targetNamespace);
+    					}
+    					
+    					this.namespaceList.setTargetNamespace(targetNamespace);
+    				}
     		
     		this.elementNames.push(localName);
     	}
@@ -275,20 +286,20 @@ public class XSDParserHandler extends DefaultHandler {
 				ElementType elementType = ElementType.getElementType(localName, parent);
 				Object object = elementType.getInstance();
 				
-				//silently ignore notation elements for now
-				if (object instanceof Notation)
-					return;
 				
 				Collection<Object> childs = elementStack.pop();
 				Collection<Object> attributes = new LinkedList<Object>();
 				Particle particle = null;
 				
 				for (Object child: childs) {
-					if ((child instanceof Particle) && (object instanceof PContainer))
+					if (object instanceof Notation) {
+						//silently ignore notation elements for now
+					} else if ((child instanceof Particle) && (object instanceof PContainer))
 						((PContainer) object).addParticle((Particle) child);
-					else if ((child instanceof Particle) && (object instanceof Inheritance))
+					else if ((child instanceof Particle) && (object instanceof Inheritance)) {
+						// add particle to object list, as it needs to be added to the parent instead of to the inheritance itself
 						particle = (Particle) child;
-					else if (child instanceof Type) {
+					} else if (child instanceof Type) {
 						this.types.add((Type) child);
 						if (!(object instanceof XSDSchema)) {
 							((Type) child).setName(uniqueTypename());
@@ -492,8 +503,7 @@ public class XSDParserHandler extends DefaultHandler {
 	    			else
 	    				throw new InvalidXSDException("Element of type " + object.getClass() + " has min- or maxOccurs attribute.");
 	    		
-	    		if (object != null)
-	    			this.elementStack.peek().add(object);
+    			this.elementStack.peek().add(object);
 	    		
 	    		if (! attributes.isEmpty())
 	    			this.elementStack.peek().addAll(attributes);
