@@ -19,7 +19,7 @@
 
 package eu.fox7.schematoolkit;
 
-public class SchemaToolkitException extends Exception {
+public class SchemaToolkitException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
