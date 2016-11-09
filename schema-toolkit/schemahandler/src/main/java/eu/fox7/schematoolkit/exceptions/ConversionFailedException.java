@@ -19,7 +19,9 @@
 
 package eu.fox7.schematoolkit.exceptions;
 
-public class ConversionFailedException extends Exception {
+import eu.fox7.schematoolkit.SchemaToolkitException;
+
+public class ConversionFailedException extends SchemaToolkitException {
 
 	/**
 	 * 
