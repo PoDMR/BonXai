@@ -2,32 +2,36 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>bonxai2xsd</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <artifactId>xsd2bonxai</artifactId>
   <packaging>jar</packaging>
 
   <parent>
     <groupId>eu.fox7.schema-toolkit</groupId>
     <artifactId>schema-toolkit</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
   </parent>
 
-  <name>BonXai2XSD Converter</name>
+  <name>XSD2BonXai Converter</name>
   <dependencies>
   	<dependency>
   		<groupId>eu.fox7.schema-toolkit</groupId>
-  		<artifactId>xsd</artifactId>
-  		<version>1.0-SNAPSHOT</version>
+  		<artifactId>bonxai</artifactId>
+  		<version>1.0</version>
   	</dependency>
   	<dependency>
   		<groupId>eu.fox7.schema-toolkit</groupId>
-  		<artifactId>bonxai</artifactId>
-  		<version>1.0-SNAPSHOT</version>
+  		<artifactId>xsd</artifactId>
+  		<version>1.0</version>
   	</dependency>
   	<dependency>
   		<groupId>eu.fox7.schema-toolkit</groupId>
   		<artifactId>typeautomaton</artifactId>
-  		<version>1.0-SNAPSHOT</version>
+  		<version>1.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>eu.fox7.schema-toolkit</groupId>
+  		<artifactId>xsd2typeautomaton</artifactId>
+  		<version>1.0</version>
   	</dependency>
   </dependencies>
 </project>

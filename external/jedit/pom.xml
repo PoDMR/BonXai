@@ -13,7 +13,7 @@
   <parent>
     <groupId>eu.fox7.foxlib</groupId>
     <artifactId>externals</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
   </parent>
 
   <build>

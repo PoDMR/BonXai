@@ -4,7 +4,7 @@
 
   <groupId>eu.fox7.jedit</groupId>
   <artifactId>jedit-foxlib</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>pom</packaging>
 
   <distributionManagement>
@@ -39,7 +39,7 @@
     <dependency>
       <groupId>eu.fox7.jedit</groupId>
       <artifactId>bonxai-plugin</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0</version>
     </dependency>
     
   </dependencies>
@@ -87,7 +87,7 @@
                 <artifactItem>
                   <groupId>eu.fox7.jedit</groupId>
                   <artifactId>flt-plugin</artifactId>
-                  <version>1.0-SNAPSHOT</version>
+                  <version>1.0</version>
                   <classifier>jar-with-dependencies</classifier>
                   <type>jar</type>
                   <overWrite>false</overWrite>
@@ -99,7 +99,7 @@
                 <artifactItem>
                   <groupId>eu.fox7.jedit</groupId>
                   <artifactId>bonxai-plugin</artifactId>
-                  <version>1.0-SNAPSHOT</version>
+                  <version>1.0</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/staging/jars</outputDirectory>
@@ -109,7 +109,7 @@
                 <artifactItem>
                   <groupId>eu.fox7</groupId>
                   <artifactId>bonxai</artifactId>
-                  <version>1.0-SNAPSHOT</version>
+                  <version>1.0</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/staging/jars</outputDirectory>

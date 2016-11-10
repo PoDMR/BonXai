@@ -5,28 +5,28 @@
   <parent>
   	<groupId>eu.fox7.schema-toolkit</groupId>
   	<artifactId>schema-toolkit</artifactId>
-  	<version>1.0-SNAPSHOT</version>
+  	<version>1.0</version>
   </parent>
   <dependencies>
   	<dependency>
   		<groupId>eu.fox7.schema-toolkit</groupId>
   		<artifactId>xsd</artifactId>
-  		<version>1.0-SNAPSHOT</version>
+  		<version>1.0</version>
   	</dependency>
   	<dependency>
   		<groupId>eu.fox7.schema-toolkit</groupId>
   		<artifactId>bonxai</artifactId>
-  		<version>1.0-SNAPSHOT</version>
+  		<version>1.0</version>
   	</dependency>
   	<dependency>
   		<groupId>eu.fox7.flt</groupId>
   		<artifactId>flt-core</artifactId>
-  		<version>1.0-SNAPSHOT</version>
+  		<version>1.0</version>
   	</dependency>
   	<dependency>
   		<groupId>eu.fox7</groupId>
   		<artifactId>treeautomata</artifactId>
-  		<version>1.0-SNAPSHOT</version>
+  		<version>1.0</version>
   	</dependency>
   </dependencies>
 </project>

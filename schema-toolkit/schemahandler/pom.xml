@@ -8,7 +8,7 @@
   <parent>
     <groupId>eu.fox7.schema-toolkit</groupId>
     <artifactId>schema-toolkit</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
   </parent>
 
   <name>Schema-Handler</name>
