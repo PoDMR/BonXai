@@ -2,33 +2,23 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <distributionManagement>
-    <downloadUrl>http://ls1-www.cs.tu-dortmund.de/nexus/content/repositories/fox</downloadUrl>
     <repository>
       <id>fox</id>
-      <name>Fox Repository</name>
-      <url>http://ls1-www.cs.tu-dortmund.de/nexus/content/repositories/fox</url>
-    </repository>
-    <snapshotRepository>
-      <id>fox-snapshot</id>
-      <name>Fox Snapshot Repository</name>
-      <url>http://ls1-www.cs.tu-dortmund.de/nexus/content/repositories/fox-snapshot</url>
+      <name>fox</name>
+      <url>file:///var/www/html/repositories/fox/</url>
       <uniqueVersion>true</uniqueVersion>
-    </snapshotRepository>
+    </repository>
   </distributionManagement>
 
   <repositories>
     <repository>
       <id>fox</id>
-      <url>http://ls1-www.cs.tu-dortmund.de/nexus/content/repositories/fox</url>
-    </repository>
-    <repository>
-      <id>fox-snapshot</id>
-      <url>http://ls1-www.cs.tu-dortmund.de/nexus/content/repositories/fox-snapshot</url>
+      <url>http://bonxai.org/maven</url>
     </repository>
   </repositories>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>eu.fox7</groupId>
+	<groupId>org.bonxai</groupId>
 	<artifactId>foxlib</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -89,14 +79,13 @@
 	</properties>
 
 	<modules>
-<!--		<module>external</module> -->
+		<module>external</module> 
 		<module>flt</module>
 		<module>schema-toolkit</module>
-<!--		<module>console</module> -->
+		<module>console</module>
 		<module>treeautomata</module>
 		<module>upafixer</module>
 		<module>xsdlearning</module>
-		<module>xmlvalidator</module>
-<!--		<module>jedit</module> -->
+		<module>jedit</module> 
 	</modules>
 </project>

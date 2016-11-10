@@ -7,7 +7,7 @@
   <packaging>jar</packaging>
 
   <parent>
-    <groupId>eu.fox7.schema-toolkit</groupId>
+    <groupId>org.bonxai.schema-toolkit</groupId>
     <artifactId>schema-toolkit</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
@@ -15,12 +15,12 @@
   <name>Tree-Automata</name>
   <dependencies>
   	<dependency>
-  		<groupId>eu.fox7.schema-toolkit</groupId>
+  		<groupId>org.bonxai.schema-toolkit</groupId>
   		<artifactId>xsd</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</dependency>
   	<dependency>
-  		<groupId>eu.fox7.flt</groupId>
+  		<groupId>org.bonxai.flt</groupId>
   		<artifactId>flt-core</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</dependency>

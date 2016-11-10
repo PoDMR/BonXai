@@ -2,24 +2,19 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>eu.fox7.jedit</groupId>
+  <groupId>org.bonxai.jedit</groupId>
   <artifactId>jedit-foxlib</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <distributionManagement>
+  <repositories>
     <repository>
-      <id>eu.fox7</id>
-      <name>Fox Repository</name>
-      <url>file:///home/mt/fox-repository</url>
+      <id>fox</id>
+      <url>http://bonxai.org/maven</url>
     </repository>
-    <snapshotRepository>
-      <id>eu.fox</id>
-      <name>Fox Repository</name>
-      <url>file:///home/mt/fox-repository</url>
-      <uniqueVersion>false</uniqueVersion>
-    </snapshotRepository>
-  </distributionManagement>
+  </repositories>
+
+
 
   <dependencies>
 
@@ -37,7 +32,7 @@
     </dependency>
     
     <dependency>
-      <groupId>eu.fox7.jedit</groupId>
+      <groupId>org.bonxai.jedit</groupId>
       <artifactId>bonxai-plugin</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
@@ -85,7 +80,7 @@
                 </artifactItem>
                 
                 <artifactItem>
-                  <groupId>eu.fox7.jedit</groupId>
+                  <groupId>org.bonxai.jedit</groupId>
                   <artifactId>flt-plugin</artifactId>
                   <version>1.0-SNAPSHOT</version>
                   <classifier>jar-with-dependencies</classifier>
@@ -97,7 +92,7 @@
                 
                 
                 <artifactItem>
-                  <groupId>eu.fox7.jedit</groupId>
+                  <groupId>org.bonxai.jedit</groupId>
                   <artifactId>bonxai-plugin</artifactId>
                   <version>1.0-SNAPSHOT</version>
                   <type>jar</type>
@@ -107,7 +102,7 @@
                 </artifactItem>
                 
                 <artifactItem>
-                  <groupId>eu.fox7</groupId>
+                  <groupId>org.bonxai</groupId>
                   <artifactId>bonxai</artifactId>
                   <version>1.0-SNAPSHOT</version>
                   <type>jar</type>

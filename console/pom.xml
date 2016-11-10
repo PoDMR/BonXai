@@ -8,7 +8,7 @@
   <parent>
     <artifactId>foxlib</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <groupId>eu.fox7</groupId>
+    <groupId>org.bonxai</groupId>
   </parent>
 
   <name>console</name>
@@ -56,62 +56,54 @@
     </dependency>
 
 
-
-
     <dependency>
-    	<groupId>eu.fox7.schema-toolkit</groupId>
+    	<groupId>org.bonxai.schema-toolkit</groupId>
     	<artifactId>xsd</artifactId>
     	<version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-    	<groupId>eu.fox7.schema-toolkit</groupId>
+    	<groupId>org.bonxai.schema-toolkit</groupId>
     	<artifactId>schemahandler</artifactId>
     	<version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-    	<groupId>eu.fox7.schema-toolkit</groupId>
-    	<artifactId>relaxng</artifactId>
-    	<version>1.0-SNAPSHOT</version>
-    	<scope>runtime</scope>
-    </dependency>
-    <dependency>
-    	<groupId>eu.fox7.schema-toolkit</groupId>
+    	<groupId>org.bonxai.schema-toolkit</groupId>
     	<artifactId>bonxai</artifactId>
     	<version>1.0-SNAPSHOT</version>
     	<scope>runtime</scope>
     </dependency>
     <dependency>
-    	<groupId>eu.fox7.schema-toolkit</groupId>
+    	<groupId>org.bonxai.schema-toolkit.converter</groupId>
     	<artifactId>bonxai2xsd</artifactId>
     	<version>1.0-SNAPSHOT</version>
     	<scope>runtime</scope>
     </dependency>
     <dependency>
-    	<groupId>eu.fox7</groupId>
+    	<groupId>org.bonxai</groupId>
     	<artifactId>upafixer</artifactId>
     	<version>1.0-SNAPSHOT</version>
     	<scope>runtime</scope>
     </dependency>
     <dependency>
-    	<groupId>eu.fox7.schema-toolkit</groupId>
+    	<groupId>org.bonxai.schema-toolkit.converter</groupId>
     	<artifactId>xsd2bonxai</artifactId>
     	<version>1.0-SNAPSHOT</version>
     	<scope>runtime</scope>
     </dependency>
     <dependency>
-    	<groupId>eu.fox7</groupId>
+    	<groupId>org.bonxai</groupId>
     	<artifactId>xsdlearner</artifactId>
     	<version>1.0-SNAPSHOT</version>
     	<scope>runtime</scope>
     </dependency>
     <dependency>
-    	<groupId>eu.fox7.schema-toolkit</groupId>
+    	<groupId>org.bonxai.schema-toolkit</groupId>
     	<artifactId>schema-operations</artifactId>
     	<version>1.0-SNAPSHOT</version>
     	<scope>runtime</scope>
     </dependency>
     <dependency>
-    	<groupId>eu.fox7.schema-toolkit</groupId>
+    	<groupId>org.bonxai.schema-toolkit</groupId>
     	<artifactId>xmlvalidator</artifactId>
     	<version>1.0-SNAPSHOT</version>
     	<scope>runtime</scope>

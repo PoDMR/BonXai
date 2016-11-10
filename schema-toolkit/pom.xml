@@ -2,13 +2,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>eu.fox7.schema-toolkit</groupId>
+  <groupId>org.bonxai.schema-toolkit</groupId>
   <artifactId>schema-toolkit</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <parent>
-    <groupId>eu.fox7</groupId>
+    <groupId>org.bonxai</groupId>
     <artifactId>foxlib</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
@@ -35,8 +35,8 @@
 <!--<module>relaxng</module> -->
     <module>typeautomaton</module>
     <module>schemahandler</module>
-    <module>converter/xsd2bonxai</module>
-    <module>converter/bonxai2xsd</module>
-    <module>converter/xsd2typeautomaton</module>
+    <module>converter</module>
+    <module>xmlvalidator</module>
+    <module>schema-operations</module>
   </modules>
 </project>
