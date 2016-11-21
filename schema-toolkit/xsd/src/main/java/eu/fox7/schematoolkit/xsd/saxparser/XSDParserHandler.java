@@ -195,6 +195,9 @@ public class XSDParserHandler extends DefaultHandler {
 	private int insideDocumentation;
 	private boolean topLevel;
 	
+	private int complexTypeExtensions;
+	private int complexTypeRestrictions;
+	
 	private Stack<String> elementNames;
     
     public XSDParserHandler() {
@@ -217,6 +220,9 @@ public class XSDParserHandler extends DefaultHandler {
 		this.insideDocumentation = 0;
 		this.topLevel = true;
 
+		this.complexTypeExtensions = 0;
+		this.complexTypeRestrictions = 0;
+		
 		this.elementStack.push(new LinkedList<Object>());
 		this.elementNames.push("");
     }
@@ -284,6 +290,13 @@ public class XSDParserHandler extends DefaultHandler {
 				elementNames.pop();
 				String parent = elementNames.peek();
 				ElementType elementType = ElementType.getElementType(localName, parent);
+				
+				if (elementType==ElementType.COMPLEXExtension)
+					this.complexTypeExtensions++;
+				
+				if (elementType==ElementType.COMPLEXRestriction)
+					this.complexTypeRestrictions++;
+				
 				Object object = elementType.getInstance();
 				
 				
@@ -530,6 +543,8 @@ public class XSDParserHandler extends DefaultHandler {
     	this.schema.setNamespaceList(namespaceList);
     	for (Type type: types)
     		this.schema.addType(type);
+    	
+    	System.err.println("Extensions: "+this.complexTypeExtensions + "Restrictions: "+this.complexTypeRestrictions);
     }
 
 	public XSDSchema getSchema() {

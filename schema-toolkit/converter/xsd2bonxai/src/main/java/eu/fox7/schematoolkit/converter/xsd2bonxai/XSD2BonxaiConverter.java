@@ -20,47 +20,40 @@
 package eu.fox7.schematoolkit.converter.xsd2bonxai;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Vector;
-
 import org.apache.commons.collections15.BidiMap;
 
-import eu.fox7.flt.automata.impl.sparse.ModifiableStateDFA;
-import eu.fox7.flt.automata.impl.sparse.SparseNFA;
 import eu.fox7.flt.automata.impl.sparse.State;
-import eu.fox7.flt.regex.Regex;
-import eu.fox7.flt.regex.converters.EpsilonEmptyEliminator;
-import eu.fox7.flt.regex.converters.Normalizer;
-import eu.fox7.flt.regex.factories.StateEliminationFactory;
 import eu.fox7.schematoolkit.AbstractSchemaConverter;
 import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.SchemaHandler;
+import eu.fox7.schematoolkit.SchemaLanguage;
+import eu.fox7.schematoolkit.SchemaToolkitException;
 import eu.fox7.schematoolkit.bonxai.om.AncestorPattern;
-import eu.fox7.schematoolkit.bonxai.om.AncestorPatternElement;
 import eu.fox7.schematoolkit.bonxai.om.Annotation;
 import eu.fox7.schematoolkit.bonxai.om.AttributePattern;
 import eu.fox7.schematoolkit.bonxai.om.Bonxai;
 import eu.fox7.schematoolkit.bonxai.om.BonxaiGroup;
 import eu.fox7.schematoolkit.bonxai.om.BonxaiType;
-import eu.fox7.schematoolkit.bonxai.om.CardinalityParticle;
 import eu.fox7.schematoolkit.bonxai.om.ChildPattern;
 import eu.fox7.schematoolkit.bonxai.om.ElementPattern;
 import eu.fox7.schematoolkit.bonxai.om.Expression;
-import eu.fox7.schematoolkit.bonxai.om.OrExpression;
-import eu.fox7.schematoolkit.bonxai.om.SequenceExpression;
 import eu.fox7.schematoolkit.common.AttributeParticle;
 import eu.fox7.schematoolkit.common.DefaultNamespace;
 import eu.fox7.schematoolkit.common.ElementProperties;
 import eu.fox7.schematoolkit.common.EmptyPattern;
 import eu.fox7.schematoolkit.common.IdentifiedNamespace;
-import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.typeautomaton.factories.XSDTypeAutomatonFactory;
+import eu.fox7.schematoolkit.xsd.XSDSchemaHandler;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.Content;
@@ -70,8 +63,6 @@ import eu.fox7.schematoolkit.xsd.om.SimpleContentType;
 import eu.fox7.schematoolkit.xsd.om.Type;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema;
 import eu.fox7.schematoolkit.xsd.om.XSDSchema.Qualification;
-import eu.fox7.util.tree.Node;
-import eu.fox7.util.tree.Tree;
 
 
 /**
@@ -82,7 +73,24 @@ import eu.fox7.util.tree.Tree;
  * is meant to be used directly in the tool that will perform this conversion.
  */
 public class XSD2BonxaiConverter extends AbstractSchemaConverter {
-    /**
+	public static void main (String[] args) {
+		if (args.length != 2) {
+			System.err.println("Usage: XSD2BonXaiconverter input.xsd output.bonxai");
+			return;
+		}
+		SchemaHandler sh = new XSDSchemaHandler();
+		try {
+			sh.loadSchema(new File(args[0]));
+			SchemaHandler target = sh.convert(SchemaLanguage.BONXAI);
+			target.writeSchema(new File(args[1]));
+		} catch (SchemaToolkitException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
      * The schema to convert.
      */
     private XSDSchema schema;
@@ -109,6 +117,8 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
 	private XSDSchema xmlSchema;
 	
 	private boolean addExpressionsForBonxaiTypes = true;
+	
+	private AncestorPatternBuilder ancestorPatternBuilder;
     
     /**
 	 * @return the typeAutomaton
@@ -151,6 +161,11 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
     public Bonxai convert(Schema schema ) throws ConversionFailedException {
     	if (!(schema instanceof XSDSchema))
     		throw new ConversionFailedException("Can only convert XML Schema schemas.");
+    	
+    	if (this.ancestorPatternBuilder == null) {
+    		this.ancestorPatternBuilder = new AncestryAncestorPatternBuilder();
+    	}
+    	
     	xmlSchema = (XSDSchema) schema;
     	this.attributeProcessor = new AttributeProcessor(xmlSchema);
     	this.particleProcessor = new ParticleProcessor(xmlSchema, !this.addExpressionsForBonxaiTypes);
@@ -159,6 +174,8 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
     	this.elementFormDefault = xmlSchema.getElementFormDefault();
 
     	this.typeAutomaton = factory.createTypeAutomaton(xmlSchema);
+    	
+    	System.err.println("TypeAutomaton: " + typeAutomaton);
     	
     	bonxai = new Bonxai();
     	
@@ -179,27 +196,29 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
 	}
 
 	private void createExpressions() {
-    	for (State state: typeAutomaton.getStates()) 
-    		if (! typeAutomaton.isInitialState(state)) 
-    	    	bonxai.addExpression(getExpression(state));
-    	
+		Map<State,AncestorPattern> map = this.ancestorPatternBuilder.buildAncestorPatterns(typeAutomaton, bonxai.getNamespaceList());
+		
+		for (Map.Entry<State, AncestorPattern> e: map.entrySet()) {
+			State state = e.getKey();
+			AncestorPattern ancestorPattern = e.getValue();
+			
+			ChildPattern childPattern = createChildPattern(state);
+			
+			Expression expression = new Expression();
+			expression.setAncestorPattern(ancestorPattern);
+			expression.setChildPattern(childPattern);
+
+			Type type = typeAutomaton.getType(state);
+			if ((type != null) && (!type.isAnonymous()) && (expression.getChildPattern().getElementPattern().getBonxaiType()==null))
+					expression.addAnnotation(new Annotation("typename",this.typeAutomaton.getTypeName(state).getName()));
+			
+			bonxai.addExpression(expression);
+		}
+		
     	Collection<Element> rootElements = schema.getElements();
     	for (Element rootElement: rootElements) {
     		bonxai.addRootElementName(rootElement.getName());
     	}
-	}
-
-	private Expression getExpression(State state) {
-		AncestorPattern ancestorPattern = createAncestorPattern(state);
-		ChildPattern childPattern = createChildPattern(state);
-
-		Expression expression = new Expression();
-		expression.setAncestorPattern(ancestorPattern);
-		expression.setChildPattern(childPattern);
-		Type type = typeAutomaton.getType(state);
-		if ((type != null) && (!type.isAnonymous()) && (expression.getChildPattern().getElementPattern().getBonxaiType()==null))
-				expression.addAnnotation(new Annotation("typename",this.typeAutomaton.getTypeName(state).getName()));
-		return expression;
 	}
 
 	private void createDeclaration() {
@@ -216,37 +235,6 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
 		}
 	}
     
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	private AncestorPattern createAncestorPattern(State state) {
-    	//Create a dfa from typeAutomaton by choosing a final state.
-    	ModifiableStateDFA dfa = new SparseNFA(typeAutomaton);
-    	State dfaState = dfa.getState(typeAutomaton.getStateValue(state));
-    	dfa.setFinalState(dfaState);
-    	System.err.println("DFA: "+ dfa);
-
-//    	Minimizer minimizer = new NFAMinimizer();
-//    	minimizer.minimize(dfa);
-//    	System.err.println("DFA after minimization: "+ dfa);
-    	
-    	// create regular expression from dfa
-    	StateEliminationFactory regexFactory = new StateEliminationFactory();
-    	Regex regex = regexFactory.create(dfa, false);
-    	
-    	// remove emptyset and epsilon
-    	Normalizer normalizer = new EpsilonEmptyEliminator();
-    	regex = normalizer.normalize(regex);
-    	
-    	System.err.println("Regex-Tree: "+ regex.getTree());
-    	
-    	// create particle from regex
-    	Tree regexTree = regex.getTree();
-    	Node root = regexTree.getRoot();
-    	AncestorPattern ancestorPattern = convertTreeNode(root);
-    	    	
-    	System.err.println("AncestorPattern: " + ancestorPattern);
-    	
-    	return ancestorPattern;
-    }
 
 	private ChildPattern createChildPattern(State state) {
 		Type type = typeAutomaton.getType(state);
@@ -299,35 +287,5 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
 		return particleProcessor.convertParticle(particle);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private AncestorPattern convertTreeNode(Node<Object> node) {
-		String key = node.getKey();
-		if (key.equals(Regex.CONCAT_OPERATOR)) { //concatenation
-			Vector<AncestorPattern> childParticles = new Vector<AncestorPattern>();
-			for (Node child: node.getChildren()) {
-				AncestorPattern childParticle = convertTreeNode(child);
-				childParticles.add(childParticle);
-			}
-			return new SequenceExpression(childParticles);
-		} else if (key.equals(Regex.ZERO_OR_MORE_OPERATOR)) { // kleene star
-			return new CardinalityParticle(convertTreeNode(node.getChild(0)), 0);
-		} else if (key.equals(Regex.UNION_OPERATOR)) { // or
-			Vector<AncestorPattern> childParticles = new Vector<AncestorPattern>();
-			for (Node child: node.getChildren()) {
-				AncestorPattern childParticle = convertTreeNode(child);
-				childParticles.add(childParticle);
-			}
-			return new OrExpression(childParticles);
-		} else if (key.equals(Regex.EPSILON_SYMBOL)) {
-			throw new RuntimeException("Epsilon no supported");
-		} else if (key.equals(Regex.EMPTY_SYMBOL)) {
-			throw new RuntimeException("Empty no supported");
-		} else { // label
-			String localName = key.substring(key.lastIndexOf("}") + 1);
-			String namespaceURI = key.substring(1, key.lastIndexOf("}"));
-			Namespace namespace = bonxai.getNamespaceByUri(namespaceURI);
-			QualifiedName name = new QualifiedName(namespace, localName); 
-			return new AncestorPatternElement(name);
-		}
-	}
+
 }

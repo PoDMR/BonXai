@@ -44,9 +44,7 @@ import eu.fox7.schematoolkit.xsd.om.XSDSchema;
  * references.
  */
 class AttributeProcessor {
-	private XSDSchema schema;
-	
-    /**
+	/**
      * Creates a new AttributeProcessor.
      *
      * The processor will use the given {@link SymbolTable} to resolve {@link
@@ -55,8 +53,7 @@ class AttributeProcessor {
      * is discovered inside {@linl convertAttributes()}, this table will be
      * used to add a corresponding reference in the returned Bonxai list.
      */
-    public AttributeProcessor(XSDSchema schema) {
-    	this.schema = schema;
+    public AttributeProcessor(XSDSchema xmlSchema) {
     }
 
     /**

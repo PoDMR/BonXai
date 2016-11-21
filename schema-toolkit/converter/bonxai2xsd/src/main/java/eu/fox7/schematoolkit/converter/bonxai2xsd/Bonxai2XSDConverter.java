@@ -38,7 +38,6 @@ import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.typeautomaton.factories.AdvancedTypeNameGenerator;
 import eu.fox7.schematoolkit.typeautomaton.factories.BonxaiTypeAutomatonConstruction;
-import eu.fox7.schematoolkit.typeautomaton.factories.TrivialTypeNameGenerator;
 import eu.fox7.schematoolkit.typeautomaton.factories.TypeNameGenerator;
 import eu.fox7.schematoolkit.xsd.om.Element;
 import eu.fox7.schematoolkit.xsd.om.Type;
