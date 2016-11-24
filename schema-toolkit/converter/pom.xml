@@ -15,6 +15,7 @@
   <name>Schema Converters</name>
 
   <modules>
+    <module>dtd2xsd</module>
     <module>xsd2bonxai</module>
     <module>bonxai2xsd</module>
     <module>xsd2typeautomaton</module>
