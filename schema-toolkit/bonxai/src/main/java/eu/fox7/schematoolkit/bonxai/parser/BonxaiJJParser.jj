@@ -890,6 +890,7 @@ Particle NamedType(): {Token t; BonxaiType type; Particle p; QualifiedName name;
 
 
 //NamespaceList       ::= "not"? "{" (NamespaceURI | ##other | ##local | ##targetNamespace)* "}"
+//TODO
 List<Namespace> NamespaceList(): { List<Namespace> namespaceList = new LinkedList<Namespace>(); }
 {   <OPENING_CURLY_BRACKET> <CLOSING_CURLY_BRACKET>
   {    return namespaceList;

@@ -116,7 +116,8 @@ public class CompactSyntaxWriter {
     }
     
     protected void writeTargetNamespace(Namespace namespace) throws IOException {
-        writer.appendLine("target namespace " +  namespace.getUri());
+    	if (! namespace.getUri().equals(""))
+    		writer.appendLine("target namespace " +  namespace.getUri());
     }
 
     /**
@@ -137,7 +138,8 @@ public class CompactSyntaxWriter {
     	for (QualifiedName name: rootElementNames) {
     		if (!first) 
     			writer.allowBreak(", ");
-    		writeName(name);    		
+    		writeName(name);
+    		first=false;
     	}
     	writer.popIndent();
     	writer.appendLine(" }");
@@ -359,7 +361,15 @@ public class CompactSyntaxWriter {
     	writeName(particle.getName());
 	}
 
-	private void writeAnyPattern(AnyPattern particle) {
+	private void writeAnyPattern(AnyPattern particle) throws IOException {
+		writer.append("any { ");
+		if (particle.getProcessContentsInstruction()!=null)
+			writer.append(particle.getProcessContentsInstruction().toString() + " ");
+		//if (particle.isComplementNamespaces())
+		//	writer.append("not ");
+		//for (Namespace namespace: particle.getNamespaces())
+		//	writer.append(namespace.getUri());
+		writer.append("}");
 		// TODO Auto-generated method stub
 		
 	}

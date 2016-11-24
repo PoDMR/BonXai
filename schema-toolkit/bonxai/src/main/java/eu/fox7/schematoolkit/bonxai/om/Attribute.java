@@ -60,7 +60,13 @@ public class Attribute extends AbstractAttribute {
     }
 
 
-    /**
+    public Attribute(QualifiedName name, String fixedValue, String defaultValue, boolean required) {
+		this(name,null,required);
+		this.setDefault(defaultValue);
+		this.setFixed(fixedValue);
+	}
+
+	/**
      * Returns the Bonxaitype of this attribute
      * @return type
      */
