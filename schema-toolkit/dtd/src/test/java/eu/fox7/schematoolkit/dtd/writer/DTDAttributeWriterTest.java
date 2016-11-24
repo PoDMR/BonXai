@@ -48,7 +48,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
     @Test
     public void testDTDAttributeNameEmptyException() throws Exception {
         try {
-            Attribute attribute = new Attribute("", "one");
+            Attribute attribute = new Attribute(null, "one");
             attribute.setType(AttributeType.CDATA);
 
             DTDAttributeWriter attributeWriter = new DTDAttributeWriter(attribute);
@@ -84,7 +84,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
     @Test
     public void testDTDAttributeTypeNullException() throws Exception {
         try {
-            Attribute attribute = new Attribute("test", "one");
+            Attribute attribute = new Attribute(new QualifiedName("","name"), "one");
             DTDAttributeWriter attributeWriter = new DTDAttributeWriter(attribute);
             attributeWriter.getAttributeDeclarationString(elementName);
 
@@ -101,7 +101,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
     @Test
     public void testDTDAttributeTypeEnumOrNotationWithEmptyTokensException() throws Exception {
         try {
-            Attribute attribute2 = new Attribute("myAttribute2", "foo");
+            Attribute attribute2 = new Attribute(new QualifiedName("","name"), "foo");
             attribute2.setType(AttributeType.ENUMERATION);
             LinkedHashSet<String> tokens = new LinkedHashSet<String>();
             attribute2.setEnumerationOrNotationTokens(tokens);
@@ -120,7 +120,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
     @Test
     public void testAttributeEnumerationTypeIllegalDefaultValueException() throws Exception {
         try {
-            Attribute attribute2 = new Attribute("myAttribute2", "hello");
+            Attribute attribute2 = new Attribute(new QualifiedName("","name"), "hello");
             attribute2.setType(AttributeType.ENUMERATION);
             LinkedHashSet<String> tokens = new LinkedHashSet<String>();
             tokens.add("test");
@@ -146,7 +146,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
     @Test
     public void testDTDAttributeValueEmptyExceptionWithPresence() throws Exception {
         try {
-        Attribute attribute = new Attribute("myAttribute", "#FIXED", "");
+        Attribute attribute = new Attribute(new QualifiedName("","name"), "#FIXED", "");
         attribute.setType(AttributeType.CDATA);
 
         DTDAttributeWriter attributeWriter = new DTDAttributeWriter(attribute);
@@ -166,7 +166,7 @@ public class DTDAttributeWriterTest extends junit.framework.TestCase {
     @Test
     public void testDTDAttributeValueEmptyException() throws Exception {
         try {
-        Attribute attribute = new Attribute("myAttribute", null);
+        Attribute attribute = new Attribute(new QualifiedName("","name"), null);
         attribute.setType(AttributeType.CDATA);
 
         DTDAttributeWriter attributeWriter = new DTDAttributeWriter(attribute);

@@ -17,9 +17,8 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package eu.fox7.bonxai.converter.dtd2xsd;
+package eu.fox7.schematoolkit.converter.dtd2xsd;
 
-import eu.fox7.bonxai.converter.dtd2xsd.exceptions.EnumerationOrNotationTokensEmtpyException;
 import eu.fox7.schematoolkit.dtd.om.*;
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 import eu.fox7.schematoolkit.common.Annotation;
@@ -27,6 +26,7 @@ import eu.fox7.schematoolkit.common.AttributeUse;
 import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.QualifiedName;
+import eu.fox7.schematoolkit.converter.dtd2xsd.exceptions.EnumerationOrNotationTokensEmtpyException;
 import eu.fox7.schematoolkit.xsd.XSDSimpleTypes;
 import eu.fox7.schematoolkit.xsd.om.SimpleContentRestriction;
 import eu.fox7.schematoolkit.xsd.om.SimpleType;

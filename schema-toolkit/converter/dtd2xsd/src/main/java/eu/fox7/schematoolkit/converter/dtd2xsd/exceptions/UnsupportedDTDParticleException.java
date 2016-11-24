@@ -17,23 +17,23 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package eu.fox7.bonxai.converter.dtd2xsd.exceptions;
+package eu.fox7.schematoolkit.converter.dtd2xsd.exceptions;
 
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 
 /**
- * There are duplicate attribute-names
+ * There is an unsupported DTD particle used in a content model of an element
  * @author Lars Schmidt
  */
-public class DuplicateAttributeNameException extends ConversionFailedException {
+public class UnsupportedDTDParticleException extends ConversionFailedException {
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public DuplicateAttributeNameException(String attributeName, String elementName) {
-        super("There are duplicate attribute-names: \"" + attributeName + "\" under the following element: \"" + elementName + "\"");
+	public UnsupportedDTDParticleException(String particleName) {
+        super("There is an unsupported DTD particle used in a content model of an element: " + particleName);
     }
 
 }

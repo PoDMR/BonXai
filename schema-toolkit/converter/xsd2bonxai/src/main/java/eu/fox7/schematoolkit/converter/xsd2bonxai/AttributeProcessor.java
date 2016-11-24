@@ -44,16 +44,14 @@ import eu.fox7.schematoolkit.xsd.om.XSDSchema;
  * references.
  */
 class AttributeProcessor {
+	private String targetNamespaceURI;
+	
 	/**
      * Creates a new AttributeProcessor.
      *
-     * The processor will use the given {@link SymbolTable} to resolve {@link
-     * AttributeRef}s inside attribute lists. The symbol table must the one to
-     * be used in the generated Bonxai file. In case an {@link AttributeGroupRef}
-     * is discovered inside {@linl convertAttributes()}, this table will be
-     * used to add a corresponding reference in the returned Bonxai list.
      */
-    public AttributeProcessor(XSDSchema xmlSchema) {
+    public AttributeProcessor(String targetNamespaceURI) {
+    	this.targetNamespaceURI = targetNamespaceURI;
     }
 
     /**
@@ -87,10 +85,12 @@ class AttributeProcessor {
      * the one potentially provided in the target.
      */
     public AttributeParticle convertAttributeRef(eu.fox7.schematoolkit.common.AttributeRef xsdAttributeRef) {
-//        eu.fox7.schematoolkit.bonxai.om.Attribute bonxaiAttributeRef = new eu.fox7.schematoolkit.bonxai.om.Attribute(xsdAttributeRef.getName(), xsdAttributeRef.getFixed(), xsdAttributeRef.getDefault(), xsdAttributeRef.getUse().equals(AttributeUse.required));
-//        return bonxaiAttributeRef;
-//TODO
-    	return null;
+    	eu.fox7.schematoolkit.bonxai.om.Attribute bonxaiAttributeRef;
+    	if (xsdAttributeRef.getName().getNamespaceURI().equals(this.targetNamespaceURI))
+    		bonxaiAttributeRef = new eu.fox7.schematoolkit.bonxai.om.Attribute(xsdAttributeRef.getName(), xsdAttributeRef.getFixed(), xsdAttributeRef.getDefault(), xsdAttributeRef.getUse().equals(AttributeUse.required));
+    	else
+    		bonxaiAttributeRef=null; //TODO
+        return bonxaiAttributeRef;
     }
 
     /**

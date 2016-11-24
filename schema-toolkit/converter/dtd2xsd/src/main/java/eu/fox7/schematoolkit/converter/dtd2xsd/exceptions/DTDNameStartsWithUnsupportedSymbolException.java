@@ -17,23 +17,24 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package eu.fox7.bonxai.converter.dtd2xsd.exceptions;
+package eu.fox7.schematoolkit.converter.dtd2xsd.exceptions;
 
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 
 /**
- * There are duplicate element-names in the resulting XML XSDSchema file
+ * This exception will be thrown if there is a DTD name that starts with an
+ * unsupported symbol
  * @author Lars Schmidt
  */
-public class DuplicateElementNameException extends ConversionFailedException {
+public class DTDNameStartsWithUnsupportedSymbolException extends ConversionFailedException {
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public DuplicateElementNameException(String elementName) {
-        super("There are duplicate element-names in the resulting XML XSDSchema file: \"" + elementName + "\"");
+	public DTDNameStartsWithUnsupportedSymbolException(String dtdName) {
+        super("There is a DTD name that starts with an unsupported symbol: \"" + dtdName + "\"");
     }
 
 }

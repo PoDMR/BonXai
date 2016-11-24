@@ -182,9 +182,8 @@ public class DTDEventHandler implements LexicalHandler, DeclHandler, DTDHandler 
         Element element = dtd.getElement(elementName);
 
         // Now we have the correct element.
-        Attribute attribute = null;
+        Attribute attribute = new Attribute(attributeQualifiedName, mode, value);
 
-        attribute = new Attribute(attributeQualifiedName, mode, value);
         AttributeTypeProcessor attributeTypeProcessor = new AttributeTypeProcessor(this.dtd, attribute);
         try {
             attributeTypeProcessor.setTypeToAttribute(type);

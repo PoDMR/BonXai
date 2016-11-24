@@ -17,23 +17,23 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package eu.fox7.bonxai.converter.dtd2xsd.exceptions;
+package eu.fox7.schematoolkit.converter.dtd2xsd.exceptions;
 
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 
 /**
- * There are no values in an enumeration type of DTD
+ * There are duplicate attribute-names
  * @author Lars Schmidt
  */
-public class EnumerationOrNotationTokensEmtpyException extends ConversionFailedException {
+public class DuplicateAttributeNameException extends ConversionFailedException {
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public EnumerationOrNotationTokensEmtpyException(String attributeName, String typeName) {
-        super("There are no values in the following enumeration type of DTD: \"" + attributeName + "\" with the following type: \"" + typeName + "\"");
+	public DuplicateAttributeNameException(String attributeName, String elementName) {
+        super("There are duplicate attribute-names: \"" + attributeName + "\" under the following element: \"" + elementName + "\"");
     }
 
 }

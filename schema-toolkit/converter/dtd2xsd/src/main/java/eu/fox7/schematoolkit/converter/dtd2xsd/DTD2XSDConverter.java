@@ -17,10 +17,13 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package eu.fox7.bonxai.converter.dtd2xsd;
+package eu.fox7.schematoolkit.converter.dtd2xsd;
 
 import eu.fox7.schematoolkit.dtd.om.DocumentTypeDefinition;
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
+import eu.fox7.schematoolkit.Schema;
+import eu.fox7.schematoolkit.SchemaConverter;
+import eu.fox7.schematoolkit.SchemaHandler;
 import eu.fox7.schematoolkit.common.DefaultNamespace;
 import eu.fox7.schematoolkit.common.IdentifiedNamespace;
 import eu.fox7.schematoolkit.xsd.om.Attribute;
@@ -48,7 +51,7 @@ import java.util.Iterator;
  *
  * @author Lars Schmidt
  */
-public class DTD2XSDConverter extends NameChecker {
+public class DTD2XSDConverter implements SchemaConverter {
 
     /**
      * The object for holding the Document Type Definition schema (source of the conversion).
@@ -71,10 +74,7 @@ public class DTD2XSDConverter extends NameChecker {
      * Constructor of class DTD2XSDConverter
      * @param dtd   DocumentTypeDefinition object holding the entire DTD structure
      */
-    public DTD2XSDConverter(DocumentTypeDefinition dtd) {
-        this.dtd = dtd;
-//        StatusLogger.logInfo("DTD2XSD", "Load preferences from file");
-//        this.loadPreferences();
+    public DTD2XSDConverter() {
     }
 
     /**
@@ -130,4 +130,15 @@ public class DTD2XSDConverter extends NameChecker {
 
     	return this.xmlSchema;
     }
+
+	@Override
+	public Schema convert(Schema schema) throws ConversionFailedException {
+		this.dtd = (DocumentTypeDefinition) schema;
+		return this.convert();
+	}
+
+	@Override
+	public SchemaHandler convert(SchemaHandler schemaHandler) throws ConversionFailedException {
+		return this.convert(schemaHandler.getSchema()).getSchemaHandler();
+	}
 }

@@ -70,7 +70,7 @@ public class DTDElementWriter {
             if (!nameChecker.checkForXMLName(this.element.getName())) {
                 throw new IllegalNAMEStringException("ELEMENT: ", this.element.getName().getName());
             }
-            elementString += this.element.getName() + " ";
+            elementString += this.element.getName().getName() + " ";
 
             ElementContentModelProcessor elementContentModelProcessor = new ElementContentModelProcessor();
             String elementContentModelRegExp = elementContentModelProcessor.convertParticleToRegExpString(this.element);
@@ -103,7 +103,7 @@ public class DTDElementWriter {
                     if (attribute1.getName() == null || attribute1.getName().equals("") || attribute2.getName() == null || attribute2.getName().equals("")) {
                         return 1;
                     }
-                    return attribute1.getName().getFullyQualifiedName().compareTo(attribute2.getName().getFullyQualifiedName());
+                    return attribute1.getName().getName().compareTo(attribute2.getName().getName());
                 }
             });
             for (Iterator<Attribute> it = attributes.iterator(); it.hasNext();) {

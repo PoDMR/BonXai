@@ -54,6 +54,7 @@ import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 import eu.fox7.schematoolkit.typeautomaton.TypeAutomaton;
 import eu.fox7.schematoolkit.typeautomaton.factories.XSDTypeAutomatonFactory;
 import eu.fox7.schematoolkit.xsd.XSDSchemaHandler;
+import eu.fox7.schematoolkit.xsd.om.Attribute;
 import eu.fox7.schematoolkit.xsd.om.ComplexContentType;
 import eu.fox7.schematoolkit.xsd.om.ComplexType;
 import eu.fox7.schematoolkit.xsd.om.Content;
@@ -99,9 +100,7 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
      * TypeAutomaton used for conversion
      */
     private TypeAutomaton typeAutomaton;
-	
-	private Qualification elementFormDefault;
-	
+		
 	private Bonxai bonxai;
 	
 	private ParticleProcessor particleProcessor;
@@ -167,11 +166,10 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
     	}
     	
     	xmlSchema = (XSDSchema) schema;
-    	this.attributeProcessor = new AttributeProcessor(xmlSchema);
+    	this.attributeProcessor = new AttributeProcessor(xmlSchema.getTargetNamespace().getUri());
     	this.particleProcessor = new ParticleProcessor(xmlSchema, !this.addExpressionsForBonxaiTypes);
     	XSDTypeAutomatonFactory factory = new XSDTypeAutomatonFactory(this.addExpressionsForBonxaiTypes);
     	this.schema = xmlSchema;
-    	this.elementFormDefault = xmlSchema.getElementFormDefault();
 
     	this.typeAutomaton = factory.createTypeAutomaton(xmlSchema);
     	
@@ -219,17 +217,17 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
     	for (Element rootElement: rootElements) {
     		bonxai.addRootElementName(rootElement.getName());
     	}
+    	
+    	Collection<Attribute> rootAttributes = schema.getAttributes();
+    	for (Attribute rootAttribute: rootAttributes) {
+    		bonxai.addRootElementName(rootAttribute.getName());
+    	}
 	}
 
 	private void createDeclaration() {
-		DefaultNamespace defaultNamespace;
-		if (elementFormDefault == Qualification.qualified) {
-			defaultNamespace = schema.getDefaultNamespace();
-		} else {
-			defaultNamespace = new DefaultNamespace("");
-		}
+		DefaultNamespace targetNamespace = new DefaultNamespace(schema.getTargetNamespace().getUri());
+		bonxai.setTargetNamespace(targetNamespace);
 		
-		bonxai.setTargetNamespace(defaultNamespace);
 		for (IdentifiedNamespace namespace: schema.getNamespaces()) {
 			bonxai.addNamespace(namespace);
 		}
@@ -260,6 +258,7 @@ public class XSD2BonxaiConverter extends AbstractSchemaConverter {
 				particle = new EmptyPattern();
 			} else if (content == null) {
 				//TODO
+				particle = new EmptyPattern();
 			} else {
 				throw new RuntimeException("Only complex content types allowed.");
 			}

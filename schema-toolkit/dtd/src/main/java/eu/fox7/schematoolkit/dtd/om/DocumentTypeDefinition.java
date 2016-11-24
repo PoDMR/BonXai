@@ -60,6 +60,8 @@ public class DocumentTypeDefinition implements Schema {
      * Constructor of the class DocumentTypeDefinition
      */
     public DocumentTypeDefinition() {
+    	this.internalEntities = new HashMap<>();
+    	this.externalEntities = new HashMap<>();
     }
 
     /**

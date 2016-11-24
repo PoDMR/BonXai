@@ -48,7 +48,9 @@ class ParticleProcessor {
     public Particle convertParticle(Particle particle) {
         Particle resultParticle;
 
-        if (particle instanceof ParticleContainer) {
+        if (particle==null)
+        	resultParticle = new EmptyPattern();
+        else if (particle instanceof ParticleContainer) {
             resultParticle = convertParticleContainer((ParticleContainer) particle);
         } else if (particle instanceof CountingPattern) {
             resultParticle = convertCountingPattern((CountingPattern) particle);

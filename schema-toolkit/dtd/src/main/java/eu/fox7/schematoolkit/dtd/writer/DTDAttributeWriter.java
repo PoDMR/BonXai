@@ -78,8 +78,8 @@ public class DTDAttributeWriter {
             if (qualifiedName == null || qualifiedName.equals("")) {
                 throw new DTDElementNameEmptyException("for an attribute declaration: " + this.attribute.getName());
             }
-            attributeString += qualifiedName + " ";
-            attributeString += this.attribute.getName() + " ";
+            attributeString += qualifiedName.getName() + " ";
+            attributeString += this.attribute.getName().getName() + " ";
             attributeString += getAttributeTypeString(qualifiedName);
             attributeString += ">\n";
         } else {

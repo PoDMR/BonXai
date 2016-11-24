@@ -17,7 +17,7 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package eu.fox7.bonxai.converter.dtd2xsd;
+package eu.fox7.schematoolkit.converter.dtd2xsd;
 
 import eu.fox7.schematoolkit.dtd.om.DocumentTypeDefinition;
 import eu.fox7.schematoolkit.common.IdentifiedNamespace;

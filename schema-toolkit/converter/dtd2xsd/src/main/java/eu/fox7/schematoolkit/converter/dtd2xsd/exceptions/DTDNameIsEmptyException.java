@@ -17,7 +17,7 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package eu.fox7.bonxai.converter.dtd2xsd.exceptions;
+package eu.fox7.schematoolkit.converter.dtd2xsd.exceptions;
 
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 

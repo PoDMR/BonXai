@@ -118,6 +118,7 @@ public class DTDSAXParser extends DefaultHandler {
         xr.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
         xr.setFeature("http://xml.org/sax/features/external-general-entities", true);
         xr.setFeature("http://xml.org/sax/features/lexical-handler/parameter-entities", true);
+        
 
         // It is necessary to use InputSources to define a SystemId. This
         // handles the setting of the correct workingdirectory!
@@ -203,7 +204,7 @@ public class DTDSAXParser extends DefaultHandler {
         //xr.setEntityResolver(handler);
         xr.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
         xr.setFeature("http://xml.org/sax/features/external-general-entities", true);
-        xr.setFeature("http://xml.org/sax/features/lexical-handler/parameter-entities", true);
+        //xr.setFeature("http://xml.org/sax/features/lexical-handler/parameter-entities", true);
 
         String uniqueRandID = java.util.UUID.randomUUID().toString();
 

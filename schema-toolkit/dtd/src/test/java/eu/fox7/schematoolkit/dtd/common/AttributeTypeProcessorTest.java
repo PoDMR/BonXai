@@ -19,6 +19,7 @@
 
 package eu.fox7.schematoolkit.dtd.common;
 
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.dtd.common.AttributeTypeProcessor;
 import eu.fox7.schematoolkit.dtd.common.exceptions.AttributeTypeIllegalValueException;
 import eu.fox7.schematoolkit.dtd.common.exceptions.NotationNotDeclaredException;
@@ -53,7 +54,7 @@ public class AttributeTypeProcessorTest extends junit.framework.TestCase {
      */
     @Test
     public void testSetTypeToAttribute() throws Exception {
-        Attribute attribute = new Attribute("name", "mode", "value");
+        Attribute attribute = new Attribute(new QualifiedName("","name"), "mode", "value");
         AttributeTypeProcessor instance = new AttributeTypeProcessor(dtd, attribute);
 
         instance.setTypeToAttribute("ID");
@@ -113,7 +114,7 @@ public class AttributeTypeProcessorTest extends junit.framework.TestCase {
              * choice of possible strings is given.
              * Form "(test1|part2|house)"
              */
-            Attribute attribute = new Attribute("name", "mode", "value");
+            Attribute attribute = new Attribute(new QualifiedName("","name"), "mode", "value");
             AttributeTypeProcessor instance = new AttributeTypeProcessor(dtd, attribute);
             instance.setTypeToAttribute("ENUMERATION");
         } catch (AttributeTypeIllegalValueException error) {
@@ -129,7 +130,7 @@ public class AttributeTypeProcessorTest extends junit.framework.TestCase {
              * Testing a random string, which has nothing to do with a possible
              * name of a type in DTD
              */
-            Attribute attribute = new Attribute("name", "mode", "value");
+            Attribute attribute = new Attribute(new QualifiedName("","name"), "mode", "value");
             AttributeTypeProcessor instance = new AttributeTypeProcessor(dtd, attribute);
             instance.setTypeToAttribute("someOtherString");
         } catch (AttributeTypeIllegalValueException error) {

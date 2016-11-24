@@ -17,23 +17,23 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package eu.fox7.bonxai.converter.dtd2xsd.exceptions;
+package eu.fox7.schematoolkit.converter.dtd2xsd.exceptions;
 
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 
 /**
- * An expected namespace was not found in the namespacelist of the schema
+ * There are duplicate element-names in the resulting XML XSDSchema file
  * @author Lars Schmidt
  */
-public class IdentifiedNamespaceNotFoundException extends ConversionFailedException {
+public class DuplicateElementNameException extends ConversionFailedException {
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public IdentifiedNamespaceNotFoundException(String namespace) {
-        super("The following namespace was not found in the namespacelist of the schema: \"" + namespace + "\"");
+	public DuplicateElementNameException(String elementName) {
+        super("There are duplicate element-names in the resulting XML XSDSchema file: \"" + elementName + "\"");
     }
 
 }

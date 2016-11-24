@@ -17,24 +17,23 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package eu.fox7.bonxai.converter.dtd2xsd.exceptions;
+package eu.fox7.schematoolkit.converter.dtd2xsd.exceptions;
 
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 
 /**
- * This exception will be thrown if there is a DTD name that starts with an
- * unsupported symbol
+ * An expected namespace was not found in the namespacelist of the schema
  * @author Lars Schmidt
  */
-public class DTDNameStartsWithUnsupportedSymbolException extends ConversionFailedException {
+public class IdentifiedNamespaceNotFoundException extends ConversionFailedException {
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public DTDNameStartsWithUnsupportedSymbolException(String dtdName) {
-        super("There is a DTD name that starts with an unsupported symbol: \"" + dtdName + "\"");
+	public IdentifiedNamespaceNotFoundException(String namespace) {
+        super("The following namespace was not found in the namespacelist of the schema: \"" + namespace + "\"");
     }
 
 }

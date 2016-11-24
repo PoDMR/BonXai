@@ -184,6 +184,26 @@ public class XSDParserHandler extends DefaultHandler {
 		public String localName;
     	public String value;
     }
+    
+    private static class Features {
+    	int complexTypeExtensions=0;
+    	int complexTypeRestrictions=0;
+    	int substitutions=0;
+    	int simpleTypes=0;
+    	int imports=0;
+    	int notations=0;
+    	int assertions=0;
+    	
+    	public int sum() {
+    		return this.assertions + this.complexTypeExtensions + this.complexTypeRestrictions + this.imports + this.notations + this.simpleTypes + this.substitutions;
+    	}
+    	
+    	public String toString() {
+    		return "Sum: " + sum()  + " Ext: " + this.complexTypeExtensions + " Res: " + this.complexTypeRestrictions + " Subs: " + 
+    				this.substitutions + " simple: " + this.simpleTypes + " imports: " + this.imports + " not: " + this.notations + 
+    				" assert: " + this.assertions; 
+    	}
+    }
 
 	private Locator locator;
     private Stack<Position> locations;
@@ -194,9 +214,7 @@ public class XSDParserHandler extends DefaultHandler {
 	private XSDSchema schema;
 	private int insideDocumentation;
 	private boolean topLevel;
-	
-	private int complexTypeExtensions;
-	private int complexTypeRestrictions;
+	private Features features;
 	
 	private Stack<String> elementNames;
     
@@ -220,8 +238,7 @@ public class XSDParserHandler extends DefaultHandler {
 		this.insideDocumentation = 0;
 		this.topLevel = true;
 
-		this.complexTypeExtensions = 0;
-		this.complexTypeRestrictions = 0;
+		this.features = new Features();
 		
 		this.elementStack.push(new LinkedList<Object>());
 		this.elementNames.push("");
@@ -292,10 +309,10 @@ public class XSDParserHandler extends DefaultHandler {
 				ElementType elementType = ElementType.getElementType(localName, parent);
 				
 				if (elementType==ElementType.COMPLEXExtension)
-					this.complexTypeExtensions++;
+					this.features.complexTypeExtensions++;
 				
 				if (elementType==ElementType.COMPLEXRestriction)
-					this.complexTypeRestrictions++;
+					this.features.complexTypeRestrictions++;
 				
 				Object object = elementType.getInstance();
 				
@@ -306,6 +323,7 @@ public class XSDParserHandler extends DefaultHandler {
 				
 				for (Object child: childs) {
 					if (object instanceof Notation) {
+						this.features.notations++;
 						//silently ignore notation elements for now
 					} else if ((child instanceof Particle) && (object instanceof PContainer))
 						((PContainer) object).addParticle((Particle) child);
@@ -314,6 +332,8 @@ public class XSDParserHandler extends DefaultHandler {
 						particle = (Particle) child;
 					} else if (child instanceof Type) {
 						this.types.add((Type) child);
+						if (child instanceof SimpleType)
+							this.features.simpleTypes++;
 						if (!(object instanceof XSDSchema)) {
 							((Type) child).setName(uniqueTypename());
 							((Type) child).setIsAnonymous(true);
@@ -336,7 +356,7 @@ public class XSDParserHandler extends DefaultHandler {
 						((Annotationable) object).setAnnotation((Annotation) child);
 					else if ((child instanceof Annotation))	{} // silently ignore annotation elements for now.
 					else if ((child instanceof Notation)) {} // silently ignore notation elements for now.
-					else if ((child instanceof Assert)) {} // silently ignore assert elements for now.
+					else if ((child instanceof Assert)) {this.features.assertions++;} // silently ignore assert elements for now.
 					else if ((child instanceof Content) && (object instanceof ComplexType))
 						((ComplexType) object).setContent((Content) child);
 					else if ((child instanceof SimpleTypeInheritance) && (object instanceof SimpleType))
@@ -496,7 +516,7 @@ public class XSDParserHandler extends DefaultHandler {
 					
 					else if (attribute.localName.equals("id")) {} // ignore id attributes not handled yet
 					else if (attribute.localName.equals("version") && object instanceof XSDSchema) {} // ignore version. this attribute has no semantics according to XSD specs
-					else if (attribute.localName.equals("substitutionGroup")) { System.err.println("Substitution groups are not supported"); }
+					else if (attribute.localName.equals("substitutionGroup")) { this.features.substitutions++; }
 					else
 						System.err.println("Unhandled attribute with name " + attribute.localName + " and value " + attribute.value + " in " + object.getClass());
 				}
@@ -544,7 +564,7 @@ public class XSDParserHandler extends DefaultHandler {
     	for (Type type: types)
     		this.schema.addType(type);
     	
-    	System.err.println("Extensions: "+this.complexTypeExtensions + "Restrictions: "+this.complexTypeRestrictions);
+    	System.err.println(this.features);
     }
 
 	public XSDSchema getSchema() {

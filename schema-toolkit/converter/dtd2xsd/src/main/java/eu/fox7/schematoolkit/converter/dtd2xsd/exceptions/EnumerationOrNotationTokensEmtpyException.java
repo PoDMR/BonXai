@@ -17,23 +17,23 @@
  * along with BonXai.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package eu.fox7.bonxai.converter.dtd2xsd.exceptions;
+package eu.fox7.schematoolkit.converter.dtd2xsd.exceptions;
 
 import eu.fox7.schematoolkit.exceptions.ConversionFailedException;
 
 /**
- * There is an unsupported DTD particle used in a content model of an element
+ * There are no values in an enumeration type of DTD
  * @author Lars Schmidt
  */
-public class UnsupportedDTDParticleException extends ConversionFailedException {
+public class EnumerationOrNotationTokensEmtpyException extends ConversionFailedException {
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public UnsupportedDTDParticleException(String particleName) {
-        super("There is an unsupported DTD particle used in a content model of an element: " + particleName);
+	public EnumerationOrNotationTokensEmtpyException(String attributeName, String typeName) {
+        super("There are no values in the following enumeration type of DTD: \"" + attributeName + "\" with the following type: \"" + typeName + "\"");
     }
 
 }

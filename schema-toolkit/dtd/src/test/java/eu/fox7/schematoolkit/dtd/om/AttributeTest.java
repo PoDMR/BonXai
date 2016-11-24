@@ -22,6 +22,7 @@ package eu.fox7.schematoolkit.dtd.om;
 import java.util.LinkedHashSet;
 import org.junit.Test;
 
+import eu.fox7.schematoolkit.common.QualifiedName;
 import eu.fox7.schematoolkit.dtd.om.Attribute;
 import eu.fox7.schematoolkit.dtd.om.AttributeType;
 import static org.junit.Assert.*;
@@ -40,7 +41,7 @@ public class AttributeTest extends junit.framework.TestCase {
      */
     @Test
     public void testSetType() {
-        Attribute attribute = new Attribute("name", "value");
+        Attribute attribute = new Attribute(new QualifiedName("","name"), "value");
 
         assertEquals(null, attribute.getType());
 
@@ -71,7 +72,7 @@ public class AttributeTest extends junit.framework.TestCase {
      */
     @Test
     public void testGetEnumerationOrNotationTokens() {
-        Attribute attribute = new Attribute("name", "value");
+        Attribute attribute = new Attribute(new QualifiedName("","name"), "value");
         attribute.setType(AttributeType.ENUMERATION);
         LinkedHashSet<String> expResult = new LinkedHashSet<String>();
         expResult.add("test");
@@ -86,17 +87,17 @@ public class AttributeTest extends junit.framework.TestCase {
      */
     @Test
     public void testGetAttributeDefaultPresence() {
-        Attribute attribute = new Attribute("name", "value");
+        Attribute attribute = new Attribute(new QualifiedName("","name"), "value");
         assertEquals(null, attribute.getAttributeDefaultPresence());
-        Attribute attribute1 = new Attribute("name", "mode", "value");
+        Attribute attribute1 = new Attribute(new QualifiedName("","name"), "mode", "value");
         assertEquals(null, attribute1.getAttributeDefaultPresence());
-        Attribute attribute2 = new Attribute("name", "#REQUIRED", "value");
+        Attribute attribute2 = new Attribute(new QualifiedName("","name"), "#REQUIRED", "value");
         assertEquals(Attribute.AttributeDefaultPresence.REQUIRED, attribute2.getAttributeDefaultPresence());
-        Attribute attribute3 = new Attribute("name", "#required", "value");
+        Attribute attribute3 = new Attribute(new QualifiedName("","name"), "#required", "value");
         assertEquals(null, attribute3.getAttributeDefaultPresence());
-        Attribute attribute4 = new Attribute("name", "#FIXED", "value");
+        Attribute attribute4 = new Attribute(new QualifiedName("","name"), "#FIXED", "value");
         assertEquals(Attribute.AttributeDefaultPresence.FIXED, attribute4.getAttributeDefaultPresence());
-        Attribute attribute5 = new Attribute("name", "#IMPLIED", "value");
+        Attribute attribute5 = new Attribute(new QualifiedName("","name"), "#IMPLIED", "value");
         assertEquals(Attribute.AttributeDefaultPresence.IMPLIED, attribute5.getAttributeDefaultPresence());
     }
 
@@ -105,7 +106,7 @@ public class AttributeTest extends junit.framework.TestCase {
      */
     @Test
     public void testGetName() {
-        Attribute attribute = new Attribute("name", "value");
+        Attribute attribute = new Attribute(new QualifiedName("","name"), "value");
         assertFalse(attribute.getName() == null);
         assertEquals("name", attribute.getName());
     }
@@ -115,7 +116,7 @@ public class AttributeTest extends junit.framework.TestCase {
      */
     @Test
     public void testGetType() {
-        Attribute attribute = new Attribute("name", "value");
+        Attribute attribute = new Attribute(new QualifiedName("","name"), "value");
 
         assertEquals(null, attribute.getType());
 
@@ -146,10 +147,10 @@ public class AttributeTest extends junit.framework.TestCase {
      */
     @Test
     public void testGetValue() {
-        Attribute attribute = new Attribute("name", "value");
+        Attribute attribute = new Attribute(new QualifiedName("","name"), "value");
         assertFalse(attribute.getValue() == null);
         assertEquals("value", attribute.getValue());
-        Attribute attribute2 = new Attribute("name", null);
+        Attribute attribute2 = new Attribute(new QualifiedName("","name"), null);
         assertTrue(attribute2.getValue() == null);
     }
 
@@ -158,7 +159,7 @@ public class AttributeTest extends junit.framework.TestCase {
      */
     @Test
     public void testSetEnumerationOrNotationTokens() {
-        Attribute attribute = new Attribute("name", "value");
+        Attribute attribute = new Attribute(new QualifiedName("","name"), "value");
         attribute.setType(AttributeType.ENUMERATION);
         LinkedHashSet<String> expResult = new LinkedHashSet<String>();
         expResult.add("test");

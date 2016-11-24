@@ -154,8 +154,17 @@ public class AncestryAncestorPatternBuilder implements AncestorPatternBuilder {
 			Set<Pair<State, State>> qps = pair.getValue();
 			Set<State> states = qps.stream()
 				.map(Pair::getValue).collect(Collectors.toSet());
+			
+			for (State state: states) {
+				if (overLimit.contains(state)) {
+					overLimit.addAll(states);
+					states = null;
+					break;
+				}
+			}
 
-			if (states.size() == 1) {
+			if (states==null) {}
+			else if (states.size() == 1) {
 				done.add(Pair.of(string, states.iterator().next()));
 			} else {
 				if (string.size() > limit) {
@@ -173,6 +182,7 @@ public class AncestryAncestorPatternBuilder implements AncestorPatternBuilder {
 					}
 					map.entrySet().forEach(e -> {
 						todo.push(Pair.of(e.getKey(), e.getValue()));
+						System.err.println("TODO: " + e.getKey());
 					});
 				}
 			}

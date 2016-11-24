@@ -42,7 +42,7 @@ public class ElementTest extends junit.framework.TestCase {
      */
     @Test
     public void testGetAttributes() {
-        Attribute attribute = new Attribute("name", "#REQUIRED", "test");
+        Attribute attribute = new Attribute(new QualifiedName("","name"), "#REQUIRED", "test");
         Element element = new Element(elementName);
         assertTrue(element.getAttributes().isEmpty());
 
@@ -57,7 +57,7 @@ public class ElementTest extends junit.framework.TestCase {
      */
     @Test
     public void testAddAttribute() {
-        Attribute attribute = new Attribute("name", "#REQUIRED", "test");
+        Attribute attribute = new Attribute(new QualifiedName("","name"), "#REQUIRED", "test");
         Element element = new Element(elementName);
         assertTrue(element.getAttributes().isEmpty());
 

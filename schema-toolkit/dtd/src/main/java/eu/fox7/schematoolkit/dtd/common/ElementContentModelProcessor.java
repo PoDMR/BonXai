@@ -262,13 +262,13 @@ public class ElementContentModelProcessor {
                 if (!nameChecker.checkForXMLName(next)) {
                     throw new IllegalNAMEStringException("Element: " + next, next);
                 }
-                Element element = new Element(new QualifiedName(Namespace.EMPTY_NAMESPACE, next));
+                ElementRef element = new ElementRef(new QualifiedName(Namespace.EMPTY_NAMESPACE, next));
                 particle = element;
                 if (this.mixed){ 
                 	for (Particle currentChild : childParticleList) {
                 		if (currentChild instanceof ElementRef) {
-                			if (((ElementRef) currentChild).getElementName().equals(element.getName())) {
-                				throw new ContentModelIllegalMixedDuplicateElementException("Particle contains more than one element with name: \"" + element.getName() + "\"");
+                			if (((ElementRef) currentChild).getElementName().equals(element.getElementName())) {
+                				throw new ContentModelIllegalMixedDuplicateElementException("Particle contains more than one element with name: \"" + element.getElementName() + "\"");
                 			}
                 		}
                 	}
@@ -447,7 +447,7 @@ public class ElementContentModelProcessor {
 
                         if (!elementNames.contains(currentElementName)) {
                             elementNames.add(currentElementName.getName());
-                            mixedParticleString += currentElementName + "|";
+                            mixedParticleString += currentElementName.getName() + "|";
                         } else {
                             throw new ContentModelIllegalMixedDuplicateElementException("Element \"" + element.getName() + "\": ChoicePattern contains more than one of: \"" + currentElementName + "\"");
                         }
@@ -565,7 +565,7 @@ public class ElementContentModelProcessor {
             if (!nameChecker.checkForXMLName(elementRef.getElementName())) {
                 throw new IllegalNAMEStringException("Element: " + elementRef.getElementName(), elementRef.getElementName().getName());
             }
-            currentRegExpString += elementRef.getElementName();
+            currentRegExpString += elementRef.getElementName().getName();
         } else {
             if (particle == null) {
                 // Particle is null
