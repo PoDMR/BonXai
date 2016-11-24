@@ -23,6 +23,7 @@ import eu.fox7.schematoolkit.common.AnyPattern;
 import eu.fox7.schematoolkit.common.ChoicePattern;
 import eu.fox7.schematoolkit.common.CountingPattern;
 import eu.fox7.schematoolkit.common.ElementRef;
+import eu.fox7.schematoolkit.common.EmptyPattern;
 import eu.fox7.schematoolkit.common.Namespace;
 import eu.fox7.schematoolkit.common.Particle;
 import eu.fox7.schematoolkit.common.ProcessContentsInstruction;
@@ -147,7 +148,7 @@ public class ElementContentModelProcessor {
         // element
         if (contentModelRegExp.equals("EMPTY")) {
             // Case: EMPTY
-            return null;
+            return new EmptyPattern();
         } else if (contentModelRegExp.equals("ANY")) {
             // Case: ANY
 
@@ -566,14 +567,14 @@ public class ElementContentModelProcessor {
                 throw new IllegalNAMEStringException("Element: " + elementRef.getElementName(), elementRef.getElementName().getName());
             }
             currentRegExpString += elementRef.getElementName().getName();
+        } else if (particle instanceof EmptyPattern) {
+        	currentRegExpString += "EMPTY";
+        } else if (particle == null) {
+        	// Particle is null
+            throw new ContentModelNullParticleException(elementName.getName(), "Particle is null");
         } else {
-            if (particle == null) {
-                // Particle is null
-                throw new ContentModelNullParticleException(elementName.getName(), "Particle is null");
-            } else {
-                // Particle is of illegal type
-                throw new ContentModelIllegalParticleException(elementName.getName(), particle.getClass().getName());
-            }
+            // Particle is of illegal type
+            throw new ContentModelIllegalParticleException(elementName.getName(), particle.getClass().getName());
         }
 
         // The regular expression string is not allowed to be empty here

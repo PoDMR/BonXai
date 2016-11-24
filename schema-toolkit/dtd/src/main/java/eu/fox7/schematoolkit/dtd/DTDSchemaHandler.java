@@ -45,7 +45,7 @@ public class DTDSchemaHandler extends SchemaHandler {
 			SchemaToolkitException {
 		DTDSAXParser parser = new DTDSAXParser();
 		try {
-			this.schema = parser.parseDTDOnly(stream);
+			this.schema = parser.parse(stream);
 		} catch (SAXException e) {
 			throw new SchemaToolkitException(e);
 		}
