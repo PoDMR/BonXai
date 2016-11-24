@@ -92,7 +92,7 @@ public class ElementTest extends junit.framework.TestCase {
 
         element.setParticle(null);
         try {
-            element.setParticle(new ElementContentModelProcessor().convertRegExpStringToParticle("ANY"));
+            element.setParticle(new AnyPattern());
         } catch (Exception ex) {
             return;
         }
@@ -167,33 +167,5 @@ public class ElementTest extends junit.framework.TestCase {
         AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.STRICT, Namespace.EMPTY_NAMESPACE);
         element.setParticle(anyPattern);
         assertEquals(anyPattern, element.getParticle());
-
-        element.setParticle(null);
-        try {
-            element.setParticle(new ElementContentModelProcessor().convertRegExpStringToParticle("EMPTY"));
-        } catch (Exception ex) {
-            return;
-        }
-        assertEquals(null, element.getParticle());
-    }
-
-    /**
-     * Test of getParticle method, of class Element.
-     */
-    @Test
-    public void testGetParticle() {
-        Element element = new Element(elementName);
-        assertEquals(null, element.getParticle());
-        AnyPattern anyPattern = new AnyPattern(ProcessContentsInstruction.STRICT, Namespace.EMPTY_NAMESPACE);
-        element.setParticle(anyPattern);
-        assertEquals(anyPattern, element.getParticle());
-
-        element.setParticle(null);
-        try {
-            element.setParticle(new ElementContentModelProcessor().convertRegExpStringToParticle("EMPTY"));
-        } catch (Exception ex) {
-            return;
-        }
-        assertEquals(null, element.getParticle());
     }
 }

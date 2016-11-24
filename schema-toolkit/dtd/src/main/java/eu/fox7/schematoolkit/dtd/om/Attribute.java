@@ -74,7 +74,7 @@ public class Attribute {
      * @param value
      */
     public Attribute(QualifiedName name, String defaultPresenceMode, String value) {
-        this.name = name;
+        this(name,value);
 
         if (defaultPresenceMode != null) {
             if (defaultPresenceMode.equals("#REQUIRED")) {
@@ -87,13 +87,15 @@ public class Attribute {
                 this.attributeDefaultPresence = AttributeDefaultPresence.FIXED;
                 this.value = value;
             }
-        } else {
-            this.value = value;
         }
-        this.enumerationOrNotationTokens = new LinkedHashSet<String>();
     }
 
-    /**
+    public Attribute(QualifiedName name, AttributeDefaultPresence defaultPresenceMode, String value) {
+		this(name,value);
+		this.attributeDefaultPresence = defaultPresenceMode;
+	}
+
+	/**
      * Setter for the type of the current attribute-object.
      * @param attributeType - AttributeType
      */
