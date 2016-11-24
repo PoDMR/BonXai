@@ -30,6 +30,7 @@
   </dependencies>
 
   <modules>
+    <module>dtd</module>
     <module>xsd</module>
     <module>bonxai</module>
 <!--<module>relaxng</module> -->
