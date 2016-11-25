@@ -62,6 +62,8 @@ class ParticleProcessor {
             resultParticle = convertElementRef((ElementRef) particle);
         } else if (particle instanceof GroupReference) {
             resultParticle = convertGroupRef((GroupReference) particle);
+        } else if (particle instanceof EmptyPattern) {
+        	resultParticle = new EmptyPattern();
         } else {
             throw new RuntimeException("Unknown Particle of class " + particle.getClass());
         }
