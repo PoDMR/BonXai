@@ -60,8 +60,8 @@ public class JEditBonxaiManager  {
 		}
 
 		private final String namespace;
-		private Buffer buffers[] = new Buffer[2];
-		private NamespaceAwareSchema schemas[] = new NamespaceAwareSchema[2];
+		private Buffer buffers[] = new Buffer[3];
+		private Schema schemas[] = new Schema[3];
 		private ExtendedContextAutomaton contextAutomaton;
 		private SchemaLanguage primaryLanguage = null;
 		private boolean correct;
@@ -72,8 +72,13 @@ public class JEditBonxaiManager  {
 		
 		
 		
-		private void addSchema(NamespaceAwareSchema schema, Buffer buffer) {
-			int slot=(primaryLanguage == null || schema.getSchemaLanguage()==primaryLanguage)?0:1;
+		private void addSchema(Schema schema, Buffer buffer) {
+			int slot;
+			
+			if (!(schema instanceof NamespaceAwareSchema))
+				slot=2;  //DTDs go to slot 2. They are not used for validation, just as starting point for conversion.
+			else
+				slot=(primaryLanguage == null || schema.getSchemaLanguage()==primaryLanguage)?0:1;
 			
 			// workaround, as it is not yet possible to validate XMLSchema against an existing contextAutomaton
 			// here we force XMLSchema to always be the primary language
@@ -88,7 +93,7 @@ public class JEditBonxaiManager  {
 			schemas[slot] = schema;
 			if (slot == 0) {
 				primaryLanguage = schema.getSchemaLanguage();
-				contextAutomaton = computeContextAutomaton(schema, buffer);
+				contextAutomaton = computeContextAutomaton((NamespaceAwareSchema) schema, buffer);
 			}
 			if (schemas[1]!=null)
 				verifySchema();
@@ -98,7 +103,7 @@ public class JEditBonxaiManager  {
 		}
 		
 		private void verifySchema() {
-			correct = verifyContextAutomaton(schemas[1], contextAutomaton, buffers[1]);
+			correct = verifyContextAutomaton((NamespaceAwareSchema) schemas[1], contextAutomaton, buffers[1]);
 			
 			Collection<State> states = contextAutomaton.getStates();
 			for (State state: states) {
@@ -144,7 +149,7 @@ public class JEditBonxaiManager  {
 				primaryLanguage = schemas[0].getSchemaLanguage();
 				buffers[1]=null;
 				schemas[1]=null;
-				contextAutomaton = computeContextAutomaton(schemas[0], buffers[0]);
+				contextAutomaton = computeContextAutomaton((NamespaceAwareSchema) schemas[0], buffers[0]);
 				reValidateXML();
 			}
 			return false;
@@ -167,10 +172,12 @@ public class JEditBonxaiManager  {
 	private class SchemaMap extends HashMap<String,SchemaWrapper> {
 		private static final long serialVersionUID = 1L;
 
-		private void putSchema(NamespaceAwareSchema schema, Buffer buffer) {
-			SchemaWrapper wrapper = this.get(schema.getTargetNamespace().getUri());
+		private void putSchema(Schema schema, Buffer buffer) {
+			String uri = (schema instanceof NamespaceAwareSchema)?((NamespaceAwareSchema) schema).getTargetNamespace().getUri():"";
+
+			SchemaWrapper wrapper = this.get(uri);
 			if (wrapper == null) {
-				wrapper = new SchemaWrapper(schema.getTargetNamespace().getUri());
+				wrapper = new SchemaWrapper(uri);
 				this.put(wrapper.namespace, wrapper);
 			}
 			wrapper.addSchema(schema, buffer);
@@ -231,9 +238,15 @@ public class JEditBonxaiManager  {
 				sourceSchema = schemaWrapper.schemas[1];
 				targetBuffer = schemaWrapper.buffers[0];
 				break;
+			} else if (schemaWrapper.buffers[2] == sourceBuffer) {
+				sourceSchema = schemaWrapper.schemas[2];
+				targetBuffer = schemaWrapper.buffers[0];
+				break;
 			}
 		}
 		if (sourceSchema!=null) {
+			if (sourceSchema.getSchemaLanguage()==SchemaLanguage.DTD)
+				sourceSchema = SchemaLanguage.DTD.getConverter(SchemaLanguage.XMLSCHEMA).convert(sourceSchema);
 			SchemaLanguage targetLanguage = (sourceSchema.getSchemaLanguage()==SchemaLanguage.BONXAI)?SchemaLanguage.XMLSCHEMA:SchemaLanguage.BONXAI;
 			this.convertSchema(sourceSchema, targetBuffer, targetLanguage, view);
 		}
@@ -360,7 +373,7 @@ public class JEditBonxaiManager  {
 		this.schemaMap.removeBuffer(buffer);
 	}
 
-	public void addSchema(NamespaceAwareSchema schema, Buffer buffer) {
+	public void addSchema(Schema schema, Buffer buffer) {
 		this.schemaMap.putSchema(schema, buffer);
 	}
 
